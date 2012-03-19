@@ -1,0 +1,511 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+% oder ...
+
+\setbeamercovered{transparent}
+% oder auch nicht
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language ngerman
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Stichwortverzeichnis
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language danish
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Unix Workshop - Einstieg
+\end_layout
+
+\begin_layout Author
+Martin Wichmann 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Jan Kretschmer
+\end_layout
+
+\begin_layout BeginFrame
+Gliederung
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Einleitung
+\end_layout
+
+\begin_layout BeginFrame
+Inhalt des Workshops
+\end_layout
+
+\begin_layout Itemize
+Linux Grundlagen
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+GUI
+\end_layout
+
+\begin_layout Itemize
+Konsole
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Verwendete Distribution: Ubuntu 10.10
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Erfahrung?
+\end_layout
+
+\begin_layout Itemize
+Wie sind Ihre Erfahrungen mit Unix/Linux?
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Linux Grundlagen
+\end_layout
+
+\begin_layout BeginFrame
+Was ist Linux
+\end_layout
+
+\begin_layout Itemize
+Unix -> Eines der 
+\begin_inset Quotes ald
+\end_inset
+
+Ur
+\begin_inset Quotes ard
+\end_inset
+
+-Betriebssysteme
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+1969 von Bell Laboratories (AT&T) entwickelt
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Linux -> Kernel
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+1991 von Linus Torvalds entwickelt
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+GNU -> Grundlegende Programme
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+GNU's not Unix
+\end_layout
+
+\begin_layout Itemize
+Ziel vollständig freies Betriebssystem
+\end_layout
+
+\begin_layout Itemize
+1984 von Richard Stallman ins Leben gerufen
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Systeme sehr unterschiedlich
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename 1000px-Tux.svg.png
+	display false
+	scale 5
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 1000px-Official_gnu.svg.png
+	display false
+	scale 5
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Logo: Tux und GNU
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Allgemeine Prinzipien
+\end_layout
+
+\begin_layout Itemize
+Kleine Programme die eine Sache gut machen
+\end_layout
+
+\begin_layout Itemize
+Alles ist eine Datei
+\end_layout
+
+\begin_layout Itemize
+Die Möglichkeit Programme zussamenarbeiten zu lassen
+\end_layout
+
+\begin_layout Itemize
+Konfigurationen als Text gespeichert
+\end_layout
+
+\begin_layout Itemize
+Eingabe und Ausgabe eines Programms im Text-Format
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Distributionen
+\end_layout
+
+\begin_layout Itemize
+Fassen Linux System zusammen
+\end_layout
+
+\begin_layout Itemize
+Mittels Paketsystem aufgebaut
+\end_layout
+
+\begin_layout Itemize
+Einzige Pflicht: Linux Kernel, evtl.
+ GNU Tools
+\end_layout
+
+\begin_layout Itemize
+Rest auswechselbar
+\end_layout
+
+\begin_layout Itemize
+Baukastensystem: Beispiel Debian
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Sowohl Kernel als auch GNU Tools auswechselbar
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Beispiele: Ubuntu, Debian, openSuse, Fedora, Arch Linux...
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename 1000px-UbuntuCoF.svg.png
+	display false
+	scale 5
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 1000px-Openlogo-debianV2.svg.png
+	display false
+	scale 5
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 1000px-OpenSUSE_Logo.svg.png
+	display false
+	scale 5
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 1000px-Fedora_logo.svg.png
+	display false
+	scale 5
+
+\end_inset
+
+
+\begin_inset Graphics
+	filename 1000px-Archlinux-icon-crystal-64.svg.png
+	display false
+	scale 5
+
+\end_inset
+
+
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Logos einiger Distributionen
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Verzeichnis-Struktur
+\end_layout
+
+\begin_layout Itemize
+/ -> Wurzelverzeichnis
+\end_layout
+
+\begin_layout Itemize
+Nach Zweck geordnet z.B.
+ /etc -> Konfigurationsdateien
+\end_layout
+
+\begin_layout Itemize
+Strenge Rechtevergabe
+\end_layout
+
+\begin_layout Itemize
+Ausgeprägte Benutzer- und Gruppenverwaltung
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename Filesystem.gif
+	display false
+	scale 35
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption
+
+\begin_layout Plain Layout
+Verzeichnis-Struktur
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Vor- und Nachteile von Linux
+\end_layout
+
+\begin_layout Standard
+Vorteile:
+\end_layout
+
+\begin_layout Itemize
+Zentrale Paketverwaltung
+\end_layout
+
+\begin_layout Itemize
+Shell
+\end_layout
+
+\begin_layout Itemize
+Zugriff auf das gesamte System
+\end_layout
+
+\begin_layout Itemize
+Open-Source und Kostenlos
+\end_layout
+
+\begin_layout Itemize
+Systemkomponenten auswechselbar (z.B.
+ grafische Oberfläche)
+\end_layout
+
+\begin_layout Itemize
+Gute Unterstützung (Foren etc.)
+\end_layout
+
+\begin_layout Standard
+Nachteile:
+\end_layout
+
+\begin_layout Itemize
+Schlechterer Hardware-Support
+\end_layout
+
+\begin_layout Itemize
+Teils schwerer Einstieg
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Quellen
+\end_layout
+
+\begin_layout Itemize
+Die Bilder in diesem Dokument stammen aus dem Wikimedia Projekt und wurden
+ unter der GNU Free Document License freigegeben
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document

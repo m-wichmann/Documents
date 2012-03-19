@@ -1,0 +1,356 @@
+#LyX 2.0 created this file. For more info see http://www.lyx.org/
+\lyxformat 413
+\begin_document
+\begin_header
+\textclass beamer
+\begin_preamble
+\usetheme{Warsaw}
+% oder ...
+
+\setbeamercovered{transparent}
+% oder auch nicht
+\end_preamble
+\use_default_options false
+\maintain_unincluded_children false
+\language ngerman
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman times
+\font_sans default
+\font_typewriter default
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing single
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_amsmath 2
+\use_esint 0
+\use_mhchem 1
+\use_mathdots 1
+\cite_engine basic
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\use_refstyle 0
+\index Stichwortverzeichnis
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 2
+\tocdepth 2
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language danish
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Unix Workshop - Aufgaben 3
+\end_layout
+
+\begin_layout Author
+Martin Wichmann 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+and
+\end_layout
+
+\end_inset
+
+ Jan Kretschmer
+\end_layout
+
+\begin_layout Section
+Überblick
+\end_layout
+
+\begin_layout BeginFrame
+Überblick
+\end_layout
+
+\begin_layout Itemize
+Benutzerverwaltung
+\end_layout
+
+\begin_layout Itemize
+Rechtevergabe
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Erläuterung
+\end_layout
+
+\begin_layout BeginFrame
+Rechteverteilung I
+\end_layout
+
+\begin_layout Itemize
+Linuxsysteme besitzen strenge Rechtevergabe
+\end_layout
+
+\begin_layout Itemize
+Rechtevergabe nach folgendem Format
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+rwx|rwx|rwx -> Jeweils Rechte für: Besitzer, Gruppe und Andere
+\end_layout
+
+\begin_layout Itemize
+r -> Lesen
+\end_layout
+
+\begin_layout Itemize
+w -> schreiben
+\end_layout
+
+\begin_layout Itemize
+x -> ausführen
+\end_layout
+
+\begin_layout Itemize
+Zudem wird je ein Benutzer und eine Gruppe als Besitzer vergeben
+\end_layout
+
+\end_deeper
+\begin_layout Itemize
+Diese Rechte verhindern jedoch nicht vollständig Zugriff durch 
+\begin_inset Quotes ald
+\end_inset
+
+Angreifer
+\begin_inset Quotes ard
+\end_inset
+
+!
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+\begin_inset Quotes ald
+\end_inset
+
+Ein Rechner ist nur so sicher wie die Tür hinter der er steht!
+\begin_inset Quotes ard
+\end_inset
+
+
+\end_layout
+
+\begin_layout Itemize
+Beispiel: Wenn Zugang zu den USB-Ports besteht, kann ein Linux Live System
+ verwendet werden um auf alle Daten zuzugreifen
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Rechteverteilung II
+\end_layout
+
+\begin_layout Itemize
+Linux ist als Mehrbenutzersystem ausgelegt
+\end_layout
+
+\begin_layout Itemize
+Benutzer und Gruppen werden verwendet um Bereiche abzutrennen und Rechte
+ möglichst einzuschränken
+\end_layout
+
+\begin_layout Itemize
+Root Benutzer besitzt alle Rechte
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Muss sehr sorgfältig verwendet werden
+\end_layout
+
+\begin_layout Itemize
+Negativ Beispiel (!!!NICHT NACHMACHEN!!!)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+sudo rm -rf /
+\end_layout
+
+\begin_layout Itemize
+Löscht GESAMTES System! Ohne Nachfrage, ohne Möglichkeit zum Rückgängig
+ machen!
+\end_layout
+
+\end_deeper
+\end_deeper
+\begin_layout Itemize
+Durch Rechteverteilung, lässt sich System gut von vielen Benutzern gleichzeitig
+ verwenden
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+z.B.
+ per ssh -> ssh username@login.ostfalia.de
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Relevante Befehle
+\end_layout
+
+\begin_layout Itemize
+adduser -> Fügt neuen Benutzer hinzu
+\end_layout
+
+\begin_layout Itemize
+groups -> Zeigt Gruppen des aktuellen Benutzers an
+\end_layout
+
+\begin_layout Itemize
+su -> Wechselt den Benutzer
+\end_layout
+
+\begin_layout Itemize
+chown -> Ändert den Besitzer einer Datei oder eines Verzeichnisses
+\end_layout
+
+\begin_layout Itemize
+chmod -> Ändert Rechte einer Datei oder eines Verzeichnisses
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout Section
+Aufgaben
+\end_layout
+
+\begin_layout BeginFrame
+Lernsituation
+\end_layout
+
+\begin_layout Standard
+Da der PC von ihrem Kollegen spontan den Geist aufgegeben hat, wird er von
+ nun an, über eine ssh Verbindung, mit an ihrem Rechner arbeiten.
+ Hierzu müssen Sie einen neuen Benutzer erstellen und ihm die entsprechenden
+ Rechte geben.
+ Bei dieser Gelegenheit können Sie ihm auch eine Kopie der vorher erstellten
+ Datei direkt in sein Home-Verzeichnis legen.
+\end_layout
+
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Aufgaben I
+\end_layout
+
+\begin_layout Itemize
+Richten Sie ihr System ein, sodass ein weiterer Benutzer daran arbeiten
+ kann
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Richten Sie einen neuen Benutzer ein (adduser)
+\end_layout
+
+\begin_layout Itemize
+Finden Sie heraus in welcher Gruppe ihr Benutzer ist (groups)
+\end_layout
+
+\begin_layout Itemize
+Melden Sie sich in einem Terminal als der neue Benutzer an (Hinweis: Sie
+ müssen/sollen sich nicht komplett abmelden!) (su)
+\end_layout
+
+\begin_layout Itemize
+Finden Sie heraus in welcher Gruppe der neue Benutzer ist (groups)
+\end_layout
+
+\begin_layout Itemize
+Melden Sie sich wieder als der neue Benutzer ab (Tipp: Der Befehl "exit"
+ bzw.
+ die Tastenkombination STRG+D meldet Sie in einer Konsole direkt ab.
+ Wenn Sie vorher als ein anderer Benutzer angemeldet waren, kehren Sie wieder
+ zu diesem zurück)
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\begin_layout BeginFrame
+Aufgaben II
+\end_layout
+
+\begin_layout Itemize
+Kopieren Sie die Datei von vorher in das neu erstellte Home-Verzeichnis
+ (cp, sudo)
+\end_layout
+
+\begin_layout Itemize
+Stellen Sie sicher, dass die Datei ihrem Kollegen gehört und entsprechende
+ Rechte gesetzt sind (ls)
+\end_layout
+
+\begin_deeper
+\begin_layout Itemize
+Machen Sie den neuen Benutzer zum Besitzer der kopierten Datei (chown)
+\end_layout
+
+\begin_layout Itemize
+Setzen Sie die Rechte so, dass nur der Besitzer der Datei Zugriff auf diese
+ hat (chmod)
+\end_layout
+
+\end_deeper
+\begin_layout EndFrame
+
+\end_layout
+
+\end_body
+\end_document

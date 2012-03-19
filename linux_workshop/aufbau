@@ -1,0 +1,39 @@
+- Einführung (nur bei Bedarf)
+    - Was ist Linux
+    - Was ist Unix
+    - Woher kommt das
+    - Seit wann gibt es das
+    - Was gibt es für Unterschiede/Vorteile/Nachteile
+- GUI
+    - Programme instalieren
+    - Systemverwaltung
+    - Erklärung das GUI komplett austauschbar ist (Unity, GNOME, KDE...)
+- Shell Einführung
+    - Prinzip (evtl. andere Shells erwähnen)
+    - Selbsthilfe (man-pages, apropos, whatis, whereis...)
+    - TAB!!! (Autovervollständigung)
+    - Kommandos für Verzeichnisse (cd, ls, mv, cp, mkdir)
+    - Dateien anzeigen (cat, less, tail...)
+    - Dateisystem-Struktur (man hier)
+- Rechteverteilung
+    - Prinzip (-rwxrwxrwx)
+    - ssh auf login.ostfalia.de (Beispiel)
+    - Grundbefehle (useradd (unter Ubuntu adduser), chmod, chown)
+- Streams (Pipes, Backticks...)
+    - Prinzip
+    - kleine Beispiele z.B. "echo `uname -a`"
+- Bash Skripte (evtl. auch Perl oder Python. Hauptsache klein und praktisch ;-))
+    - kurze Einführung
+- awk (evtl. mit ps und grep oder so)
+    - nur Kleinigkeiten z.B. "echo Hello World | awk '{printf "%s \n%s!\n",$1,$2}'"
+- Umgebungsvariablen
+    - Was ist das und wofür brauch ich das?
+    - export und echo
+- Prozesse (ps, kill, top)
+    - Aufbau der Prozesse (init...) <- pstree
+    - Prozesskontrolle (ps, kill)
+    - Ressourcenmonitoring (top...)
+- Praktische Kleinigkeiten
+    - sort, wc
+    - bc
+    - diff
