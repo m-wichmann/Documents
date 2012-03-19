@@ -1,0 +1,88 @@
+Dies sind grobe Lösungen für meine alten Aufgaben. Leider wurden die Lösungen länger nicht gepflegt und enthalten falsche Lösungen und einige zu nicht mehr existierenden Aufgaben.
+
+
+== Aufgaben 1 ==
+* Software-Center/Synaptic starten, AbiWord suchen und installieren
+* AbiWord starten und neues Dokument anlegen
+* System -> Systemverwaltung -> Synaptic -> Paket-Eigenschaften
+* System -> Systemverwaltung -> Laufwerksverwaltung -> SMART Werte anzeigen lassen
+* System -> Systemverwaltung -> Systemüberwachung -> Prozesse
+* System -> Systemverwaltung -> Systemüberwachung -> System
+* System -> Systemverwaltung -> Systemüberwachung -> Dateisysteme
+* Steht rechts oben in der Ecke
+* Dokument speichern in /home/USERNAME
+== Aufgaben 2 ==
+* Anwendungen -> Zubehör -> Terminal
+
+* pwd falls nötig cd ~
+* mkdir temp
+* mv DATEI temp
+* ls -la temp/DATEI
+
+* man hier -> /var/log
+* less /var/log/kern.log
+* tail -n 5 /var/log/kern.log
+* grep "eth0"
+
+* find /var/log -iname "history.log"
+== Aufgaben 3 ==
+* groups
+* sudo adduser USER
+* su otto
+* groups
+* exit
+
+* cp /home/USER1/DATEI /home/USER2/
+
+
+* chown USER2 DATEI
+* chmod 700 DATEI
+== Aufgaben 4 ==
+* who
+* ps -u USERNAME
+* gedit & -> ps | grep gedit -> kill PID_VON_GEDIT
+
+
+* Bash Skript
+** #!/bin/bash
+** echo "Hello World!"
+
+
+
+* Regelmäßig ausführen
+** crontab -e
+** * * * * * /PFAD/ZU/SKRIPT/SKRIPT.sh > /PFAD/ZU/SKRIPT/SKRIPT.log
+** Rechte der Dateien anpassen -> z.B. chmod 777 DATEIEN
+
+
+* kill $(echo $(ps -u $(who -u | awk '{print $1}' | grep USERNAME -m 1) | grep PROGRAMM | awk '{print $1}'))
+
+
+== Aufgaben 5 ==
+
+* ifconfig
+* arp -a
+* ping www.google.de
+* tracepath www.google.de
+
+
+
+* less /var/log/kern.log
+* cat /var/log/kern.log | grep "eth0" > /home/USERNAME/eth0.log
+* cat /var/log/daemon.log | grep "eth0" >> /home/USERNAME/eth0.log
+* sed 's/.*]//g'
+
+== Aufgaben 6 ==
+
+* dd if=/dev/zero of=/home/erebos/temp/temp.hdd bs=1M count=1000
+* mkfs.ext3 temp.iso
+* sudo mount -o loop temp.iso /media/temp -> vorher eventuell mkdir /media/temp
+* sudo debootstrap stable /media/temp http://debian.tu-bs.de/debian/ -> Server nur angegeben um schneller herunterzuladen
+
+
+
+* sudo chroot /media/temp
+* sudo apt-get install hello
+* hello in Image ausführen -> hello versuchen in anderem Terminal auszuführen
+* sudo umount /media/temp
+

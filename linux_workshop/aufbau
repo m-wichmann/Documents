@@ -1,3 +1,13 @@
+##########
+Ideensammlung
+#####
+- Netzwerkaufgaben (ifconfig, ping, tracert...)
+- Aufgaben zum arbeiten in Images z.B. für Cloud ;-) (dd, mkfs, mount, debootstrap, chroot...)
+
+
+##########
+Möglicher Aufbau
+#####
 - Einführung (nur bei Bedarf)
     - Was ist Linux
     - Was ist Unix
