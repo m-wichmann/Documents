@@ -1,14 +1,5 @@
 ##########
-Ideensammlung
-#####
-- Netzwerkaufgaben (ifconfig, ping, tracert...)
-- Aufgaben zum arbeiten in Images z.B. für Cloud ;-) (dd, mkfs, mount, debootstrap, chroot...)
-- Vorführung von einem Embedded System mit Linux
-- editor auf der konsole (vi *würg* ;-))
-
-
-##########
-Möglicher Aufbau
+Aufbau
 #####
 - Einführung (nur bei Bedarf)
     - Was ist Linux
@@ -23,21 +14,23 @@ Möglicher Aufbau
 - Shell Einführung
     - Prinzip (evtl. andere Shells erwähnen)
     - Selbsthilfe (man-pages, apropos, whatis, whereis...)
-    - TAB!!! (Autovervollständigung)
-    - Kommandos für Verzeichnisse (cd, ls, mv, cp, mkdir)
-    - Dateien anzeigen (cat, less, tail...)
+    - TAB!!! (Autovervollständigung, History...)
+    - Kommandos für Verzeichnisse (cd, ls, mv, cp, mkdir, rm, rmdir) (., .., ~)
+    - links (ln)
+    - Dateien anzeigen (cat, less, tail, head...)
     - Dateisystem-Struktur (man hier)
 - Rechteverteilung
     - Prinzip (-rwxrwxrwx)
-    - ssh auf login.ostfalia.de (Beispiel)
+    - ssh auf username@login.ostfalia.de (Beispiel)
     - Grundbefehle (useradd (unter Ubuntu adduser), chmod, chown)
 - Streams (Pipes, Backticks...)
     - Prinzip
     - kleine Beispiele z.B. "echo `uname -a`"
+- awk (evtl. mit ps und grep oder so)
+    - prinzip (turingvollständig)
+    - nur Kleinigkeiten z.B. "echo Hello World | awk '{printf "%s \n%s!\n",$1,$2}'"
 - Bash Skripte (evtl. auch Perl oder Python. Hauptsache klein und praktisch ;-))
     - kurze Einführung
-- awk (evtl. mit ps und grep oder so)
-    - nur Kleinigkeiten z.B. "echo Hello World | awk '{printf "%s \n%s!\n",$1,$2}'"
 - Umgebungsvariablen
     - Was ist das und wofür brauch ich das?
     - export und echo
@@ -48,4 +41,8 @@ Möglicher Aufbau
 - Praktische Kleinigkeiten
     - sort, wc
     - bc
-    - diff
+    - diff, wget, tar
+    - Netzwerkaufgaben (ifconfig, ping, tracert...)
+    - Aufgaben zum arbeiten in Images z.B. für Cloud ;-) (dd, mkfs, mount, debootstrap, chroot...)
+    - Vorführung von einem Embedded System mit Linux
+    - editor auf der konsole (vi *würg* ;-))
