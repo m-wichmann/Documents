@@ -24,6 +24,10 @@
   pdfauthor={Martin Wichmann}
 ]{hyperref}
 \usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{multirow}
+
+\definecolor{hellgrau}{rgb}{0.95,0.95,0.95}
 
 
 \begin{document}
@@ -104,7 +108,7 @@ In der letzten Phase "`After SOP"' wird das Produkt schlussendlich produziert un
 % Sicherheitsplan... Seite 121
 \section{Management der funktionalen Sicherheit}
 \label{sec:Management}
-Das Management der funktionalen Sicherheit ist der Konzept-Phase zuzuordnen. In diesem Zusammenhang werden unter anderem folgende Dokumente gefordert:
+Das Management der funktionalen Sicherheit ist der Konzept-Phase zuzuordnen. In diesem Zusammenhang werden unter anderem folgende Dokumente gefordert (vgl. \cite[S. 121]{1}):
 
 \begin{itemize}
     \item Ausbildungs- und Qualifizierungsnachweise
@@ -114,7 +118,7 @@ Das Management der funktionalen Sicherheit ist der Konzept-Phase zuzuordnen. In 
     \item Sicherheitsnachweise
 \end{itemize}
 
-
+% TODO: etwas darüber schreiben...
 
 
 
@@ -122,12 +126,125 @@ Das Management der funktionalen Sicherheit ist der Konzept-Phase zuzuordnen. In 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Gefährdung E,S,C -> ASIL
 % Seite 122
-\section{G und R}
+\section{Gefährdungsanalyse und Risikoeinschätzung}
 \label{sec:GundR}
-asd
+Ein Kernpunkt der Konzept-Phase ist die Gefährdungsanalyse und Risikoeinschätzung, im weiteren kurz G\&R. Im ISO Standard 26262 ist eine Vorgehensweise beschrieben, mit der verschiedene Gefahren analysiert und in Klassen eingeteilt werden. Dabei wird folgender Ablauf vorgegeben (vgl. \cite[S. 123]{1}):
+
+\begin{itemize}
+    \item Ermitteln aller relevanten Fahrzeugzustände und Fahrsituationen
+    \item Ermitteln möglicher funktionaler Fehler
+    \item Bewerten der Risiken jeder Gefährdungssituation in allen Fahrsituationen
+    \item Festlegen der notwendigen Risikominderung (ASIL)
+    \item Ableiten der Sicherheitsziele
+\end{itemize}
+
+Im ersten Schritt wird eine Liste von möglicher Zuständen erstellt. Dazu gehören zum Beispiel Autobahnfahrt, Landstraße, stop-and-go. Im Anhang des Standards sind eine Reihe von Beispielen dazu aufgeführt die als Anhaltspunkt dienen können. Im nächsten Schritt wird ermittelt welche funktionalen Fehler auftreten können. Hierzu werden die zu Beginn definierten Informationen und Experten verwendet um einen Katalog von möglichen Fehlern zu ermitteln. Beispiel hierzu sind:
+
+\begin{itemize}
+    \item Fahrlicht schaltet unmotiviert ab
+    \item Fahrlicht schaltet unmotiviert ein
+    \item Fahrlicht flackert
+\end{itemize}
+
+Nachdem nun sowohl Fahrbedingungen und mögliche Fehler aufgelistet wurden, werden nun die möglichen Risiken betrachtet. Hierzu werden alle Zustände mit allen Risiken betrachtet und nach einem vorgegebenen Schema bewertet. Dieses Schema ist wie folgt aufgebaut:
+
+\begin{itemize}
+    \item Häufigkeit der Fahrsituation (Exposure E)
+    \begin{itemize}
+        \item E0: Unvorstellbar
+        \item E1: Sehr niedrige Wahrscheinlichkeit
+        \item E2: Niedrige Wahrscheinlichkeit
+        \item E3: Mittlere Wahrscheinlichkeit
+        \item E4: Hohe Wahrscheinlichkeit
+    \end{itemize}
+    \item Schwere eines möglichen Schadens (Severity S)
+    \begin{itemize}
+        \item S0: Keine Verletzungen
+        \item S1: Leichte und mittlere Verletzungen
+        \item S2: Schwere Verletzungen - Überleben wahrscheinlich
+        \item S3: Lebensgefährliche Verletzungen - Überleben unwahrscheinlich
+    \end{itemize}
+    \item Beherschbarkeit druch den Fahrer (Controllability C)
+    \begin{itemize}
+        \item C0: Im Allgemeinen beherschbar
+        \item C1: Einfach beherschbar
+        \item C2: Normalerweise beherschbar
+        \item C3: Schwierig oder nicht beherschbar
+    \end{itemize}
+\end{itemize}
+
+In Schritt vier wird nun aus den Risikoabschätzungen ein Automotive-Sicherheit-Intergritätslevel (ASIL) abgeleitet. Dieses kann die Werte QM, A, B, C und D annehmen. Hierbei gibt QM an, dass keine Maßnahmen zur Risikominderung nötig sind. ASIL A ist die niedrigste Klasse und D die höchste. Diese Einteilung wirkt sich direkt auf die geforderten Sicherheits-Maßnahmen aus. Es wird jeweils der höchste vorhandene ASIL für jede Fahrsituation gewählt. Der ASIL wird nach folgendem Schema gewählt.
 
 
+\begin{table}[h]
+\center
+\begin{tabular}[h]{c c | c c c}
+\toprule
+ &  & C1 & C2 & C3\\
+\midrule
+\multirow{4}{*}{S1} & E1 & QM & QM & QM\\
+ & E2 & QM & QM & QM\\
+ & E3 & QM & QM & ASIL A\\
+ & E4 & QM & ASIL A & ASIL B\\
+\midrule
+\multirow{4}{*}{S2} & E1 & QM & QM & QM\\
+ & E2 & QM & QM & ASIL A\\
+ & E3 & QM & ASIL A & ASIL B\\
+ & E4 & ASIL A & ASIL B & ASIL C\\
+\midrule
+\multirow{4}{*}{S3} & E1 & QM & QM & ASIL A\\
+ & E2 & QM & ASIL A & ASIL B\\
+ & E3 & ASIL A & ASIL B & ASIL C\\
+ & E4 & ASIL B & ASIL C & ASIL D\\
+\bottomrule
+\end{tabular}
+\caption{Einteilung der ASIL aufgrund der Risikoeinschätzung vgl. \cite[S. 125]{1}}
+\label{tab:asil}
+\end{table}
 
+Der letzte Schritt besteht nun aus dem ableiten von angemessenen Sicherheitszielen. Diese sind den Gefährdungen und Konsequenzen entsprechend zu wählen und im Sicherheitsplan zu beschreiben.
+
+Da die ASIL Level prinzipiell eine subjektive Einschätzung sind, gibt der Standard einige Beispiel (vgl. \cite[S. 125]{1}) anhand derer die Gefährdungen eingeteilt werden können.
+
+Beispiel für Häufigkeit der Fahrsituation (Exposure E):
+\begin{itemize}
+    \item E4 = bei jeder Fahrt (Beispiel: Schalten, Beschleunigen)
+    \item E2 = mehrmals im Jahr (Beispiel: Anhängerfahrt, Dachgepäckträger)
+\end{itemize}
+
+Beispiel für für die Schwere eines Unfalls (Severity S):
+\begin{itemize}
+    \item S3 = Seitenaufprall eines anderen Fahrzeugs mit $ < 35 km/h $
+    \item S0 = Anfahren an einen Zaun oder Negrenzungspfahl mit $ \Delta v < 15 km/h $
+    \item S1 = Frontalzusammenstoß von zwei PKWs mit $ \Delta v < 20 km/h $
+\end{itemize}
+
+Beispiel für Beherrschbarkeit (Controllability C):
+\begin{itemize}
+    \item C2 = Fahrer kann Farhzeug normalerweise bei Dunkeheit auf einer unbeleuchteten Landstraße bei totalem Lichtausfall stoppen, ohne von der Fahrbahn zu kommen
+    \item C1 = Fahrer kann in der Regel Personenschäden durch Bremsen vermeiden, wenn die Lenksäule beim Anfahren blockiert
+\end{itemize}
+
+Als Beispiel für eine gesamte Analyse wird eine Servolenkung betrachtet (vgl. \cite[S. 217]{1}). Hierbei werden zwei mögliche Szenarien ausgewählt. Eine vollständige Analyse würde weitaus umfangreicher ausfallen müssen.
+
+Erstes Szenario: Bei einer Stadtfahrt (etwa 50 km/h) kommt es zu unmotivierten Lenkbewegungen.
+\begin{itemize}
+    \item E = E4
+    \item C = C3
+    \item S = S2
+\end{itemize}
+
+Dieses Szenario würde zu einem ASIL C führen. Die selbe Analyse bei einer Landstraßenfahrt (etwa 100 km/h) führt zu ASIL D. Damit wird diese Gefährdung als ASIL D bewertet.
+
+Zweites Szenario: Ausfall der Lenkkraftunterstützung bei einer langsamen Fahrt ( $ <= 20 km/h $ ).
+
+\begin{itemize}
+    \item E = E4
+    \item C = C2
+    \item S = S1
+\end{itemize}
+
+Dieses Szenario führt zu einem ASIL A. Jedoch führt die selbe Situation bei einer höheren Geschwindigkeit zu einem ASIL B. Diese Gefährdung wird also mit ASIL B bewertet.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Abb. 6-3
