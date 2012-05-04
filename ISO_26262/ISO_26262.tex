@@ -1,0 +1,197 @@
+% ToDo:
+% - Seiten cite mit "Seite" oder "S."
+
+\documentclass[a4paper,DIV=calc,ngerman]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage[pdftex]{graphicx}
+\graphicspath{{images/}}
+\usepackage{wrapfig}
+\usepackage[
+  pdftex,
+  bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
+  pdfpagemode={UseNone},
+  pdfpagelayout={SinglePage},
+  plainpages=false,
+  pdfkeywords={Robuste Systeme, ISO 26262},
+  pdfsubject={Robuste Systeme - ISO 26262},
+  pdftitle={Robuste Systeme - ISO 26262},
+  pdfauthor={Martin Wichmann}
+]{hyperref}
+\usepackage{booktabs}
+
+
+\begin{document}
+
+
+\titlehead{\center{\large \textsc{Ostfalia Hochschule für angewandte Wissenschaften}}}
+\title{Robuste Systeme - ISO 26262}
+\author{Martin Wichmann\\701\,277\,37}
+\date{\today}
+\maketitle
+
+\tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Was ist die ISO
+% DIN 61508...
+% TODO: was ist funktionale Sicherheit
+\section{Einleitung}
+\label{sec:Einleitung}
+Diese Ausarbeitung beschäftigt sich mit der Norm ISO/DIS 26262. Dabei handelt es sich um eine neue Norm für Funktionale Sicherheit die gezielt für den Automobil Bereich entwickelt wurde. Bereits seit 1998 existiert die DIN EN 61508 unter dem Namen "`Funktionale Sicherheit sicherheitsbezogener elektrischer/elektronischer/programmierbarer elektronischer Systeme"'. Diese ist jedoch im Bezug zum Automobil Bereich zum Teil unklar formuliert. So zum Beispiel endet der Produkt-Zyklus bei der DIN 61508 mit dem Aufstellen des Produktes. Diese Vorgehensweise ist zwar zum Beispiel bei Chemie-Anlagen korrekt, jedoch im Automobil Bereich nicht vollständig. Hier folgt auf die Fertigstellung des Produktes die Serien-Produktion, der Betrieb, der Kundendienst und zum Schluss die Außerbetriebnahme. Aus diesem Grund wurde 2011 die ISO/DIS 26262 freigegeben. Diese Norm deckt genau die erwähnten Punkte ab und spezialisiert sich unter anderem im Bereich Hardware und Software. Dazu gehören auch einige Beispiele die auf den Automobil Bereich zugeschnitten sind und so direkt Anwendung finden können.
+
+% TODO: sind es "keine" oder "kaum" Zitate aus der Norm???
+Da die ISO 26262 der Hochschule nicht zur Verfügung steht und es aufgrund des aktuellen Veröffentlichkeiskeitsdatums des Standards nur wenig Literatur dazu existiert, basiert diese Ausarbeitung vor allem auf \cite{1}. Dieses Buch thematisiert vor allem den DIN EN 61508, betrachtet jedoch auch in einem recht Ausführlichen Kapitel den ISO 26262 Standard. Aus diesem Grund werden die Informationen im weiteren vor allem aus dem genannten Buch stammen und es werden keine direkten Zitate aus der Norm verwendet.
+
+Die Struktur dieser Ausarbeitung orientiert sich grob an der Struktur des Standards und des Sicherheitslebenszyklus. Dabei wird vor allem Wert auf einige konkrete Punkte gelegt.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufbau der ISO
+\section{Struktur und Überblick ISO 26262}
+\label{sec:Struktur}
+Die ISO 26262 ist in insgesamt 10 Abschnitte aufgeteilt. Dabei behandelt jedes Kapitel einen bestimmten Themenbereich der funktionalen Sicherheit.
+
+\begin{enumerate}
+    \item Vokabular
+    \item Management der funktionalen Sicherheit
+    \item Konzeptphase
+    \item Produktentwicklung: Systemebene
+    \item Produktentwicklung: Hardwareebene
+    \item Produktentwicklung: Softwareebene
+    \item Produktion, Betrieb und Außerbetriebnahme
+    \item Unterstützende Prozesse
+    \item ASIL- und sicherheitsorientierte Analysen
+    \item Guideline
+\end{enumerate}
+
+Abschnitt 1 führt das in der Norm verwendete Vokabular ein. In Abschnitt 2 werden Organisatorische Konzepte eingeführt die verwendet werden um die funktionale Sicherheit während des gesamten Projektes zu gewährleisten.
+
+Entsprechend des Titels befasst sich Abschnitt 3 mit der Konzeptphase. In diesem Zusammenhang ist vor allem die "`Gefährdungsanalyse und Risikoabschätzung"' zu nennen. Hierin werden alle potentiellen Gefährdungen des Systems identifiziert und mögliche Konsequenzen ausgewertet. Anschließend wird jeder Gefährdung entsprechend der Vorgaben ein Sicherheitslevel (ISO 26262: ASIL, DIN 61508: SIL) zugeordnet. Dieses gibt an in wie weit diese Gefährdung ein Sicherheitsrisiko darstellt.
+
+Abschnitte 4 bis 6 befassen sich mit der eigentlichen Entwicklung des Produktes. Hier werden Vorgehensweisen wie zum Beispiele V-Modelle definiert. Außerdem werden entsprechend dem ASIL Anforderungen und Methoden definiert die eingehalten werden müssen.
+
+Die restlichen Abschnitten befassen sich jeweils mit den titelgebenden Bereichen. Dabei hervorzuheben sind vor allem Abschnitte 8 und 10. Abschnitt 8 erläutert zum Beispiel Schnittstellen zwischen verteilten Entwicklungs-Partnerschaften, Konfigurations-Management, Dokumentation und Qualifizierung von Software-Werkzeugen und -Komponenten. Im Abschnitt 10 werden vor allem Beispiele und weiterführende Informationen zum Standard gegeben.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Sicherheitslebenszyklus}
+\label{sec:Sicherheitslebenszyklus}
+Der Sicherheitslebenszyklus, im weiteren kurz Lebenszyklus genannt, umfasst eine Reihe von Punkten von der Konzeptphase bis hin zur Produktions- und Servicephase. Hierbei werden Anforderung an jeden Teilpunkt gestellt, mit dem Ziel funktionale Sicherheit zu gewährleisten.
+
+% TODO: Abbildung 6-1
+
+Abbildung ??? zeigt den Lebenszyklus nach ISO 26262. Dieser stellt eine konkrete Interpretation des Lebenszyklus der DIN 61508 dar. Die Nummerierungen innerhalb der Abbildung geben an, in welchem Kapitel des Standards die konkreten Regelungen zu finden sind. 
+
+Die Punkte "`Item definition"' und "`Initiation safety lifecycle"' werden benötigt um das geplante Produkt zu beschreiben. Hier werden alle Eigenschaften des Produktes festgelegt und Anforderungen definiert. Im nächsten Punkt "`Hazard analysis and risk assessment"' werden alle möglichen Gefahren udn deren Folgen betrachtet. Aus diesen wird im Punkt "`Functional safety concept"' ein Sicherheitsplan entwickelt der den kompletten Lebenszyklus abdeckt und die Konzept-Phase abschließt. 
+
+Die Produkt-Entwicklungs-Phase ist relativ selbst erklärend. Hier wird das Produkt nach den Vorgaben des Sicherheitsplans entworfen. Zusätzlich werden die Produktion, Wartung und Außerbetriebnahme geplant.
+
+In der letzten Phase "`After SOP"' wird das Produkt schlussendlich produziert und ausgeliefert. Obwohl der Sicherheitsplan vor allem zu Beginn entwickelt wird, werden während des kompletten Lebenszyklus Erweiterungen und Verbesserungen vorgenommen. Dabei ist es wichtig jederzeit eine Nachvollziehbarkeit zu gewährleisten. Es sollte also jederzeit klar sein wer, wann, warum, welche Änderungen vorgenommen hat. Außerdem können während aller Phasen des Projektes Reviews, Audits und Sicherheitsassesments durchgeführt werden. \cite[S. 121]{1}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Angepasste Prozesse
+% Ausbildungsnachweise
+% Sicherheitsplan... Seite 121
+\section{Management der funktionalen Sicherheit}
+\label{sec:Management}
+Das Management der funktionalen Sicherheit ist der Konzept-Phase zuzuordnen. In diesem Zusammenhang werden unter anderem folgende Dokumente gefordert:
+
+\begin{itemize}
+    \item Ausbildungs- und Qualifizierungsnachweise
+    \item Sicherheitsplan
+    \item Projektplan/Projekthandbuch inklusive der Planung der sicherheitsbezogenen Vorgänge
+    \item Review-, Audit- und Assessmentplan
+    \item Sicherheitsnachweise
+\end{itemize}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gefährdung E,S,C -> ASIL
+% Seite 122
+\section{G und R}
+\label{sec:GundR}
+asd
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Abb. 6-3
+% Seite 129
+\section{Systemebene}
+\label{sec:Systemebene}
+asd
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Obergrenze Ausfall bei ASIC
+% Fehlerarten
+% FMEA, FTA
+% Seite 133
+\section{Hardware}
+\label{sec:Hardware}
+asd
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% V-Modell Abb 6-10
+% Metriken
+% Arbeitsprodukte
+\section{Software}
+\label{sec:Software}
+asd
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Seite 149
+\section{Produktion und Betrieb}
+\label{sec:}
+asd
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Was haben wir aus dem ganzen Kram gelernt ;-)
+\section{Fazit}
+\label{sec:Fazit}
+asd
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ein paar Quellenangaben...
+\begin{thebibliography}{------}
+\label{sec:Literatur}
+
+\bibitem[1]{1} \textsc{Peter Löw, Roland Pabst, Erwin Petry}: {\em Funktionale Sicherheit in der Praxis.} dpunkt.verlag, 2010.
+
+\end{thebibliography}
+
+
+
+
+
+\end{document}
