@@ -41,6 +41,7 @@
 
 \tableofcontents
 
+\newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Was ist die ISO
@@ -246,12 +247,31 @@ Zweites Szenario: Ausfall der Lenkkraftunterstützung bei einer langsamen Fahrt 
 
 Dieses Szenario führt zu einem ASIL A. Jedoch führt die selbe Situation bei einer höheren Geschwindigkeit zu einem ASIL B. Diese Gefährdung wird also mit ASIL B bewertet.
 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Produktentwicklung}
+\label{sec:Produktentwicklung}
+Dieses Kapitel beschäftigt sich mit der Produktentwicklung. In diesem zusammenhang werden relevante Größen und Techniken vorgestellt, die im Rahmen der ISO 26262 empfohlen werden. 
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Abb. 6-3
 % Seite 129
-\section{Systemebene}
+\subsection{Systemebene}
 \label{sec:Systemebene}
-asd
+Die Entwicklung auf der Systemebene beginnt mit dem aktualisieren der Planung und dem Ausarbeiten eines Integrations- und Testplans. Daraufhin werden technische Sicherheitsanforderungen anhand der G\&R spezifiziert.
+
+% TODO Abb. 6-3 einfügen
+
+Abbildung ??? zeigt den Ablauf der Entwicklung nach ISO 26262. Nachdem die Sicherheitsanforderungen spezifiziert wurden und der Systementwurf dementsprechend angepasst wurde, teilt sich die Entwicklung in Hardware- und Software-Design auf. Diese werden jeweils in ihren eigenen Kapitel näher betrachtet. Um die getrennte Entwicklung erfolgreich durchführen zu können, müssen die Schnittstellen zwischen Hardware- und Software klar und eindeutig beschrieben werden.
+
+Um eine quantitative Einschätzung der zuverlässigkeit der Hardware zu gewährleisten werden in der System-Entwicklung Zielwerte für Hardwaremetriken festgelegt. Diese werden anhand des ASIL festgelegt und werden später mit den berechneten abgeglichen.
+
+Um systematische Fehler zu vermeiden wird gefordert "`bewährte Architekturen wiederzuverwenden"'. Dies verhindert das "`Kinderkrankheiten"' der Hard- und Software das System beeinträchtigen. Was dabei als bewährte Architektur gilt ist nicht näher beschrieben. Allgemein können jedoch standartisierte Techniken verwendet werden. Dazu könnten zum Beispiel die ARM-Architektur, die CAN-Schnittstelle oder der POSIX-Standard für Betriebssysteme gezählt werden.
+
+Anschließend an den Systementwurf folgt die Verifikation des Designs. Hierbei wird die Konformität und Vollständigkeit des Sicherheitskonzeptes überprüft. Der Umfang der Verifikation ist abhängig vom ASIL. So wird für Systeme mit ASIL B eine Inspektion des Entwurfs gefordert, während für ASIL C und D zusätzliche Simulationen oder Prototypen nötig sind.
 
 
 
@@ -261,10 +281,57 @@ asd
 % Fehlerarten
 % FMEA, FTA
 % Seite 133
-\section{Hardware}
+\subsection{Hardware}
 \label{sec:Hardware}
-asd
+% TODO: Abbildung 6-4 einfügen
+Die Hardware-Entwicklung wird parallel zur Software-Entwicklung durchgeführt und muss somit mit dieser abgestimmt werden. Abbildung ??? zeigt den Ablauf des Hardware-Entwurfs nach ISO 26262. Noch vor dem Beginn der Hardware-Entwicklung werden aus dem technischen Sicherheitskonzept die Hardware-Sicherheitsanforderungen hergeleitet. Diese enthalten auch die schon auf Systemebene beschriebenen Metriken und Obergrenzen für zufällige Hardware-Fehler. Die Obergrenzen können entweder durch Analyse festgelegt werden oder es können die Empfehlungen aus der Norm verwendet werden (siehe Tabelle \ref{tab:ausfallrate}). 
 
+\begin{table}[h]
+\center
+\begin{tabular}[h]{c r r c}
+\toprule
+ASIL & \multicolumn{3}{c}{Obergrenze für Ausfallrate}\\
+\midrule
+D & $ <10^{-8}/h $ & $ <10 $ FIT & Anforderung\\
+C & $ <10^{-7}/h $ & $ <100 $ FIT   & Anforderung\\
+B & $ <10^{-7}/h $ & $ <100 $ FIT   & Empfehlung\\
+A & $ <10^{-6}/h $ & $ <1000 $ FIT   & Informativ\\
+\bottomrule
+\end{tabular}
+\caption{Obergrenze für Ausfallraten nach ISO 26262 (vgl. \cite[S. 133]{1})}
+\label{tab:ausfallrate}
+\end{table}
+
+Da die Klassifikation der Hardwarefehler und die Berechnung der Metriken relativ umfangreich ist, werden diese Punkte im folgenden nur kurz vorgestellt. Für eine umfangreichere Erläuterung sei an dieser Stelle auf \cite[S. 135 ff.]{1} verwiesen.
+
+Hardwarefehler werden in folgende Klassen unterteilt (vgl. \cite[S. 136]{1}):
+
+\begin{itemize}
+    \item Ungefährliche Fehler (safe fault; $ \lambda_S $): Fehler die die Wahrscheinlichkeit einer Verletzung nicht wesentlich erhöhen.
+    \item Einfachfehler (single point fault; $ \lambda_{SPF} $): Fehler die nicht durch einen Sicherheitsmechanismus abgedeckt sind und die für sich alleine zu einer Verletzung eines Sicherheitsziels führen.
+    \item Mehrfachfehler (multiple point fault; $ \lambda_{MPF} $): Einer von mehreren unabhängigen Fehlern die kombiniert zu einem Versagen führen können. Diese können schalfend ($L$), erkannt ($D$) oder wahrgenommen ($P$) sein.
+    \item Schlafende Fehler (latent fault; $ L $): Fehler die weder durch Sicherheitsmechanismen abgedeckt noch durch den Fahrer erkannt werden können.
+    \item Erkannte oder wahrgenommene Fehler (detected or perceived fault; $ P $): Fehler die durch Sicherheitsmechanismen abgedeckt sind oder vom Fahrer erkannt werden können. Diese Fehler führen nicht zu einem Versagen.
+    \item Restfehler (residual fault; $ \lambda_{RF} $): Fehler die nicht durch Sicherheitsmechanismen abgedeckt sind und für sich alleine zu einer Verletzung eines Sicherheitsziels führen.
+\end{itemize}
+
+Bei der ISO 26262 werden zwei verschiedene Metriken eingeführt die zur Analyse verwendet werden. Die erste Metrik ist die "`Single Point Fault Metric"' (kurz SPFM). Die Berechnung dieser ist dargestellt in Gleichung \ref{eq:spfm}. Dabei steht $ \lambda $ für die Ausfallrate und SRHW für Safety related HW elements und damit für alle Sicherheits relevanten Elemente des Systems. Diese Metrik betrachtet zwar die Einfachfehler ($ \lambda_{SPF} $) und den Restfehler ($ \lambda_{RF} $), die ungefährlichen Fehler ($ \lambda_{S} $) werden jedoch nicht weiter betrachtet. Das bedeutet das die Single Point Faul Metric zwar relevant im Bezug auf die Sicherheit ist, jedoch nicht die gesamt Verfügbarkeit des System in betracht zieht. Aus diesem Grund wird zusätzlich die "`Latent Fault Metric"' (kurz LFM) verwendet. Diese in \ref{eq:lfm} gezeigte Metrik, bezieht auch die vorher nicht betrachtet Fehler mit ein und kann somit verwendet werden um die schlafenden Mehrfachfehler zu minimieren. 
+
+% TODO: caption hinzufügen oder SPFM und LFM erklären
+
+\begin{equation}
+\textnormal{SPFM} = 1 - \frac{\sum\limits_{\textnormal{SRHW}} (\lambda_{SPF} + \lambda_{RF})}{\sum\limits_{\textnormal{SRHW}} \lambda} = \frac{\sum\limits_{\textnormal{SRHW}} (\lambda_{MPF} + \lambda_{S})}{\sum\limits_{\textnormal{SRHW}} \lambda}
+\label{eq:spfm}
+\end{equation}
+
+\begin{equation}
+\textnormal{LFM} = 1 - \frac{\sum\limits_{\textnormal{SRHW}} (\lambda_{MPF Latent})}{\sum\limits_{\textnormal{SRHW}} (\lambda - \lambda_{SPF} - \lambda_{RF})} = \frac{\sum\limits_{\textnormal{SRHW}} (\lambda_{MPF D+P} + \lambda_{S})}{\sum\limits_{\textnormal{SRHW}} (\lambda - \lambda_{SPF} - \lambda_{RF})}
+\label{eq:lfm}
+\end{equation}
+
+Mithilfe dieser beiden Metriken kann nun für das ganze System, Teilsysteme oder für einzelne Bauteile die Ausfallrate bestimmt werden. Anhand dieser Angaben lässt sich überprüfen ob die entsprechenden Systeme dem Standard entsprechen. Neben einer reinen Sicherheitsanalyse sollte auch eine Kosten-Nutzen-Analyse durchgeführt werden, da Bauteile mit geringer Ausfallrate und hoher Zuverlässigkeit auch in der Regel teuer sind.
+
+% TODO: Beispiel einfügen. z.b. zweifach fehler beispiel
 
 
 
@@ -272,7 +339,7 @@ asd
 % V-Modell Abb 6-10
 % Metriken
 % Arbeitsprodukte
-\section{Software}
+\subsection{Software}
 \label{sec:Software}
 asd
 
