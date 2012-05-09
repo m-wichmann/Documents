@@ -1,8 +1,6 @@
 % TODO:
-% - Rechtschreibung und Grammatik überprüfen
 % - Quellen angeben, zitieren, fußnoten...
-% - Abb 6-10 malen und einfügen...
-% - ...phase oder ...-Phase???
+% - formeln besser umsetzen
 
 \documentclass[a4paper,DIV=calc,ngerman]{scrartcl}
 
@@ -69,7 +67,7 @@ Die ISO 26262 ist in insgesamt 10 Abschnitte aufgeteilt. Dabei behandelt jedes K
 \begin{enumerate}
     \item Vokabular
     \item Management der funktionalen Sicherheit
-    \item Konzeptphase
+    \item Konzept-Phase
     \item Produktentwicklung: Systemebene
     \item Produktentwicklung: Hardwareebene
     \item Produktentwicklung: Softwareebene
@@ -81,7 +79,7 @@ Die ISO 26262 ist in insgesamt 10 Abschnitte aufgeteilt. Dabei behandelt jedes K
 
 Abschnitt 1 führt das in der Norm verwendete Vokabular ein. In Abschnitt 2 werden organisatorische Konzepte eingeführt die verwendet werden um die funktionale Sicherheit während des gesamten Projektes zu gewährleisten.
 
-Entsprechend des Titels befasst sich Abschnitt 3 mit der Konzeptphase. In diesem Zusammenhang ist vor allem die \emph{Gefährdungsanalyse und Risikoabschätzung} zu nennen. Hierin werden alle potentiellen Gefährdungen des Systems identifiziert und mögliche Konsequenzen ausgewertet. Anschließend wird jeder Gefährdung entsprechend der Vorgaben ein Sicherheitslevel (ISO 26262: ASIL, DIN 61508: SIL) zugeordnet. Dieses gibt an in wie weit diese Gefährdung ein Sicherheitsrisiko darstellt.
+Entsprechend des Titels befasst sich Abschnitt 3 mit der Konzept-Phase. In diesem Zusammenhang ist vor allem die \emph{Gefährdungsanalyse und Risikoabschätzung} zu nennen. Hierin werden alle potentiellen Gefährdungen des Systems identifiziert und mögliche Konsequenzen ausgewertet. Anschließend wird jeder Gefährdung entsprechend der Vorgaben ein Sicherheitslevel (ISO 26262: ASIL, DIN 61508: SIL) zugeordnet. Dieses gibt an in wie weit diese Gefährdung ein Sicherheitsrisiko darstellt.
 
 Abschnitte 4 bis 6 befassen sich mit der eigentlichen Entwicklung des Produktes. Hier werden Vorgehensweisen wie zum Beispiel V-Modelle definiert. Außerdem werden entsprechend dem ASIL Anforderungen und Methoden definiert die eingehalten werden müssen.
 
@@ -93,7 +91,7 @@ Die restlichen Abschnitte befassen sich jeweils mit den titelgebenden Bereichen.
 \label{sec:Sicherheitslebenszyklus}
 Der \emph{Sicherheitslebenszyklus}, im weiteren kurz Lebenszyklus genannt, umfasst eine Reihe von Punkten von der Konzept-Phase bis hin zur Produktions- und Service-Phase. Hierbei werden Anforderung an jeden Teilpunkt gestellt, mit dem Ziel funktionale Sicherheit zu gewährleisten.
 
-\begin{wrapfigure}{R}{0.5\textwidth}
+\begin{wrapfigure}{R}{0.45\textwidth}
 \includegraphics[width=7.5cm]{Abb_6_1}
 \caption{Sicheitslebenszyklus nach ISO 26262\cite{1}}
 \label{fig:lifecycle}
@@ -101,11 +99,11 @@ Der \emph{Sicherheitslebenszyklus}, im weiteren kurz Lebenszyklus genannt, umfas
 
 Abbildung \ref{fig:lifecycle} zeigt den Lebenszyklus nach ISO 26262. Dieser stellt eine konkrete Interpretation des Lebenszyklus der DIN 61508 dar. Die Nummerierungen innerhalb der Abbildung geben an, in welchem Kapitel des Standards die konkreten Regelungen zu finden sind. 
 
-Die Punkte \emph{Item definition} und \emph{Initiation safety lifecycle} werden benötigt um das geplante Produkt zu beschreiben. Hier werden alle Eigenschaften des Produktes festgelegt und Anforderungen definiert. Im nächsten Punkt {Hazard analysis and risk assessment} werden alle möglichen Gefahren und deren Folgen betrachtet. Aus diesen wird im Punkt \emph{Functional safety concept} ein Sicherheitsplan entwickelt, der den kompletten Lebenszyklus abdeckt und die Konzept-Phase abschließt. 
+Die Punkte \emph{Item definition} und \emph{Initiation safety lifecycle} werden benötigt um das geplante Produkt zu beschreiben. Hier werden alle Eigenschaften des Produktes festgelegt und Anforderungen definiert. Im nächsten Punkt, \emph{Hazard analysis and risk assessment}, werden alle möglichen Gefahren und deren Folgen betrachtet. Aus diesen wird im Punkt \emph{Functional safety concept} ein Sicherheitsplan entwickelt, der den kompletten Lebenszyklus abdeckt und die Konzept-Phase abschließt. 
 
 Die Produkt-Entwicklungs-Phase ist relativ selbsterklärend. Hier wird das Produkt nach den Vorgaben des Sicherheitsplans entworfen. Zusätzlich werden die Produktion, Wartung und Außerbetriebnahme geplant.
 
-In der letzten Phase \emph{After SOP} wird das Produkt schlussendlich produziert und ausgeliefert. Obwohl der Sicherheitsplan vor allem zu Beginn entwickelt wird, werden während des kompletten Lebenszyklus Erweiterungen und Verbesserungen vorgenommen. Dabei ist es wichtig jederzeit eine Nachvollziehbarkeit zu gewährleisten. Es sollte also jederzeit klar sein wer, wann, warum, welche Änderungen vorgenommen hat. Außerdem können während aller Phasen des Projektes Reviews, Audits und Sicherheitsassessments durchgeführt werden. \cite[S. 121]{1}
+In der letzten Phase \emph{After SOP\footnote{SOP steht für Start of Production}} wird das Produkt schlussendlich produziert und ausgeliefert. Obwohl der Sicherheitsplan vor allem zu Beginn entwickelt wird, werden während des kompletten Lebenszyklus Erweiterungen und Verbesserungen vorgenommen. Dabei ist es wichtig jederzeit eine Nachvollziehbarkeit zu gewährleisten. Es sollte also jederzeit klar sein wer, wann, warum, welche Änderungen vorgenommen hat. Außerdem können während aller Phasen des Projektes Reviews, Audits und Sicherheitsassessments durchgeführt werden. \cite[S. 121]{1}
 
 
 
@@ -127,7 +125,7 @@ Das Management der funktionalen Sicherheit ist der Konzept-Phase zuzuordnen. In 
     \item Sicherheitsnachweise
 \end{itemize}
 
-Die Form und der Umfang der Dokumente wird im Standard nicht näher definiert. Aus diesem Grund muss hier von Projekt zu Projekt entschieden werden. Ziel dieser Dokumente ist die Übersicht über den kompletten Projekt-Zyklus in Bezug auf das Sicherheits-Konzept. Für eine spätere Überprüfung der Informationen liegt es nahe möglichst viele und genaue Informationen zu Beginn und während des gesamten Projektes zu sammeln. Ein wichtiger Punkt ist hierbei auch die Nachvollziehbarkeit und Nicht-Abstreitbarkeit, sodass im Nachhinein jede Entscheidung inklusive der Begründung nachvollzogen werden kann. Obwohl das Management der funktionalen Sicherheit hier der Konzept-Phase zugeordnet wird ist die Angabe ein wenig unvollständig. So muss während der gesamten Projekt-Zeit der Sicherheitsplan aktualisiert und verbessert werden.
+Die Form und der Umfang der Dokumente wird im Standard nicht näher definiert. Aus diesem Grund muss hier von Projekt zu Projekt entschieden werden. Ziel dieser Dokumente ist die Übersicht über den kompletten Projekt-Zyklus in Bezug auf das Sicherheits-Konzept. Für eine spätere Überprüfung der Informationen liegt es nahe, möglichst viele und genaue Informationen zu Beginn und während des gesamten Projektes zu sammeln. Ein wichtiger Punkt ist hierbei auch die Nachvollziehbarkeit und Nicht-Abstreitbarkeit, sodass im Nachhinein jede Entscheidung inklusive der Begründung nachvollzogen werden kann. Obwohl das Management der funktionalen Sicherheit hier der Konzept-Phase zugeordnet wird, ist die Angabe ein wenig unvollständig. So muss während der gesamten Projekt-Zeit der Sicherheitsplan aktualisiert und verbessert werden.
 
 
 
@@ -211,9 +209,9 @@ In Schritt vier wird nun aus den Risikoabschätzungen ein \emph{Automotive-Siche
 \label{tab:asil}
 \end{table}
 
-Der letzte Schritt besteht nun aus dem ableiten von angemessenen Sicherheitszielen. Diese sind den Gefährdungen und Konsequenzen entsprechend zu wählen und im Sicherheitsplan zu beschreiben.
+Der letzte Schritt besteht nun aus dem Ableiten von angemessenen Sicherheitszielen. Diese sind den Gefährdungen und Konsequenzen entsprechend zu wählen und im Sicherheitsplan zu beschreiben.
 
-Da die ASIL Level prinzipiell eine subjektive Einschätzung sind, gibt der Standard einige Beispiel (vgl. \cite[S. 125]{1}) anhand derer die Gefährdungen eingeteilt werden können.
+Da die ASIL Level prinzipiell eine subjektive Einschätzung sind, gibt der Standard einige Beispiel, anhand derer die Gefährdungen eingeteilt werden können  (vgl. \cite[S. 125]{1}).
 
 Beispiel für Häufigkeit der Fahrsituation (Exposure E):
 \begin{itemize}
@@ -260,7 +258,7 @@ Dieses Szenario führt zu einem ASIL A. Jedoch führt die selbe Situation bei ei
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Produktentwicklung}
 \label{sec:Produktentwicklung}
-Dieses Kapitel beschäftigt sich mit der Produktentwicklung. In diesem Zusammenhang werden relevante Größen und Techniken vorgestellt, die im Rahmen der ISO 26262 empfohlen werden. 
+Dieses Kapitel beschäftigt sich mit der Produktentwicklung. In diesem Zusammenhang werden relevante Größen und Techniken vorgestellt, die im Rahmen der ISO 26262 empfohlen werden.
 
 
 
@@ -296,7 +294,7 @@ Anschließend an den Systementwurf folgt die Verifikation des Designs. Hierbei w
 \subsection{Hardware}
 \label{sec:Hardware}
 
-Die Hardware-Entwicklung wird parallel zur Software-Entwicklung durchgeführt und muss somit mit dieser abgestimmt werden. Abbildung \ref{fig:hardware} zeigt den Ablauf des Hardware-Entwurfs nach ISO 26262. Noch vor dem Beginn der Hardware-Entwicklung werden aus dem technischen Sicherheitskonzepts die Hardware-Sicherheitsanforderungen abgeleitet. Diese enthalten auch die schon auf Systemebene beschriebenen Metriken und Obergrenzen für zufällige Hardware-Fehler. Die Obergrenzen können entweder durch Analyse festgelegt werden oder es können die Empfehlungen aus der Norm verwendet werden (siehe Tabelle\footnote{FIT steht für \emph{Failure In Time} und gibt die maximale Anzahl der Ausfälle in $10^9$ Stunden an.} \ref{tab:ausfallrate}). 
+Die Hardware-Entwicklung wird parallel zur Software-Entwicklung durchgeführt und muss somit mit dieser abgestimmt werden. Abbildung \ref{fig:hardware} zeigt den Ablauf des Hardware-Entwurfs nach ISO 26262. Noch vor dem Beginn der Hardware-Entwicklung werden aus dem technischen Sicherheitskonzepts die Hardware-Sicherheitsanforderungen abgeleitet. Diese enthalten auch die schon auf Systemebene beschriebenen Metriken und Obergrenzen für zufällige Hardware-Fehler. Die Obergrenzen können entweder durch Analyse festgelegt werden oder es können die Empfehlungen aus der Norm verwendet werden (siehe Tabelle \ref{tab:ausfallrate})\footnote{FIT steht für \emph{Failure In Time} und gibt die maximale Anzahl der Ausfälle in $10^9$ Stunden an.}. 
 
 \begin{figure}[h]
 \centering
@@ -324,19 +322,17 @@ A & $ <10^{-6}/h $ & $ <1000 $ FIT   & Informativ\\
 Da die Klassifikation der Hardwarefehler und die Berechnung der Metriken relativ umfangreich ist, werden diese Punkte im folgenden nur kurz vorgestellt. Für eine umfangreichere Erläuterung sei an dieser Stelle auf \cite[S. 135 ff.]{1} verwiesen.
 
 Hardwarefehler werden in folgende Klassen unterteilt (vgl. \cite[S. 136]{1}):
-
 \begin{itemize}
-    \item \emph{Ungefährliche Fehler} (safe fault; $ \lambda_S $): Fehler die die Wahrscheinlichkeit einer Verletzung nicht wesentlich erhöhen.
-    \item \emph{Einfachfehler} (single point fault; $ \lambda_{SPF} $): Fehler die nicht durch einen Sicherheitsmechanismus abgedeckt sind und die für sich alleine zu einer Verletzung eines Sicherheitsziels führen.
+    \item \emph{Ungefährliche Fehler} (safe fault; $ \lambda_S $): Fehler, die die Wahrscheinlichkeit einer Verletzung nicht wesentlich erhöhen.
+    \item \emph{Einfachfehler} (single point fault; $ \lambda_{SPF} $): Fehler, die nicht durch einen Sicherheitsmechanismus abgedeckt sind und die für sich alleine zu einer Verletzung eines Sicherheitsziels führen.
     \item \emph{Mehrfachfehler} (multiple point fault; $ \lambda_{MPF} $): Einer von mehreren unabhängigen Fehlern die kombiniert zu einem Versagen führen können. Diese können schlafend ($L$), erkannt ($D$) oder wahrgenommen ($P$) sein.
-    \item \emph{Schlafende Fehler} (latent fault; $ L $): Fehler die weder durch Sicherheitsmechanismen abgedeckt noch durch den Fahrer erkannt werden können.
-    \item \emph{Erkannte oder wahrgenommene Fehler} (detected or perceived fault; $ P $): Fehler die durch Sicherheitsmechanismen abgedeckt sind oder vom Fahrer erkannt werden können. Diese Fehler führen nicht zu einem Versagen.
-    \item \emph{Restfehler} (residual fault; $ \lambda_{RF} $): Fehler die nicht durch Sicherheitsmechanismen abgedeckt sind und für sich alleine zu einer Verletzung eines Sicherheitsziels führen.
+    \item \emph{Schlafende Fehler} (latent fault; $ L $): Fehler, die weder durch Sicherheitsmechanismen abgedeckt noch durch den Fahrer erkannt werden können.
+    \item \emph{Erkannte oder wahrgenommene Fehler} (detected or perceived fault; $ P $): Fehler, die durch Sicherheitsmechanismen abgedeckt sind oder vom Fahrer erkannt werden können. Diese Fehler führen nicht zu einem Versagen.
+    \item \emph{Restfehler} (residual fault; $ \lambda_{RF} $): Fehler, die nicht durch Sicherheitsmechanismen abgedeckt sind und für sich alleine zu einer Verletzung eines Sicherheitsziels führen.
 \end{itemize}
 
 Bei der ISO 26262 werden zwei verschiedene Metriken eingeführt die zur Analyse verwendet werden. Die erste Metrik ist die \emph{Single Point Fault Metric} (kurz SPFM). Die Berechnung dieser ist dargestellt in Gleichung \ref{eq:spfm}. Dabei steht $ \lambda $ für die Ausfallrate und SRHW für \emph{Safety related HW elements} und damit für alle sicherheits-relevanten Elemente des Systems. Diese Metrik betrachtet zwar die Einfachfehler ($ \lambda_{SPF} $) und den Restfehler ($ \lambda_{RF} $), die ungefährlichen Fehler ($ \lambda_{S} $) werden jedoch nicht weiter betrachtet. Das bedeutet das die Single Point Faul Metric zwar relevant im Bezug auf die Sicherheit ist, jedoch nicht die Gesamt-Verfügbarkeit des System in Betracht zieht. Aus diesem Grund wird zusätzlich die \emph{Latent Fault Metric} (kurz LFM) verwendet. Diese in \ref{eq:lfm} gezeigte Metrik, bezieht auch die vorher nicht betrachteten Fehler mit ein und kann somit verwendet werden um die schlafenden Mehrfachfehler zu minimieren. 
 
-% TODO: formeln besser umsetzen
 \begin{equation}
 \textnormal{SPFM} = 1 - \frac{\sum\limits_{\textnormal{SRHW}} (\lambda_{SPF} + \lambda_{RF})}{\sum\limits_{\textnormal{SRHW}} \lambda} = \frac{\sum\limits_{\textnormal{SRHW}} (\lambda_{MPF} + \lambda_{S})}{\sum\limits_{\textnormal{SRHW}} \lambda}
 \label{eq:spfm}
@@ -357,9 +353,14 @@ Mithilfe dieser beiden Metriken kann nun für das ganze System, Teilsysteme oder
 % Arbeitsprodukte
 \subsection{Software}
 \label{sec:Software}
-Ähnlich der Entwicklung der Hardware spezifiziert die ISO 26262 auch einige Methoden und Tipps zum Gebiet der Software-Entwicklung. Einer der Kernpunkte ist das \emph{Phasenmodell} zur Software-Entwicklung nach ISO 26262. Dieses, dem klasischen \emph{V-Modell} ähnelnden, Modell ist in Abbildung ??? zu sehen. Wie auch in anderen Diagrammen der Norm werden auch hier die zugehörigen Kapitel-Nummern in den einzelnen Phasen dargestellt. Zu beachten ist, dass sowohl die erste als auch die letzte Phase des Modells nicht der Software-Entwicklung zugeordnet sind, sondern zur Systementwurfs-Phase gehört.
+Ähnlich der Entwicklung der Hardware spezifiziert die ISO 26262 auch einige Methoden und Tipps zum Gebiet der Software-Entwicklung. Einer der Kernpunkte ist das \emph{Phasenmodell} zur Software-Entwicklung nach ISO 26262. Dieses, dem klassischen \emph{V-Modell} ähnelnden, Modell ist in Abbildung \ref{fig:software} zu sehen. Wie auch in anderen Diagrammen der Norm werden auch hier die zugehörigen Kapitel-Nummern in den einzelnen Phasen dargestellt. Zu beachten ist, dass sowohl die erste als auch die letzte Phase des Modells nicht der Software-Entwicklung zugeordnet sind, sondern zur Systementwurfs-Phase gehört.
 
-% TODO: Abb 6-10 einfügen
+\begin{figure}[h]
+\centering
+\includegraphics[width=15cm]{Abb_6_10}
+\caption{Phasenmodell für Softwareentwicklung nach ISO 26262\cite{1}}
+\label{fig:software}
+\end{figure}
 
 Neben dem V-Modell definiert der Standard vor allem grobe Richtlinien und Tipps. Jederzeit werden auch verschiedene Alternativen angeboten. Konkrete Vorgaben werden hierbei jedoch nicht gemacht. Dies führt dazu, dass in der Praxis eine angemessene Kombination der Methoden erforderlich ist. 
 
@@ -381,12 +382,10 @@ Ein weiterer Kernpunkt der Software-Entwicklung nach ISO 26262 besteht im Testen
 Der ISO Standard 26262 definiert einige unterstützende Prozesse die keiner einzelnen Phase zugeordnet werden können. Diese betreffen zum Beispiel die Schnittstellen in verteilten Entwicklungs-Partnerschaften oder die Spezifikation und das Management von Sicherheitsanforderungen. Da eine Beschreibung aller unterstützenden Prozesse den Rahmen dieser Arbeit sprengen würde, soll an dieser Stelle nur ein Beispiel beschrieben werden. Hierzu wird die Qualifizierung von Software-Werkzeugen betrachtet. Da Fehler nicht nur durch eigenes Verschulden, sondern auch durch Abhängigkeiten zu Dritt-Software entstehen können, definiert die ISO 26262 auch an dieser Stelle eine Methode zur Analyse.
 
 Die Norm unterscheidet Software-Werkzeuge dabei nach zwei Eigenschaften:
-
 \begin{itemize}
     \item \emph{Tool Impact} (TI0, TI1): Die Wahrscheinlichkeit, durch eine Fehlfunktion des Werkzeugs eine Sicherheitsanforderung zu verletzen.
     \item \emph{Tool Error Detection} (TD1 bis TD4): Die Wahrscheinlichkeit, eine Fehlfunktion des Werkzeugs zu verhindern oder zu erkennen.
 \end{itemize}
-
 Anhand dieser beiden Eigenschaften wird mittels einer vorgegebenen Tabelle ein \emph{Werkzeugvertrauenslevel} (TCL, Tool Confidence Level) bestimmt. Dieses reicht von TCL1, Werkzeuge die Sicherheitsanforderungen wahrscheinlich nicht verletzen können, bis TCL4 als höchster Vertrauenslevel für Sicherheitskritische Werkzeuge. Somit wäre zum Beispiel ein Office-Programm TCL1 während ein Werkzeug zur Codegenerierung weitaus höher eingestuft werden würde. Je nach ASIL werden hierbei bestimmte Vertrauenslevel gefordert. Bei Bedarf kann auch eine Werkzeugvalidierung durchgeführt werden.
 
 
