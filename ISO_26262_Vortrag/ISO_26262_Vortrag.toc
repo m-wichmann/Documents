@@ -1,6 +1,0 @@
-\beamer@endinputifotherversion {3.10pt}
-\select@language {ngerman}
-\beamer@sectionintoc {1}{Einleitung}{3}{0}{1}
-\beamer@subsectionintoc {1}{1}{mysubsection}{4}{0}{1}
-\beamer@sectionintoc {2}{Einleitung1}{5}{0}{2}
-\beamer@sectionintoc {3}{Einleitung2}{6}{0}{3}
