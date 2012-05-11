@@ -14,5 +14,7 @@ clean:
 	$(RM) $(TARGET).out
 	$(RM) $(TARGET).log
 	$(RM) $(TARGET).toc
+	$(RM) $(TARGET).nav
+	$(RM) $(TARGET).snm
 
 .PHONY: all clean
