@@ -174,20 +174,89 @@
 \frametitle{Management der funktionalen Sicherheit}
 
 \begin{itemize}
-    \item asd
+    \item Genaue Dokumentation der Sicherheit und des Projektes
+    \item Geforderte Dokumente (Auszug):
+    \begin{itemize}
+        \item Ausbildungs- und Qualifizierungsnachweise
+        \item Sicherheitsplan
+        \item Review-, Audit- und Assessmentplan
+        \item Sicherheitsnachweise
+    \end{itemize}
+    \item Dokumentation\dots
+    \begin{itemize}
+        \item \dots während des gesamten Projektes
+        \item \dots ausführlich (Wer, wann, was, warum)
+        \item \dots Nachvollziehbar und Nicht-Abstreitbar
+    \end{itemize}
 \end{itemize}
 
 \end{frame}
 
 \begin{frame}
-\frametitle{Gefährdungsanalyse und Risikoeinschätzung}
+\frametitle{Gefährdungsanalyse und Risikoeinschätzung I}
 
 \begin{itemize}
-    \item asd
+    \item Ermitteln aller relevanten Fahrzeugzustände und Fahrsituationen
+    \item Ermitteln möglicher funktionaler Fehler
+    \item Bewerten der Risiken jeder Gefährdungssituation in allen Fahrsituationen
+    \item Festlegen der notwendigen Risikominderung (ASIL)
+    \item Ableiten der Sicherheitsziele
 \end{itemize}
 
 \end{frame}
 
+
+\begin{frame}
+\frametitle{Gefährdungsanalyse und Risikoeinschätzung II}
+
+\begin{itemize}
+    \item Häufigkeit der Fahrsituation (Exposure E)
+    \begin{itemize}
+        \item E0 bis E4
+    \end{itemize}
+    \item Schwere eines möglichen Schadens (Severity S)
+    \begin{itemize}
+        \item S0 bis S3
+    \end{itemize}
+    \item Beherrschbarkeit durch den Fahrer (Controllability C)
+    \begin{itemize}
+        \item C0 bis C3
+    \end{itemize}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Gefährdungsanalyse und Risikoeinschätzung III}
+
+\center
+{
+\small
+\begin{tabular}[h]{c c | c c c}
+
+\toprule
+ &  & C1 & C2 & C3\\
+\midrule
+\multirow{4}{*}{S1} & E1 & QM & QM & QM\\
+ & E2 & QM & QM & QM\\
+ & E3 & QM & QM & ASIL A\\
+ & E4 & QM & ASIL A & ASIL B\\
+\midrule
+\multirow{4}{*}{S2} & E1 & QM & QM & QM\\
+ & E2 & QM & QM & ASIL A\\
+ & E3 & QM & ASIL A & ASIL B\\
+ & E4 & ASIL A & ASIL B & ASIL C\\
+\midrule
+\multirow{4}{*}{S3} & E1 & QM & QM & ASIL A\\
+ & E2 & QM & ASIL A & ASIL B\\
+ & E3 & ASIL A & ASIL B & ASIL C\\
+ & E4 & ASIL B & ASIL C & ASIL D\\
+\bottomrule
+\end{tabular}
+}
+
+\end{frame}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
@@ -195,26 +264,13 @@
 \section{Produktentwicklung}
 \label{sec:Produktentwicklung}
 
-\begin{frame}
-\frametitle{Produktentwicklung}
-
-\begin{itemize}
-    \item asd
-\end{itemize}
-
-\end{frame}
-
-
-
-
-
 \subsection{Systemebene}
 \begin{frame}
 \frametitle{Systemebene Überblick}
 
-\begin{itemize}
-    \item asd
-\end{itemize}
+\begin{figure}
+   \includegraphics[width=4.5cm]{Abb_6_3}
+\end{figure}
 
 \end{frame}
 
@@ -222,7 +278,16 @@
 \frametitle{Systemebene Methoden}
 
 \begin{itemize}
-    \item asd
+    \item Entwurf der\dots
+    \begin{itemize}
+        \item \dots Hardware
+        \item \dots Software
+        \item \dots Testumgebung
+        \item \dots Validierung
+    \end{itemize}
+    \item Spezifizierung der Metriken
+    \item Einsatz von "`bewährten Architekturen"'
+    \item Alle Schritte anhand des ASIL entwerfen und validieren
 \end{itemize}
 
 \end{frame}
@@ -235,9 +300,27 @@
 \begin{frame}
 \frametitle{Hardware Überblick}
 
-\begin{itemize}
-    \item asd
-\end{itemize}
+\begin{figure}
+   \includegraphics[width=5.4cm]{Abb_6_4}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Hardware Obergrenze Ausfallrate}
+
+\begin{center}
+\begin{tabular}[h]{c r r c}
+\toprule
+ASIL & \multicolumn{3}{c}{Obergrenze für Ausfallrate}\\
+\midrule
+D & $ <10^{-8}/h $ & $ <10 $ FIT & Anforderung\\
+C & $ <10^{-7}/h $ & $ <100 $ FIT   & Anforderung\\
+B & $ <10^{-7}/h $ & $ <100 $ FIT   & Empfehlung\\
+A & $ <10^{-6}/h $ & $ <1000 $ FIT   & Informativ\\
+\bottomrule
+\end{tabular}
+\end{center}
 
 \end{frame}
 
@@ -245,26 +328,36 @@
 \frametitle{Hardware Fehlerarten}
 
 \begin{itemize}
-    \item asd
+    \item Ungefährliche Fehler (safe fault; $ \lambda_S $)
+    \item Einfachfehler (single point fault; $ \lambda_{SPF} $)
+    \item Mehrfachfehler (multiple point fault; $ \lambda_{MPF} $)
+    \item Schlafende Fehler (latent fault; $ L $)
+    \item Erkannte oder wahrgenommene Fehler (detected or perceived fault; $ P $)
+    \item Restfehler (residual fault; $ \lambda_{RF} $)
 \end{itemize}
 
 \end{frame}
+
+
 
 \begin{frame}
 \frametitle{Hardware Metriken}
 
 \begin{itemize}
-    \item asd
+    \item Metriken geben Fehlertoleranz an
+    \item Beschriebene Metriken:
+    \item Single Point Fault Metric
+    \begin{itemize}
+        \item Betrachtet kritische Fehler ($ \lambda_{SPF}, \lambda_{RF} $)
+        \item Beschreibt Risiko des Systems
+    \end{itemize}
+    \item Latent Fault Metric
+    \begin{itemize}
+        \item Betrachtet übrige Fehler ($ \lambda_{MPFD}, \lambda_{MPFP}, \lambda_{S} $)
+        \item Beschreibt Verfügbarkeit des Systems
+    \end{itemize}
 \end{itemize}
 
-\end{frame}
-
-\begin{frame}
-\frametitle{Hardware Methoden}
-
-\begin{itemize}
-    \item asd
-\end{itemize}
 
 \end{frame}
 
@@ -276,9 +369,9 @@
 \begin{frame}
 \frametitle{Software Überblick}
 
-\begin{itemize}
-    \item asd
-\end{itemize}
+\begin{figure}
+   \includegraphics[width=11cm]{Abb_6_10}
+\end{figure}
 
 \end{frame}
 
@@ -286,7 +379,13 @@
 \frametitle{Software Methoden}
 
 \begin{itemize}
-    \item asd
+    \item ISO 26262 gibt grobe Tipps und Richtlinien
+    \item Je ASIL unterschiedliche Anforderungen. Z.B.:
+    \begin{itemize}
+        \item ASIL B: Anweisungsüberdeckende Tests
+        \item ASIL D: Tests nach MC/DC (DO-178B)
+    \end{itemize}
+    \item Allgemeine Einhaltung bestimmter Richtlinien (MISRA-C)
 \end{itemize}
 
 \end{frame}
@@ -302,7 +401,9 @@
 \frametitle{Fazit}
 
 \begin{itemize}
-    \item asd
+    \item Sammlung von Tipps und Best Practices
+    \item Standard noch recht neu -> Wenig Informationen
+    \item Rechtlich gefordert
 \end{itemize}
 
 \end{frame}
