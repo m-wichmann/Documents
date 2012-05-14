@@ -21,7 +21,6 @@
 \usepackage{graphicx}
 \graphicspath{{images/}}
 
-
 \hypersetup{
   pdftex,
   bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
@@ -36,6 +35,10 @@
 
 \usepackage{booktabs}
 \usepackage{multirow}
+
+
+\newtranslation[to=ngerman]{Example}{Beispiel}
+
 
 \usetheme{Warsaw}
 
@@ -259,6 +262,35 @@
 \end{frame}
 
 
+
+
+\begin{frame}
+\frametitle{Gefährdungsanalyse und Risikoeinschätzung III}
+
+\begin{example}[Analyse einer Servolenkung]
+    \begin{itemize}
+    \item Bei einer Stadtfahrt (etwa 50 km/h) kommt es zu unmotivierten Lenkbewegungen
+        \begin{itemize}
+            \item E = E4
+            \item C = C3
+            \item S = S2
+            \item ASIL C
+        \end{itemize}
+    \item Selbe Situation bei einer Landstraßenfahrt (etwa 100 km/h)
+        \begin{itemize}
+            \item E = E4
+            \item C = C3
+            \item S = S3
+            \item ASIL D
+        \end{itemize}
+    \item Servolenkung: ASIL D
+    \end{itemize}
+\end{example}
+
+
+\end{frame}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 % Produktentwicklung
 \section{Produktentwicklung}
@@ -332,7 +364,7 @@ A & $ <10^{-6}/h $ & $ <1000 $ FIT   & Informativ\\
     \item Einfachfehler (single point fault; $ \lambda_{SPF} $)
     \item Mehrfachfehler (multiple point fault; $ \lambda_{MPF} $)
     \item Schlafende Fehler (latent fault; $ L $)
-    \item Erkannte oder wahrgenommene Fehler (detected or perceived fault; $ P $)
+    \item Erkannte oder wahrgenommene Fehler (detected or perceived fault; $ D, P $)
     \item Restfehler (residual fault; $ \lambda_{RF} $)
 \end{itemize}
 
@@ -403,7 +435,7 @@ A & $ <10^{-6}/h $ & $ <1000 $ FIT   & Informativ\\
 \begin{itemize}
     \item Sammlung von Tipps und Best Practices
     \item Standard noch recht neu -> Wenig Informationen
-    \item Rechtlich gefordert
+    \item Rechtlich gefordert und damit zukunftsrelevant
 \end{itemize}
 
 \end{frame}
