@@ -1,0 +1,241 @@
+% TODO:
+% - Listing verbessern (Größe, evtl. Hintergrundfarbe)
+% - Matlab oder MatLab
+
+
+
+% \lstinputlisting[frame=single, float, caption={CAPTION ???}, label={lst:preproc}, firstline=25, lastline=30]{../../../Programming/miscStuff/coin_count/coin.m}
+
+\documentclass[a4paper,DIV=calc,ngerman]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{listings}					% Code-Abschnitt mit Syntax-Highlighting
+\lstset{
+language=matlab,
+%breaklines=true,
+%breakatwhitespace=true
+basicstyle=\footnotesize,
+numbers=left,
+numberstyle=\footnotesize,
+stepnumber=2,
+numbersep=5pt,
+extendedchars=true,					% Macht das überhaupt was???
+inputencoding=utf8,
+breakindent=30pt,
+escapeinside={\%(}{\%)},
+captionpos=b
+%xleftmargin=20pt					% Einrückung der listings
+}
+\usepackage[pdftex]{graphicx}
+\graphicspath{{images/}}
+\usepackage{wrapfig}
+\usepackage[
+  pdftex,
+  bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
+  pdfpagemode={UseNone},
+  pdfpagelayout={SinglePage},
+  plainpages=false,
+  pdfkeywords={Bildverarbeitung},
+  pdfsubject={Bildverarbeitung},
+  pdftitle={Bildverarbeitung},
+  pdfauthor={Martin Wichmann}
+]{hyperref}
+\usepackage{booktabs}
+
+
+\hyphenation{}
+
+\begin{document}
+
+\titlehead{\center{\large \textsc{Ostfalia Hochschule für angewandte Wissenschaften}}}
+\title{Bildverarbeitung}
+\author{Martin Wichmann\\701\,277\,37}
+\date{\today}
+
+\maketitle
+\tableofcontents
+
+% TODO: schauen ob text auch auf erste sein soll?!
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Worum gehts eigentlich...
+\section{Einleitung}
+\label{sec:Einleitung}
+Diese Ausarbeitung dokumentiert zwei Aufgaben aus dem Bereich der Bildverarbeitung. Neben den ausgearbeiteten Lösungsansätzen werden theoretische Erweiterungen und Verbesserungen betrachtet. Dabei werden die theoretischen Grundlagen der Bildverarbeitung vorausgesetzt und nicht näher erläutert.
+
+Bei der ersten Aufgabe handelt es sich um einen Münzenzähler. Hierbei soll ein Bild ausgewertet werden und untersucht werden welche und wie viele Münzen zu sehen sind. Die Lösung hierzu wurde in Matlab\footnote{Matlab Version 2011b inklusive Image Processing Toolbox} erstellt.
+
+Aufgabe 2 betrachtet ein Video einer, auf einem Modellauto plazierten, Web-Cam. Die Auswertung der Bilder soll hier die Seitenlinien und Stopplinien erkennen und somit Kurven und Kreuzungen erkennen. Diese Aufgabe wurde mithilfe von OpenCV bearbeitet. Dabei wurde Python als Programmiersprache gewählt.
+
+% TODO: URL zu github in footnote einfügen
+Dieses Dokument enthält lediglich relevante Code-Abschnitte. Der gesamte Quellcode liegt der Ausarbeitung bei oder kann im Internet\footnote{URL} gefunden werden.
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 1 - Münzenzähler
+\section{Aufgabe 1 - Münzenzähler}
+\label{sec:aufgabe1}
+In dieser Aufgabe wird mittels Matlab ein Bild ausgewertet und die Anzahl und Zusammenstellung der Münzen ausgegeben. Da im Originalbild zwei Münzen zu nah beieinander lagen um einfach erkannt werden zu können, wurde dieses Bild mittels Gimp von Hand verändert.
+
+
+\subsection{Allgemeine Idee}
+\label{sec:a1idee}
+Die grundsätzliche Vorgehensweise bei dieser Aufgabe kann auf folgende Punkte zusammengefasst werden:
+
+\begin{enumerate}
+    \item Bild laden
+    \item Bild aufbereiten
+    \item Objekte erkennen
+    \item Münzen erkennen
+\end{enumerate}
+
+Im ersten Punkt wird das Bild in Matlab geladen. Hierdurch lässt sich weiter mit dem Bild arbeiten. Im nächsten Schritt wird das Bild aufbereitet. Dies ist nötig da ansonsten Bild-Rauschen und -Fehler die Objekterkennung erschweren würden. In diesem Zusammenhang wird vor allem auf Erosion und Dilatation zurückgegriffen. Außerdem wird ein Kantendetektions-Filter angewendet.
+
+% TODO: Was für ein Algorithmus setzt matlab zur objekterkennung ein?
+Nachdem das Bild nun vorbereitet wurde werden alle Objekte im Bild erkannt. Dabei wird auf eine Matlab-Funktionen zurückgegriffen. Zu guter Letzt werden die Münzen anhand ihrer Eigenschaften unterschieden.
+
+
+% TODO: subplot kram erklären...
+\subsection{Umsetzung}
+\label{sec:a1umsetzung}
+
+
+\begin{lstlisting}[frame=single, float, caption={Bild einlesen}, label={lst:bildeinlesen}]
+colormap('Gray');
+Irgb=imread('IMAG0092_improved.jpg');
+Ibw=rgb2gray(Irgb);
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, float, caption={Bild-Aufbereitung}, label={lst:bildaufbereitung}]
+SE=ones(3,3);
+
+Itemp=imerode(Ibw,SE);
+Itemp=imerode(Itemp,SE);
+
+Itemp=edge(Itemp,'canny',0.03);
+
+Itemp=imdilate(Itemp,SE);
+Itemp=imdilate(Itemp,SE);
+\end{lstlisting}
+
+
+\begin{lstlisting}[frame=single, float, caption={Bild-Aufbereitung}, label={lst:bildaufbereitung}]
+L=bwlabel(Itemp);
+col=label2rgb(L,'jet','w','shuffle');
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[frame=single, float, caption={Objekt-Segmentierung}, label={lst:segmentierung}]
+props=regionprops(L,'Area');
+
+area=[props.Area];
+ObjArea=find(area > 10000);
+
+mask=ismember(L, ObjArea);
+\end{lstlisting}
+
+
+
+\begin{lstlisting}[frame=single, float, caption={Objekt-Segmentierung}, label={lst:segmentierung}]
+for i = ObjArea
+    [r, c] = find(L==i);
+    
+    if ((area(i) >= 55000) && (area(i) <= 65000))
+        z = 1;
+    elseif ((area(i) >= 65001) && (area(i) <= 70000))
+        z = 5;
+    ...
+    else
+        z = 0;
+    end
+
+    cointext = strcat(num2str(z), ' c');
+    text(c(1),r(1),cointext);
+end
+\end{lstlisting}
+
+
+\subsection{Mögliche Verbesserungen}
+\label{sec:a1verbesserungen}
+Verbesserungs-Möglichkeiten sind an einigen Stellen vorhanden. So könnte zu aller erst die Qualität der Bilder verbessert werden. Hierzu wäre es notwendig ein konkretes Verfahren vorzugeben, mit dem die Bilder erstellt werden. Dies würde dazu führen, dass die Beleuchtung und der Bild-Hintergrund besser kontrolliert werden kann und so das Matlab-Skript besser arbeiten kann. Außerdem könnte in diesem Zusammenhang eine Normgröße hinzugefügt werden, um die absolute Größe der Münzen besser bestimmen können.
+
+Auch im nächsten Schritt, der Bild-Aufbereitung, steckt viel Optimierungs-Potential. So könnte hier die Objekterkennung mit komplexeren und besser abgestimmten Filtern erleichtert werden.
+
+Als letzter Verbesserungs-Punkt soll noch die Münzerkennung erwähnt werden. Vor allem hier ist es möglich einen komplexeren Ansatz zu verfolgen. Die in hier erstellt Lösung verfolgt in diesem Punkt einer relativ naiven Ansatz, der zwar in diesem speziellen Fall funktioniert, im allgemeinen jedoch Probleme bereiten würde. 
+
+
+
+
+
+
+% ab hier sollte nur noch python kommen...
+\lstset{language=python}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Aufgabe 2 - Farhbahnerkennung
+\section{Aufgabe 2 - Farhbahnerkennung}
+\label{sec:aufgabe2}
+
+
+
+\subsection{Allgemeine Idee}
+\label{sec:a2idee}
+
+
+
+\subsection{Umsetzung}
+\label{sec:a2umsetzung}
+
+\paragraph{Hauptprogramm}
+
+\paragraph{Farhbahn-Begrenzung erkennen}
+
+\paragraph{Stopplinien erkennen}
+
+
+\subsection{Mögliche Verbesserungen}
+\label{sec:a2verbesserungen}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Was haben wir aus dem ganzen Kram gelernt ;-)
+\section{Fazit}
+\label{sec:Fazit}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ein paar Quellenangaben...
+\begin{thebibliography}{------}
+\label{sec:Literatur}
+
+%\bibitem[1]{1} \textsc{Peter Löw, Roland Pabst, Erwin Petry}: {\em Funktionale Sicherheit in der Praxis.} dpunkt.verlag, 2010.
+%\bibitem[2]{2} \textsc{Jürgen Sauler, Stefan Kriso, Martina Hafner}: {\em ISO 26262 - Die zukünftige Norm zur funktionalen Sicherheit von Straßenfahrzeugen.} Online unter: \url{http://www.elektronikpraxis.vogel.de/themen/elektronikmanagement/projektqualitaetsmanagement/articles/242243/}, 2011.
+%\bibitem[3]{3} \textsc{Freescale Semiconductor Inc.}: {\em ISO 26262 cuts electronics complexity risks: Pt. 1- Requirements and assessment flow.} Online unter: \url{http://eetimes.com/design/automotive-design/4236887/}, 2012.
+%\bibitem[4]{4} \textsc{Mark Pitchford, Bill St. Clair}: {\em Verbesserung aktueller Praktiken für ISO 26262.} Online unter: \url{http://www.elektroniknet.de/automotive/technik-know-how/prozesse-standards-und-qualitaet/article/78649/0/Verbesserung_aktueller_Praktiken_fuer_ISO_26262/}, 2011.
+
+
+
+
+
+\end{thebibliography}
+
+
+
+
+
+\end{document}
