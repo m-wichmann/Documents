@@ -76,7 +76,7 @@ Bei der ersten Aufgabe handelt es sich um einen Münzenzähler. Hierbei soll ein
 
 Aufgabe 2 betrachtet ein Video einer, auf einem Modellauto plazierten, Web-Cam. Die Auswertung der Bilder soll hier die Seitenlinien und Stopplinien erkennen und somit Kurven und Kreuzungen erkennen. Diese Aufgabe wurde mithilfe von OpenCV bearbeitet. Dabei wurde Python als Programmiersprache gewählt.
 
-Dieses Dokument enthält lediglich relevante Code-Abschnitte. Der gesamte Quellcode liegt der Ausarbeitung bei oder kann im Internet\footnote{Münzenzähler: \url{https://github.com/erebos42/miscStuff/tree/master/coin_count} und Farhbahnerkennung: \url{https://github.com/erebos42/miscStuff/tree/master/BV_1}} gefunden werden.
+Dieses Dokument enthält lediglich relevante Code-Abschnitte. Der gesamte Quellcode kann im Internet\footnote{Münzenzähler: \url{https://github.com/erebos42/miscStuff/tree/master/coin_count} und Farhbahnerkennung: \url{https://github.com/erebos42/miscStuff/tree/master/BV_1}} gefunden werden.
 
 
 
@@ -108,7 +108,7 @@ Zwischen allen relevanten Schritten wird das aktuelle Bild ausgegeben um den Abl
 
 \begin{figure}
 \centering
-\includegraphics[width=14cm]{coin_count_result2}
+\includegraphics[width=13cm]{coin_count_result2}
 \caption{Münzenzähler Ergebnis}
 \label{fig:coincountresult}
 \end{figure}
@@ -119,7 +119,7 @@ Zwischen allen relevanten Schritten wird das aktuelle Bild ausgegeben um den Abl
 \label{sec:a1umsetzung}
 Im folgenden werden relevante Ausschnitte aus dem Quellcode erläutert.
 
-\begin{lstlisting}[frame=single, caption={Bild einlesen}, label={lst:bildeinlesen}]
+\begin{lstlisting}[frame=single, float, caption={Bild einlesen}, label={lst:bildeinlesen}]
 colormap('Gray');
 Irgb=imread('IMAG0092_improved.jpg');
 Ibw=rgb2gray(Irgb);
@@ -127,7 +127,7 @@ Ibw=rgb2gray(Irgb);
 
 In Listing \ref{lst:bildeinlesen} wird das Bild eingelesen und in einer Variable gespeichert. Dabei wird in der letzten Zeile das Bild in ein Grauton-Bild gewandelt. Dies ist hilfreich, da im weiteren die Farbwerte keine Rolle spielen und außerdem die Operationen einfacher durchzuführen sind.
 
-\begin{lstlisting}[frame=single, caption={Bild-Aufbereitung}, label={lst:bildaufbereitung}]
+\begin{lstlisting}[frame=single, float, caption={Bild-Aufbereitung}, label={lst:bildaufbereitung}]
 SE=ones(3,3);
 
 Itemp=imerode(Ibw,SE);
@@ -142,7 +142,7 @@ Itemp=imdilate(Itemp,SE);
 Listing \ref{lst:bildaufbereitung} befasst sich mit dem Aufbereiten des Bilds. Dabei wird auf die Erosion und Dilatation zurückgegriffen. Außerdem wird in Zeile 6 ein Canny-Kantenfilter eingesetzt. Dieser komplette Abschnitt wurde mittels "`trial and error"' entworfen, da es viele Wege gibt um das Bild zu optimieren. Weitere Möglichkeiten der Verbesserung wären zum Beispiel das Einsetzen von Opening und Closing oder der Einsatz von anderen Kanten-Filtern. Es wäre auch möglich das Bild mittels einer einfachen Schwelle in ein Zweipegel-Bild umzuwandeln oder andere Filter einzusetzen. Die Bild-Qualität ist jedoch bei komplexeren Filtern nicht unbedingt besser, und so bietet es sich an eine möglichst einfache Variante zu verwenden. Wie sich in den nächsten Schritten herausstellte, war die Bild-Qualität nach der angewendeten Aufbereitung ausreichend.
 
 
-\begin{lstlisting}[frame=single, caption={Objekt-Segmentierung}, label={lst:segmentierung}]
+\begin{lstlisting}[frame=single, float, caption={Objekt-Segmentierung}, label={lst:segmentierung}]
 L=bwlabel(Itemp);
 col=label2rgb(L,'jet','w','shuffle');
 \end{lstlisting}
@@ -150,7 +150,7 @@ col=label2rgb(L,'jet','w','shuffle');
 Nachdem Bild-Rauschen und andere Fehlern minimiert wurden, können nun die Objekte segmentiert werden. Der zugehörige Quellcode ist in Listing \ref{lst:segmentierung} zu sehen. Hierfür wird in Zeile eins eine einzige Matlab-Funtion eingesetzt. Diese implementiert eine abgewandelte Form eines Floodfill-Algorithmus. Bei dieser Variante wird das Bild Lauflängen-Codiert.\cite{1} Anschließend werden den Läufen vorläufige Labels zugeordnet und im nächsten Schritt zu den endgültigen Labels gewandelt. Zeile zwei des Listings färbt die segmentierten Objekte zufällig ein.
 
 
-\begin{lstlisting}[frame=single, caption={Objekt-Klassifizierung}, label={lst:klassifizierung}]
+\begin{lstlisting}[frame=single, float, caption={Objekt-Klassifizierung}, label={lst:klassifizierung}]
 props=regionprops(L,'Area');
 
 area=[props.Area];
@@ -160,7 +160,7 @@ mask=ismember(L, ObjArea);
 \end{lstlisting}
 Die Objekt-Klassifizierung findet in Listing \ref{lst:klassifizierung} statt. Hier werden in Zeile eins die Eigenschaften, hier nur die Fläche, der vorher erkannten Objekte bestimmt. Diese Flächen werden in Zeile drei in einen Vektor geschrieben und in Zeile vier anhand eines Schwellwerts gefiltert. Die letzte Zeile in diesem Listing wählt nur die Objekte (Pixel) aus, die auch den gewählten Eigenschaften entsprechen. 
 
-\begin{lstlisting}[frame=single, caption={Münzen-Erkennung}, label={lst:detectcoins}]
+\begin{lstlisting}[frame=single, float, caption={Münzen-Erkennung}, label={lst:detectcoins}]
 for i = ObjArea
     [r, c] = find(L==i);
     
@@ -178,7 +178,9 @@ for i = ObjArea
 end
 \end{lstlisting}
 
-Die abschließende Münzen-Erkennung ist in Listing \ref{lst:detectcoins} zu finden. Die for-Schleife wird dabei genutzt um über alle erkannten Objekte zu iterieren. Anschließend werden in Zeile zwei alle Pixel ermittelt, die zu diesem Objekt gehören. Das darauf folgende if-Konstrukt wird verwendet um anhand der Fläche die Münzen zu unterscheiden. Die dabei angegebenen Grenzwerte wurden von Hand für dieses Bild ermittelt und müssten für andere Bilder angepasst werden. In den Zeilen 13 und 14 werden nun ein Textfeld ins Bild gesetzt das angibt welchen Wert die Münze hat. Vor allem in diesem Schritt ist es möglich umfangreiche Verbesserungen einzubauen. So könnte zusätzlich ein Referenz-Objekt mit aufgenommen werden, um so die Schwellwerte für die Münzen automatisch ermitteln zu lassen. Außerdem könnten weitere Eigenschaften zu Auswertung herangezogen werden. Vor allem der Achsen-Durchmesser und die Farbe kann viele Informationen beinhalten.
+Die abschließende Münzen-Erkennung ist in Listing \ref{lst:detectcoins} zu finden. Die for-Schleife wird dabei genutzt um über alle erkannten Objekte zu iterieren. Anschließend werden in Zeile zwei alle Pixel ermittelt, die zu diesem Objekt gehören. Das darauf folgende if-Konstrukt wird verwendet um anhand der Fläche die Münzen zu unterscheiden. Die dabei angegebenen Grenzwerte wurden von Hand für dieses Bild ermittelt und müssten für andere Bilder angepasst werden. In den Zeilen 13 und 14 werden nun ein Textfeld ins Bild gesetzt das angibt welchen Wert die Münze hat.
+
+Vor allem in diesem Schritt ist es möglich umfangreiche Verbesserungen einzubauen. So könnte zusätzlich ein Referenz-Objekt mit aufgenommen werden, um so die Schwellwerte für die Münzen automatisch ermitteln zu lassen. Außerdem könnten weitere Eigenschaften zu Auswertung herangezogen werden. Vor allem der Achsen-Durchmesser und die Farbe kann viele Informationen beinhalten.
 
 
 
@@ -188,7 +190,7 @@ Verbesserungs-Möglichkeiten sind an einigen Stellen vorhanden. So könnte zu al
 
 Auch im nächsten Schritt, der Bild-Aufbereitung, steckt viel Optimierungs-Potential. So könnte hier die Objekterkennung mit komplexeren und besser abgestimmten Filtern erleichtert werden.
 
-Als letzter Verbesserungs-Punkt soll noch die Münzerkennung erwähnt werden. Vor allem hier ist es möglich einen komplexeren Ansatz zu verfolgen. Die in hier erstellt Lösung verfolgt in diesem Punkt einer relativ naiven Ansatz, der zwar in diesem speziellen Fall funktioniert, im allgemeinen jedoch Probleme bereiten würde. 
+Als letzter Verbesserungs-Punkt soll noch die Münzerkennung erwähnt werden. Vor allem hier ist es möglich einen komplexeren Ansatz zu verfolgen. Die hier erstellt Lösung verfolgt in diesem Punkt einer relativ naiven Ansatz, der zwar in diesem speziellen Fall funktioniert, im allgemeinen jedoch Probleme bereiten würde. 
 
 
 
@@ -199,29 +201,74 @@ Als letzter Verbesserungs-Punkt soll noch die Münzerkennung erwähnt werden. Vo
 \lstset{language=python}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Aufgabe 2 - Farhbahnerkennung
-\section{Aufgabe 2 - Farhbahnerkennung}
+\section{Aufgabe 2 - Fahrbahnerkennung}
 \label{sec:aufgabe2}
+In dieser Aufgabe soll ein Video einer auf einem Modellauto montierten Kamera ausgewertet werden. Dabei wird versucht die Fahrbahn-Begrenzungen und Stopplinien zu erkennen. Diese Aufgabe wurde mittels OpenCV und Python gelöst. Abbildung \ref{fig:bv1} zeigt einen Beispielhaften Auszug aus der Ausgabe des Programms. Hier sind sowohl der Mittelstreifen als auch die rechte Fahrbahn-Begrenzung zu erkennen.
 
-
+\begin{figure}
+\centering
+\includegraphics[width=7cm]{bv1}
+\caption{Farhbahn-Erkennung}
+\label{fig:bv1}
+\end{figure}
 
 \subsection{Allgemeine Idee}
 \label{sec:a2idee}
+Auch bei dieser Aufgabe kann die Bilderkennung in folgende Unterpunkte gegliedert werden:
 
+\begin{enumerate}
+    \item Bild laden
+    \item Bild aufbereiten
+    \item Fahrbahn erkennen
+\end{enumerate}
 
+In Punkt eins wird das Bild aus dem Video geladen. Die Umwandlung in ein Zwei-Pegel-Bild findet in Punkt zwei statt. Im letzten Schritt werden im Bild die Fahrbahn-Begrenzungen und Stopplinien erkannt.
 
 \subsection{Umsetzung}
 \label{sec:a2umsetzung}
+Der Quellcode des Programms wurde auf zwei Dateien aufgeteilt. In der ersten befindet sich die Haupt-Routine. Diese lädt ein Bild, bereitet dieses auf, und gibt es an die zweite Datei weiter. Diese sucht nach den Markierungen und gibt die Ergebnisse zurück an das Hauptprogramm. Im folgenden werden gekürzte Quellcode-Auschnitte gezeigt. Der gesamte Quellcode ist im Internet zu finden.
 
 \paragraph{Hauptprogramm}
+Das Hauptprogramm beginnt mit dem Einlesen eines Frames. Dieses ist in Listing \ref{lst:getframe} zu sehen. In Zeile eins wird das Video geladen. Zeile zwei fordert anschließend den nächsten Frame des Videos an. In diesem Quellcode-Auszug wird lediglich ein Frame angezeigt. Im echten Programm wird dies für jedes vorhandene Bild durchgeführt.
 
-\paragraph{Farhbahn-Begrenzung erkennen}
+Die Zeilen drei und vier werden verwendet um das Bild erst in ein Grauton-Bild umzuwandeln und anschließend in ein Zwei-Pegel-Bild. Dieses Zwei-Pegel-Bild wird in der letzten Zeile der Erkennungs-Logik übergeben.
+
+\begin{lstlisting}[frame=single, float, caption={Einlesen eines Bilds}, label={lst:getframe}]
+video = cv.CaptureFromFile(filepath)
+frame = cv.QueryFrame(video)
+cv.CvtColor(frame,framebw,cv.CV_BGR2GRAY)
+cv.Threshold(framebw, framebin, 150, 255, cv.CV_THRESH_BINARY);
+result = checkimage(framebin, frameoutcol)
+\end{lstlisting}
+
+Listing \ref{lst:callcheck} zeigt die Aufteilung der Logik. Hier werden sowohl für den linken und rechten Rand als auch die Stopplinie je eine Funktion aufgerufen.
+
+\begin{lstlisting}[frame=single, float, caption={Aufruf der Fahrbahn-Erkennung}, label={lst:callcheck}]
+right = checkborderright(frame, frameout)
+left = checkborderleft(frame, frameout)
+stop = checkstop(frame, frameout)
+\end{lstlisting}
+
+\paragraph{Fahrbahn-Begrenzung erkennen}
+Die genaue Implementation der Logik soll hier der Übersicht halber nicht weiter betrachtet werden. Die Erkennung erfolgt nach einem sehr einfachen Muster:
+
+\begin{itemize}
+    \item Suche in Zeile X von Mitte bis Rand einen weißen Pixel
+    \item Falls gefunden: Rand erkannt
+    \item Falls nicht: Suche in nächster Zeile
+\end{itemize}
+
+Dieser Minimal-Ansatz wird durch kleine Erweiterungen etwas verbessert. So wird ein Rand nicht gewertet, wenn er nur einen Pixel breit ist. Das ändert jedoch nichts daran, dass der Algorithmus nicht stabil ist. So werden häufig noch falsche Ränder erkannt, oder der Rechte Rand als der Linke gewertet. Es zeigt jedoch gut mit welchen Mittel eine solche Lösung entworfen werden kann.
 
 \paragraph{Stopplinien erkennen}
+Die Stopplinien-Erkennung erfolgt nach einem ähnlichen Schema wie die Rand-Erkennung. So werden die Pixel in der Mitte des Bildes von unten nach oben ausgewertet. Falls ein weißer Pixel erkannt wird, wird zusätzlich überprüft ob die Linie eine gewisse horizontale Länge aufweist.
+
+Obwohl auch dieser Algorithmus sehr einfach und nicht stabil ist, werden erstaunlich gute Ergebnisse erzielt. So werden in den meisten Fällen die Stopplinien erkannt. Auch Falsch-Positiv-Ergebnisse sind relativ selten.
 
 
 \subsection{Mögliche Verbesserungen}
 \label{sec:a2verbesserungen}
-
+Wie schon bei der ersten Aufgabe ist auch dieses Projekt eher als Proof-of-Concept zu verstehen. Aus diesem Grund gibt es einige Verbesserungs-Möglichkeiten. So könnten bei der Bild-Aufbereitung komplexere Algorithmen, wie zum Beispiel ein Canny- oder Sobel-Filter, angewendet werden. Auch ein adaptiver Schwellwert für die Erstellung des Zwei-Pegel-Bilds könnte sich vorteilhaft auswirken.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
