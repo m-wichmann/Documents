@@ -1,6 +1,6 @@
 % TODO:
 % - Listing verbessern (Größe, evtl. Hintergrundfarbe)
-% - Matlab oder MatLab
+% - Listings besser anordnen
 
 
 
@@ -70,14 +70,13 @@ captionpos=b
 % Worum gehts eigentlich...
 \section{Einleitung}
 \label{sec:Einleitung}
-Diese Ausarbeitung dokumentiert zwei Aufgaben aus dem Bereich der Bildverarbeitung. Neben den ausgearbeiteten Lösungsansätzen werden theoretische Erweiterungen und Verbesserungen betrachtet. Dabei werden die theoretischen Grundlagen der Bildverarbeitung vorausgesetzt und nicht näher erläutert.
+Diese Ausarbeitung dokumentiert zwei Aufgaben aus dem Bereich der Bildverarbeitung. Neben den ausgearbeiteten Lösungsansätzen werden mögliche Erweiterungen und Verbesserungen betrachtet. Dabei werden die theoretischen Grundlagen der Bildverarbeitung vorausgesetzt und nicht näher erläutert.
 
 Bei der ersten Aufgabe handelt es sich um einen Münzenzähler. Hierbei soll ein Bild ausgewertet werden und untersucht werden welche und wie viele Münzen zu sehen sind. Die Lösung hierzu wurde in Matlab\footnote{Matlab Version 2011b inklusive Image Processing Toolbox} erstellt.
 
 Aufgabe 2 betrachtet ein Video einer, auf einem Modellauto plazierten, Web-Cam. Die Auswertung der Bilder soll hier die Seitenlinien und Stopplinien erkennen und somit Kurven und Kreuzungen erkennen. Diese Aufgabe wurde mithilfe von OpenCV bearbeitet. Dabei wurde Python als Programmiersprache gewählt.
 
-% TODO: URL zu github in footnote einfügen
-Dieses Dokument enthält lediglich relevante Code-Abschnitte. Der gesamte Quellcode liegt der Ausarbeitung bei oder kann im Internet\footnote{URL} gefunden werden.
+Dieses Dokument enthält lediglich relevante Code-Abschnitte. Der gesamte Quellcode liegt der Ausarbeitung bei oder kann im Internet\footnote{Münzenzähler: \url{https://github.com/erebos42/miscStuff/tree/master/coin_count} und Farhbahnerkennung: \url{https://github.com/erebos42/miscStuff/tree/master/BV_1}} gefunden werden.
 
 
 
@@ -86,12 +85,12 @@ Dieses Dokument enthält lediglich relevante Code-Abschnitte. Der gesamte Quellc
 % Aufgabe 1 - Münzenzähler
 \section{Aufgabe 1 - Münzenzähler}
 \label{sec:aufgabe1}
-In dieser Aufgabe wird mittels Matlab ein Bild ausgewertet und die Anzahl und Zusammenstellung der Münzen ausgegeben. Da im Originalbild zwei Münzen zu nah beieinander lagen um einfach erkannt werden zu können, wurde dieses Bild mittels Gimp von Hand verändert.
+In dieser Aufgabe wird mittels Matlab ein Bild ausgewertet und die Anzahl und Zusammenstellung der Münzen ausgegeben. Da im Originalbild zwei Münzen zu nah beieinander lagen um gut erkannt werden zu können, wurde dieses Bild mittels Gimp von Hand verändert.
 
 
 \subsection{Allgemeine Idee}
 \label{sec:a1idee}
-Die grundsätzliche Vorgehensweise bei dieser Aufgabe kann auf folgende Punkte zusammengefasst werden:
+Die grundsätzliche Vorgehensweise bei dieser Aufgabe kann auf folgende Punkte aufgeteilt werden:
 
 \begin{enumerate}
     \item Bild laden
@@ -100,24 +99,35 @@ Die grundsätzliche Vorgehensweise bei dieser Aufgabe kann auf folgende Punkte z
     \item Münzen erkennen
 \end{enumerate}
 
-Im ersten Punkt wird das Bild in Matlab geladen. Hierdurch lässt sich weiter mit dem Bild arbeiten. Im nächsten Schritt wird das Bild aufbereitet. Dies ist nötig da ansonsten Bild-Rauschen und -Fehler die Objekterkennung erschweren würden. In diesem Zusammenhang wird vor allem auf Erosion und Dilatation zurückgegriffen. Außerdem wird ein Kantendetektions-Filter angewendet.
+Im ersten Punkt wird das Bild in Matlab geladen. Hierdurch kann weiter mit dem Bild gearbeitet werden. Im nächsten Schritt wird das Bild aufbereitet. Dies ist nötig da ansonsten Bild-Rauschen und -Fehler die Objekterkennung erschweren würden. In diesem Zusammenhang wird vor allem auf Erosion und Dilatation zurückgegriffen. Außerdem wird ein Kantendetektions-Filter angewendet.
 
-% TODO: Was für ein Algorithmus setzt matlab zur objekterkennung ein?
 Nachdem das Bild nun vorbereitet wurde werden alle Objekte im Bild erkannt. Dabei wird auf eine Matlab-Funktionen zurückgegriffen. Zu guter Letzt werden die Münzen anhand ihrer Eigenschaften unterschieden.
 
+Zwischen allen relevanten Schritten wird das aktuelle Bild ausgegeben um den Ablauf nachvollziehen zu können. Das fertige Ergebnis ist in Abbildung \ref{fig:coincountresult} zu sehen.
 
-% TODO: subplot kram erklären...
+
+\begin{figure}
+\centering
+\includegraphics[width=14cm]{coin_count_result2}
+\caption{Münzenzähler Ergebnis}
+\label{fig:coincountresult}
+\end{figure}
+
+
+
 \subsection{Umsetzung}
 \label{sec:a1umsetzung}
+Im folgenden werden relevante Ausschnitte aus dem Quellcode erläutert.
 
-
-\begin{lstlisting}[frame=single, float, caption={Bild einlesen}, label={lst:bildeinlesen}]
+\begin{lstlisting}[frame=single, caption={Bild einlesen}, label={lst:bildeinlesen}]
 colormap('Gray');
 Irgb=imread('IMAG0092_improved.jpg');
 Ibw=rgb2gray(Irgb);
 \end{lstlisting}
 
-\begin{lstlisting}[frame=single, float, caption={Bild-Aufbereitung}, label={lst:bildaufbereitung}]
+In Listing \ref{lst:bildeinlesen} wird das Bild eingelesen und in einer Variable gespeichert. Dabei wird in der letzten Zeile das Bild in ein Grauton-Bild gewandelt. Dies ist hilfreich, da im weiteren die Farbwerte keine Rolle spielen und außerdem die Operationen einfacher durchzuführen sind.
+
+\begin{lstlisting}[frame=single, caption={Bild-Aufbereitung}, label={lst:bildaufbereitung}]
 SE=ones(3,3);
 
 Itemp=imerode(Ibw,SE);
@@ -129,15 +139,18 @@ Itemp=imdilate(Itemp,SE);
 Itemp=imdilate(Itemp,SE);
 \end{lstlisting}
 
+Listing \ref{lst:bildaufbereitung} befasst sich mit dem Aufbereiten des Bilds. Dabei wird auf die Erosion und Dilatation zurückgegriffen. Außerdem wird in Zeile 6 ein Canny-Kantenfilter eingesetzt. Dieser komplette Abschnitt wurde mittels "`trial and error"' entworfen, da es viele Wege gibt um das Bild zu optimieren. Weitere Möglichkeiten der Verbesserung wären zum Beispiel das Einsetzen von Opening und Closing oder der Einsatz von anderen Kanten-Filtern. Es wäre auch möglich das Bild mittels einer einfachen Schwelle in ein Zweipegel-Bild umzuwandeln oder andere Filter einzusetzen. Die Bild-Qualität ist jedoch bei komplexeren Filtern nicht unbedingt besser, und so bietet es sich an eine möglichst einfache Variante zu verwenden. Wie sich in den nächsten Schritten herausstellte, war die Bild-Qualität nach der angewendeten Aufbereitung ausreichend.
 
-\begin{lstlisting}[frame=single, float, caption={Bild-Aufbereitung}, label={lst:bildaufbereitung}]
+
+\begin{lstlisting}[frame=single, caption={Objekt-Segmentierung}, label={lst:segmentierung}]
 L=bwlabel(Itemp);
 col=label2rgb(L,'jet','w','shuffle');
 \end{lstlisting}
 
+Nachdem Bild-Rauschen und andere Fehlern minimiert wurden, können nun die Objekte segmentiert werden. Der zugehörige Quellcode ist in Listing \ref{lst:segmentierung} zu sehen. Hierfür wird in Zeile eins eine einzige Matlab-Funtion eingesetzt. Diese implementiert eine abgewandelte Form eines Floodfill-Algorithmus. Bei dieser Variante wird das Bild Lauflängen-Codiert.\cite{1} Anschließend werden den Läufen vorläufige Labels zugeordnet und im nächsten Schritt zu den endgültigen Labels gewandelt. Zeile zwei des Listings färbt die segmentierten Objekte zufällig ein.
 
 
-\begin{lstlisting}[frame=single, float, caption={Objekt-Segmentierung}, label={lst:segmentierung}]
+\begin{lstlisting}[frame=single, caption={Objekt-Klassifizierung}, label={lst:klassifizierung}]
 props=regionprops(L,'Area');
 
 area=[props.Area];
@@ -145,10 +158,9 @@ ObjArea=find(area > 10000);
 
 mask=ismember(L, ObjArea);
 \end{lstlisting}
+Die Objekt-Klassifizierung findet in Listing \ref{lst:klassifizierung} statt. Hier werden in Zeile eins die Eigenschaften, hier nur die Fläche, der vorher erkannten Objekte bestimmt. Diese Flächen werden in Zeile drei in einen Vektor geschrieben und in Zeile vier anhand eines Schwellwerts gefiltert. Die letzte Zeile in diesem Listing wählt nur die Objekte (Pixel) aus, die auch den gewählten Eigenschaften entsprechen. 
 
-
-
-\begin{lstlisting}[frame=single, float, caption={Objekt-Segmentierung}, label={lst:segmentierung}]
+\begin{lstlisting}[frame=single, caption={Münzen-Erkennung}, label={lst:detectcoins}]
 for i = ObjArea
     [r, c] = find(L==i);
     
@@ -165,6 +177,9 @@ for i = ObjArea
     text(c(1),r(1),cointext);
 end
 \end{lstlisting}
+
+Die abschließende Münzen-Erkennung ist in Listing \ref{lst:detectcoins} zu finden. Die for-Schleife wird dabei genutzt um über alle erkannten Objekte zu iterieren. Anschließend werden in Zeile zwei alle Pixel ermittelt, die zu diesem Objekt gehören. Das darauf folgende if-Konstrukt wird verwendet um anhand der Fläche die Münzen zu unterscheiden. Die dabei angegebenen Grenzwerte wurden von Hand für dieses Bild ermittelt und müssten für andere Bilder angepasst werden. In den Zeilen 13 und 14 werden nun ein Textfeld ins Bild gesetzt das angibt welchen Wert die Münze hat. Vor allem in diesem Schritt ist es möglich umfangreiche Verbesserungen einzubauen. So könnte zusätzlich ein Referenz-Objekt mit aufgenommen werden, um so die Schwellwerte für die Münzen automatisch ermitteln zu lassen. Außerdem könnten weitere Eigenschaften zu Auswertung herangezogen werden. Vor allem der Achsen-Durchmesser und die Farbe kann viele Informationen beinhalten.
+
 
 
 \subsection{Mögliche Verbesserungen}
@@ -213,7 +228,7 @@ Als letzter Verbesserungs-Punkt soll noch die Münzerkennung erwähnt werden. Vo
 % Was haben wir aus dem ganzen Kram gelernt ;-)
 \section{Fazit}
 \label{sec:Fazit}
-
+Während dieser Projekte konnte ein interessanter Überblick über die Anwendung der Bildverarbeitung gewonnen werden. Dabei konnte vor allem mit verschiedenen Techniken experimentiert werden. Die Lösungen der Aufgaben sind jedoch eher als Proof-of-Concept zu sehen und würden wahrscheinlich für Produktiv-Systeme nicht ausreichen.
 
 
 
@@ -226,7 +241,7 @@ Als letzter Verbesserungs-Punkt soll noch die Münzerkennung erwähnt werden. Vo
 %\bibitem[1]{1} \textsc{Peter Löw, Roland Pabst, Erwin Petry}: {\em Funktionale Sicherheit in der Praxis.} dpunkt.verlag, 2010.
 %\bibitem[2]{2} \textsc{Jürgen Sauler, Stefan Kriso, Martina Hafner}: {\em ISO 26262 - Die zukünftige Norm zur funktionalen Sicherheit von Straßenfahrzeugen.} Online unter: \url{http://www.elektronikpraxis.vogel.de/themen/elektronikmanagement/projektqualitaetsmanagement/articles/242243/}, 2011.
 %\bibitem[3]{3} \textsc{Freescale Semiconductor Inc.}: {\em ISO 26262 cuts electronics complexity risks: Pt. 1- Requirements and assessment flow.} Online unter: \url{http://eetimes.com/design/automotive-design/4236887/}, 2012.
-%\bibitem[4]{4} \textsc{Mark Pitchford, Bill St. Clair}: {\em Verbesserung aktueller Praktiken für ISO 26262.} Online unter: \url{http://www.elektroniknet.de/automotive/technik-know-how/prozesse-standards-und-qualitaet/article/78649/0/Verbesserung_aktueller_Praktiken_fuer_ISO_26262/}, 2011.
+\bibitem[1]{1} \textsc{The Mathworks Inc}: {\em Matlab Referenz.} Online unter: \url{http://www.mathworks.de/help/toolbox/images/ref/bwlabel.html}, 2012.
 
 
 
