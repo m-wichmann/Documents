@@ -1,0 +1,57 @@
+% TODO:
+
+% mögliche klassen:
+% - letter
+% - g-brief (DIN)
+% - scrlttr2 (DIN, KOMA)
+% - dinbrief
+
+
+\documentclass[a4paper,DIV=calc,ngerman]{scrartcl}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[ngerman]{babel}
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lmodern}
+
+\hyphenation{}
+
+\begin{document}
+
+\titlehead{\center{\large \textsc{Ostfalia Hochschule für angewandte Wissenschaften}}}
+\title{Robuste Systeme - ISO 26262}
+\author{Martin Wichmann\\???\,???\,??}
+\date{\today}
+
+\maketitle
+\tableofcontents
+
+\thispagestyle{empty}
+
+\newpage
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+\section{Einleitung}
+\label{sec:Einleitung}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+\section{Fazit}
+\label{sec:Fazit}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ein paar Quellenangaben...
+\begin{thebibliography}{------}
+\label{sec:Literatur}
+
+\bibitem[1]{1} \textsc{Peter Löw, Roland Pabst, Erwin Petry}: {\em Funktionale Sicherheit in der Praxis.} dpunkt.verlag, 2010.
+
+\end{thebibliography}
+
+\end{document}

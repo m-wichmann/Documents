@@ -1,0 +1,273 @@
+%% 
+%% Master Thesis
+%% Autor: Martin Wichmann
+%% 
+%% Todo:
+%% 
+
+
+\documentclass[
+  a4paper,					    % a4paper (sic!)
+  %BCOR10mm,				    % Korrektur des innneren Randes bei Bindung (Bindungskorrektur)
+  %DIV12,					    % je groesser die Zahl, desto kleiner der Rand
+  %11pt,        			    % Schriftgroesse
+  %oneside,
+  twoside,
+  %openright,   				% doppelseitig und jedes Kapitel faengt auf der rechten Seite an
+  %pagesize,					% schreibt die Seitengroesseninformationen in die PDF Datei
+  DIV=calc,     				% KOMA-Script soll den optimalen Satzspiegel berechnen
+  %DIVclassic, 					% mittelalterlicher Buchseitenkanon
+  %headsepline,					% Trennlinie
+  %footsepline,					% Trennlinie
+  %headtopline,					% Trennlinie
+  %footbotline,					% Trennlinie
+  %noonelinecaption,			% setzt die Bildueberschrift unabhaengig von der Laenge immer linksbuendig
+  %liststotoc,
+  %idxtotoc,
+  bibliography=totoc,
+  %bibtotocnumbered, liststotocnumbered,
+  %liststotoc, idxtotoc, bibtotoc,
+  %tablecaptionbelow,
+  %tablecaptionabove,	        % Tabellenbeschriftung unter oder oben
+  %abstracton,  				% Überschrift der Zusammenfassung aktivieren
+  %chapterprefix,				% "Kapitel xx" vor jeder Kapitelueberschrift
+  %cleardoublestandard,
+  %cleardoubleplain,
+  cleardoublepage=empty,
+  %smallheadings,
+  %normalheadings,
+  %makeidx,
+  ngerman,     					% allen Paketen die Hauptsprache mitteilen
+  %draft       					% draft version  
+  final       					% final version
+]{scrbook}	
+%%%%%%%%%%%%%%% Grundlegendes %%%%%%%%%%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[english,ngerman]{babel} 	% Unterstuezung fuer englisch und deutsch
+\usepackage{setspace}			% erlaubt 1 1/2 fachen Zeilenabstand
+%%%%%%%%%%%%%%% Tabellen %%%%%%%%%%%%%%%
+%\usepackage{array}
+%\usepackage{tabularx}
+\usepackage{booktabs}			% \toprule, \midrule und \bottomrule in Tabellen
+%\usepackage{multirow}
+%%%%%%%%%%%%%%% Mathe %%%%%%%%%%%%%%%
+%\usepackage{amsmath, amsthm, amscd, amssymb, amsfonts}
+%\usepackage{ziffer}
+%\usepackage{icomma}
+%%%%%%%%%%%%%%% Typografie %%%%%%%%%%%%%%%
+%\usepackage{mparhack}			% workaround for a LaTeX bug in marginpars
+\usepackage{ellipsis}			% fix uneven spacing around ellipses in LaTeX text mode.
+\usepackage{microtype} 			% optischer Randausgleich (font expansion and character protrusion)
+%%%%%%%%%%%%%%% Schriften %%%%%%%%%%%%%%%
+\usepackage{lmodern}
+%\usepackage{textcomp} 			% Sonderzeichen
+%\usepackage{mathcomp}
+%\usepackage{chemsym}
+%%%%%%%%%%%%%%% Sonstiges %%%%%%%%%%%%%%%
+%\usepackage{url}
+\usepackage{scrhack}            % KOMA Paket um zussammenarbeit mit anderen Paket (listings) zu verbessern
+\usepackage{listings}			% Code-Abschnitt mit Syntax-Highlighting
+\lstset{
+%language=C,
+breaklines=true,
+breakatwhitespace=true
+basicstyle=\footnotesize,
+numbers=left,
+numberstyle=\footnotesize,
+stepnumber=2,
+numbersep=5pt,
+extendedchars=true,
+inputencoding=utf8,
+breakindent=30pt,
+escapeinside={\%(}{\%)},
+%xleftmargin=20pt				% Einrückung der listings
+}
+%\usepackage{color} 			% Farben
+%%%%%%%%%%%%%%% Grafiken %%%%%%%%%%%%%%%
+\usepackage[pdftex]{graphicx}	% das pdftex soll das Handling von Bildern verbessern
+\graphicspath{{images/}}		% Bilder im Verzeichnis images suchen
+\usepackage{wrapfig}
+%\usepackage[hang]{subfigure}	% Subabbildungen
+%\usepackage{tikz}				% zum Zeichnen (Frontend zu PGF)
+%\usepackage{rotating} 			% fuer gedrehte Tabellen und Bilder
+%\usepackage{pdfpages}
+\usepackage[
+  pdftex,
+  bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
+  pdfpagemode={UseNone},		% UseNone, FullScreen, UseThumbs, UseOutlines, (UseOC, UseAttachments)
+  pdfpagelayout={TwoPageRight},	% SinglePage, OneColumn, TwoColumnLeft, TwoColumnRight, TwoPageLeft, TwoPageRight
+  plainpages=false, 
+  pdfkeywords={},
+  pdfsubject={},
+  pdftitle={Master-Arbeit},
+  pdfauthor={Martin Wichmann}
+]{hyperref}
+%%%%%%%%%%%%%%% Zitieren und Index %%%%%%%%%%%%%%%
+% Ich habe im Internet gelesen, dass cite nach hyperref stehen soll?!
+\usepackage[numbers]{natbib}
+% Index:
+%\usepackage{makeidx}					% Paket für die Indexerstellung
+%\makeindex
+% Glossar:
+%\usepackage[style=super, header=none, border=none, number=none, cols=2, toc=true]{glossary}
+%\usepackage[style=altlist, number=none]{glossary}
+%\makeglossary
+% Benutzung des Glossars: \glossary{name={Schnauze}, description={Fachausdruck für die Hundenase.},}
+%                         \glossary{name={Knochen}, description={Lieblingsspeise eines jeden Hundes.},}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%% Eigene Definitionen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% Bei Verwendung von BibTex: %%%%%%%%%%%%%%%%%%%%
+\addto{\captionsngerman}{\renewcommand*{\bibname}{Quellenverzeichnis}}
+% sonst
+%\renewcommand{\bibname}{Quellenverzeichnis}
+
+%%% Trennungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hyphenation{}
+
+%%% 1 1/2 fachen Zeilenabstand wählen %%%%%%%%%%%%%%%%%%%%
+\onehalfspacing
+\typearea[current]{calc}				% Neuberechnung des Satzspiegels
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Begin document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\selectlanguage{ngerman}
+\frontmatter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Titel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\titlehead{\center{\large \textsc{Ostfalia Hochschule für angewandte Wissenschaften}}}
+\subject{Master-Arbeit}
+\title{}
+\author{Martin Wichmann\\Matrikel ???\,???\,??}
+\date{Eingereicht am TODO}
+\publishers{Prüfer: 
+
+  TODO
+
+  TOOD}
+
+%\uppertitleback{%
+%  Beteiligte Institutionen:\\
+%  \parbox{0.5\textwidth}{%
+%  \centering \includegraphics[width=3.5cm]{logofh} \\
+%  Fakultät Informatik \\ Ostfalia Hochschule für angewandte Wissenschaften } \hfill
+%}
+
+\lowertitleback{Diese Arbeit wurde mit Hilfe von Freier Software erstellt: \\
+Gesetzt mit Hilfe von {\KOMAScript} und {\LaTeX}. LibreOffice für die \\ Textverarbeitung und gedit als Editor. Xubuntu als offenes Betriebssystem. \\ \\ Diese Arbeit ist freigegeben unter der Creative Commons CC-BY-SA Lizenz\cite{CCBYSA}.
+}
+\dedication{TODO\\ \vspace{1cm}
+\textit{TODO}
+}
+
+\begin{singlespace}
+\maketitle
+
+%%%%%%%%%%%%%%%% Abstract %%%%%%%%%%%%%%%%%%%%%%%
+
+
+\section*{Zusammenfassung}
+\pdfbookmark[1]{Zusammenfassung}{Zussammenfassung}
+TODO
+\vfill
+
+\foreignlanguage{english}{
+\section*{Abstract}
+TODO
+\vfill
+}
+
+
+\thispagestyle{empty}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Verzeichnisse %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents               	% Inhaltsverzeichnis
+%\listoffigures               		% Abbildungsverzeichnis
+%\listoftables             			% Tabellenverzeichnis
+%\lstlistoflistings          		% Listenverzeichnis
+%\listoflistings					% Quellcodeverzeichis
+%\printglossary               		% Formelverzeichnis
+\end{singlespace}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Zeilenabstand %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Das Setzen eines anderen Abstandes mitten im Dokument kann zu Fehlern führen (vgl. scrguide S. 30)
+%\doublespacing
+%\onehalfspacing
+%\typearea[current]{last}					% stammt aus scrguide S. 30
+%\typearea[current]{calc}					% Neuberechnung des Satzspiegels
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Einleitung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+\chapter{Einleitung}
+\label{sec:Einleitung}
+TODO
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Zusammenfassung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Fazit und Ausblick}
+\label{sec:FazitAusblick}
+TODO
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Anhang %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\backmatter
+\appendix
+\part*{Anhang}
+TODO
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%% Erklärung und CD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Erklärung}
+\label{sec:Erklärung}
+Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig und nur unter Verwendung der angegebenen Quellen und Hilfsmittel erstellt habe.
+\vspace{2.5cm} \par
+Wolfenbüttel, den TODO
+
+
+\chapter{Beigelegte CD}
+\label{sec:BeigelegteCD}
+TODO
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bibliographie %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% \setbibpreamble{Die Quellenangaben sind alphabetisch nach den Namen der Autoren sortiert.
+% Bei mehreren Autoren wird nach dem ersten Autor sortiert.\par\bigskip\bigskip}
+%
+% Quellen, die nicht direkt zitiert wurden, aber trotzdem hier erscheinen sollen!
+%\nocite{tbinformatik}\nocite{tb_et2000}\nocite{tb_mathe1999}
+\nocite{*}
+%
+\begin{singlespace}
+\bibliographystyle{natdin}	% alphadin, plaindin, abbrvdin, unsrtdin, natdin
+					            % germbib: gerabbrv, geralpha, gerplain, gerunsrt, gerapali, gerxampl
+                           		% plainnat, abbrvnat, unsrtnat
+                           		% Am besten geeignet: natdin
+                           		% oder was ist mit dinat
+                           		% ???apalike???
+\bibliography{literature}
+\end{singlespace}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}
+
+

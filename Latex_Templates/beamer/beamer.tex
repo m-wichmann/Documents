@@ -1,0 +1,136 @@
+% TODO:
+% - 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% documentclss
+\documentclass[]{beamer}
+%\documentclass[handout]{beamer} %Drucker Version
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% packages
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+
+\usepackage{setspace}
+\usepackage{microtype}
+\usepackage{lmodern}
+
+\usepackage{graphicx}
+\graphicspath{{images/}}
+
+\hypersetup{
+  pdftex,
+  bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
+  pdfpagemode={UseNone},
+  pdfpagelayout={SinglePage},
+  plainpages=false,
+  pdfkeywords={Robuste Systeme, ISO 26262},
+  pdfsubject={Robuste Systeme - ISO 26262},
+  pdftitle={Robuste Systeme - ISO 26262},
+  pdfauthor={Martin Wichmann}
+}
+
+\usepackage{booktabs}
+\usepackage{multirow}
+
+
+\newtranslation[to=ngerman]{Example}{Beispiel}
+
+
+\usetheme{Warsaw}
+
+
+
+\AtBeginSection[]
+{
+   \begin{frame}
+        \frametitle{Inhaltsübersicht}
+        \tableofcontents[currentsection,currentsubsection]
+   \end{frame}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title
+\author{Martin Wichmann}
+\title{ISO 26262}
+\date{\today}
+\institute{Ostfalia Hochschule für angewandte Wissenschaften}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% begin document
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Inhaltsübersicht}
+\tableofcontents
+\end{frame}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Einleitung
+\section{Einleitung}
+\label{sec:einleitung}
+
+\begin{frame}
+\frametitle{Frametitle}
+\begin{itemize}
+    \item Punkt 1
+    \item Punkt 2
+    \item Punkt 3\cite{1}
+    \begin{itemize}
+        \item Sub Punkt 1
+    \end{itemize}
+    \item Punkt 4
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Fazit
+\section{Fazit}
+\label{sec:Fazit}
+
+\begin{frame}
+\frametitle{Fazit}
+
+
+\end{frame}
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Literaturangaben
+\appendix
+\section*{Literatur}
+\label{sec:Literatur}
+
+\begin{frame}
+\begin{thebibliography}{10}
+
+\bibitem[1]{1} \textsc{Peter Löw, Roland Pabst, Erwin Petry}: {\em Funktionale Sicherheit in der Praxis.} dpunkt.verlag, 2010.
+
+\end{thebibliography}
+\end{frame}
+
+\end{document}
+
