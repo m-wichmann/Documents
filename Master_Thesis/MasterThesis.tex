@@ -3,7 +3,7 @@
 %% Autor: Martin Wichmann
 %% 
 %% Todo:
-%% 
+%% - Danksagung
 
 
 \documentclass[
@@ -215,7 +215,7 @@ TODO
 \mainmatter
 \chapter{Einleitung}
 \label{sec:Einleitung}
-TODO
+% TODO
 
 
 
@@ -226,39 +226,113 @@ TODO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Grundlagen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Grundlagen}
 \label{sec:Grundlagen}
+Dieses Kapitel enthält Grundlagen zu den Themen Autosar und Virtualisierung.
+% TODO
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Allgemeine Virtualisierung
+% Class 1 und 2
+\section{Virtualisierung}
+\label{sec:Virtualisierung}
+Der Begriff Virtualisierung bezeichnet eine Reihe von Techniken die verwendet werden um die Ressourcen eines Rechner-Systems zu verwalten. Hierdurch kann eine reales System als mehrere logische betrachtet und genutzt werden. Dabei können verschiedene Ziele verfolgt werden.
+
+Aus dem Desktop-Bereich ist die System-Virtualisierung bekannt wie sie zum Beispiel mittels VirtualBox\footnote{VirtualBox zu finden unter \url{www.virtualbox.org}} umgesetzt ist. Hierbei werden die Ressourcen des bestehenden Systems durch einen Hypervisor verwaltet und den virtuellen Instanzen zugeordnet. Diese Art wird vor allem verwendet um zum Beispiel unter Windows Zugriff auf ein Linux zu haben um spezielle Software auszuführen.
+
+Im Gegensatz dazu wird im Server-Bereich der Fokus auf andere Bereiche gelegt. Die hier verfolgten Ziele sind vor allem eine einfache Wartbarkeit, Ausfallsicherheit und Ressourcenschonung. Mittels virtueller Server können Ausfallzeiten minimiert werden, indem bei einem Ausfall einfach eine andere virtuelle Instanz des Servers gestartet wird und dessen Arbeit übernimmt. 
+
+Virtualisierung kann mittels einer Reihe von Techniken erfolgen. Hier wird zum Beispiel Unterschieden ob die Hardware direkt zum Gast-System weitergegeben wird, oder aber eine eigene virtuelle Hardware emuliert wird. Außerdem könnte ein Gast-System Teile des Hosts, zum Beispiel dessen Kernel, mit verwenden. Allgemein werden die Hypervisor jedoch nach folgenden zwei Klassen unterschieden\cite[Seite 22 ff.]{hypervisor}:
+
+\paragraph{Type 1 (bare host)} Hierbei handelt es sich um native Hypervisor die direkt auf der Hardware laufen. Diese bauen auf kein Betriebssystem auf und verwalten selbstständig die Ressourcen und Gast-Systeme. Aus diesem Grund sind sie vor allem Interessant für eingebettete Systeme. Type 1 Hypervisor werden genauer im nächsten Kapitel betrachtet.
+
+\paragraph{Type 2 (extended host)} Ein Type 2 Hypervisor ist nur auf einem vollständigen Betriebssystem lauffähig. Damit ist der Hypervisor eine logische Schicht zwischen dem Host- und Gast-Betriebssystem und kann von den Vorteilen eines Betriebssystems profitieren. Hieraus ergibt sich das ein Type 2 Hypervisor meißt kleiner und schneller ist.
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gründe für Embedded Virtualisierung
+\section{Virtualisierung bei eingebetteten Systemen}
+\label{sec:EVirtualisierung}
+Virtualisierung im Bereich der eingebetteten Systeme hat in den letzten Jahren immer mehr an Bedeutung gewonnen. Da Mikrocontroller und SOCs\footnote{System-on-a-Chip, dt. Ein-Chip-System} immer Leistungsfähiger werden ist es sinnvoll diese Leistung auch auszunutzen. Gerade im Automobil-Bereich, in dem die Anzahl der Steuergeräte zum Teil auf mittlerweile über 50 gestiegen ist, kann es die Kosten erheblich reduzieren wenn stattdessen einige dieser System virtualisiert werden können.
+
+Hypervisor im embedded Bereich müssen bestimmte Erforderungen erfüllen die viele Hypervisor nicht betrachten. Zu diesen Anforderungen gehört zum Beispiel ein geringer Engerie-Verbrauch und Effiziente Speicher Nutzung. Ein weiterer wichtiger Punkt ist die Echtzeitfähigkeit. Diese ist vor allem kritisch, da meißt eine zwei-stufige Scheduler-Architektur entsteht, einmal der Scheduler des Hypervisors und einmal der Scheduler des Gast-Systems. Eine Echtzeit-Analyse ist in diesem Fall relativ anspruchsvoll.
+
+Um nur ein einfaches Beispiel zu nennen, könnte ein System mit 4 Sub-Systemen betrachtet werden. Diese Sub-Systeme könnten alle in ein einziges System mit einer 4-Kern CPU vereint werden und genauso wie vorher verwendet werden. Je nach benötigter Leistung könnte das Resultierende System durchaus noch verkleinert und damit kostengünstiger gestaltet werden.
+
+
+\subsection{Hypervisor Beispiel}
+% Beispiele genauer betrachten: PikeOS, COQOS
+% http://www.opensynergy.com/Products/COQOS
+% http://www.windriver.com/products/hypervisor/
+% http://www.ok-labs.com/products/okl4-microvisor
+% http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php
+% http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/
+Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}.
+
+
+
+
+
+\subsection{Vorteile}
+% TODO Vorteile
+Der Einsatz von Virtualisierung hat eine Reihe von Vorteilen\cite{emb_hyp}.
+
+\paragraph{Betriebssystem Unabhängigkeit}
+Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene Betriebssysteme komplett parallel zu verwenden und die stärken der verschiedenen Systeme zu nutzen. So wird dieser Vorteil zum Beispiel bei COQOS genutzt um Autosar und Android parallel lauffähig zu haben. Dadurch kann Autosar Zeit- und Sicherheitskritische Aufgaben und gleichzeitig Android den Infotainment Bereich übernehmen.
+
+\paragraph{Sicherheit}
+% Safety und Security
+%   Hypervisor als Watchdog und evtl als Firewall?!
+%   Redundanz (Flugzeug...)
+
+\paragraph{Wiederverwenden von altem Code}
+
+\paragraph{IP Schutz}
+
+\paragraph{Höhere Maximal Performance}
+
+\paragraph{Trennung der Software Lizenzen}
+
+\paragraph{Kürzere Entwicklungszeiten}
+
+\paragraph{Hypervisor klein und robust}
+% kann theoretisch formal bewiesen werden
+
+
+\subsection{Nachteile}
+
+\paragraph{Performance Overhead}
+
+\paragraph{Weniger Hardware Redundanz}
+
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Autosar}
 \label{sec:Autosar}
-
+Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitektur die Hauptsächlich in der Automobil-Industrie verwendet wird. Autosar, kurz für AUTomotive Open System ARchitecture, wurde gemeinsam von einer Reihe von Firmen seit etwa 2003 entwickelt. Zu den Kern Mitgliedern gehören zur Zeit BMW, Bosch, Toyota, Volkswagen und eine Reihe anderer.
+% TODO
+% Erbe von OSEK/VDX
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Netzwerk Managment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Netzwerk Managment (!)
 \section{Netzwerk Managment}
 \label{sec:Netzwerk Managment}
-TODO
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Virtualisierung}
-\label{sec:Virtualisierung}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Allgemeine Virtualisierung
-% Class 1 und 2
-% Gründe für Embedded Virtualisierung
-%   Hypervisor als Watchdog und evtl als Firewall?!
-\section{Embedded Virtualisierung}
-\label{sec:EVirtualisierung}
-TODO
+% TODO
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit ISO 26262 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Sicherheit ISO 26262}
 \label{sec:Sicherheit}
-TODO
+% TODO
+
 
 
 
@@ -271,57 +345,29 @@ TODO
 % Gesamtes Modell darstellen
 \chapter{Fallbeispiel}
 \label{sec:Fallbeispiel}
-
-
-
-
+% TODO
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Netzwerk Managment (!)
 \section{NM bei Autosar}
 \label{sec:AutosarNM}
-TODO
-
-
-
-
-
-
-
-
-
+% TODO
 
 
 % TODO: evtl Kapitel: Umsetzung Embedded Virt
 
 
-
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation}
 \label{sec:Kommunikation}
-TODO
-
-
-
-
-
-
+% TODO
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit bei Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Sicherheit bei Embedded Virtualisierung}
 \label{sec:SicherheitEV}
-TODO
-
-
-
-
-
+% TODO
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Umsetzung des Fallbeispiels %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -329,7 +375,7 @@ TODO
 % Ansprechen der Scheinwerfer
 \section{Umsetzung des Fallbeispiels}
 \label{sec:FallbeispielUmsetzung}
-TODO
+% TODO
 
 
 
@@ -343,7 +389,13 @@ TODO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Zusammenfassung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Fazit und Ausblick}
 \label{sec:FazitAusblick}
-TODO
+% TODO
+
+
+
+
+
+
 
 
 
@@ -352,10 +404,6 @@ TODO
 \backmatter
 \appendix
 \part*{Anhang}
-TODO
-
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%% Erklärung und CD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -363,12 +411,11 @@ TODO
 \label{sec:Erklärung}
 Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig und nur unter Verwendung der angegebenen Quellen und Hilfsmittel erstellt habe.
 \vspace{2.5cm} \par
-Wolfenbüttel, den TODO
+Wolfenbüttel, den % TODO
 
 
 \chapter{Beigelegte CD}
 \label{sec:BeigelegteCD}
-TODO
 
 
 
