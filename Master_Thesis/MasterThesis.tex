@@ -5,6 +5,8 @@
 %% Todo:
 %% - Danksagung
 %% - Cite auf mein GitHub ändern oder so?!
+%% - Portabilität PC VM auf embedded Hypervisor
+%% - Relevanz für Testen und Entwicklungsprozess
 
 
 \documentclass[
@@ -91,6 +93,7 @@ escapeinside={\%(}{\%)},
 \usepackage{wrapfig}
 %\usepackage[hang]{subfigure}	% Subabbildungen
 %\usepackage{tikz}				% zum Zeichnen (Frontend zu PGF)
+\usepackage{pgfgantt}           % pgf verwenden um Gantt Diagramme zu erstellen
 %\usepackage{rotating} 			% fuer gedrehte Tabellen und Bilder
 %\usepackage{pdfpages}
 \usepackage[
@@ -220,8 +223,61 @@ TODO
 \label{sec:Einleitung}
 % TODO
 
+Diese Master-Arbeit betrachtet die Möglichkeiten der Virtualisierung anhand eines Fallbeispiels. Dieses Fallbeispiel wird im nächsten Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Die praktische Umsetzung des Fallbeispiels wird danach erläutert. Zum Schluss dieser Arbeit werden Sicherheits-Merkmale und die Bedeutung für die Wirtschaft betrachtet.
 
 
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Vorstellung Fallbeispiel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Gesamtes Modell darstellen
+\chapter{Fallbeispiel und Planung}
+\label{sec:FallbeispielPlanung}
+% TODO
+Das in dieser Master-Arbeit betrachtete Praxis-Beispiel ist eine Scheinwerfer-Steuerung inklusive User-Interface. Dies ist bewusst als minimal Beispiel konzipiert um den Fokus auf die Virtualisierung zu legen.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{overview.png}
+\caption{Architektur}
+\label{fig:arch}
+\end{figure}
+
+Die geplante Architektur der Scheinwerfer-Steuerung ist in Abbildung \ref{fig:arch} zu sehen. Dabei sind zwei getrennte Hardware Elemente zu sehen. Zum einen das Scheinwerfer-Steuergerät und zum anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles Autosar und Linux auf einem Windows Host.
+
+Aus dieser Architektur-Beschreibung lassen sich vier Kern-Bereiche dieser Master-Arbeit ableiten:
+
+\begin{itemize}
+    \item Virtualisierung von Autosar und Linux
+    \item Kommunikation zwischen Linux und Autosar
+    \item Kommunikation zwischen Autosar und Scheinwerfer
+    \item Zugriff auf Hardware inklusive Betrachtung von Netzwerkmanagement
+\end{itemize}
+
+Hierbei ist zu beachten, dass das aktivieren des Netzwerkmanagements erst möglich ist, sobald eine Kommunikation zwischen Autosar und der Hardware möglich ist.
+
+% TODO: Projektplanung
+Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes ein Monat Arbeit vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen.
+
+
+\begin{figure}[ht]
+\centering
+
+\begin{ganttchart}{12}
+\gantttitle{2012}{8} 
+\gantttitle{2013}{4} \\
+\gantttitlelist{9,10,11,12,1,2}{2} \\
+\ganttbar{Virtualisierung}{1}{2} \\
+\ganttbar{Kommunikation Linux/Autosar}{3}{4} \\
+\ganttbar{Kommunikation Autosar/Scheinwerfer}{5}{6} \\
+\ganttbar{Zugriff auf Hardware}{7}{8} \\
+\ganttbar{Evaluation}{9}{10} \\
+\ganttbar{Fertigstellen der Arbeit}{11}{12} 
+\end{ganttchart}
+
+\caption{Zeitplanung Master-Arbeit}
+\label{fig:gantt}
+\end{figure}
 
 
 
@@ -344,41 +400,69 @@ Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitekt
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Fallbeispiel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Umsetzung Fallbeispiel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Gesamtes Modell darstellen
-\chapter{Fallbeispiel}
-\label{sec:Fallbeispiel}
+\chapter{Umsetzung des Fallbeispiels}
+\label{sec:Umsetzung_Fallbeispiel}
 % TODO
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Netzwerk Managment (!)
-\section{NM bei Autosar}
-\label{sec:AutosarNM}
+
+% Virtualisierung Linux/Autosar (Erst auf PC; Embedded betrachtet)
+% Kommunikation zwischen Linux und Autosar
+% Kommunikation Autosar und Scheinwerfer
+%   Zugriff auf Hardware (Netzwerkmanagment)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Virtualisierung}
+\label{sec:Virtualisierung_Umgesetzt}
 % TODO
+
 
 
 % TODO: evtl Kapitel: Umsetzung Embedded Virt
 
 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Kommunikation}
-\label{sec:Kommunikation}
+\section{Kommunikation Linux und Autosar}
+\label{sec:Kommunikation_L_A}
 % TODO
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Kommunikation Autosar und Scheinwerfer}
+\label{sec:Kommunikation_A_S}
+% TODO
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Netzwerk Managment (!)
+\section{Zugriff auf Hardware (Netzwerkmanagment)}
+\label{sec:AutosarNM}
+% TODO
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theoretischer Produkt Lifecycle %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wie könnte das erarbeitete sinnvoll in der Wirtschaft umgesetzt werden?!
+\section{Theoretischer Produkt Lifecycle}
+\label{sec:Lifecycle}
+% TODO
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit bei Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sicherheit bei Embedded Virtualisierung}
-\label{sec:SicherheitEV}
+\chapter{Sicherheitsbetrachtung des Fallbeispiels}
+\label{sec:Sicherheit_Beispiel}
 % TODO
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Umsetzung des Fallbeispiels %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Virtualisierung mit Autosar und ...
-% Ansprechen der Scheinwerfer
-\section{Umsetzung des Fallbeispiels}
-\label{sec:FallbeispielUmsetzung}
-% TODO
 
 
 
