@@ -53,7 +53,7 @@
 %\usepackage{array}
 %\usepackage{tabularx}
 \usepackage{booktabs}			% \toprule, \midrule und \bottomrule in Tabellen
-%\usepackage{multirow}
+\usepackage{multirow}
 %%%%%%%%%%%%%%% Mathe %%%%%%%%%%%%%%%
 %\usepackage{amsmath, amsthm, amscd, amssymb, amsfonts}
 %\usepackage{ziffer}
@@ -223,7 +223,7 @@ TODO
 \label{sec:Einleitung}
 % TODO
 
-Diese Master-Arbeit betrachtet die Möglichkeiten der Virtualisierung anhand eines Fallbeispiels. Dieses Fallbeispiel wird im nächsten Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Die praktische Umsetzung des Fallbeispiels wird danach erläutert. Zum Schluss dieser Arbeit werden Sicherheits-Merkmale und die Bedeutung für die Wirtschaft betrachtet.
+Diese Master-Arbeit betrachtet die Möglichkeiten der Virtualisierung im Embedded Bereich anhand eines Fallbeispiels. Dieses Fallbeispiel wird im nächsten Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Die praktische Umsetzung des Fallbeispiels wird danach erläutert. Zum Schluss werden einige Aspekte werden einige Aspekte dieser Arbeit analysiert und die Relevanz für die Wirtschaft betrachtet.
 
 
 
@@ -231,8 +231,8 @@ Diese Master-Arbeit betrachtet die Möglichkeiten der Virtualisierung anhand ein
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Vorstellung Fallbeispiel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Gesamtes Modell darstellen
-\chapter{Fallbeispiel und Planung}
-\label{sec:FallbeispielPlanung}
+\chapter{Motivation und Planung}
+\label{sec:MotivationPlanung}
 % TODO
 Das in dieser Master-Arbeit betrachtete Praxis-Beispiel ist eine Scheinwerfer-Steuerung inklusive User-Interface. Dies ist bewusst als minimal Beispiel konzipiert um den Fokus auf die Virtualisierung zu legen.
 
@@ -257,7 +257,7 @@ Aus dieser Architektur-Beschreibung lassen sich vier Kern-Bereiche dieser Master
 Hierbei ist zu beachten, dass das aktivieren des Netzwerkmanagements erst möglich ist, sobald eine Kommunikation zwischen Autosar und der Hardware möglich ist.
 
 % TODO: Projektplanung
-Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes ein Monat Arbeit vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen.
+Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes ein Monat Arbeit vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen. Jede Phase enthält die Vorbereitung, Umsetzung und Dokmentation des entsprechenden Bereichs.
 
 
 \begin{figure}[ht]
@@ -336,7 +336,7 @@ Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Daz
 
 \subsection{Vorteile}
 % TODO Vorteile
-Der Einsatz von Virtualisierung hat eine Reihe von Vorteilen\cite{emb_hyp}.
+Der Einsatz von Virtualisierung hat eine Reihe von Vorteilen\cite{wiki:emb_hyp}.
 
 \paragraph{Betriebssystem Unabhängigkeit}
 Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene Betriebssysteme komplett parallel zu verwenden und die stärken der verschiedenen Systeme zu nutzen. So wird dieser Vorteil zum Beispiel bei COQOS genutzt um Autosar und Android parallel lauffähig zu haben. Dadurch kann Autosar Zeit- und Sicherheitskritische Aufgaben und gleichzeitig Android den Infotainment Bereich übernehmen.
@@ -387,6 +387,8 @@ Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitekt
 % TODO
 
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit ISO 26262 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Sicherheit ISO 26262}
 \label{sec:Sicherheit}
@@ -408,10 +410,7 @@ Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitekt
 
 
 
-% Virtualisierung Linux/Autosar (Erst auf PC; Embedded betrachtet)
-% Kommunikation zwischen Linux und Autosar
-% Kommunikation Autosar und Scheinwerfer
-%   Zugriff auf Hardware (Netzwerkmanagment)
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Virtualisierung}
@@ -427,7 +426,49 @@ Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitekt
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation Linux und Autosar}
 \label{sec:Kommunikation_L_A}
-% TODO
+Eine Kommunikation zwischen Linux und Autosar kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozess-Kommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Mem bekannt. Diese stehen jedoch unter Autosar nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bus-Systeme wie zum Beispiel LIN oder Flexray sind auch denkbar werden jedach im weiteren nicht näher untersucht. Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriff auf System ermöglichen die keine CAN-Schnittstelle besitzen. Vor- und Nachteile der Techniken sind im folgenden aufgeführt.
+
+% TODO: hieraus eine Tabelle machen oder vielleicht als texte schreiben?!
+\begin{itemize}
+    \item CAN
+    \begin{itemize}
+        \item[$+$] Standard
+        \item[$+$] Echtzeitfähig durch Arbitrierung
+        \item[$-$] Linux benötigt vollen CAN Zugriff
+        \item[$-$] Jedes Linux System CAN-Hardware (Kosten)
+    \end{itemize}
+    \item Ethernet
+    \begin{itemize}
+        \item[$+$] Standard
+        \item[$+$] Hohe Übertragungsrate
+        \item[$+$] Autosar soll "of the shelf"-TCP/IP-Stack verwenden der auch zu Linux kompatibel sein kann\cite[S. 21]{autosar_eth}
+        \item[$-$] Kollisionen/Latenz und damit nur bedingt Echtzeitfähig
+        \item[$-$] Benötigt Autosar 4.0
+    \end{itemize}
+    \item VCAN
+    \begin{itemize}
+        \item[$+$] Baut auf Ethernet auf
+        \item[$+$] Gut umsetzbar im Evaluations-Prozess
+        \item[$+$] Eigene "Logik" lässt sich im Gateway implementieren (Firewall, Kommunikations Matrix)
+        \item[$-$] Nicht geeignet für Prouktiv-Systeme
+        \item[$-$] Auf Elektrobit tresos beschränt
+        \item[$-$] EB Gateway Protokoll muss implementiert werden
+    \end{itemize}
+\end{itemize}
+
+% Warum VCAN?!
+Sowohl die Kommunikation via Ethernet als auch CAN sind in diesem Projekt nicht weiter relevant, da beide nicht in der verwendeten Version 3.1 von WinCore zur Verfügung stehen. Somit wird in dieser Arbeit der VCAN betrachtet. Dieser ist einfach und flexibel und damit vor allem in den ersten Phasen eines Projektes von Vorteil.
+
+% Deswegen VCAN-API geschrieben
+Im Rahmen dieser Master-Arbeit wurde eine VCAN-API in Python entworfen die sowohl das Senden als auch Empfangen von CAN-Botschaften ermöglicht. Zusätzlich wurde die Funktionalität des von Elektrobit bereitgestellten Closed-Source VCAN-Gateways Reverse-Engineered werden. Lediglich die Anbindung an die PCAN-Hardware fehlt zur Zeit. Im folgenden Kapitel wird die API näher beschrieben. Der Quellcode steht unter der LGPL\footnote{Lizenz-Bedingung zu finden unter: \url{http://www.gnu.org/licenses/lgpl-3.0.txt}} und ist im Internet\footnote{VCAN-API Git Repository: \url{https://github.com/erebos42/VCAN_API}} zu finden.
+
+
+\subsection{Python VCAN-API}
+% Beschreibung der VCAN API
+
+
+
+
 
 
 
@@ -435,6 +476,8 @@ Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitekt
 \section{Kommunikation Autosar und Scheinwerfer}
 \label{sec:Kommunikation_A_S}
 % TODO
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -446,19 +489,32 @@ Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitekt
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Theoretischer Produkt Lifecycle %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Wie könnte das erarbeitete sinnvoll in der Wirtschaft umgesetzt werden?!
-\section{Theoretischer Produkt Lifecycle}
-\label{sec:Lifecycle}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Analyse des Fallbeispiels %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\chapter{Analyse des Fallbeispiels}
+\label{sec:Beispiel_Analyse}
 % TODO
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Relevanz für die Wirtschaft %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Wie könnte das erarbeitete sinnvoll in der Wirtschaft umgesetzt werden?!
+\section{Relevanz für die Wirtschaft}
+\label{sec:Wirtschaft}
+% TODO
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Benchmark und Betrachtung der Echtzeitfähigkeit %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+\section{Benchmark und Betrachtung der Echtzeitfähigkeit}
+\label{sec:Benchmark}
+% TODO
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit bei Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\chapter{Sicherheitsbetrachtung des Fallbeispiels}
+\section{Sicherheitsbetrachtung des Fallbeispiels}
 \label{sec:Sicherheit_Beispiel}
 % TODO
 
