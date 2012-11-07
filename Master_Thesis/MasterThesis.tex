@@ -7,6 +7,7 @@
 %% - Cite auf mein GitHub ändern oder so?!
 %% - Portabilität PC VM auf embedded Hypervisor
 %% - Relevanz für Testen und Entwicklungsprozess
+%% - Autosar oder AUTOSAR?!
 
 
 \documentclass[
@@ -233,7 +234,11 @@ Diese Master-Arbeit betrachtet die Möglichkeiten der Virtualisierung im Embedde
 % Gesamtes Modell darstellen
 \chapter{Motivation und Planung}
 \label{sec:MotivationPlanung}
-% TODO
+% Motivation für Autosar und Virtualisierung
+% Wodurch werden Systeme komplexer [SE_Autosar, Seite 11]
+% Ein System partitionieren [SE_Autosar, Seite 27]
+
+% Beispiel in dieser Arbeit
 Das in dieser Master-Arbeit betrachtete Praxis-Beispiel ist eine Scheinwerfer-Steuerung inklusive User-Interface. Dies ist bewusst als minimal Beispiel konzipiert um den Fokus auf die Virtualisierung zu legen.
 
 \begin{figure}[ht]
@@ -335,37 +340,42 @@ Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Daz
 
 
 \subsection{Vorteile}
-% TODO Vorteile
+% TODO Sollten vielleicht ein paar Punkte gestrichen werden?!
 Der Einsatz von Virtualisierung hat eine Reihe von Vorteilen\cite{wiki:emb_hyp}.
 
 \paragraph{Betriebssystem Unabhängigkeit}
-Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene Betriebssysteme komplett parallel zu verwenden und die stärken der verschiedenen Systeme zu nutzen. So wird dieser Vorteil zum Beispiel bei COQOS genutzt um Autosar und Android parallel lauffähig zu haben. Dadurch kann Autosar Zeit- und Sicherheitskritische Aufgaben und gleichzeitig Android den Infotainment Bereich übernehmen.
+Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene Betriebssysteme komplett parallel zu verwenden und die stärken der verschiedenen Systeme zu nutzen. So wird dieser Vorteil zum Beispiel bei COQOS genutzt um Autosar und Android parallel lauffähig zu haben. Dadurch kann Autosar Zeit- und Sicherheitskritische Aufgaben übernehmen und gleichzeitig Android den Infotainment Bereich verwalten.
 
 \paragraph{Sicherheit}
-% Safety und Security
-%   Hypervisor als Watchdog und evtl als Firewall?!
-%   Redundanz (Flugzeug...)
+Eine strickte Trennung durch Virtualiserung kann eine erhöhte Sicherheit bedeuten. Hierbei ist sowohl die Sicherheit vor Angriffen als auch Ausfällen gemeint. Zum einen ist eine Redundanz der Applikationen möglich. Diese Technik wird zum Teil in hochsicherheits Anwendungen, wie zum Beispiel Flugzeugen, genutzt um Code-Fehler auszuschließen. Es könnten also mehrere Applikationen mit unterschiedlichen Implementationen in verschiedenen VMs laufen.
+
+Eine weitere Möglichkeit durch Virtualisierung die Sicherheit zu erhöhen ist das einsetzen eines Watchdog-Systems auf Hypervisor-Ebene. Dieser kann das korrekte Verhalten der VMs überprüfen und bei Bedarf ein System neu starten. Auch kann auf dieser Ebene eine Art Firewall implementiert werden. Diese könnte kontrollieren welche VMs welche Nachrichten senden und empfangen darf. Damit wird verhindert das zum Beispiel das Infotainment-System eine Motor-Relevante Botschaft auf den CAN-Bus schickt.
 
 \paragraph{Wiederverwenden von altem Code}
+Durch die Möglichkeit verschiedene Betriebssysteme einzusetzen, kann alter Code wiederverwendet werden. Damit kann die Zeit der Entwicklung reduziert werden und erst später das System auf ein neues Betriebssystem portiert werden.
 
-\paragraph{IP Schutz}
+\paragraph{IP Schutz und Trennung von Software Lizenzen}
+Der Schutz von Intellectual Property spielt in der heutigen Wirtschaft eine große Rolle, jedoch bietet die Open-Source Welt einige Interessante Möglichkeiten. Um diese beiden Welten zu trennen und trotzdem von beidem zu profitieren, können unterschiedliche VMs verwendet werden. So ist es denkbar eine VM für jeglichen GPL-Code zu verwenden und die Kommunikation über Ethernet zu gestalten. Damit muss der eigene Code nicht auch unter der GPL freigegeben werden da nicht gegen GPL-Code gelinkt wurde.
+% TODO: OEMs brauchen nur VM liefern...
 
-\paragraph{Höhere Maximal Performance}
-
-\paragraph{Trennung der Software Lizenzen}
-
-\paragraph{Kürzere Entwicklungszeiten}
+% TODO: ergibt sich aus oberen Punkten:
+%\paragraph{Kürzere Entwicklungszeiten}
 
 \paragraph{Hypervisor klein und robust}
 % kann theoretisch formal bewiesen werden
-
+Ein im Embedded Bereich eingesetzter Hypervisor kann klein und robust sein, da die meißten der aus der Destop-Virtualisierung bekannten Techniken nicht benötigt werden. Daraus folgt das ein Embedded Hypervisor sehr kompakt sein kann und damit gut optimiert werden kann. Theoretisch ist es sogar möglich diesen Formal zu beweisen und somit auf dieser Ebene Sicherheit zu garantieren.
 
 \subsection{Nachteile}
+%TODO
+
+%\paragraph{Größere Angriffsfläche}
+
 
 \paragraph{Performance Overhead}
+Durch das Einsetzen eines Hypervisors und mehreren VMs kann es zu einem Performance Overhead kommen. Dieser kann jedoch minimiert werden indem die Hardware entsprechend gewählt wird. So bieten moderne CPU-Architekturen verschiedene Virtualisierungs-Eweiterungen mit denen der Overhead minimiert wird. Auch eine angemessene Anzahl der CPU-Kerne kann den Overhead minimieren indem Preemption zwischen den VMs verhindert wird.
 
-\paragraph{Weniger Hardware Redundanz}
-
+\paragraph{Weniger Hardware-Redundanz}
+Da sich die Anzahl der Steuergeräte durch Virtualisierung verringert, verringert sich auch die Hardware-Redundanz. In dem Extrem-Beispiel indem nur noch ein Steuergerät im Auto vorhanden wäre, würde ein Single-Point-of-Failure existieren und so die Sicherheit stark gefährden. Auf der anderen Seite könnte dieser Nachteil jedoch durch Virtualisierung auch stark verbessert werden. So ist es möglich das ein anderes Steuergerät einen Ausfall erkennt und direkt eine Ersatz-VM startet um so die Sicherheit weiter zu gewährleisten. 
 
 
 
@@ -378,6 +388,9 @@ Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene 
 Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitektur die Hauptsächlich in der Automobil-Industrie verwendet wird. Autosar, kurz für AUTomotive Open System ARchitecture, wurde gemeinsam von einer Reihe von Firmen seit etwa 2003 entwickelt. Zu den Kern Mitgliedern gehören zur Zeit BMW, Bosch, Toyota, Volkswagen und eine Reihe anderer.
 % TODO
 % Erbe von OSEK/VDX
+% Autosar Leitspruch unterbringen
+% Kernpunkt: Interfaces
+% JasPar (zwischen Legacy und Auosar)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Netzwerk Managment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -499,11 +512,19 @@ Im Rahmen dieser Master-Arbeit wurde eine VCAN-API in Python entworfen die sowoh
 % TODO
 
 
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Relevanz für die Wirtschaft %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Wie könnte das erarbeitete sinnvoll in der Wirtschaft umgesetzt werden?!
 \section{Relevanz für die Wirtschaft}
 \label{sec:Wirtschaft}
 % TODO
+% Es gibt bereits einige Embedded Hypervisor
+% Multi-Core CPUs und leistungsfähige SOCs sind billig
+% Sicherheit (ISO 26262) erfordert viel aufmerksamkeit
+% Kurze "time-to-market" durch Evaluation auf Windows/Linux Platformen
+% 
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Benchmark und Betrachtung der Echtzeitfähigkeit %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -511,6 +532,8 @@ Im Rahmen dieser Master-Arbeit wurde eine VCAN-API in Python entworfen die sowoh
 \section{Benchmark und Betrachtung der Echtzeitfähigkeit}
 \label{sec:Benchmark}
 % TODO
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit bei Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
