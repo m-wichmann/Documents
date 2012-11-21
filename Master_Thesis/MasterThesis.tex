@@ -415,6 +415,8 @@ Der Entwurf des Systems sollte genau überlegt sein, da dieser Grundstein für d
 
 Als Austauschformat wird XML, mit der Dateiendung "`.arxml"' verwendet. Es ist möglich nur einen Teil des Systems in eine XML-Datei zu exportieren um zum Beispiel einem OEM nur die für ihn relevante Teile offenzulegen.
 
+Innerhalb dieses Projektes wird Systemdesk von der Firma dSpace verwendet.
+
 \paragraph{Kommunikations-Informationen}
 Um eine Kommunikation zwischen mehreren Komponenten zu ermöglichen müssen entsprechende Informationen geliefert werden. Hierbei existieren zum Beispiel die Formate DBC, FIBEX und LDF. Obwohl es sich bei DBC und LDF prinzipiell um Bus-Systemabhängige Formate handelt, spielt dies bei Autosar keine Rolle. So wird im Autosar-Stack die Kommunikations derart abstrahiert, sodass Botschaften transparent über unterschiedliche Bus-Systeme oder auch innerhalb einer ECU werden können.
 
@@ -425,28 +427,29 @@ Die eigentliche Implementation der Funktionalität findet im Quellcode, beziehun
 
 \paragraph{Autosar Entwicklungswerkzeug}
 % Trennung zwischen den ...
+An zentraler Stelle in der Abbildung steht das "`Autosar Entwicklungswerkzeug"'. Dies besteht genau genommen aus mindestens drei Teilen und muss nicht zwingend komplett von einem Hersteller stammen. So gibt es einige Implementationen die nur einen Teil des Aufgabenbereichs abdecken. Die drei nötige Komponenten sind:
+
+\begin{itemize}
+    \item Basis-Software Implementation
+    \item Basis-Software Konfigurator
+    \item Runtime-Enviroment Generator
+\end{itemize}
+
 
 \paragraph{VFB und RTE}
-
-\paragraph{Basis Software}
-
-
-
-
-
-
-% System-Entwurf
-% - System-Description
-% - UML
-% - SW-C
-
-% VFB und RTE
 %   - Communication mechanisms
 
-% BSW und Stack
+
+\paragraph{Basis Software}
+% Wichtigste Module
 %   - OS (OSEK as basis)
 %   - MCAL
 %   - Complex Driver
+
+
+
+
+
 
 
 
@@ -467,10 +470,17 @@ Die eigentliche Implementation der Funktionalität findet im Quellcode, beziehun
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Netzwerk Managment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Netzwerk Managment (!)
-\section{Netzwerk Managment}
-\label{sec:Netzwerk Managment}
-% TODO
+\section{Netzwerk-Managment}
+\label{sec:Netzwerk-Managment}
+Um den Zustand eines Bus-Systems synchron verändern zu können, wird das sogenannte Netzwerk-Managment (kurz NM) verwendet. Hierbei wird mittels spezieller Nachrichten der gewünschte Bus-Zustand mitgeteilt. So kann zum Beispiel ein Bus-System schlafen gelegt werden, wenn alle relevanten Steuergeräte sich ebenfalls schlafen gelegt haben. Das Netzwerk-Managment-Prinzip ist vor allem nützlich um Energie zu sparen. Außerdem können hiermit Fehler vermieden werden. Das ist zum Beispiel bei dem Start eines Autos nützlich. Hier existieren Abhängigkeiten zwischen den ECUs. Damit eine ECU ihren Betrieb nicht vor allen anderen beginnt, und somit eventuell eine fehlende Abhägkeit erzeugt wird, können alle Systeme in einem Bereit-Zustand warten. Wenn nun alle ECUs bereit sind kann das gesamte System synchron in einen aktiven Zustand übergehen.
 
+Die Implementation eines NM-Systems ist offen gelassen. So existieren verschiedene Varianten zum Beispiel bei CANopen, OSEK/VDX und Autosar. Das Prinzip ist jedoch überall ähnlich. Nachrichten werden auf einem Braodcast-Kanal umher geschickt und bestimmen den aktuellen Zustand. Mittels eines Statecharts kann das Bus-System zwischen den möglichen Zuständen wechseln. Generell gibt es damit drei Modi: Normal, Low-Power und Sleep. Zusätzlich können benötigte Zustände, wie zum Beispiel "`Initialisierung abgeschlossen"' eingeführt werden.
+
+Zudem können zwei Konzepte des Netzwerk-Managements unterschieden werden. Bei dem indirekten Monitoring werden Applikations-Botschaften beobachtet die im Laufe des Betriebs ohnehin gesendet werden. Diese Art des NM bedingt das jeder Bus-Knoten zyklisch Nachrichten sendet. Außerdem ist hierbei eine umfangreiche Konfiguration nötig, da bestimmt werden muss, welche Nachrichten bei welchem Knoten als NM-Nachrichten verwendet werden sollen.
+
+Das zweite Konzept ist das direkte Monitoring. Hierbei werden von jedem Bus-Teilnehmer dedizierte Botschaften gesendet die den gewüsnchten Bus-Status mitteilen. Um Nachrichten-Bursts zu vermeiden wird der Bus als logischer Ring mit NM-Token gesehen. Hierdurch hat jeder Bus-Knoten einen definierten Vorgänger und Nachfolger.
+
+Das Netzwerk-Managment ist bei Autosar in zwei Schichten unterteilt. Das Modul Nm ist für ein generisches Netzwerk-Managment verantwortlich, während Module wie CanNm, FrNm, LinNm und UdpNm die Bus-Abhängige Verwaltung übernehmen. Die explizite Unterstützung von OSEK-NM wurde mit Autosar 4.0 entfernt. Diese kann jedoch noch durch eigene Implementierungen ermöglicht werden.
 
 
 
@@ -492,6 +502,8 @@ Die eigentliche Implementation der Funktionalität findet im Quellcode, beziehun
 \chapter{Umsetzung des Fallbeispiels}
 \label{sec:Umsetzung_Fallbeispiel}
 % TODO
+
+
 
 
 
@@ -545,14 +557,18 @@ Eine Kommunikation zwischen Linux und Autosar kann auf verschiedene Wege erfolge
 Sowohl die Kommunikation via Ethernet als auch CAN sind in diesem Projekt nicht weiter relevant, da beide nicht in der verwendeten Version 3.1 von WinCore zur Verfügung stehen. Somit wird in dieser Arbeit der VCAN betrachtet. Dieser ist einfach und flexibel und damit vor allem in den ersten Phasen eines Projektes von Vorteil.
 
 % Deswegen VCAN-API geschrieben
-Im Rahmen dieser Master-Arbeit wurde eine VCAN-API in Python entworfen die sowohl das Senden als auch Empfangen von CAN-Botschaften ermöglicht. Zusätzlich wurde die Funktionalität des von Elektrobit bereitgestellten Closed-Source VCAN-Gateways Reverse-Engineered werden. Lediglich die Anbindung an die PCAN-Hardware fehlt zur Zeit. Im folgenden Kapitel wird die API näher beschrieben.
+Im Rahmen dieser Master-Arbeit wurde ein VCAN-Gatway in Python entworfen, das sowohl das Senden als auch Empfangen von CAN-Botschaften ermöglicht. Zusätzlich wurde die Funktionalität des von Elektrobit bereitgestellten Closed-Source VCAN-Gateways Reverse-Engineered und leicht erweitert. Im folgenden Kapitel wird die API näher beschrieben.
 
 % Der Quellcode steht unter der LGPL\footnote{Lizenz-Bedingung zu finden unter: \url{http://www.gnu.org/licenses/lgpl-3.0.txt}} und ist im Internet\footnote{VCAN-API Git Repository: \url{https://github.com/erebos42/VCAN_API}} zu finden.
 
 
-\section{VCAN-API}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% VCAN-API %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{VCAN-Gateway}
+\label{sec:VCAN_Gateway}
 % Beschreibung der VCAN API
+Da das VCAN-Gateway von Elektrobit Closed-Source ist, und damit Änderungen und Erweiterungen nur von Elektrobit vorgenommen werden können, wurde im Rahmen dieser Arbeit eine Alternative entworfen. Als Programmiersprache wurde hier Pyhton gewählt, da bereits Erfahrung hiermit vorhanden ist und eine schnelle Entwicklung möglich ist. Außerdem ist hier zu erkennen das eine Kompplung zwischen zwei Bereichen entsteht. Zum einen die Embedded Welt inklusive CAN-Bus in der fast ausschließlich Assembler, C und C++ vorherschen, und auf der anderen Seite eine Hoch- und Skriptsprache die vor allem einfach und umfangreich ist.
 
+Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, und dem Frontend, bestehend aus dem eigentlichen Gateway und dem VCAN-Viewer.
 
 
 
@@ -563,6 +579,7 @@ Im Rahmen dieser Master-Arbeit wurde eine VCAN-API in Python entworfen die sowoh
 \section{Kommunikation Autosar und Scheinwerfer}
 \label{sec:Kommunikation_A_S}
 % TODO
+% vielleicht auch Aufbau des neuen Steuergeräts in dieses Kapitel
 
 
 
@@ -656,6 +673,10 @@ Wolfenbüttel, den % TODO
 
 \chapter{Beigelegte CD}
 \label{sec:BeigelegteCD}
+
+
+
+\include{appendix}
 
 
 

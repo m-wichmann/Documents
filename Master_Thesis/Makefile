@@ -19,5 +19,6 @@ clean:
 	$(REMOVE) $(TARGET).toc
 	$(REMOVE) $(TARGET).bbl
 	$(REMOVE) $(TARGET).blg
+	$(REMOVE) appendix.aux
 
 .PHONY: all clean
