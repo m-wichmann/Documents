@@ -8,6 +8,8 @@
 %% - Portabilität PC VM auf embedded Hypervisor
 %% - Relevanz für Testen und Entwicklungsprozess
 %% - Autosar oder AUTOSAR?!
+%% - Ethernet Kosten im Gegensatz zu CAN? Vorteile/Nachteile?
+%% - Autosar MISRA-Konform? 
 
 
 \documentclass[
@@ -485,9 +487,93 @@ Das Netzwerk-Managment ist bei Autosar in zwei Schichten unterteilt. Das Modul N
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit ISO 26262 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sicherheit ISO 26262}
+\section{Funktionale Sicherheit nach ISO 26262}
 \label{sec:Sicherheit}
 % TODO
+% - FuSi im Bezug auf mein Beispiel oder allgemein Autosar und dann in welches Kapitel?!
+Der seit 1998 existierende Standard DIN EN 61508 mit dem Namen "`Funktionale Sicherheit sicherheitsbezogener elektrischer/elektronischer/programmierbarer elektronischer Systeme"' gilt als Grund-Norm für funktionale Sicherheit. Da diese jedoch für den Automobil-Bereich zum Teil unklar definiert ist, musste eine Erweiterung geschaffen werden. Als Beispiel für eine Unklarheit kann hier der in der DIN 61508 definierte Produktzyklus betrachtet werden. Dieser endet mit dem Aufstellen des Produktes wie es zum Beispiel bei einer Chemie-Anlagen der Fall ist. Im Automobil-Bereich folgt jedoch auf das Fertigstellen des Produktes, die Serien-Produktion, der Kundendienst und zum Schluss die Außerbetriebname. Daher wurde 2011 die ISO/DIS 26262 freigegeben. In dieser Norm werden genau diese Punkte abgedeckt und Bereiche wie zum Beispiel Hardware und Software Entwicklung näher betrachtet.
+
+Funktionale Sicherheit versucht allgemein einen methodischen Ansatz zur Absicherung von Systemen zu schaffen. Hierzu werden Anforderungen und Vorgehensweisen beschrieben um die Sicherheits-Eigenschaften möglichst Objektiv betrachten zu können. Der Begriff funktionale Sicherheit beschreibt lediglich ein Konzept. Die Normen ISO 26262 und DIN 61508 stellen konkrete Implementationen dieses Konzeptes dar. Dieses Kapitel basiert vor allem auf \cite{iso26262} und \cite{iso26262_robuste}.
+
+\subsection{Sicherheitslebenszyklus}
+\label{sec:ISO26262_lebenszyklus}
+
+% TODO: dieses Bild vielleicht als wrapfigure?!
+\begin{figure}[H]
+\includegraphics[width=0.75\textwidth]{ISO_26262_Lifecycle}
+\caption{Sicheitslebenszyklus nach ISO 26262\cite{iso26262}}
+\label{fig:lifecycle}
+\end{figure}
+
+Abbildung \ref{fig:lifecycle} zeigt den Sicherheitslebenzyklus nach ISO 26262. Dieser stellt eine konkrete Interpretation des Produktlebenszyklus nach DIN 61508 dar. Die im Bild angegebenen Nummerierungen verweisen auf die jeweiligen Kapitel in der Norm. 
+
+Der Lebenszyklus lässt sich in drei Phasen aufteilen. In der \emph{Concept-Phase} werden die Produkt-Anforderungen definiert. Zusätzlich wird hier eine Gefährdungsanalyse und Risikoeinschätzung vorgenommen und ein Sicherheitsplan zur Funktionalen Sicherheit entworfen der alle weiteren Phasen abdeckt.
+
+In der Zweiten Phase, \emph{Product Development}, wird das eigentliche Produkt entworfen. Der Entwurf ist hier in die groben Abschnitte Systementwurf, Hardwareentwurf und Softwareentwurf gegliedert. Am Schluss der Entwicklungsphase steht die Produkt Veröffentlichung. Für alle Abschnitte sind den jeweiligen Kapitel der Norm genauere Informationen zu finden.
+
+Die letzte Phase, \emph{After SOP}\footnote{SOP steht für Start of Production}, betrachtet die Produktion und Auslieferung der Produkte. Der zu Beginn entworfene Sicherheitsplan muss während aller Phasen verbessert und erweitert werden. Dabei muss zu jedem Zeitpunkt Nachvollziehbarkeit und Nicht-Abstreitbarkeit gewährleistet sein. Das bedeutet das jederzeit bekannt ist wer, wann, warum, welche Änderungen vorgenommen hat. Während aller Phasen des Projektes können Reviews, Audits und Sicherheitsassessments durchgeführt werden.
+
+Der genaue Umfang des Managements der Funktionalen Sicherheit wird im Standard nicht festgelegt. Dieser hängt von der Art und Größe des Projektes ab und muss zu Beginn in der Konzept-Phase definiert werden. Einige geforderte Dokumente könnten zum Beispiel sein:
+
+\begin{itemize}
+    \item Ausbildungs- und Qualifizierungsnachweise
+    \item Sicherheitsplan
+    \item Projektplan/Projekthandbuch inklusive der Planung der sicherheitsbezogenen Vorgänge
+    \item Review-, Audit- und Assessmentplan
+    \item Sicherheitsnachweise
+\end{itemize}
+
+\subsection{Gefährdungsanalyse und Risikoeinschätzung}
+\label{sec:ISO26262_GundR}
+Einer der Kernpunkte der ISO 26262 ist die Gefährdungsanalyse und Risikoeinschätzung. Hierzu werden Vorgehensweisen beschrieben mit Hilfe derer verschiedene Fahrsituationen auf mögliche Fehler untersucht werden können und demeptsprechend Sicherheitseinstufungen vorgenommen werden können. Hierzu wird folgender Ablauf vorgeschrieben:
+
+\begin{itemize}
+    \item Ermitteln aller relevanten Fahrzeugzustände und Fahrsituationen
+    \item Ermitteln möglicher funktionaler Fehler
+    \item Bewerten der Risiken jeder Gefährdungssituation in allen Fahrsituationen
+    \item Festlegen der notwendigen Risikominderung (ASIL)
+    \item Ableiten der Sicherheitsziele
+\end{itemize}
+
+Um nun eine Gefährdungsanalyse durchzuführen wird zu Beginn ein Katalog von Fahrsituationen und möglichen Fehlern erstellt. Anschließend werden alle Fehler aufgrund folgender Eigenschaften bewertet.
+
+\begin{itemize}
+    \item Häufigkeit der Fahrsituation (Exposure E; E0 bis E4)
+    \item Schwere eines möglichen Schadens (Severity S; S0 bis S3)
+    \item Beherrschabrkeit durch den Fahrer (Controllability C; C0 bis C3)
+\end{itemize}
+
+Aus diesen drei Eigenschaften wird nun über eine im Standard definierte Tabelle ein \emph{automotive safety integrity level} (ASIL) abgeleitet. Dieser kann die Werte QM, A, B, C und D annehmen. Hierbei steht A für die niedrigsten Anforderungen und D für die höchsten. Die Klasse QM gibt an, dass keine Maßnahmen zur Risikominderung nötig sind.
+
+Im letzten Schritt werden aus dem ASIL Sicherheitsziele abgeleitet. Diese sind den Gefährdungen und Konsequenzen entsprechend zu wählen und im Sicherheitsplan zu beschreiben.
+
+
+\subsection{Produkt Entwicklung}
+\label{sec:ISO26262_produkt_entwicklung}
+Auf genau Prozesse bei der Produkt Entwicklung soll an dieser Stelle nicht eingegangen werden. Allgemein ist jedoch zu sagen, dass die ISO 26262 einige Vorgaben und Empfehlung macht die bei steigendem ASIL an Umfang zunehmen. So können im Bereich der Softwareentwicklung bei ASIL A oder B Anweisungsüberdeckende Tests ausreichend sein, während bei ASIL D umfangreiche Tests nach dem MC/DC\footnote{Modified Condition/Decision Coverage} Prinzip gefordert sind. Im Hardware-Bereich werden außerdem Anforderungen an die Ausfallrate der Systeme gegeben. Um diese zu bestimmen definiert der Standard eine Reihe von Metriken anhand derer die Berechnung der Ausfallraten erfolgt.
+
+Ein wichtiger Punkt der Norm kann außerdem unter dem Leit-Satz: "`bewährte Architekturen wiederverwenden"' zusammengefasst werden. Diese etwas vage Angabe kann verschieden interpretiert werden. Es kann jedoch Allgemein gesagt werden, das alle Standartisierten Techniken als bewährte Architekturen zu sehen sind. Dazu könnten zum Beispiel die ARM-Architektur, die CAN-Schnittstelle oder der POSIX-Standard gezählt werden. Auch Betriebssysteme und Systemarchitekturen wie OSEK/VDX und Autosar gehören hierzu.
+
+Neben den Anforderungen an den Entwicklungsprozess und das Endprodukt werden auch Bedingungen an die verwendeten Software-Werkzeuge gestellt. Diese und einige anderen Anforderungen und Empfehlungen sind unter dem Begriff "`Unterstützende Prozesse"' zusammengefasst. Die Qualifizierung von Software-Werkzeugen relevant, da Fehler nicht nur durch Selbstverschulden sondern auch durch Abhängigkeiten zu Dritt-Software entstehen können. Hierzu unterscheidet die Norm Software-Werkzeuge nach zwei Eigenschaften:
+
+\begin{itemize}
+    \item \emph{Tool Impact} (TI0, TI1): Die Wahrscheinlichkeit, durch eine Fehlfunktion des Werkzeugs eine Sicherheitsanforderung zu verletzen.
+    \item \emph{Tool Error Detection} (TD1 bis TD4): Die Wahrscheinlichkeit, eine Fehlfunktion des Werkzeugs zu verhindern oder zu erkennen.
+\end{itemize}
+
+Diese Eigenschaften bestimmen mittels einer Tabelle einen \emph{Werkzeugvertrauenslevel} (TCL, Tool Confidence Level). Dieser wird eingestuft von TCL1, Werkzeuge die Sicherheitsanforderungen wahrscheinlich nicht verletzen können, bis TCL4 als höchster Vertrauenslevel.
+% Beispiel Office, Code-Gen
+
+
+
+\subsection{Autosar und ISO 26262}
+\label{sec:ISO26262_autosar}
+% Warum relevant bei Autosar???
+%Damit stellen die genannten Techniken und die ISO 26262 Norm den aktuellen Stand der Technik und Wissenschaft dar. Dies ist vor allem rechtlich relevant. 
+% - Rechtliche Anforderung
+
+
+
 
 
 
@@ -612,7 +698,7 @@ Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, u
 % TODO
 % Es gibt bereits einige Embedded Hypervisor
 % Multi-Core CPUs und leistungsfähige SOCs sind billig
-% Sicherheit (ISO 26262) erfordert viel aufmerksamkeit
+% Sicherheit (ISO 26262) erfordert viel Aufmerksamkeit
 % Kurze "time-to-market" durch Evaluation auf Windows/Linux Platformen
 % 
 
@@ -623,6 +709,24 @@ Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, u
 \section{Benchmark und Betrachtung der Echtzeitfähigkeit}
 \label{sec:Benchmark}
 % TODO
+%
+% Teile sollten vielleicht in separate Kapitel?!
+%
+% - Echtzeitfähigkeit
+%   - WinCore
+%       - Jitter messen
+%       - Kann Windows Echtzeitfähig sein? Auch mit WinCore?
+%       - Wie verhält sich der Testaufbau unter Last? CPU-Last auf Windows/WinCore/Linux?
+%   - Ethernet
+%       - Verhalten unter Last?
+%   - Embedded Virt
+% - Overhead
+%   - WinCore
+% - Robustheit
+%   - Fehlerhaftes Steuergerät das z.B. dauernd sendet?!
+%   - Ethernet
+
+
 
 
 
@@ -676,6 +780,8 @@ Wolfenbüttel, den % TODO
 
 
 
+% This file contains sensitive information that is not shared on GitHub!!!
+% If you don't have the appendix.tex, then this line has to be deleted.
 \input{appendix}
 
 
