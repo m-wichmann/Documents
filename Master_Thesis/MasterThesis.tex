@@ -10,6 +10,7 @@
 %% - Autosar oder AUTOSAR?!
 %% - Ethernet Kosten im Gegensatz zu CAN? Vorteile/Nachteile?
 %% - Autosar MISRA-Konform? 
+%% - Virtualisierte Autosar-Komponente könnte LSMS ersetzen
 
 
 \documentclass[
@@ -491,6 +492,7 @@ Das Netzwerk-Managment ist bei Autosar in zwei Schichten unterteilt. Das Modul N
 \label{sec:Sicherheit}
 % TODO
 % - FuSi im Bezug auf mein Beispiel oder allgemein Autosar und dann in welches Kapitel?!
+% - Rückwirkungsfreiheit
 Der seit 1998 existierende Standard DIN EN 61508 mit dem Namen "`Funktionale Sicherheit sicherheitsbezogener elektrischer/elektronischer/programmierbarer elektronischer Systeme"' gilt als Grund-Norm für funktionale Sicherheit. Da diese jedoch für den Automobil-Bereich zum Teil unklar definiert ist, musste eine Erweiterung geschaffen werden. Als Beispiel für eine Unklarheit kann hier der in der DIN 61508 definierte Produktzyklus betrachtet werden. Dieser endet mit dem Aufstellen des Produktes wie es zum Beispiel bei einer Chemie-Anlagen der Fall ist. Im Automobil-Bereich folgt jedoch auf das Fertigstellen des Produktes, die Serien-Produktion, der Kundendienst und zum Schluss die Außerbetriebname. Daher wurde 2011 die ISO/DIS 26262 freigegeben. In dieser Norm werden genau diese Punkte abgedeckt und Bereiche wie zum Beispiel Hardware und Software Entwicklung näher betrachtet.
 
 Funktionale Sicherheit versucht allgemein einen methodischen Ansatz zur Absicherung von Systemen zu schaffen. Hierzu werden Anforderungen und Vorgehensweisen beschrieben um die Sicherheits-Eigenschaften möglichst Objektiv betrachten zu können. Der Begriff funktionale Sicherheit beschreibt lediglich ein Konzept. Die Normen ISO 26262 und DIN 61508 stellen konkrete Implementationen dieses Konzeptes dar. Dieses Kapitel basiert vor allem auf \cite{iso26262} und \cite{iso26262_robuste}.
@@ -561,19 +563,42 @@ Neben den Anforderungen an den Entwicklungsprozess und das Endprodukt werden auc
     \item \emph{Tool Error Detection} (TD1 bis TD4): Die Wahrscheinlichkeit, eine Fehlfunktion des Werkzeugs zu verhindern oder zu erkennen.
 \end{itemize}
 
-Diese Eigenschaften bestimmen mittels einer Tabelle einen \emph{Werkzeugvertrauenslevel} (TCL, Tool Confidence Level). Dieser wird eingestuft von TCL1, Werkzeuge die Sicherheitsanforderungen wahrscheinlich nicht verletzen können, bis TCL4 als höchster Vertrauenslevel.
-% Beispiel Office, Code-Gen
+Diese Eigenschaften bestimmen mittels einer Tabelle einen \emph{Werkzeugvertrauenslevel} (TCL, Tool Confidence Level). Dieser wird eingestuft von TCL1, Werkzeuge die Sicherheitsanforderungen wahrscheinlich nicht verletzen können, bis TCL4 als höchster Vertrauenslevel. So wird eine Textverarbeitungs-Software als TCL1 eingestuft, da diese selbst in schlimmsten Fällen nicht direkt Sicherheit des Endproduktes beeinflusst. Auf der anderen Seite sollte eine Code-Generierungs-Software vermutlich als TCL4 eingestuft werden, da eventuelle Fehler im resultierenden Code verherende Auswirkungen auf die Sicherheit haben können. Zudem können erzeugte Fehler hier nur durch umfangreiche Tests und Code-Reviews erkannt werden.
+
 
 
 
 \subsection{Autosar und ISO 26262}
 \label{sec:ISO26262_autosar}
-% Warum relevant bei Autosar???
-%Damit stellen die genannten Techniken und die ISO 26262 Norm den aktuellen Stand der Technik und Wissenschaft dar. Dies ist vor allem rechtlich relevant. 
-% - Rechtliche Anforderung
+% - Timing Protection, Memory Protection, Program Flow Monitoring
+% - Autosar Distributionen die ISO 26262 konform sind bzw. Konformitätsmodule bieten
+%   - MICROSAR (Vector Informatics)
+% - http://www.elektroniknet.de/automotive/technik-know-how/sicherheitselektronik/article/31185/2/Entwicklung_von_Steuergeraete-Basis-Software_nach_ISODIS_26262/
+% - http://www.elektronikpraxis.vogel.de/embedded-computing/articles/342436/
+% - Rückwirkungsfreiheit oder „Freedom from Interference“.
 
+Obwohl Autosar und die ISO 26262 auf den ersten Blick keinerlei direkte Verbindungen haben, zeigt sich im weiteren, dass beide Themen zusammen in den letzten Jahren und in der Zukunft stark an Relevanz gewinnen. Dies ergibt sich aus folgendem Auschnitt des Produkthaftungsgesetzes.
 
+% TODO: eines von diesen Zitaten auswählen...
+%\begin{quote}
+%Erforderlich sind die Sicherungsmaßnahmen, die nach dem im Zeitpunkt des Inverkehrbringens des Produkts vorhandenen neuesten Stand der Wissenschaft und Technik konstruktiv möglich sind [\dots] und als geeignet und genügend erscheinen, um Schäden zu verhindern [\dots].\cite{BGH_Urteil}
+%\end{quote}
 
+\begin{quote}
+Die Ersatzpflicht des Herstellers ist ausgeschlossen, wenn [\dots] der Fehler nach dem Stand der Wissenschaft und Technik in dem Zeitpunkt, in dem der Hersteller das Produkt in den Verkehr brachte, nicht erkannt werden konnte.\cite{ProdG}
+\end{quote}
+
+Da es sich bei Autosar und der ISO 26262 um den aktuellen Stand der Technik handelt, müssen diese Techniken eingesetzt werden, um Regress-Ansprüche vermeinden zu können und das Produkthaftungsgesetz zu befolgen. Dabei kann dies als Umstieg von OSEK/VDX und DIN 61508, gesehen werden. Beide Umstiege gleichzeitig durchzuführen ist ein umfangreicher Schritt, der viel Einsatz erfordert. 
+
+Da es sich bei Autosar um eine Komponenten- und Modul-orientierte Architektur handelt, lässt sich die ISO Norm gezielt auf einzelne Komponenten anwenden wie es auch im Sicherheits-Standard definiert ist. So können einzelne BSW-Module auf deren Risiko-Potenzial geprüft werden und diese anschließend einer Sicherheitsklasse zugeordnet werden. Daraufhin können die entsprechenden Sicherheitsvorkehrungen getroffen werden. Da dies jedoch sehr umfangreich sein kann ist es nicht praktikabel alle Module nach ISO 26262 zu zertifizieren. Vor allem da BSW-Module einfach getauscht und geupdatet werden können, wäre eine jedes mal eine neue Zertifizierung nötig. Diese Schwierigkeit wird von einigen Herstellern umgangen indem nur Teile der Basissoftware zertifiziert wird um damit die Kernpunkte der ISO 26262 abzudecken.
+
+% TODO: Quellen:
+% http://www.opensynergy.com/sites/default/files/media/sonstige/COQOS-Datasheet_En.pdf
+% http://ww.automotive.elektrobit.com/home/ecu-software/autosar/eb-tresos-product-line/eb-tresos-autocore.html
+% http://www.vector.com/vi_microsar_safe_26262_de.html
+Sowohl COQOS als auch EB tresos bieten ein ISO 26262 zertifiziertes OS-Modul an. Das Elektorbit OS-Modul ist dabei bis ASIL-D zertifiziert. Hierbei handelt es sich um Mikrokernel mit einer minimalen Funktionalität. Elektrobit bietet zusätzlich ein QM-OS-Modul an, das nicht nach ISO 26262 zertifiziert ist und somit nicht für sicherheitskritische Anwendungen geeignet ist. Eine Absicherung des OS-Moduls kann vor allem die Rückwirkungsfreiheit des Systems garantieren. Ob jedoch auch andere Punkte der ISO abgedeckt sind ist nicht klar. So findet ein Kernpunkt der Norm, die Kommunikation, vor allem in anderen Modulen (Com, PduR\dots) statt. Somit ist eine allgemeine Ende-zu-Ende-Absicherung der Kommunikation nicht möglich.
+
+Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 beinhaltet drei Module. Das Modul "`SafeExecution"' wird verwendet um Rückwirkungsfreiheit via Laufzeitüberwachung, Speicherschutz und Ablaufkontrolle zu gewährleisten. Dieses ähnelt dem Funktionsumfang der beiden bereits vorgestellten Modelle. Durch das Modul "`SafeCom"' wird zusätzlich eine Ende-zu-Ende-Absicherung der Inntra- und Inter-ECU-Kommunikation vorgenommen. Das dritte Modul, "`SafeSelfTest"', wird verwendet um eine Zyklische Überprüfung der Hardware zu ermöglichen.
 
 
 
@@ -616,7 +641,7 @@ Eine Kommunikation zwischen Linux und Autosar kann auf verschiedene Wege erfolge
     \item CAN
     \begin{itemize}
         \item[$+$] Standard
-        \item[$+$] Echtzeitfähig durch Arbitrierung
+        \item[$+$] Deterministisch durch Arbitrierung und Zyklische Sender
         \item[$-$] Linux benötigt vollen CAN Zugriff
         \item[$-$] Jedes Linux System CAN-Hardware (Kosten)
     \end{itemize}
