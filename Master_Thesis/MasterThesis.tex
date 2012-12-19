@@ -471,19 +471,32 @@ An zentraler Stelle in der Abbildung steht das "`Autosar Entwicklungswerkzeug"'.
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Netzwerk Managment %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Netzwerk Managment (!)
-\section{Netzwerk-Managment}
-\label{sec:Netzwerk-Managment}
-Um den Zustand eines Bus-Systems synchron verändern zu können, wird das sogenannte Netzwerk-Managment (kurz NM) verwendet. Hierbei wird mittels spezieller Nachrichten der gewünschte Bus-Zustand mitgeteilt. So kann zum Beispiel ein Bus-System schlafen gelegt werden, wenn alle relevanten Steuergeräte sich ebenfalls schlafen gelegt haben. Das Netzwerk-Managment-Prinzip ist vor allem nützlich um Energie zu sparen. Außerdem können hiermit Fehler vermieden werden. Das ist zum Beispiel bei dem Start eines Autos nützlich. Hier existieren Abhängigkeiten zwischen den ECUs. Damit eine ECU ihren Betrieb nicht vor allen anderen beginnt, und somit eventuell eine fehlende Abhägkeit erzeugt wird, können alle Systeme in einem Bereit-Zustand warten. Wenn nun alle ECUs bereit sind kann das gesamte System synchron in einen aktiven Zustand übergehen.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Netzwerk Management %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Netzwerk Management (!)
+\section{Netzwerk-Management}
+\label{sec:Netzwerk-Management}
+% TODO: evtl. Bild einfügen mit logischem Ring oder so
+Um den Zustand eines Bus-Systems synchron verändern zu können, wird das sogenannte Netzwerk-Management (kurz NM) verwendet. Hierbei wird mittels spezieller Nachrichten der gewünschte Bus-Zustand mitgeteilt. So kann zum Beispiel ein Bus-System schlafen gelegt werden, wenn alle relevanten Steuergeräte sich ebenfalls schlafen gelegt haben. Das Netzwerk-Management-Prinzip ist vor allem nützlich um Energie zu sparen. Außerdem können hiermit Fehler vermieden werden. Das ist zum Beispiel bei dem Start eines Autos nützlich. Hier existieren Abhängigkeiten zwischen den ECUs. Damit eine ECU ihren Betrieb nicht vor allen anderen beginnt, und somit eventuell eine fehlende Abhägkeit erzeugt wird, können alle Systeme in einem Bereit-Zustand warten. Wenn nun alle ECUs bereit sind kann das gesamte System synchron in einen aktiven Zustand übergehen.
 
-Die Implementation eines NM-Systems ist offen gelassen. So existieren verschiedene Varianten zum Beispiel bei CANopen, OSEK/VDX und Autosar. Das Prinzip ist jedoch überall ähnlich. Nachrichten werden auf einem Braodcast-Kanal umher geschickt und bestimmen den aktuellen Zustand. Mittels eines Statecharts kann das Bus-System zwischen den möglichen Zuständen wechseln. Generell gibt es damit drei Modi: Normal, Low-Power und Sleep. Zusätzlich können benötigte Zustände, wie zum Beispiel "`Initialisierung abgeschlossen"' eingeführt werden.
+Die Implementation eines NM-Systems ist offen gelassen. So existieren verschiedene Varianten zum Beispiel bei CANopen, OSEK/VDX und Autosar. Das Prinzip ist jedoch überall ähnlich. Nachrichten werden auf einem Braodcast-Kanal umher geschickt und bestimmen den aktuellen Zustand. Mittels eines Zustands-Modells kann das Bus-System zwischen den möglichen Zuständen wechseln. Generell gibt es damit drei Modi: Normal, Low-Power und Sleep. Zusätzlich können benötigte Zustände, wie zum Beispiel "`Initialisierung abgeschlossen"' eingeführt werden.
 
 Zudem können zwei Konzepte des Netzwerk-Managements unterschieden werden. Bei dem indirekten Monitoring werden Applikations-Botschaften beobachtet die im Laufe des Betriebs ohnehin gesendet werden. Diese Art des NM bedingt das jeder Bus-Knoten zyklisch Nachrichten sendet. Außerdem ist hierbei eine umfangreiche Konfiguration nötig, da bestimmt werden muss, welche Nachrichten bei welchem Knoten als NM-Nachrichten verwendet werden sollen.
 
-Das zweite Konzept ist das direkte Monitoring. Hierbei werden von jedem Bus-Teilnehmer dedizierte Botschaften gesendet die den gewüsnchten Bus-Status mitteilen. Um Nachrichten-Bursts zu vermeiden wird der Bus als logischer Ring mit NM-Token gesehen. Hierdurch hat jeder Bus-Knoten einen definierten Vorgänger und Nachfolger.
+Das zweite Konzept ist das direkte Monitoring. Hierbei werden von jedem Bus-Teilnehmer dedizierte Botschaften gesendet die den gewüsnchten Bus-Status mitteilen. Um Nachrichten-Bursts zu vermeiden wird der Bus als logischer Ring mit NM-Token gesehen. Hierdurch hat jeder Bus-Knoten einen definierten Vorgänger und Nachfolger. Wenn nun ein Knoten eine NM-Botschaft erhält, sendet dieser wiederum eine NM-Botschaft an seinen Nachfolger.
 
-Das Netzwerk-Managment ist bei Autosar in zwei Schichten unterteilt. Das Modul Nm ist für ein generisches Netzwerk-Managment verantwortlich, während Module wie CanNm, FrNm, LinNm und UdpNm die Bus-Abhängige Verwaltung übernehmen. Die explizite Unterstützung von OSEK-NM wurde mit Autosar 4.0 entfernt. Diese kann jedoch noch durch eigene Implementierungen ermöglicht werden.
+% TODO: NM ohne Master nochmal überlegen...
+Zudem kann Netzwerk-Management sowohl von einem Master gesetuert werden, als auch frei laufend betrieben werden. Falls ein Master vorhanden ist, kann dieser die Zustände im System sammeln und gezielt eine Zustands-Veränderung des Gesamt-Systems veranlassen. Dabei kann der Master auch einen Slave darstellen. Falls NM ohne einen Master implementiert ist, hängt der Zustand des Gesamt-Systems von allen Knoten ab. Somit wird ein Bus-Sleep-Mode erst erreicht, sobald alle Bus-Teilnehmer sich einig sind.
+
+Im folgenden werden die Netzwerk-Management-Konzepte von drei verschiedenen üblichen Systemen betrachtet. Dies soll einen Einblick in die übliche Praxis geben.
+
+\paragraph{CANopen}
+Die CANopen-Implementierung von Netzwerk-Management verwendet ein Master-gesteuertes System mit direktem Monitoring. Hierbei werden also vom Master gezielt NM-Botschaften gesendet um den Zustand eines Knotens zu verändern. Diese Botschaften bestehen aus zwei Byte, wobei ein Byte die ID des Ziel-Knotens, und ein Byte den gewünschten Zustand enthält. Mögliche Zustände sind: Init, Pre-operational, Operational und Stopped.
+
+\paragraph{OSEK/VDX}
+Sowohl direktes als auch indirektes Monitoring wird bei OSEK unterstützt. Dabei begrenzt sich das indirekte Monitoring offensichtlich auf zyklisch sendende Knoten. Beim direkten Monitoring wird ein logischer Ring mit Token eingesetzt. Dies soll mögliche Botschaften-Häufungen vermeiden, und somit die Bus-Last verringern. Das Zustands-Diagramm bei OSEK-NM ist umfangreicher als bei CANopen und soll an dieser Stelle nicht betrachtet werden. NM-Botschaften enthalten folgenden Daten: Quell-ID, Ziel-ID, OpCode und optionale Applikations-spezifische Daten. Dabei stellt das Feld OpCode den aktuellen Zustand beziehungsweise den gewünschten Zustand des Knotens dar. Die verwendeten Botschaften-IDs müssen zur Entwicklungszeit von Hand bestimmt werden.
+
+\paragraph{Autosar}
+Das Netzwerk-Managmenent unter Autosar ähnelt dem von OSEK und ist dementsprechende als direktes Monitoring ohne Master entworfen. Die explizite Unterstützung von OSEK-NM wurde mit Autosar 4.0 entfernt. Diese kann jedoch noch durch eigene Implementierungen ermöglicht werden. Ebenso wie bei OSEK-NM müssen die NM-IDs von Hand zur Entwicklungszeit bestimmt werden. Bei Autosar bedeutet dies zudem das sowohl in der System-Description als auch in der Kommunikations-Matrix die entsprechenden Werte eingepflegt werden müssen. Zudem müssen bei der ECU-Konfiguration die entsprechenden Com-Channel definiert und konfiguriert werden. Die Autosar-typische Modul-Struktur wird auch beim Netzwerk-Management verwendet. So stellt das Modul Nm ein generisches Netzwerk-Management zur Verfügung, während Module wie CanNm, FrNm, LinNm und UdpNm die Bus-Abhängige Verwaltung übernehmen. Die eigentliche Übertragung der Botschaften wird, wie auch bei Applikations-Botschaften, über Module wie Can und CanIf durchgeführt.
 
 
 
@@ -492,7 +505,7 @@ Das Netzwerk-Managment ist bei Autosar in zwei Schichten unterteilt. Das Modul N
 \label{sec:Sicherheit}
 % TODO
 % - FuSi im Bezug auf mein Beispiel oder allgemein Autosar und dann in welches Kapitel?!
-% - Rückwirkungsfreiheit
+% - Rückwirkungsfreiheit und Kernpunkte von ISO 26262 erwähnen
 Der seit 1998 existierende Standard DIN EN 61508 mit dem Namen "`Funktionale Sicherheit sicherheitsbezogener elektrischer/elektronischer/programmierbarer elektronischer Systeme"' gilt als Grund-Norm für funktionale Sicherheit. Da diese jedoch für den Automobil-Bereich zum Teil unklar definiert ist, musste eine Erweiterung geschaffen werden. Als Beispiel für eine Unklarheit kann hier der in der DIN 61508 definierte Produktzyklus betrachtet werden. Dieser endet mit dem Aufstellen des Produktes wie es zum Beispiel bei einer Chemie-Anlagen der Fall ist. Im Automobil-Bereich folgt jedoch auf das Fertigstellen des Produktes, die Serien-Produktion, der Kundendienst und zum Schluss die Außerbetriebname. Daher wurde 2011 die ISO/DIS 26262 freigegeben. In dieser Norm werden genau diese Punkte abgedeckt und Bereiche wie zum Beispiel Hardware und Software Entwicklung näher betrachtet.
 
 Funktionale Sicherheit versucht allgemein einen methodischen Ansatz zur Absicherung von Systemen zu schaffen. Hierzu werden Anforderungen und Vorgehensweisen beschrieben um die Sicherheits-Eigenschaften möglichst Objektiv betrachten zu können. Der Begriff funktionale Sicherheit beschreibt lediglich ein Konzept. Die Normen ISO 26262 und DIN 61508 stellen konkrete Implementationen dieses Konzeptes dar. Dieses Kapitel basiert vor allem auf \cite{iso26262} und \cite{iso26262_robuste}.
@@ -696,8 +709,8 @@ Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, u
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Netzwerk Managment (!)
-\section{Zugriff auf Hardware (Netzwerkmanagment)}
+% Netzwerk Management (!)
+\section{Zugriff auf Hardware (Netzwerkmanagement)}
 \label{sec:AutosarNM}
 % TODO
 
@@ -716,10 +729,10 @@ Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, u
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Relevanz für die Wirtschaft %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Relevanz für die reale Projekte %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Wie könnte das erarbeitete sinnvoll in der Wirtschaft umgesetzt werden?!
-\section{Relevanz für die Wirtschaft}
-\label{sec:Wirtschaft}
+\section{Relevanz für reale Projekte}
+\label{sec:Relevanz}
 % TODO
 % Es gibt bereits einige Embedded Hypervisor
 % Multi-Core CPUs und leistungsfähige SOCs sind billig
