@@ -392,44 +392,45 @@ Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitekt
 
 Gemäß dem Autosar-Leitspruch "`Cooperate on standards, compete on implementation"' handelt es sich bei Autosar lediglich um einen Standard. Ziel von Autosar ist es Schnittstellen zu definieren die möglichst alle Vorrausetzungen der Automobilindustrie erfüllen und damit den Standard allgemein Einsetzbar machen. Die Implementation des Autosar-Standards ist den verschiedenen Firmen überlassen. Im Kapitel \ref{sec:Toolkette} wird eine kurze Übersicht der verschiedenen Autosar-Distributionen und zugehöriger Tools gegeben.
 
-Im folgenden Kapitel wird ein kurzer Überblick im die Technik von Autosar gegeben. Um den Rahmen dieser Arbeit nicht zu sprengen beschränkt sich das Kapitel auf die Grundlagen und wichtigsten Konzepte. Ein übersichtlicher und guter Einblick ist in \cite{autosar_techoverview} und \cite{autosar_layer} zu finden.
+Im folgenden Kapitel wird ein kurzer Überblick der Technik von Autosar gegeben. Um den Rahmen dieser Arbeit nicht zu sprengen beschränkt sich das Kapitel auf die Grundlagen und wichtigsten Konzepte. Ein übersichtlicher und guter Einblick ist in \cite{autosar_techoverview} und \cite{autosar_layer} zu finden.
 
-Gründe für den Einsatz von Autosar ist vor allem die steigende Komplexität von Elektrik/Elektronik Systemen (kurz E/E Systeme) wie sie im Automobil Umfeld vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können bedarf es eines Standard-Systems das genau auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die Autosar verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit. \cite{autosar_techoverview}[S. 5]
+Ein Grund für den Einsatz von Autosar ist vor allem die steigende Komplexität von Elektrik/Elektronik Systemen (kurz E/E Systeme) wie sie im Automobil Umfeld vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können bedarf es eines Standard-Systems das genau auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die Autosar verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit. \cite{autosar_techoverview}[S. 5]
 
 % TODO: vielleicht in eigenes Kapitel auslagern, je nach Umfang
 \subsection{Grundkonzepte}
 \label{sec:Grundkonzepte}
 Diese Kapitel soll einen Überblick über die Grundlagen von Autosar geben. Anhand der Abbildung \ref{fig:autosar_overview} werden im folgenden die verschiedenen Aspekte von Autosar betrachtet. Dieses Kapitel basiert stark auf \cite{autosar_techoverview}.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=1\textwidth]{autosar_overview.png}
-\caption{Autosar Überblick}
-\label{fig:autosar_overview}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{autosar_overview.png}
+    \caption{Autosar Überblick}
+    \label{fig:autosar_overview}
 \end{figure}
 
-Der Lebenszyklus eines Autosar Systems lässt sich in zwei Phasen unterteilen. Die erste Phase ist in der Abbildung im oberen Teil zu sehen und beinhaltet das Design und die Entwicklung. In der zweite Phase werden alle Konfigurationen und Quelldateien verwendet um mittels des "`Autosar Entwicklungswerkzeugs"'  ausführbare Dateien zu generieren die anschließend auf der Ziel-Hardware ausgeführt werden können.
+Der Lebenszyklus eines Autosar Systems lässt sich in zwei Phasen unterteilen. Die erste Phase ist in der Abbildung im oberen Teil zu sehen und beinhaltet das Design und die Entwicklung. In der zweite Phase werden alle Konfigurationen und Quelldateien verwendet um mittels des "`Autosar Entwicklungswerkzeugs"'  ausführbare Dateien zu generieren, die anschließend auf der Ziel-Hardware ausgeführt werden können. Im folgenden werden die einzelnen nötigen Elemente näher erläutert.
 
-Zur Entwicklung eines Systems werden drei verschiedene Komponenten benötigt. Je nach Vorgabe können eine oder mehrere dieser Komponenten direkt von einem Hersteller oder OEM kommen, um so die Anforderungen für die restlichen Elemente zu beschreiben.
 
-\paragraph{System Description} Ein Entwurf der "`System Description"' ist am oberen Rand der Abbildung zu sehen. Hier werden Komponenten und deren Verbindungen definiert. Die verschiedenen Interfaces und der Virtual Functional Bus werden in einem seperaten Abschnitt betrachtet. Komponenten (Software-Components, kurz SW-C) können beliebig geschachtelt werden um so eine logische Trennung zwischen Teil-Systemen zu schaffen. Hierbei ist lediglich zu beachten, dass pro ECU eine Top-Level-Composition (kurz TLC) gefordert wird. Die eigentliche Funtkionalität ist in Runnables implementiert. Diese müssen einer SW-C zugehören und werden von einem RTE-Event, zum Beispiel ein Timer, aktiviert.
+\paragraph{System Description} Ein Entwurf der "`System Description"' ist am oberen Rand der Abbildung zu sehen. Hier werden Komponenten und deren Verbindungen definiert. Die verschiedenen Interfaces und der Virtual Functional Bus werden in einem seperaten Abschnitt näher betrachtet. Komponenten (Software-Components, kurz SW-C) können beliebig geschachtelt werden um so eine logische Trennung zwischen Teil-Systemen zu schaffen. Hierbei ist lediglich zu beachten, dass pro ECU eine Top-Level-Composition (kurz TLC) gefordert wird. Die eigentliche Funtkionalität ist in Runnables implementiert. Diese müssen einer SW-C zugehören und werden von einem RTE-Event, zum Beispiel ein Timer, aktiviert.
 
 Der Entwurf des Systems sollte genau überlegt sein, da dieser Grundstein für die weitere Entwicklung ist. In dieser Phase erfolgt auch die Zuriffskontrolle auf Interfaces sowie die Definition der RTE-Events, Zugriff auf Inter-Runnable-Variables und einer Reihe weitere Eigenschaften die später relevant sind.
 
 Als Austauschformat wird XML, mit der Dateiendung "`.arxml"' verwendet. Es ist möglich nur einen Teil des Systems in eine XML-Datei zu exportieren um zum Beispiel einem OEM nur die für ihn relevante Teile offenzulegen.
 
-Innerhalb dieses Projektes wird Systemdesk von der Firma dSpace verwendet.
+Innerhalb dieses Projektes wird Systemdesk der Firma dSpace verwendet.
 
 \paragraph{Kommunikations-Informationen}
-Um eine Kommunikation zwischen mehreren Komponenten zu ermöglichen müssen entsprechende Informationen geliefert werden. Hierbei existieren zum Beispiel die Formate DBC, FIBEX und LDF. Obwohl es sich bei DBC und LDF prinzipiell um Bus-Systemabhängige Formate handelt, spielt dies bei Autosar keine Rolle. So wird im Autosar-Stack die Kommunikations derart abstrahiert, sodass Botschaften transparent über unterschiedliche Bus-Systeme oder auch innerhalb einer ECU werden können.
+Um eine Kommunikation zwischen mehreren Komponenten zu ermöglichen müssen entsprechende Informationen geliefert werden. Hierbei existieren zum Beispiel die Formate DBC, FIBEX und LDF. Obwohl es sich bei DBC und LDF prinzipiell um Bus-Systemabhängige Formate handelt, spielt dies bei Autosar keine Rolle. So wird im Autosar-Stack die Kommunikations derart abstrahiert, sodass Botschaften transparent über unterschiedliche Bus-Systeme oder auch innerhalb einer ECU übertragen werden können.
 
 Relevante Informationen sind Botschaften-IDs, Bezeichner, Bitlänge und Position der Signale in der Botschaft. Im Rahmen dieses Projektes werden DBC-Dateien mittels Vector CANoe erstellt.
 
 \paragraph{Quellcode und Objektdateien}
-Die eigentliche Implementation der Funktionalität findet im Quellcode, beziehungsweise im Objektcode statt. Durch den Autosar-Standard ist ein Benennungsschema definiert wodurch die entsprechenden Funktionen identifiziert werden. Auch der Zugriff auf Funktionen der RTE sind durch dieses Schema definiert. Die API-Funktionen der RTE werden vom RTE-Generator der verwendeten Autosar-Distribution erstellt. 
+Die eigentliche Implementation der Funktionalität findet im Quellcode, beziehungsweise im Objektcode statt. Durch den Autosar-Standard ist ein Benennungsschema definiert, wodurch die entsprechenden Funktionen identifiziert werden. Auch der Zugriff auf Funktionen der RTE sind durch dieses Schema definiert. Die API-Funktionen der RTE werden vom RTE-Generator der verwendeten Autosar-Distribution erstellt.
+
+% TODO: Beispiele für RTE Aufurfe...
+
 
 \paragraph{Autosar Entwicklungswerkzeug}
-% Trennung zwischen den ...
 An zentraler Stelle in der Abbildung steht das "`Autosar Entwicklungswerkzeug"'. Dies besteht genau genommen aus mindestens drei Teilen und muss nicht zwingend komplett von einem Hersteller stammen. So gibt es einige Implementationen die nur einen Teil des Aufgabenbereichs abdecken. Die drei nötige Komponenten sind:
 
 \begin{itemize}
@@ -438,18 +439,60 @@ An zentraler Stelle in der Abbildung steht das "`Autosar Entwicklungswerkzeug"'.
     \item Runtime-Enviroment Generator
 \end{itemize}
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{Autosar_Prozess.png}
+    \caption{Autosar-Entwicklungs-Prozess}
+    \label{fig:autosar_prozess}
+\end{figure}
 
-\paragraph{VFB und RTE}
-%   - Communication mechanisms
+Die Basis-Software Implementation stellt das eigentliche Betriebssystem, inklusive aller Module dar. Mit Hilfe des Basis-Software Konfigurators werden die verschiedenen Module des Betriebssystems ausgewählt und konfiguriert. An dieser Stelle werden zum Beispiel Tasks erstellt und Botschaften-IDs vergeben. Zu diesem Zweck kann an dieser Stelle die System- und Kommunikations-Beschreibung importiert werden. Hierdurch können einige Einstellung automatisch vorgenommen werden. Der letzte Teil der Autosar-Entwicklungsumgebung ist der RTE-Generator. Dieser benötigt eine System-Beschreibung und generiert aus dieser die entsprechende API zwischen BSW und Applikation. Der vereinfachte Autosar-Entwicklungs-Prozess ist in Abbiludng \ref{fig:autosar_prozess} zu sehen.
 
 
-\paragraph{Basis Software}
+
+\subsection{Virtual Function Bus und Runtime-Enviroment}
+\label{sec:vfb}
+Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikation ist der "`Virtual Function Bus"' (kurz VFB) und die "`Runtime-Enviroment"' (kurz RTE). Durch diese soll ein Austausch und eine Verlagerung auf eine andere ECU ermöglicht werden. Dies wird ermöglicht durch eine vollständige Trennung zwischen der Basis-Software und der User-Applikation wie es in Abbildung \ref{fig:autosar_layer} zu sehen ist. 
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{autosar_layer.png}
+    \caption{Autosar Schichtenmodell}
+    \label{fig:autosar_layer}
+\end{figure}
+
+% Was ist VFB
+Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compilezeit bzw. Laufzeit. So wird während der System-Modellierung der VFB entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Diese werden später in diesem Kapitel näher betrachtet.
+
+% Was ist Rte
+Bei der RTE handelt es sich um eine konkrete Implementierung des VFB. Während der VFB zur Design-Phase das komplette Modell abdeckt, wird eine RTE pro ECU verwendet. Diese RTE stellt alle Methoden zur Verfügung, die zur Kommunikation zwischen den Komponenten nötig sind. Zudem wird auf alle Methoden verzichtet, die von den SW-Cs auf der ECU nicht verwendet werden.
+
+% Welche Vorteile bietet das
+
+% Was sind interfaces und Ports
+
+\paragraph{Sender/Receiver Interface}
+
+\paragraph{Client/Server Interface}
+
+% Anderes
+
+
+
+
+\subsection{Basis Software}
+\label{sec:bsw}
 % Wichtigste Module
 %   - OS (OSEK as basis)
 %   - MCAL
 %   - Complex Driver
 
-
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{autosar_refined_layer}
+    \caption{Autosar Schichtenmodell mit genauerer Aufteilung}
+    \label{fig:autosar_refined_layer}
+\end{figure}
 
 
 
@@ -458,6 +501,8 @@ An zentraler Stelle in der Abbildung steht das "`Autosar Entwicklungswerkzeug"'.
 
 \subsection{Toolkette}
 \label{sec:Toolkette}
+% Zur Entwicklung eines Systems werden vier verschiedene Komponenten benötigt: Basissoftware-Implementation, Basissoftware-Konfigurator, RTE-Generator und eine System-Modell-Werkzeug. Dabei können einzelne Lösungen sowohl mehrere Komponenten abdecken als auch nur einen Teil einer Komponente.
+% Im Kapitel \ref{sec:Toolkette} wird eine kurze Übersicht der verschiedenen Autosar-Distributionen und zugehöriger Tools gegeben.
 % Verfügbare/Nötige Tools
 
 
