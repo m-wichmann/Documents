@@ -109,7 +109,8 @@ escapeinside={\%(}{\%)},
   pdfkeywords={},
   pdfsubject={},
   pdftitle={Master-Arbeit},
-  pdfauthor={Martin Wichmann}
+  pdfauthor={Martin Wichmann},
+%  colorlinks=true
 ]{hyperref}
 %%%%%%%%%%%%%%% Zitieren und Index %%%%%%%%%%%%%%%
 % Ich habe im Internet gelesen, dass cite nach hyperref stehen soll?!
@@ -496,12 +497,15 @@ Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu h
 
 
 
-\subsection{Basis Software}
+\subsection{Basis-Software}
 \label{sec:bsw}
+% TODO: Conformance Classes
 % Wichtigste Module
 %   - OS (OSEK as basis)
 %   - MCAL
 %   - Complex Driver
+% Einzelne Module können ausgetauscht werden; Z.B. Comm-Stack für Kompatibilität
+Bei der Basis-Software (kurz BSW) handelt es sich um das eigentlich Betriebssystem. Dieses stellt verschiedene Funktionen bereit. Darunter zum Beispiel ein Scheduler und eine Verwaltung der Tasks. Außerdem sind eine Hardware-Abstraktion und -Treiber hier untergebracht. Dabei ist das gesamte System modular aufgebaut um möglichst Übersichtlich zu sein. Abbildung \ref{fig:autosar_refined_layer} zeigt die grobe Struktur der Basis-Software. Die genaue Einteilung der Module und Abhängigkeiten zwischen diesen wird im Rahmen dieser Arbeit nicht beschrieben. Der geneigte Leser findet jedoch unter \cite{autosar_layer} nähere Informationen dazu.
 
 \begin{figure}[h]
     \centering
@@ -510,13 +514,35 @@ Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu h
     \label{fig:autosar_refined_layer}
 \end{figure}
 
+% statisches System
+Autosar, und damit auch das Betriebssystem und die Basis-Software, ist als statisches System entworfen. Das bedeutet das alle Entscheidungen und Einstellung zur Entwicklungs-Zeit feststehen müssen. Somit können nach der Compile-Zeit keine Veränderungen am System vorgenommen werden. Hierdurch wird die Komplexität des Systems nicht unnötig erhöht, und damit die Analyse, vor allem im Bezug auf Echtzeitfähigkeit, vereinfacht.
+
+% TODO: Module toll; OEM kann einzelne Module liefern; Hersteller einzelne Module verlangen
 
 
+Im weiteren werden die wichtigsten BSW-Module näher betrachtet\cite{SE_Autosar}. Neben diesen existieren noch einige andere Module, die vor allem verschiedene Bus-Systeme und Hardware anbinden. Dazu gehören zum Beispiel: CAN, FlexRay, SPI und PWM.
+
+\paragraph{Os}
+Bei dem Modul Os handelt es sich um den Betriebssystem-Kern. Dieser ist dem Bereich System Services zuzuordnen und basiert auf einem OSEK-Betriebssystem. Zusätzlich sind Funktionen wie Speicherschutz und Deadline-Überwachung vorgesehen.
+
+\paragraph{SchM}
+Ebenfalls dem Bereich System Services zugeordnet ist das Modul SchM. Dieses stellt den Scheduler der Basis-Software dar. 
+
+\paragraph{EcuM}
+Das Power-Management der ECU wird vom ECU State Manager übernommen. Auch dieser ist den System Services zuzuordnen. Er ist verantwortlich für die Initialisierung aller Basissoftware-Module und sowohl Begin als auch Ende der Schlaf-Modi.
+
+\paragraph{Com}
+Als oberstes Modul der Communication Services organisiert das Com-Modul die Kommunikation innerhalb einer und zwischen verschiedenen ECUs. Hierzu stellt das Modul eine Signal-orientierte Datenschnittstelle zur Verfügung. Bei einem Signal handelt es sich um einen einzelnen Wert, zum Beispiel ein Sensor-Wert. Eine Reihe von Signal wird anschließend im Com-Modul zu PDUs (Protocol Data Unit) gepackt und weitergegeben.
+
+\paragraph{PduR}
+Die gepackten PDUs werden vom PDU-Router-Modul zwischen dem Com-Modulen und den entsprechenden Interfaces weitergegeben. Damit stellt das PduR-Modul die Funktion eines Gateways dar und wird ebenfalls bei den Communication Services eingeordnet.
+
+\paragraph{Mcu}
+Eine Aufgabe des MCU-Driver-Moduls ist die Initialisierung der MCU- und PLL-Clocks, sowie der RAM Speicherbereiche. Das Modul wird dem Bereich Microcontroller-Drivers zugeordnet.
 
 
-
-
-
+\paragraph{Complex Driver}
+Unter dem Begriff Complex Driver werden Module zusammen gefasst, die eingesetzt werden um spezielle Funktionen und Zeit-Anforderungen im Bereich der Sensor- und Aktor-Systeme zu ermöglichen. Diese Module existieren komplett unabhängig vom Rest der BSW und sind damit stark Hardware-Abhängig. Damit ist dies der "`standardisierte Weg, den Standard zu umgehen"'\cite[Seite 227]{SE_Autosar}. So kann ein Complex Driver zur Migration von bestehendem Code genutzt werden. Dies ist jedoch nur bedingt möglich, da die Kommunikation eines Complex Drivers stark eingeschränkt ist.
 
 
 
