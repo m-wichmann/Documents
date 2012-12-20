@@ -5,4 +5,11 @@
 *.out
 *.pdf
 *.toc
+*.acn
+*.acr
+*.alg
+*.glg
+*.glo
+*.gls
+*.ist
 appendix.tex
