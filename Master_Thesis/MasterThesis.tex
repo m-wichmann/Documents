@@ -466,17 +466,19 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
 \end{figure}
 
 % Was ist VFB
-Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compilezeit bzw. Laufzeit. So wird während der System-Modellierung der VFB entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Die zwei wichtigsten Interfaces werden im weiteren kurz betrachtet. Analog zu diesen existieren noch Autosar-Service-Interfaces, die Autosar-intern verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten abfragen lassen.
+Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compilezeit bzw. Laufzeit. So wird während der System-Modellierung der VFB entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Bei Ports handelt es sich um Interaktionspunkte zwischen Softwarekomponenten. Dabei wird zwischen PPorts (provide ports), die etwas bereitstellen, und RPorts (require ports), die etwas benötigen, unterschieden. Um einen Port verwenden zu können muss diesem ein Port Interface zugeordnet sein.
 
-% Ports beschreiben
+Die zwei wichtigsten Interfaces werden im weiteren kurz betrachtet. Analog zu diesen existieren noch zwei Autosar-Service-Interfaces, die Autosar-intern verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen.
 
 % Was sind interfaces und Ports
 \paragraph{Sender/Receiver Interface}
-asd
+Bei einem Sender/Receiver Interface handelt es sich um einen Kommunikationsmechanismus mit dessen Hilfe Daten ausgetauscht werden können. Die übertragenen Daten können dabei sowohl primitve als auch komplexe Datentypen wie Strukturen enthalten.
 
 \paragraph{Client/Server Interface}
-asd
+Vom Server wird hier eine Funktion bereitgestellt, die vom Client aufgerufen werden kann. Dabei können mit Hilfe der Übergabe- und Rückgabeparameter auch Daten ausgetauscht werden.
 
+% TODO: muss das so mit dem paragraph???
+\paragraph{}
 % Was ist Rte
 Bei der RTE handelt es sich um eine konkrete Implementierung des VFB. Während der VFB zur Design-Phase das komplette Modell abdeckt, wird eine RTE pro ECU verwendet. Diese RTE stellt alle Methoden zur Verfügung, die für die Kommunikation der Komponenten dieser ECU nötig sind. Das bedeutet das auf alle Methoden verzichtet wird, die auf dieser ECU nicht ausgeführt werden können.
 
@@ -488,7 +490,8 @@ Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu h
 
 
 
-% Anderes
+
+
 
 
 
@@ -506,6 +509,12 @@ Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu h
     \caption{Autosar Schichtenmodell mit genauerer Aufteilung}
     \label{fig:autosar_refined_layer}
 \end{figure}
+
+
+
+
+
+
 
 
 
