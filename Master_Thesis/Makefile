@@ -6,6 +6,7 @@ REMOVE = rm -rf
 all:
 	pdflatex $(TARGET)
 	bibtex $(TARGET)
+	makeglossaries $(TARGET)
 	pdflatex $(TARGET)
 	pdflatex $(TARGET)
 
@@ -19,6 +20,13 @@ clean:
 	$(REMOVE) $(TARGET).toc
 	$(REMOVE) $(TARGET).bbl
 	$(REMOVE) $(TARGET).blg
+	$(REMOVE) $(TARGET).acn
+	$(REMOVE) $(TARGET).acr
+	$(REMOVE) $(TARGET).alg
+	$(REMOVE) $(TARGET).glg
+	$(REMOVE) $(TARGET).glo
+	$(REMOVE) $(TARGET).gls
+	$(REMOVE) $(TARGET).ist
 	$(REMOVE) appendix.aux
 
 .PHONY: all clean

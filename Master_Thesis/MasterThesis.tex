@@ -118,12 +118,11 @@ escapeinside={\%(}{\%)},
 % Index:
 %\usepackage{makeidx}					% Paket für die Indexerstellung
 %\makeindex
-% Glossar:
-%\usepackage[style=super, header=none, border=none, number=none, cols=2, toc=true]{glossary}
-%\usepackage[style=altlist, number=none]{glossary}
-%\makeglossary
-% Benutzung des Glossars: \glossary{name={Schnauze}, description={Fachausdruck für die Hundenase.},}
-%                         \glossary{name={Knochen}, description={Lieblingsspeise eines jeden Hundes.},}
+% Glossar und Liste der Akronyme:
+\usepackage[order=word, toc, acronym, nonumberlist]{glossaries}
+\makeglossaries
+\loadglsentries{acronym}
+\loadglsentries{glossary}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%% Eigene Definitionen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -933,9 +932,11 @@ Wolfenbüttel, den % TODO
 
 %\chapter{Module der Basis-Software}
 
-\chapter{Glossar}
 
-\chapter{Verzeichnis der Abkürzungen}
+
+\glsaddall
+\printglossaries
+
 
 
 % TODO: Glossar; BSW-Modul-Liste; Grafische Notation (Autosar, SPEM); 
