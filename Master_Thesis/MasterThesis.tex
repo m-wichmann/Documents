@@ -386,6 +386,16 @@ Da sich die Anzahl der Steuergeräte durch Virtualisierung verringert, verringer
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Allgemeine Softwarearchitektur %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Allgemeine Softwarearchitektur}
+\label{sec:allg_softarch}
+% System, Komplexität, Partitionierung
+
+
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Autosar}
 \label{sec:Autosar}
@@ -471,7 +481,7 @@ Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus d
 
 Die zwei wichtigsten Interfaces werden im weiteren kurz betrachtet. Analog zu diesen existieren noch zwei Autosar-Service-Interfaces, die Autosar-intern verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen.
 
-% Was sind interfaces und Ports
+% TODO: Multiplizität; Explizit, Implizit; Events
 \paragraph{Sender/Receiver Interface}
 Bei einem Sender/Receiver Interface handelt es sich um einen Kommunikationsmechanismus mit dessen Hilfe Daten ausgetauscht werden können. Die übertragenen Daten können dabei sowohl primitve als auch komplexe Datentypen wie Strukturen enthalten.
 
@@ -483,7 +493,6 @@ Vom Server wird hier eine Funktion bereitgestellt, die vom Client aufgerufen wer
 % Was ist Rte
 Bei der RTE handelt es sich um eine konkrete Implementierung des VFB. Während der VFB zur Design-Phase das komplette Modell abdeckt, wird eine RTE pro ECU verwendet. Diese RTE stellt alle Methoden zur Verfügung, die für die Kommunikation der Komponenten dieser ECU nötig sind. Das bedeutet das auf alle Methoden verzichtet wird, die auf dieser ECU nicht ausgeführt werden können.
 
-% Welche Vorteile bietet das
 % TODO: SWC auf andere ECU wirklich so einfach?
 Das Hauptkonzept der Techniken VFB und RTE ist die Festlegung von Schnittstellen. Dieses Konzept wird bereits seit langer Zeit in anderen Bereichen der Software-Entwicklung durchgeführt. So werden zum Beispiel bei Java Interfaces verwendet, um konkrete Implementationen abzukapseln und generisch zu halten. 
 
@@ -499,12 +508,6 @@ Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu h
 
 \subsection{Basis-Software}
 \label{sec:bsw}
-% TODO: Conformance Classes
-% Wichtigste Module
-%   - OS (OSEK as basis)
-%   - MCAL
-%   - Complex Driver
-% Einzelne Module können ausgetauscht werden; Z.B. Comm-Stack für Kompatibilität
 Bei der Basis-Software (kurz BSW) handelt es sich um das eigentlich Betriebssystem. Dieses stellt verschiedene Funktionen bereit. Darunter zum Beispiel ein Scheduler und eine Verwaltung der Tasks. Außerdem sind eine Hardware-Abstraktion und -Treiber hier untergebracht. Dabei ist das gesamte System modular aufgebaut um möglichst Übersichtlich zu sein. Abbildung \ref{fig:autosar_refined_layer} zeigt die grobe Struktur der Basis-Software. Die genaue Einteilung der Module und Abhängigkeiten zwischen diesen wird im Rahmen dieser Arbeit nicht beschrieben. Der geneigte Leser findet jedoch unter \cite{autosar_layer} nähere Informationen dazu.
 
 \begin{figure}[h]
@@ -514,14 +517,16 @@ Bei der Basis-Software (kurz BSW) handelt es sich um das eigentlich Betriebssyst
     \label{fig:autosar_refined_layer}
 \end{figure}
 
-% statisches System
+% TODO: Seite 186
 Autosar, und damit auch das Betriebssystem und die Basis-Software, ist als statisches System entworfen. Das bedeutet das alle Entscheidungen und Einstellung zur Entwicklungs-Zeit feststehen müssen. Somit können nach der Compile-Zeit keine Veränderungen am System vorgenommen werden. Hierdurch wird die Komplexität des Systems nicht unnötig erhöht, und damit die Analyse, vor allem im Bezug auf Echtzeitfähigkeit, vereinfacht.
 
-% TODO: Module toll; OEM kann einzelne Module liefern; Hersteller einzelne Module verlangen
+Der modulare Aufbau der BSW bietet einige interessante Vorteile. So ist der Umfang eines Moduls, und damit alle Rechte und Pflichten, durch die Spezifikation klar vorgegeben. Dadurch sind Module austauschbar und einfach testbar. Zusätzlich besteht so die Möglichkeit, einzelne Module von verschiedenen Herstellern zu beziehen. Damit hat ein BSW-Anbieter die Möglichkeit sich auf bestimmte Module oder Modul-Gruppen zu beschränken oder zu spezialisieren. Auch ist es vorstellbar, dass ein Automobil-Hersteller eine konkrete Implementation einiger Module verlangt. So könnte gefordert werden, dass der gesamte Kommunikations-Stack immer von einem Hersteller stammt um absolute Kompatibilität zu gewährleisten.
 
+% TODO: nachteile von modulen; ICC
 
 Im weiteren werden die wichtigsten BSW-Module näher betrachtet\cite{SE_Autosar}. Neben diesen existieren noch einige andere Module, die vor allem verschiedene Bus-Systeme und Hardware anbinden. Dazu gehören zum Beispiel: CAN, FlexRay, SPI und PWM.
 
+% TODO: in spec überprüfen
 \paragraph{Os}
 Bei dem Modul Os handelt es sich um den Betriebssystem-Kern. Dieser ist dem Bereich System Services zuzuordnen und basiert auf einem OSEK-Betriebssystem. Zusätzlich sind Funktionen wie Speicherschutz und Deadline-Überwachung vorgesehen.
 
@@ -547,6 +552,12 @@ Unter dem Begriff Complex Driver werden Module zusammen gefasst, die eingesetzt 
 
 
 
+\subsection{Beispiel für den Kommunikations-Ablauf}
+\label{sec:beispiel_komm}
+% vgl. Seite 146
+
+
+
 \subsection{Toolkette}
 \label{sec:Toolkette}
 % Zur Entwicklung eines Systems werden vier verschiedene Komponenten benötigt: Basissoftware-Implementation, Basissoftware-Konfigurator, RTE-Generator und eine System-Modell-Werkzeug. Dabei können einzelne Lösungen sowohl mehrere Komponenten abdecken als auch nur einen Teil einer Komponente.
@@ -555,6 +566,10 @@ Unter dem Begriff Complex Driver werden Module zusammen gefasst, die eingesetzt 
 
 
 
+
+
+\subsection{Kritik an Autosar}
+\label{sec:kritik_autosar}
 
 
 
@@ -914,6 +929,16 @@ Wolfenbüttel, den % TODO
 % This file contains sensitive information that is not shared on GitHub!!!
 % If you don't have the appendix.tex, then this line has to be deleted.
 \input{appendix}
+
+
+%\chapter{Module der Basis-Software}
+
+\chapter{Glossar}
+
+\chapter{Verzeichnis der Abkürzungen}
+
+
+% TODO: Glossar; BSW-Modul-Liste; Grafische Notation (Autosar, SPEM); 
 
 
 
