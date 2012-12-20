@@ -396,6 +396,10 @@ Im folgenden Kapitel wird ein kurzer Überblick der Technik von Autosar gegeben.
 
 Ein Grund für den Einsatz von Autosar ist vor allem die steigende Komplexität von Elektrik/Elektronik Systemen (kurz E/E Systeme) wie sie im Automobil Umfeld vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können bedarf es eines Standard-Systems das genau auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die Autosar verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit. \cite{autosar_techoverview}[S. 5]
 
+% TODO: zeitliche einordnung (versionen)
+
+% TODO: evtl. noch ein Kapitel zur benennung der sachen
+
 % TODO: vielleicht in eigenes Kapitel auslagern, je nach Umfang
 \subsection{Grundkonzepte}
 \label{sec:Grundkonzepte}
@@ -462,18 +466,27 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
 \end{figure}
 
 % Was ist VFB
-Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compilezeit bzw. Laufzeit. So wird während der System-Modellierung der VFB entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Diese werden später in diesem Kapitel näher betrachtet.
+Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compilezeit bzw. Laufzeit. So wird während der System-Modellierung der VFB entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Die zwei wichtigsten Interfaces werden im weiteren kurz betrachtet. Analog zu diesen existieren noch Autosar-Service-Interfaces, die Autosar-intern verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten abfragen lassen.
 
-% Was ist Rte
-Bei der RTE handelt es sich um eine konkrete Implementierung des VFB. Während der VFB zur Design-Phase das komplette Modell abdeckt, wird eine RTE pro ECU verwendet. Diese RTE stellt alle Methoden zur Verfügung, die zur Kommunikation zwischen den Komponenten nötig sind. Zudem wird auf alle Methoden verzichtet, die von den SW-Cs auf der ECU nicht verwendet werden.
-
-% Welche Vorteile bietet das
+% Ports beschreiben
 
 % Was sind interfaces und Ports
-
 \paragraph{Sender/Receiver Interface}
+asd
 
 \paragraph{Client/Server Interface}
+asd
+
+% Was ist Rte
+Bei der RTE handelt es sich um eine konkrete Implementierung des VFB. Während der VFB zur Design-Phase das komplette Modell abdeckt, wird eine RTE pro ECU verwendet. Diese RTE stellt alle Methoden zur Verfügung, die für die Kommunikation der Komponenten dieser ECU nötig sind. Das bedeutet das auf alle Methoden verzichtet wird, die auf dieser ECU nicht ausgeführt werden können.
+
+% Welche Vorteile bietet das
+% TODO: SWC auf andere ECU wirklich so einfach?
+Das Hauptkonzept der Techniken VFB und RTE ist die Festlegung von Schnittstellen. Dieses Konzept wird bereits seit langer Zeit in anderen Bereichen der Software-Entwicklung durchgeführt. So werden zum Beispiel bei Java Interfaces verwendet, um konkrete Implementationen abzukapseln und generisch zu halten. 
+
+Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu halten. Somit soll es möglich sein, eine Implementation einer SW-C durch eine andere auszutauschen, ohne das Gesamt-System zu verändern. Zudem ist ein Ziel, die Funktionalität unabhängig von der Hardware zur Verfügung zu stellen. Das bedeutet das eine SW-C auf eine andere ECU verlagert werden kann, ohne weitere Anpassungen vornehmen zu müssen. Dabei müssen lediglich die RTE-Schichten neu generiert werden, um damit zum Beispiel Intra-ECU Kommunikation zur Inter-ECU Kommunikation zu verändern. Ob dieses Verfahren in der Praxis so einfach eingesetzt werden kann, ist zweifelhaft. So muss die für die SW-C nötig Hardware (zum Beispiel PWM-Ausgänge) sowohl vorhanden sein, als auch bei der ECU-Konfiguration korrekt eingerichtet sein. Zudem müssen entsprechende Timer konfiguriert sein, um die enthaltenen Runnables ausführen zu können. Allgemein gilt jedoch, dass durch die Kapselung ein Austausch der Software erleichtert wird.
+
+
 
 % Anderes
 
