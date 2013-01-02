@@ -562,28 +562,84 @@ Unter dem Begriff Complex Driver werden Module zusammen gefasst, die eingesetzt 
 
 
 
-
-\subsection{Beispiel für den Kommunikations-Ablauf}
-\label{sec:beispiel_komm}
+% TODO: Bild malen und Beispiel beschreiben
+%\subsection{Beispiel für den Kommunikations-Ablauf}
+%\label{sec:beispiel_komm}
 % vgl. Seite 146
 
 
 
 \subsection{Toolkette}
 \label{sec:Toolkette}
-% Zur Entwicklung eines Systems werden vier verschiedene Komponenten benötigt: Basissoftware-Implementation, Basissoftware-Konfigurator, RTE-Generator und eine System-Modell-Werkzeug. Dabei können einzelne Lösungen sowohl mehrere Komponenten abdecken als auch nur einen Teil einer Komponente.
-% Im Kapitel \ref{sec:Toolkette} wird eine kurze Übersicht der verschiedenen Autosar-Distributionen und zugehöriger Tools gegeben.
-% Verfügbare/Nötige Tools
+In diesem Kapitel wird ein Überblick über die nötige Toolkette und die bestehenden Möglichkeiten gegeben. Allgemein werde vier Komponenten benötigt: Basissoftware-Implementation, Basissoftware-Konfigurator, RTE-Generator und ein System-Modell-Werkzeug. Dabei können einzelne Lösungen sowohl eine als auch mehrere dieser Komponenten abdecken. Dadurch fällt die Trennung dieser Schichten zum Teil schwer. In der Theorie soll es bei Autosar möglich sein, einzelne Komponenten der Toolkette auszutauschen. So könnte es möglich sein, Produkte von 4 verschiedenen Herstellern zu nutzen und diese über die standartisierten Schnittstellen miteinander arbeiten zu lassen. Auch der Austausch einzelnener BSW-Module fällt in diesen Bereich. Ob dies jedoch in der Praxis wirklich möglich ist, ist anzuzweifeln, da viele Hersteller bestimmte Teile des Standards nicht oder nicht komplett unterstützen und es so zu Fehlern kommen kann.
 
+Im folgenden werden einige Autosar-Distributionen kurz betrachtet\cite{wiki:autosar}. Dabei ist zu sehen, das nicht alle Abschnitte der Toolkette von allen Produkten abgedeckt werden. So spezialisieren sich die Lösungen der Firma dSPACE auf vor allem auf den System-Entwurf, während Elektrobit hierzu keine Software anbietet. Neben den hier erwähnten Herstellern existieren noch eine Reihe weiterer die jedoch nicht näher betrachtet werden sollen.
+
+% TODO: evtl. durch Tabelle ersetzen
+\paragraph{ArcCore}
+ArcCore bietet eine Autosar Toolkette an, die alle bereiche abdeckt. Dabei werden sowohl die BSW-Implementation als auch die Basis-Version des Entwicklungswerkzeuges als Open-Source unter einer GPL-Lizenz verbreitet. Zudem setzt es mit Eclipse und der GCC auf zwei starke Open-Source Projekte. ArcCore unterstützt Autosar 4.0
+
+\paragraph{dSpace}
+Die Firma dSPACE bietet mit SystemDesk ein Tool zur System-Modellierung an. Dies wird auch in diesem Projekt verwendet, und bietet neben der reinen System-Modellierung auch eine Anbindung an MatLab. Hierdurch kann auch das Verhalten modelliert werden. Zusätzlich wird ein Tool angeboten, mit dem sich die RTE generieren lässt.
+
+\paragraph{Elektrobit}
+Die von Elektrobit angebotenen Produkte sind EB tresos AutoCore und das EB tresos Studio. Bei ersterem handelt es sich um eine BSW-Implementation, während das EB tresos Studio die BSW-Konfiguration und die RTE-Generierung übernimmt.
+
+\paragraph{Mentor Graphics}
+Mit Volcano VSTAR bietet Mentor Graphics eine BSW-Implementation, einen BSW-Konfigurator und einen RTE-Generator. Zusätzlich wird mit Volcano VSA ein Tool zur System-Modellierung angeboten.
 
 
 
 
 \subsection{Kritik an Autosar}
 \label{sec:kritik_autosar}
+Mit Autosar existiert ein Standard, der die Möglichkeit bietet die System-Entwicklung im Automobil-Bereich stark zu vereinfachen und vereinheitlichen. Jedoch handelt es sich bei Autosar nicht um eine Universallösung mit deren Hilfe alle Probleme gelöst sind. Vor allem da Autosar einen großen Umstieg von der klasischen Software-Entwicklung bedeutet, gibt es immer wieder Kritik an den Konzepten. Ob diese Kritikpunkte jedoch ausreichen um das Vermeiden von Autosar zu begründen ist anzuzweifeln. Im folgenden werden einige Kritikpunkte näher betrachtet.
 
 
+% Timing
+\paragraph{Timing}
 
+
+% Efficiency
+\paragraph{Effizienz}
+
+
+% Kosten
+\paragraph{Kosten}
+
+
+% TODO: Titel ändern
+\paragraph{Zu viel Standard}
+Der Autosar Standard ist sehr Umfangreich, wodurch versucht wird möglichst viele Fälle abzudecken und jegliche nötige Funktionalität zu beschreiben. Dies kann jedoch als Kritikpunkt gesehen werden, da der Standard hierdurch aufgeblasen wird. Vor allem durch den Einfluss verschiedener OEMs ist im Standard Funktionalität enthalten, die nicht der gängigen Praxis entspricht. Als Besipiel hierzu sei der Zeitpunkt der Entscheidung für eine Kommunikations-Strategie (Topologie, Protokolle\dots) genannt.\cite{as_kritik} Der Standard sieht hierbei die zwei Zeitpunkte "`pre-compile-time"' und "`link time"' vor. Jedoch wurde auf Wunsch von Volvo hin auch die Möglichkeit geboten Entscheidung "`post build"' zu treffen. Diese im Standard enthaltene Möglichkeit, wird jedoch anscheinend einzig von Volvo verwendet, und stellt damit für die meißten Hersteller keinen Mehrwert dar. 
+% TODO: OEM spezifische Autosar standards
+
+Zudem sind in der Spezifikation Hinweise und Anforderungen an eine konkrete Implementierung gegeben. So sind immer wieder C-spezifische Anmerkungen zu finden, die umgesetzt werden sollten oder müssen. Hierdurch wird die Offenheit des Standards jedoch eingeschränkt, da konkrete Teile der Implementierung vorgegeben sind.\cite[Seite 20]{autosar_eth} Auch wenn diese Anmerkung dem üblichen Programmier-Standard entsprechen, wiederspricht dieser Ansatz dem Design einer Architektur in der vor allem Schnittstellen und die im Vordergrund stehen sollten. % TODO: ??? [Citation needed]
+
+Auch das Fehlen einer Referenzimplementierung kann als Kritik an den Standard angebracht werden.\cite{Hoffmann200803} Vor allem mehrdeutige oder unklare Aussagen im Standard könnten durch eine Refernzimplementierung geklärt werden. Auch würde dies mögliche Designfehler, nicht umsetzbare oder nicht praktikable Entscheidungen überprüfen und könnte frühzeitig Fehler vermeiden. 
+
+
+% Verschiedene Versionen/Zu schnelle Entwicklung
+\paragraph{Schnelle Entwicklung von Autosar}
+% schnelle entwicklung 
+% großer aufwand
+% oem spezifische änderungen
+
+
+% Bindung an Hersteller
+\paragraph{Bindung an Hersteller}
+Zwar ist im Standard vorgesehen, dass Software-Komponenten, Basissoftware-Module und ähnliches austauschbar sind, jedoch ist anzuzweifeln, dass dieses in der Praxis so einfach möglich ist. Hierdurch entsteht eine Bindung an den Hersteller der Autosar-Distribution, da der Aufwand und die Kosten eines Umstiegs zu einem anderen Hersteller hoch sind.\cite{as_kritik}
+
+% Fehler/Probleme im Design müssen früh erkannt werden
+\paragraph{Starke Relevanz der Designphase}
+Durch die Top-Down Methodik gewinnt die Designphase stark an Relevanz. Dies ist einerseits ein Vorteil, da das gesamte System aus einer abstrakten Perspektive entworfen werden kann, auf der anderen Seite jedoch auch ein Nachteil. Fehler die erst in der Umsetzung und Implementation des Systems zu erkennen sind, müssen auf das zurück abgebildet werden. Hierdurch ergibt sich ein erneuter Integrationsaufwand, da die neuen Versionen des Modells wieder eingearbeitet werden müssen. Dies war zum Beispiel auch während dieses Projektes erkennbar. Das Hinzufügen einer CAN-Botschaft führt zu einer Änderung der CAN-Matrix, des System-Designs und zu einer Notwendigkeit die Basissoftware neu zu konfigurieren. In einem klasischen Design, könnte dies wahrscheinlich einfacher gelöst werden, jedoch ist ein Vergleich dieser beiden Methoden an dieser Stelle nicht möglich.
+
+\paragraph{Dokumentation der Konfiguration}
+Da die Konfiguration der Basis-Software und der Entwurf des System-Designs mittels grafischer Tools durchgeführt wird, ist eine Dokumentation der einzelnen Entscheidungen schwierig.\cite[Seite 182 f.]{SE_Autosar} In der klassischen Entwicklung kann eine Entscheidung mittels eines Kommentars im Quellcode oder ähnlichem erläutert werden. Das bei Autosar eingesetzte XML-Format kann zwar auch Kommentare enthalten, jedoch ist nicht praktikabel als Projektdokumentation einsetzbar. Aus diesem Grund ist es bei dem Einsatz von Autosar notwendig spezielle Vorkehrungen zur Dokumentation einzelner Entscheidungen zu treffen. 
+% TODO: bietet tresos Kommentar Funktion?!
+
+% TODO: paragrpah umbenennen
+\paragraph{Verschieben von Softwarekomponenten}
+Die bei Autosar vorgesehene Möglichkeit Software-Komponenten zwischen ECUs zu verschieben bedingt einige Forderungen. So muss die Bandbreite der Kommunikations-Kanäle in betracht gezogen werden. Wenn zum Beispiel zwei intensiv kommunizierende Komponenten von einer ECU auf zwei verteilt werden, kann die Bus-Last stark ansteigen und eventuell Fehler hervorrufen. Auch ist in Betracht zu ziehen, das die von der Softwarekomponente erwartete Hardware vorhanden sein muss. So kann eine Komponente die FlexRay verwendet nicht auf eine ECU verschoben werden, die kein FlexRay bietet. Auch die Anzahl der freien Digital oder Analog Ein/Ausgänge fällt in diese Kategorie. Hierdurch ist die oft erwähnte Verschiebbarkeit der Software-Komponenten nur stark eingeschränkt möglich.
 
 
 
