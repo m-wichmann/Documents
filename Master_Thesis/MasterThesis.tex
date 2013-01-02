@@ -595,41 +595,30 @@ Mit Volcano VSTAR bietet Mentor Graphics eine BSW-Implementation, einen BSW-Konf
 \label{sec:kritik_autosar}
 Mit Autosar existiert ein Standard, der die Möglichkeit bietet die System-Entwicklung im Automobil-Bereich stark zu vereinfachen und vereinheitlichen. Jedoch handelt es sich bei Autosar nicht um eine Universallösung mit deren Hilfe alle Probleme gelöst sind. Vor allem da Autosar einen großen Umstieg von der klasischen Software-Entwicklung bedeutet, gibt es immer wieder Kritik an den Konzepten. Ob diese Kritikpunkte jedoch ausreichen um das Vermeiden von Autosar zu begründen ist anzuzweifeln. Im folgenden werden einige Kritikpunkte näher betrachtet.
 
+% TODO: C(89) veraltet?!
 
-% Timing
-\paragraph{Timing}
+% TODO: gibt es bei Autosar wirklich kein Real-Time Kram?!
+%\paragraph{Timing}
 
-
-% Efficiency
 \paragraph{Effizienz}
-
-
-% Kosten
-\paragraph{Kosten}
-
+Speziell auf Anforderungen angepasste Systeme können effektiver entworfen werden als ein Bausatzsystem wie Autosar. Vor allem ECUs mit kleinem Funktionsumfang leiden unter dem Overhead der durch die Abstraktionsschichten und Modularisierung von Autosar entsteht. Auf der anderen Seite können komplexe Systeme von den angebotenen Möglichkeiten profitieren und mittels Autosar die Effizienz steigern.\cite{as_kritik}\cite{wiki:autosar} Da es sich bei der Automobil-Industrie um einen stark Kosten-orientierten Zweig der Wirtschaft handelt, können geringe Mehrkosten durchaus relevant sein. Somit ist eine Abwägung zwischen Kosten und Vorteilen von Autosar in jedem Projekt nötig.\cite[Seite 152]{SE_Autosar} 
 
 % TODO: Titel ändern
 \paragraph{Zu viel Standard}
-Der Autosar Standard ist sehr Umfangreich, wodurch versucht wird möglichst viele Fälle abzudecken und jegliche nötige Funktionalität zu beschreiben. Dies kann jedoch als Kritikpunkt gesehen werden, da der Standard hierdurch aufgeblasen wird. Vor allem durch den Einfluss verschiedener OEMs ist im Standard Funktionalität enthalten, die nicht der gängigen Praxis entspricht. Als Besipiel hierzu sei der Zeitpunkt der Entscheidung für eine Kommunikations-Strategie (Topologie, Protokolle\dots) genannt.\cite{as_kritik} Der Standard sieht hierbei die zwei Zeitpunkte "`pre-compile-time"' und "`link time"' vor. Jedoch wurde auf Wunsch von Volvo hin auch die Möglichkeit geboten Entscheidung "`post build"' zu treffen. Diese im Standard enthaltene Möglichkeit, wird jedoch anscheinend einzig von Volvo verwendet, und stellt damit für die meißten Hersteller keinen Mehrwert dar. 
-% TODO: OEM spezifische Autosar standards
+Der Autosar Standard ist sehr Umfangreich, wodurch versucht wird möglichst viele Fälle abzudecken und jegliche nötige Funktionalität zu beschreiben. Dies kann jedoch als Kritikpunkt gesehen werden, da der Standard hierdurch aufgeblasen wird. Vor allem durch den Einfluss verschiedener OEMs ist im Standard Funktionalität enthalten, die nicht der gängigen Praxis entspricht. Als Besipiel hierzu sei der Zeitpunkt der Entscheidung für eine Kommunikations-Strategie (Topologie, Protokolle\dots) genannt.\cite{as_kritik} Der Standard sieht hierbei die zwei Zeitpunkte "`pre-compile-time"' und "`link time"' vor. Jedoch wurde auf Wunsch von Volvo hin auch die Möglichkeit geboten Entscheidung "`post build"' zu treffen. Diese im Standard enthaltene Möglichkeit, wird jedoch anscheinend einzig von Volvo verwendet, und stellt damit für die meißten Hersteller keinen Mehrwert dar. Hierdurch sind neben dem allgemeinen Autosar-Standard ebenso OEM spezifische Derivate davon entstanden.
+% TODO: OEM spezifische Autosar standards besipiel
 
 Zudem sind in der Spezifikation Hinweise und Anforderungen an eine konkrete Implementierung gegeben. So sind immer wieder C-spezifische Anmerkungen zu finden, die umgesetzt werden sollten oder müssen. Hierdurch wird die Offenheit des Standards jedoch eingeschränkt, da konkrete Teile der Implementierung vorgegeben sind.\cite[Seite 20]{autosar_eth} Auch wenn diese Anmerkung dem üblichen Programmier-Standard entsprechen, wiederspricht dieser Ansatz dem Design einer Architektur in der vor allem Schnittstellen und die im Vordergrund stehen sollten. % TODO: ??? [Citation needed]
 
 Auch das Fehlen einer Referenzimplementierung kann als Kritik an den Standard angebracht werden.\cite{Hoffmann200803} Vor allem mehrdeutige oder unklare Aussagen im Standard könnten durch eine Refernzimplementierung geklärt werden. Auch würde dies mögliche Designfehler, nicht umsetzbare oder nicht praktikable Entscheidungen überprüfen und könnte frühzeitig Fehler vermeiden. 
 
 
-% Verschiedene Versionen/Zu schnelle Entwicklung
 \paragraph{Schnelle Entwicklung von Autosar}
-% schnelle entwicklung 
-% großer aufwand
-% oem spezifische änderungen
+Die schnelle Entwicklung von Autosar bringt durchaus Probleme mit sich. Seit 2005 ist etwa alle zwei Jahre eine neue Version der Autosar Spezifikation veröffentlicht worden. Mitunter mit umfangreichen Änderungen und Neuerungen. Dieser schnellen Entwicklung müssen zum einen die Toolketten-Anbieter als auch die Automobil-Hersteller folgen. Erstere müssen dabei möglichst schnell die neue Version unterstützen und die neuen BSW-Module anbieten um Wettbewerbsfähig zu sein. Automobil-Hersteller müssen zudem versuchen die aktuellen Versionen in ihren Entwicklungsprozess einzubauen. Da dieser durchaus mehrere Jahre betragen kann, ist eine kurzfristige Umstellung nur schwer möglich. Hinzukommt zudem, dass einige OEMs veränderte und erweiterte Autosar-Variationen verwenden. Auch diese müssen von den eingesetzten Tools unterstütz werden. Diese Punkte zusammen führen dazu, dass der Entwicklungsprozess der Toolkette und der Endprodukte nur schwer dem aktuellen Stand von Autosar folgen kann. Es ist jedoch zu erwarten, dass die Entwicklung von Autosar in Zukunft sich verlangsamt und damit der Entwicklungszyklus erleichtert wird. Die im Moment gängige Praxis mehrere Autosar Versionen zu unterstützen und zu pflegen würde damit auch ein Ende haben.\cite[Seite 179]{SE_Autosar}\cite{as_kritik}
 
-
-% Bindung an Hersteller
 \paragraph{Bindung an Hersteller}
 Zwar ist im Standard vorgesehen, dass Software-Komponenten, Basissoftware-Module und ähnliches austauschbar sind, jedoch ist anzuzweifeln, dass dieses in der Praxis so einfach möglich ist. Hierdurch entsteht eine Bindung an den Hersteller der Autosar-Distribution, da der Aufwand und die Kosten eines Umstiegs zu einem anderen Hersteller hoch sind.\cite{as_kritik}
 
-% Fehler/Probleme im Design müssen früh erkannt werden
 \paragraph{Starke Relevanz der Designphase}
 Durch die Top-Down Methodik gewinnt die Designphase stark an Relevanz. Dies ist einerseits ein Vorteil, da das gesamte System aus einer abstrakten Perspektive entworfen werden kann, auf der anderen Seite jedoch auch ein Nachteil. Fehler die erst in der Umsetzung und Implementation des Systems zu erkennen sind, müssen auf das zurück abgebildet werden. Hierdurch ergibt sich ein erneuter Integrationsaufwand, da die neuen Versionen des Modells wieder eingearbeitet werden müssen. Dies war zum Beispiel auch während dieses Projektes erkennbar. Das Hinzufügen einer CAN-Botschaft führt zu einer Änderung der CAN-Matrix, des System-Designs und zu einer Notwendigkeit die Basissoftware neu zu konfigurieren. In einem klasischen Design, könnte dies wahrscheinlich einfacher gelöst werden, jedoch ist ein Vergleich dieser beiden Methoden an dieser Stelle nicht möglich.
 
