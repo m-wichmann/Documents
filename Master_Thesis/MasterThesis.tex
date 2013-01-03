@@ -198,7 +198,7 @@ TODO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Verzeichnisse %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \tableofcontents               	% Inhaltsverzeichnis
-%\listoffigures               		% Abbildungsverzeichnis
+\listoffigures               		% Abbildungsverzeichnis
 %\listoftables             			% Tabellenverzeichnis
 %\lstlistoflistings          		% Listenverzeichnis
 %\listoflistings					% Quellcodeverzeichis
@@ -384,10 +384,10 @@ Da sich die Anzahl der Steuergeräte durch Virtualisierung verringert, verringer
 
 
 
-
+% TODO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Allgemeine Softwarearchitektur %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Allgemeine Softwarearchitektur}
-\label{sec:allg_softarch}
+%\section{Allgemeine Softwarearchitektur}
+%\label{sec:allg_softarch}
 % System, Komplexität, Partitionierung
 
 % Um Nutzen von Autosar verstehen zu können: System verstehen
@@ -427,7 +427,7 @@ Ein Grund für den Einsatz von Autosar ist vor allem die steigende Komplexität 
 \label{sec:Grundkonzepte}
 Diese Kapitel soll einen Überblick über die Grundlagen von Autosar geben. Anhand der Abbildung \ref{fig:autosar_overview} werden im folgenden die verschiedenen Aspekte von Autosar betrachtet. Dieses Kapitel basiert stark auf \cite{autosar_techoverview}.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\textwidth]{autosar_overview.png}
     \caption{Autosar Überblick}
@@ -465,7 +465,7 @@ An zentraler Stelle in der Abbildung steht das "`Autosar Entwicklungswerkzeug"'.
     \item Runtime-Enviroment Generator
 \end{itemize}
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\textwidth]{Autosar_Prozess.png}
     \caption{Autosar-Entwicklungs-Prozess}
@@ -480,7 +480,7 @@ Die Basis-Software Implementation stellt das eigentliche Betriebssystem, inklusi
 \label{sec:vfb}
 Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikation ist der "`Virtual Functional Bus"' (kurz VFB) und die "`Runtime-Enviroment"' (kurz RTE). Durch diese soll ein Austausch und eine Verlagerung auf eine andere ECU ermöglicht werden. Dies wird ermöglicht durch eine vollständige Trennung zwischen der Basis-Software und der User-Applikation wie es in Abbildung \ref{fig:autosar_layer} zu sehen ist. 
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\textwidth]{autosar_layer.png}
     \caption{Autosar Schichtenmodell}
@@ -521,7 +521,7 @@ Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu h
 \label{sec:bsw}
 Bei der Basis-Software (kurz BSW) handelt es sich um das eigentlich Betriebssystem. Dieses stellt verschiedene Funktionen bereit. Darunter zum Beispiel ein Scheduler und eine Verwaltung der Tasks. Außerdem sind eine Hardware-Abstraktion und -Treiber hier untergebracht. Dabei ist das gesamte System modular aufgebaut um möglichst Übersichtlich zu sein. Abbildung \ref{fig:autosar_refined_layer} zeigt die grobe Struktur der Basis-Software. Die genaue Einteilung der Module und Abhängigkeiten zwischen diesen wird im Rahmen dieser Arbeit nicht beschrieben. Der geneigte Leser findet jedoch unter \cite{autosar_layer} nähere Informationen dazu.
 
-\begin{figure}[h]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\textwidth]{autosar_refined_layer}
     \caption{Autosar Schichtenmodell mit genauerer Aufteilung}
@@ -677,14 +677,15 @@ Funktionale Sicherheit versucht allgemein einen methodischen Ansatz zur Absicher
 \subsection{Sicherheitslebenszyklus}
 \label{sec:ISO26262_lebenszyklus}
 
+Abbildung \ref{fig:lifecycle} zeigt den Sicherheitslebenzyklus nach ISO 26262. Dieser stellt eine konkrete Interpretation des Produktlebenszyklus nach DIN 61508 dar. Die im Bild angegebenen Nummerierungen verweisen auf die jeweiligen Kapitel in der Norm. 
+
 % TODO: dieses Bild vielleicht als wrapfigure?!
-\begin{figure}[H]
+\begin{figure}[!htbp]
+\center
 \includegraphics[width=0.75\textwidth]{ISO_26262_Lifecycle}
 \caption{Sicheitslebenszyklus nach ISO 26262\cite{iso26262}}
 \label{fig:lifecycle}
 \end{figure}
-
-Abbildung \ref{fig:lifecycle} zeigt den Sicherheitslebenzyklus nach ISO 26262. Dieser stellt eine konkrete Interpretation des Produktlebenszyklus nach DIN 61508 dar. Die im Bild angegebenen Nummerierungen verweisen auf die jeweiligen Kapitel in der Norm. 
 
 Der Lebenszyklus lässt sich in drei Phasen aufteilen. In der \emph{Concept-Phase} werden die Produkt-Anforderungen definiert. Zusätzlich wird hier eine Gefährdungsanalyse und Risikoeinschätzung vorgenommen und ein Sicherheitsplan zur Funktionalen Sicherheit entworfen der alle weiteren Phasen abdeckt.
 
@@ -804,8 +805,6 @@ Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 bei
 
 
 
-% TODO: evtl Kapitel: Umsetzung Embedded Virt
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -861,20 +860,28 @@ Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, u
 
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Aufbau der ECU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Aufbau des Bordnetzsteuergerätes}
+\label{sec:Aufbau_der_ECU}
+Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerk-Management. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät aufgebaut und getestet. Dieses wurde netterweise von VW bereitgestellt. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation Autosar und Scheinwerfer}
 \label{sec:Kommunikation_A_S}
 % TODO
-% vielleicht auch Aufbau des neuen Steuergeräts in dieses Kapitel
+% headlight_final projekt
 
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Netzwerk Management (!)
-\section{Zugriff auf Hardware (Netzwerkmanagement)}
+\section{Einsatz des Netzwerkmanagement}
 \label{sec:AutosarNM}
 % TODO
 
@@ -937,7 +944,7 @@ Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, u
 \section{Sicherheitsbetrachtung des Fallbeispiels}
 \label{sec:Sicherheit_Beispiel}
 % TODO
-
+% krypto instanz in embedded hyp
 
 
 
@@ -964,9 +971,26 @@ Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, u
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Anhang %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\backmatter
+
 \appendix
 \part*{Anhang}
+
+% This file contains sensitive information that is not shared on GitHub!!!
+% If you don't have the appendix.tex, then this line has to be deleted.
+\input{appendix}
+
+
+% TODO: BSW-Modul-Liste; Grafische Notation (Autosar, SPEM); 
+
+
+% Alles hier nach hat keine Nummerierung mehr...
+\backmatter
+
+
+
+\chapter{Beigelegte CD}
+\label{sec:BeigelegteCD}
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%% Erklärung und CD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -977,27 +1001,9 @@ Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig und nur unt
 Wolfenbüttel, den % TODO
 
 
-\chapter{Beigelegte CD}
-\label{sec:BeigelegteCD}
-
-
-
-% This file contains sensitive information that is not shared on GitHub!!!
-% If you don't have the appendix.tex, then this line has to be deleted.
-\input{appendix}
-
-
-%\chapter{Module der Basis-Software}
-
-
-
+% Alle Einträge zum Glossar hinzufügen und Glossar/Akronymliste printen
 \glsaddall
 \printglossaries
-
-
-
-% TODO: Glossar; BSW-Modul-Liste; Grafische Notation (Autosar, SPEM); 
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bibliographie %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
