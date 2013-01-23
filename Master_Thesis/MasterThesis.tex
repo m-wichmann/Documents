@@ -100,7 +100,9 @@
 \usepackage{wrapfig}
 %\usepackage[hang]{subfigure}	% Subabbildungen
 %\usepackage{tikz}				% zum Zeichnen (Frontend zu PGF)
-\usepackage{pgfgantt}           % pgf verwenden um Gantt Diagramme zu erstellen
+\usepackage{pgfgantt}           % pgf verwenden um Gantt Diagramme zu erstellen (http://www.ctan.org/pkg/pgfgantt)
+%\usepackage{chronology}         % Chronologien zeichnen (http://www.tug.org/texlive/devsrc/Master/texmf-dist/tex/latex/chronology/chronology.sty)
+%\usepackage{timeline}
 \usepackage{rotating} 			% fuer gedrehte Tabellen und Bilder
 %\usepackage{pdfpages}
 \usepackage[
@@ -421,11 +423,65 @@ Im folgenden Kapitel wird ein kurzer Überblick der Technik von Autosar gegeben.
 
 Ein Grund für den Einsatz von Autosar ist vor allem die steigende Komplexität von Elektrik/Elektronik Systemen (kurz E/E Systeme) wie sie im Automobil Umfeld vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können bedarf es eines Standard-Systems das genau auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die Autosar verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit. \cite[S. 5]{autosar_techoverview}
 
-% TODO: zeitliche einordnung (versionen)
+% TODO: Tabelle durch Zeitleiste ersetzen?!
+%\begin{chronology}[5]{2000}{2015}{3ex}{0.7\textwidth}
+%  \event{1984}{one}
+%  \event[1985]{1986}{two}
+%  \event{\decimaldate{8}{7}{2005}}{1.0}
+%  \event{\decimaldate{4}{5}{2006}}{2.0}
+%  \event{\decimaldate{4}{12}{2006}}{2.1}
+%  \event{\decimaldate{21}{12}{2007}}{3.0}
+%  \event{\decimaldate{15}{8}{2008}}{3.1}
+%  \event{\decimaldate{18}{12}{2009}}{4.0}
+%  \event{\decimaldate{13}{5}{2011}}{3.2}
+%  \event{\decimaldate{15}{4}{2011}}{4.0.2}
+%  \event{\decimaldate{22}{12}{2011}}{4.0.3}
+%\end{chronology}
+%\begin{timeline}{2000}{2015}{100}{200}
+%  \MonthAndYearEvent{7}{2005}{1.0}
+%  \MonthAndYearEvent{5}{2006}{2.0}
+%  \MonthAndYearEvent{12}{2006}{2.1}
+%  \MonthAndYearEvent{12}{2007}{3.0}
+%  \MonthAndYearEvent{8}{2008}{3.1}
+%  \MonthAndYearEvent{12}{2009}{4.0}
+%  \MonthAndYearEvent{5}{2011}{3.2}
+%  \MonthAndYearEvent{4}{2011}{4.0.2}
+%  \MonthAndYearEvent{12}{2011}{4.0.3}
+%\end{timeline}
 
-% TODO: evtl. noch ein Kapitel zur benennung der sachen
+\begin{table}[h]
+\center
+\begin{tabular}[h]{c c c l}
+\toprule
+Release & Datum & Phase & Notiz\\
+\midrule
+      & Juli 2003  &  & Gründung Autosar\\
+\midrule
+1.0   & 08.07.2005 & \multirow{3}{*}{Phase I} & \\
+2.0	  & 04.05.2006 &  & \\
+2.1	  & 04.12.2006 &  & \\
+\midrule
+3.0	  & 21.12.2007 & \multirow{3}{*}{Phase II} & \\
+3.1	  & 15.08.2008 &  & \\
+      & 2008       &  & Erste Autos mit Autosar\\
+4.0	  & 18.12.2009 &  & \\
+\midrule
+3.2	  & 13.05.2011 & \multirow{3}{*}{Phase III} & \\
+4.0.2 & 15.04.2011 &  & \\
+4.0.3 & 22.12.2011 &  & \\
+\bottomrule
+\end{tabular}
+\caption{Zeitlicher Ablauf der Autosar-Entwicklung (vgl. \cite{wiki:autosar_de}\cite{as_roadmap}\cite{as_background})}
+\label{tab:timeline}
+\end{table}
 
-% TODO: vielleicht in eigenes Kapitel auslagern, je nach Umfang
+% TODO: Text zur Zeitleiste
+
+
+
+
+
+
 \subsection{Grundkonzepte}
 \label{sec:Grundkonzepte}
 Diese Kapitel soll einen Überblick über die Grundlagen von Autosar geben. Anhand der Abbildung \ref{fig:autosar_overview} werden im folgenden die verschiedenen Aspekte von Autosar betrachtet. Dieses Kapitel basiert stark auf \cite{autosar_techoverview}.
@@ -489,9 +545,8 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
 
 Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compilezeit bzw. Laufzeit. So wird während der System-Modellierung der VFB entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Bei Ports handelt es sich um Interaktionspunkte zwischen Softwarekomponenten. Dabei wird zwischen PPorts (provide ports), die etwas bereitstellen, und RPorts (require ports), die etwas benötigen, unterschieden. Um einen Port verwenden zu können muss diesem ein Port Interface zugeordnet sein.
 
-Die zwei wichtigsten Interfaces werden im weiteren kurz betrachtet. Analog zu diesen existieren noch zwei Autosar-Service-Interfaces, die Autosar-intern verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen.
+Die zwei wichtigsten Interfaces werden im weiteren kurz betrachtet. Analog zu diesen existieren noch zwei Autosar-Service-Interfaces, die Autosar-intern verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen. Zusätzlich kann beim Zugriff auf ein Port zwischen einem Expliziten und Impliziten Zugriff unterschieden werden. Diese Modi, sowie die Multiplizität der Interface soll an dieser Stelle nicht erläutert werden und ist unter \cite[Seite 101 ff.]{SE_Autosar} nachzulesen.
 
-% TODO: Multiplizität; Explizit, Implizit; Events
 \paragraph{Sender/Receiver Interface}
 Bei einem Sender/Receiver Interface handelt es sich um einen Kommunikationsmechanismus mit dessen Hilfe Daten ausgetauscht werden können. Die übertragenen Daten können dabei sowohl primitve als auch komplexe Datentypen wie Strukturen enthalten.
 
@@ -509,7 +564,7 @@ Std_ReturnType Rte_Write_<p>_<d>(IN Rte_Instance <self>, IN <data>)
 Std_ReturnType Rte_Read_<p>_<d>(IN Rte_Instance <self>, OUT <data>)
 \end{lstlisting}
 
-Die in Zeile 1 und 2 in Listing \ref{lst:rte_beispiele} gezeigten Beispiele, werden verwendet, um auf ein Sender/Receiver-Interface zuzugreifen. Dabei stehen die Platzhalter \texttt{<p>} und \texttt{<d>} für den entsprechenden Port und das gewünschte Datenelement. Das Argument \texttt{<data>} entspricht dem zu empfangen beziehungsweise zu sendenden Datenelements. Das Element \texttt{<self>} vom Typ Rte_Instance wird verwendet um % TODO ??? !!!
+Die in Zeile 1 und 2 in Listing \ref{lst:rte_beispiele} gezeigten Beispiele, werden verwendet, um auf ein Sender/Receiver-Interface zuzugreifen. Dabei stehen die Platzhalter \texttt{<p>} und \texttt{<d>} für den entsprechenden Port und das gewünschte Datenelement. Das Argument \texttt{<data>} entspricht dem zu empfangen beziehungsweise zu sendenden Datenelements. Das Element \texttt{<self>} vom Typ Rte\_Instance wird verwendet um mehrere Instanzen zu verwalten und funktioniert ähnlich wie ein \texttt{this}-Pointer bei der Objekt-Orientierung.
 
 Das Hauptkonzept der Techniken VFB und RTE ist die Festlegung von Schnittstellen. Dieses Konzept wird bereits seit langer Zeit in anderen Bereichen der Software-Entwicklung durchgeführt. So werden zum Beispiel bei Java Interfaces verwendet, um konkrete Implementationen abzukapseln und generisch zu halten. 
 
@@ -641,7 +696,6 @@ Zudem können zwei Konzepte des Netzwerk-Managements unterschieden werden. Bei d
 
 Das zweite Konzept ist das direkte Monitoring. Hierbei werden von jedem Bus-Teilnehmer dedizierte Botschaften gesendet die den gewüsnchten Bus-Status mitteilen. Um Nachrichten-Bursts zu vermeiden wird der Bus als logischer Ring mit NM-Token gesehen. Hierdurch hat jeder Bus-Knoten einen definierten Vorgänger und Nachfolger. Wenn nun ein Knoten eine NM-Botschaft erhält, sendet dieser wiederum eine NM-Botschaft an seinen Nachfolger.
 
-% TODO: NM ohne Master nochmal überlegen...
 Zudem kann Netzwerk-Management sowohl von einem Master gesetuert werden, als auch frei laufend betrieben werden. Falls ein Master vorhanden ist, kann dieser die Zustände im System sammeln und gezielt eine Zustands-Veränderung des Gesamt-Systems veranlassen. Dabei kann der Master auch einen Slave darstellen. Falls NM ohne einen Master implementiert ist, hängt der Zustand des Gesamt-Systems von allen Knoten ab. Somit wird ein Bus-Sleep-Mode erst erreicht, sobald alle Bus-Teilnehmer sich einig sind.
 
 Im folgenden werden die Netzwerk-Management-Konzepte von drei verschiedenen üblichen Systemen betrachtet. Dies soll einen Einblick in die übliche Praxis geben.
