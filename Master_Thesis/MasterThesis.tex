@@ -7,12 +7,12 @@
 %% - Cite auf mein GitHub ändern oder so?!
 %% - Portabilität PC VM auf embedded Hypervisor
 %% - Relevanz für Testen und Entwicklungsprozess
-%% - Autosar oder AUTOSAR?!
+%% - AUTOSAR in Titel?!
 %% - Ethernet Kosten im Gegensatz zu CAN? Vorteile/Nachteile?
-%% - Autosar MISRA-Konform? 
-%% - Virtualisierte Autosar-Komponente könnte LSMS ersetzen
+%% - AUTOSAR MISRA-Konform? 
+%% - Virtualisierte AUTOSAR-Komponente könnte LSMS ersetzen
 %% - "Lizenz Server" am CAN Netz um Nachrichten zu überprüfen und damit evtl. krypto
-%% - Master Arbeit auch als Eval und Einführung von Autosar
+%% - Master Arbeit auch als Eval und Einführung von AUTOSAR
 
 
 \documentclass[
@@ -111,8 +111,8 @@
   pdfpagemode={UseNone},		% UseNone, FullScreen, UseThumbs, UseOutlines, (UseOC, UseAttachments)
   pdfpagelayout={TwoPageRight},	% SinglePage, OneColumn, TwoColumnLeft, TwoColumnRight, TwoPageLeft, TwoPageRight
   plainpages=false, 
-  pdfkeywords={Autosar, Virtualisierung, ECU, Python, CAN},
-  pdfsubject={Virtualisierung von Autosar Softwarekomponenten für die Erprobung},
+  pdfkeywords={AUTOSAR, Virtualisierung, ECU, Python, CAN},
+  pdfsubject={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
   pdftitle={Master-Arbeit},
   pdfauthor={Martin Wichmann},
 %  colorlinks=true
@@ -188,13 +188,13 @@ Gesetzt mit Hilfe von {\KOMAScript} und {\LaTeX}. LibreOffice für die \\ Textve
 
 \section*{Zusammenfassung}
 \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
-Nach fast zehn Jahren seit den ersten Bemühungen um Autosar, haben sich die Architektur und die Entwicklungsmethoden mittlerweile in der Automobil-Industrie etabliert. Diese Master-Arbeit betrachtet die Möglichkeiten Autosar Komponenten virtualisiert einzusetzen. Hierzu wird ein Fallbeispiel betrachtet, mit Hilfe dessen sowohl die Virtualisierung, inklusive der Kommunikation, als auch Autosar selber evaluiert wird. Um den Bedarf an Autosar-Entwicklern zu decken, wird an der Ostfalia Hochschule für angewandte Wissenschaften seit einige Jahren Autosar in der Lehre eingesetzt. Um diese Bemühungen zu unterstützen soll diese Arbeit zusätzlich als Grundlagen-Einführung dienen.
+Nach fast zehn Jahren seit den ersten Bemühungen um AUTOSAR, haben sich die Architektur und die Entwicklungsmethoden mittlerweile in der Automobil-Industrie etabliert. Diese Master-Arbeit betrachtet die Möglichkeiten AUTOSAR Komponenten virtualisiert einzusetzen. Hierzu wird ein Fallbeispiel betrachtet, mit Hilfe dessen sowohl die Virtualisierung, inklusive der Kommunikation, als auch AUTOSAR selber evaluiert wird. Um den Bedarf an AUTOSAR-Entwicklern zu decken, wird an der Ostfalia Hochschule für angewandte Wissenschaften seit einige Jahren AUTOSAR in der Lehre eingesetzt. Um diese Bemühungen zu unterstützen soll diese Arbeit zusätzlich als Grundlagen-Einführung dienen.
 
 \vfill
 
 \foreignlanguage{english}{
 \section*{Abstract}
-After almost ten years since the beginning of Autosar, the architecture and development-process is established in the automotive industry. This master-thesis looks at the possibilities to use virtualized Autosar components. For this an case study is examined to evaluate both the virtualization, including the communication, and Autosar as a concept. To cover the demand for Autosar developers, the Ostfalia Hochschule für angewandte Wissenschaften is using Autosar in courses. To support these efforts, this thesis is written to cover the fundamentals of AUTOSAR.
+After almost ten years since the beginning of AUTOSAR, the architecture and development-process is established in the automotive industry. This master-thesis looks at the possibilities to use virtualized AUTOSAR components. For this an case study is examined to evaluate both the virtualization, including the communication, and AUTOSAR as a concept. To cover the demand for AUTOSAR developers, the Ostfalia Hochschule für angewandte Wissenschaften is using AUTOSAR in courses. To support these efforts, this thesis is written to cover the fundamentals of AUTOSAR.
 \vfill
 }
 
@@ -257,18 +257,18 @@ Das in dieser Master-Arbeit betrachtete Praxis-Beispiel ist eine Scheinwerfer-St
 \label{fig:arch}
 \end{figure}
 
-Die geplante Architektur der Scheinwerfer-Steuerung ist in Abbildung \ref{fig:arch} zu sehen. Dabei sind zwei getrennte Hardware Elemente zu sehen. Zum einen das Scheinwerfer-Steuergerät und zum anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles Autosar und Linux auf einem Windows Host.
+Die geplante Architektur der Scheinwerfer-Steuerung ist in Abbildung \ref{fig:arch} zu sehen. Dabei sind zwei getrennte Hardware Elemente zu sehen. Zum einen das Scheinwerfer-Steuergerät und zum anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles AUTOSAR und Linux auf einem Windows Host.
 
 Aus dieser Architektur-Beschreibung lassen sich vier Kern-Bereiche dieser Master-Arbeit ableiten:
 
 \begin{itemize}
-    \item Virtualisierung von Autosar und Linux
-    \item Kommunikation zwischen Linux und Autosar
-    \item Kommunikation zwischen Autosar und Scheinwerfer
+    \item Virtualisierung von AUTOSAR und Linux
+    \item Kommunikation zwischen Linux und AUTOSAR
+    \item Kommunikation zwischen AUTOSAR und Scheinwerfer
     \item Zugriff auf Hardware inklusive Betrachtung von Netzwerkmanagement
 \end{itemize}
 
-Hierbei ist zu beachten, dass das aktivieren des Netzwerkmanagements erst möglich ist, sobald eine Kommunikation zwischen Autosar und der Hardware möglich ist.
+Hierbei ist zu beachten, dass das aktivieren des Netzwerkmanagements erst möglich ist, sobald eine Kommunikation zwischen AUTOSAR und der Hardware möglich ist.
 
 % TODO: Projektplanung
 Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes ein Monat Arbeit vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen. Jede Phase enthält die Vorbereitung, Umsetzung und Dokmentation des entsprechenden Bereichs.
@@ -282,8 +282,8 @@ Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist,
 \gantttitle{2013}{4} \\
 \gantttitlelist{9,10,11,12,1,2}{2} \\
 \ganttbar{Virtualisierung}{1}{2} \\
-\ganttbar{Kommunikation Linux/Autosar}{3}{4} \\
-\ganttbar{Kommunikation Autosar/Scheinwerfer}{5}{6} \\
+\ganttbar{Kommunikation Linux/AUTOSAR}{3}{4} \\
+\ganttbar{Kommunikation AUTOSAR/Scheinwerfer}{5}{6} \\
 \ganttbar{Zugriff auf Hardware}{7}{8} \\
 \ganttbar{Evaluation}{9}{10} \\
 \ganttbar{Fertigstellen der Arbeit}{11}{12} 
@@ -299,7 +299,7 @@ Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Grundlagen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Grundlagen}
 \label{sec:Grundlagen}
-Dieses Kapitel enthält Grundlagen zu den Themen Autosar und Virtualisierung.
+Dieses Kapitel enthält Grundlagen zu den Themen AUTOSAR und Virtualisierung.
 % TODO
 
 
@@ -353,7 +353,7 @@ Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Daz
 Der Einsatz von Virtualisierung hat eine Reihe von Vorteilen\cite{wiki:emb_hyp}.
 
 \paragraph{Betriebssystem Unabhängigkeit}
-Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene Betriebssysteme komplett parallel zu verwenden und die stärken der verschiedenen Systeme zu nutzen. So wird dieser Vorteil zum Beispiel bei COQOS genutzt um Autosar und Android parallel lauffähig zu haben. Dadurch kann Autosar Zeit- und Sicherheitskritische Aufgaben übernehmen und gleichzeitig Android den Infotainment Bereich verwalten.
+Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene Betriebssysteme komplett parallel zu verwenden und die stärken der verschiedenen Systeme zu nutzen. So wird dieser Vorteil zum Beispiel bei COQOS genutzt um AUTOSAR und Android parallel lauffähig zu haben. Dadurch kann AUTOSAR Zeit- und Sicherheitskritische Aufgaben übernehmen und gleichzeitig Android den Infotainment Bereich verwalten.
 
 \paragraph{Sicherheit}
 Eine strickte Trennung durch Virtualiserung kann eine erhöhte Sicherheit bedeuten. Hierbei ist sowohl die Sicherheit vor Angriffen als auch Ausfällen gemeint. Zum einen ist eine Redundanz der Applikationen möglich. Diese Technik wird zum Teil in hochsicherheits Anwendungen, wie zum Beispiel Flugzeugen, genutzt um Code-Fehler auszuschließen. Es könnten also mehrere Applikationen mit unterschiedlichen Implementationen in verschiedenen VMs laufen.
@@ -414,15 +414,15 @@ Da sich die Anzahl der Steuergeräte durch Virtualisierung verringert, verringer
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Autosar}
+\section{AUTOSAR}
 \label{sec:Autosar}
-Bei Autosar handelt es sich um eine offene und standardisierte Softwarearchitektur die Hauptsächlich in der Automobil-Industrie Verwendung findet. Autosar, kurz für \emph{AUTomotive Open System ARchitecture}, wurde gemeinsam von einer Reihe von Automobilherstellern und Zulieferern seit etwa 2003 entwickelt. Zu den Kern Mitgliedern gehören zur Zeit BMW, Bosch, Toyota, Volkswagen und eine Reihe anderer. Autosar ist als Erbe von OSEK/VDX zu sehen und baut somit auch zum Teil auf dieses auf.
+Bei AUTOSAR handelt es sich um eine offene und standardisierte Softwarearchitektur die Hauptsächlich in der Automobil-Industrie Verwendung findet. AUTOSAR, kurz für \emph{AUTomotive Open System ARchitecture}, wurde gemeinsam von einer Reihe von Automobilherstellern und Zulieferern seit etwa 2003 entwickelt. Zu den Kern Mitgliedern gehören zur Zeit BMW, Bosch, Toyota, Volkswagen und eine Reihe anderer. AUTOSAR ist als Erbe von OSEK/VDX zu sehen und baut somit auch zum Teil auf dieses auf.
 
-Gemäß dem Autosar-Leitspruch "`Cooperate on standards, compete on implementation"' handelt es sich bei Autosar lediglich um einen Standard. Ziel von Autosar ist es Schnittstellen zu definieren die möglichst alle Vorrausetzungen der Automobilindustrie erfüllen und damit den Standard allgemein Einsetzbar machen. Die Implementation des Autosar-Standards ist den verschiedenen Firmen überlassen. Im Kapitel \ref{sec:Toolkette} wird eine kurze Übersicht der verschiedenen Autosar-Distributionen und zugehöriger Tools gegeben.
+Gemäß dem AUTOSAR-Leitspruch "`Cooperate on standards, compete on implementation"' handelt es sich bei AUTOSAR lediglich um einen Standard. Ziel von AUTOSAR ist es Schnittstellen zu definieren die möglichst alle Vorrausetzungen der Automobilindustrie erfüllen und damit den Standard allgemein Einsetzbar machen. Die Implementation des AUTOSAR-Standards ist den verschiedenen Firmen überlassen. Im Kapitel \ref{sec:Toolkette} wird eine kurze Übersicht der verschiedenen AUTOSAR-Distributionen und zugehöriger Tools gegeben.
 
-Im folgenden Kapitel wird ein kurzer Überblick der Technik von Autosar gegeben. Um den Rahmen dieser Arbeit nicht zu sprengen beschränkt sich das Kapitel auf die Grundlagen und wichtigsten Konzepte. Ein übersichtlicher und guter Einblick ist in \cite{autosar_techoverview} und \cite{autosar_layer} zu finden.
+Im folgenden Kapitel wird ein kurzer Überblick der Technik von AUTOSAR gegeben. Um den Rahmen dieser Arbeit nicht zu sprengen beschränkt sich das Kapitel auf die Grundlagen und wichtigsten Konzepte. Ein übersichtlicher und guter Einblick ist in \cite{autosar_techoverview} und \cite{autosar_layer} zu finden.
 
-Ein Grund für den Einsatz von Autosar ist vor allem die steigende Komplexität von Elektrik/Elektronik Systemen (kurz E/E Systeme) wie sie im Automobil Umfeld vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können bedarf es eines Standard-Systems das genau auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die Autosar verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit. \cite[S. 5]{autosar_techoverview}
+Ein Grund für den Einsatz von AUTOSAR ist vor allem die steigende Komplexität von Elektrik/Elektronik Systemen (kurz E/E Systeme) wie sie im Automobil Umfeld vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können bedarf es eines Standard-Systems das genau auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die AUTOSAR verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit. \cite[S. 5]{autosar_techoverview}
 
 % TODO: Tabelle durch Zeitleiste ersetzen?!
 %\begin{chronology}[5]{2000}{2015}{3ex}{0.7\textwidth}
@@ -456,7 +456,7 @@ Ein Grund für den Einsatz von Autosar ist vor allem die steigende Komplexität 
 \toprule
 Release & Datum & Phase & Notiz\\
 \midrule
-      & Juli 2003  &  & Gründung Autosar\\
+      & Juli 2003  &  & Gründung AUTOSAR\\
 \midrule
 1.0   & 08.07.2005 & \multirow{3}{*}{Phase I} & \\
 2.0	  & 04.05.2006 &  & \\
@@ -464,7 +464,7 @@ Release & Datum & Phase & Notiz\\
 \midrule
 3.0	  & 21.12.2007 & \multirow{3}{*}{Phase II} & \\
 3.1	  & 15.08.2008 &  & \\
-      & 2008       &  & Erste Autos mit Autosar\\
+      & 2008       &  & Erste Autos mit AUTOSAR\\
 4.0	  & 18.12.2009 &  & \\
 \midrule
 3.2	  & 13.05.2011 & \multirow{3}{*}{Phase III} & \\
@@ -472,7 +472,7 @@ Release & Datum & Phase & Notiz\\
 4.0.3 & 22.12.2011 &  & \\
 \bottomrule
 \end{tabular}
-\caption{Zeitlicher Ablauf der Autosar-Entwicklung (vgl. \cite{wiki:autosar_de}\cite{as_roadmap}\cite{as_background})}
+\caption{Zeitlicher Ablauf der AUTOSAR-Entwicklung (vgl. \cite{wiki:autosar_de}\cite{as_roadmap}\cite{as_background})}
 \label{tab:timeline}
 \end{table}
 
@@ -485,7 +485,7 @@ Release & Datum & Phase & Notiz\\
 
 \subsection{Grundkonzepte}
 \label{sec:Grundkonzepte}
-Diese Kapitel soll einen Überblick über die Grundlagen von Autosar geben. Anhand der Abbildung \ref{fig:autosar_overview} werden im folgenden die verschiedenen Aspekte von Autosar betrachtet. Dieses Kapitel basiert stark auf \cite{autosar_techoverview}.
+Diese Kapitel soll einen Überblick über die Grundlagen von AUTOSAR geben. Anhand der Abbildung \ref{fig:autosar_overview} werden im folgenden die verschiedenen Aspekte von AUTOSAR betrachtet. Dieses Kapitel basiert stark auf \cite{autosar_techoverview}.
 
 \begin{figure}[!htbp]
     \centering
@@ -494,7 +494,7 @@ Diese Kapitel soll einen Überblick über die Grundlagen von Autosar geben. Anha
     \label{fig:autosar_overview}
 \end{figure}
 
-Der Lebenszyklus eines Autosar Systems lässt sich in zwei Phasen unterteilen. Die erste Phase ist in der Abbildung im oberen Teil zu sehen und beinhaltet das Design und die Entwicklung. In der zweite Phase werden alle Konfigurationen und Quelldateien verwendet um mittels des "`Autosar Entwicklungswerkzeugs"'  ausführbare Dateien zu generieren, die anschließend auf der Ziel-Hardware ausgeführt werden können. Im folgenden werden die einzelnen nötigen Elemente näher erläutert.
+Der Lebenszyklus eines AUTOSAR Systems lässt sich in zwei Phasen unterteilen. Die erste Phase ist in der Abbildung im oberen Teil zu sehen und beinhaltet das Design und die Entwicklung. In der zweite Phase werden alle Konfigurationen und Quelldateien verwendet um mittels des "`AUTOSAR Entwicklungswerkzeugs"'  ausführbare Dateien zu generieren, die anschließend auf der Ziel-Hardware ausgeführt werden können. Im folgenden werden die einzelnen nötigen Elemente näher erläutert.
 
 
 \paragraph{System Description} Ein Entwurf der "`System Description"' ist am oberen Rand der Abbildung zu sehen. Hier werden Komponenten und deren Verbindungen definiert. Die verschiedenen Interfaces und der Virtual Functional Bus werden in einem seperaten Abschnitt näher betrachtet. Komponenten (Software-Components, kurz SW-C) können beliebig geschachtelt werden um so eine logische Trennung zwischen Teil-Systemen zu schaffen. Hierbei ist lediglich zu beachten, dass pro ECU eine Top-Level-Composition (kurz TLC) gefordert wird. Die eigentliche Funtkionalität ist in Runnables implementiert. Diese müssen einer SW-C zugehören und werden von einem RTE-Event, zum Beispiel ein Timer, aktiviert.
@@ -506,15 +506,15 @@ Als Austauschformat wird XML, mit der Dateiendung "`.arxml"' verwendet. Es ist m
 Innerhalb dieses Projektes wird Systemdesk der Firma dSpace verwendet.
 
 \paragraph{Kommunikations-Informationen}
-Um eine Kommunikation zwischen mehreren Komponenten zu ermöglichen müssen entsprechende Informationen geliefert werden. Hierbei existieren zum Beispiel die Formate DBC, FIBEX und LDF. Obwohl es sich bei DBC und LDF prinzipiell um Bus-Systemabhängige Formate handelt, spielt dies bei Autosar keine Rolle. So wird im Autosar-Stack die Kommunikations derart abstrahiert, sodass Botschaften transparent über unterschiedliche Bus-Systeme oder auch innerhalb einer ECU übertragen werden können.
+Um eine Kommunikation zwischen mehreren Komponenten zu ermöglichen müssen entsprechende Informationen geliefert werden. Hierbei existieren zum Beispiel die Formate DBC, FIBEX und LDF. Obwohl es sich bei DBC und LDF prinzipiell um Bus-Systemabhängige Formate handelt, spielt dies bei AUTOSAR keine Rolle. So wird im AUTOSAR-Stack die Kommunikations derart abstrahiert, sodass Botschaften transparent über unterschiedliche Bus-Systeme oder auch innerhalb einer ECU übertragen werden können.
 
 Relevante Informationen sind Botschaften-IDs, Bezeichner, Bitlänge und Position der Signale in der Botschaft. Im Rahmen dieses Projektes werden DBC-Dateien mittels Vector CANoe erstellt.
 
 \paragraph{Quellcode und Objektdateien}
-Die eigentliche Implementation der Funktionalität findet im Quellcode, beziehungsweise im Objektcode statt. Durch den Autosar-Standard ist ein Benennungsschema definiert, wodurch die entsprechenden Funktionen identifiziert werden. Auch der Zugriff auf Funktionen der RTE sind durch dieses Schema definiert. Die API-Funktionen der RTE werden vom RTE-Generator der verwendeten Autosar-Distribution erstellt.
+Die eigentliche Implementation der Funktionalität findet im Quellcode, beziehungsweise im Objektcode statt. Durch den AUTOSAR-Standard ist ein Benennungsschema definiert, wodurch die entsprechenden Funktionen identifiziert werden. Auch der Zugriff auf Funktionen der RTE sind durch dieses Schema definiert. Die API-Funktionen der RTE werden vom RTE-Generator der verwendeten AUTOSAR-Distribution erstellt.
 
-\paragraph{Autosar Entwicklungswerkzeug}
-An zentraler Stelle in der Abbildung steht das "`Autosar Entwicklungswerkzeug"'. Dies besteht genau genommen aus mindestens drei Teilen und muss nicht zwingend komplett von einem Hersteller stammen. So gibt es einige Implementationen die nur einen Teil des Aufgabenbereichs abdecken. Die drei nötige Komponenten sind:
+\paragraph{AUTOSAR Entwicklungswerkzeug}
+An zentraler Stelle in der Abbildung steht das "`AUTOSAR Entwicklungswerkzeug"'. Dies besteht genau genommen aus mindestens drei Teilen und muss nicht zwingend komplett von einem Hersteller stammen. So gibt es einige Implementationen die nur einen Teil des Aufgabenbereichs abdecken. Die drei nötige Komponenten sind:
 
 \begin{itemize}
     \item Basis-Software Implementation
@@ -525,11 +525,11 @@ An zentraler Stelle in der Abbildung steht das "`Autosar Entwicklungswerkzeug"'.
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\textwidth]{Autosar_Prozess.png}
-    \caption{Autosar-Entwicklungs-Prozess}
+    \caption{AUTOSAR-Entwicklungs-Prozess}
     \label{fig:autosar_prozess}
 \end{figure}
 
-Die Basis-Software Implementation stellt das eigentliche Betriebssystem, inklusive aller Module dar. Mit Hilfe des Basis-Software Konfigurators werden die verschiedenen Module des Betriebssystems ausgewählt und konfiguriert. An dieser Stelle werden zum Beispiel Tasks erstellt und Botschaften-IDs vergeben. Zu diesem Zweck kann an dieser Stelle die System- und Kommunikations-Beschreibung importiert werden. Hierdurch können einige Einstellung automatisch vorgenommen werden. Der letzte Teil der Autosar-Entwicklungsumgebung ist der RTE-Generator. Dieser benötigt eine System-Beschreibung und generiert aus dieser die entsprechende API zwischen BSW und Applikation. Der vereinfachte Autosar-Entwicklungs-Prozess ist in Abbiludng \ref{fig:autosar_prozess} zu sehen.
+Die Basis-Software Implementation stellt das eigentliche Betriebssystem, inklusive aller Module dar. Mit Hilfe des Basis-Software Konfigurators werden die verschiedenen Module des Betriebssystems ausgewählt und konfiguriert. An dieser Stelle werden zum Beispiel Tasks erstellt und Botschaften-IDs vergeben. Zu diesem Zweck kann an dieser Stelle die System- und Kommunikations-Beschreibung importiert werden. Hierdurch können einige Einstellung automatisch vorgenommen werden. Der letzte Teil der AUTOSAR-Entwicklungsumgebung ist der RTE-Generator. Dieser benötigt eine System-Beschreibung und generiert aus dieser die entsprechende API zwischen BSW und Applikation. Der vereinfachte AUTOSAR-Entwicklungs-Prozess ist in Abbiludng \ref{fig:autosar_prozess} zu sehen.
 
 
 
@@ -540,13 +540,13 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\textwidth]{autosar_layer.png}
-    \caption{Autosar Schichtenmodell}
+    \caption{AUTOSAR Schichtenmodell}
     \label{fig:autosar_layer}
 \end{figure}
 
 Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compilezeit bzw. Laufzeit. So wird während der System-Modellierung der VFB entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Bei Ports handelt es sich um Interaktionspunkte zwischen Softwarekomponenten. Dabei wird zwischen PPorts (provide ports), die etwas bereitstellen, und RPorts (require ports), die etwas benötigen, unterschieden. Um einen Port verwenden zu können muss diesem ein Port Interface zugeordnet sein.
 
-Die zwei wichtigsten Interfaces werden im weiteren kurz betrachtet. Analog zu diesen existieren noch zwei Autosar-Service-Interfaces, die Autosar-intern verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen. Zusätzlich kann beim Zugriff auf ein Port zwischen einem Expliziten und Impliziten Zugriff unterschieden werden. Diese Modi, sowie die Multiplizität der Interface soll an dieser Stelle nicht erläutert werden und ist unter \cite[Seite 101 ff.]{SE_Autosar} nachzulesen.
+Die zwei wichtigsten Interfaces werden im weiteren kurz betrachtet. Analog zu diesen existieren noch zwei AUTOSAR-Service-Interfaces, die AUTOSAR-intern verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen. Zusätzlich kann beim Zugriff auf ein Port zwischen einem Expliziten und Impliziten Zugriff unterschieden werden. Diese Modi, sowie die Multiplizität der Interface soll an dieser Stelle nicht erläutert werden und ist unter \cite[Seite 101 ff.]{SE_Autosar} nachzulesen.
 
 \paragraph{Sender/Receiver Interface}
 Bei einem Sender/Receiver Interface handelt es sich um einen Kommunikationsmechanismus mit dessen Hilfe Daten ausgetauscht werden können. Die übertragenen Daten können dabei sowohl primitve als auch komplexe Datentypen wie Strukturen enthalten.
@@ -586,15 +586,15 @@ Bei der Basis-Software (kurz BSW) handelt es sich um das eigentlich Betriebssyst
 \begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\textwidth]{autosar_refined_layer}
-    \caption{Autosar Schichtenmodell mit genauerer Aufteilung}
+    \caption{AUTOSAR Schichtenmodell mit genauerer Aufteilung}
     \label{fig:autosar_refined_layer}
 \end{figure}
 
-Autosar, und damit auch das Betriebssystem und die Basis-Software, ist als statisches System entworfen. Das bedeutet das alle Entscheidungen und Einstellung zur Entwicklungs-Zeit feststehen müssen. Somit können nach der Compile-Zeit keine Veränderungen am System vorgenommen werden. Auch ist dynamisches Linken von Komponenten oder dynamische Speicheranforderung nicht möglich. Hierdurch wird die Komplexität des Systems möglichst gering gehalten, und damit die Analyse, vor allem im Bezug auf Echtzeitfähigkeit, vereinfacht.\cite[Seite 186]{SE_Autosar}
+AUTOSAR, und damit auch das Betriebssystem und die Basis-Software, ist als statisches System entworfen. Das bedeutet das alle Entscheidungen und Einstellung zur Entwicklungs-Zeit feststehen müssen. Somit können nach der Compile-Zeit keine Veränderungen am System vorgenommen werden. Auch ist dynamisches Linken von Komponenten oder dynamische Speicheranforderung nicht möglich. Hierdurch wird die Komplexität des Systems möglichst gering gehalten, und damit die Analyse, vor allem im Bezug auf Echtzeitfähigkeit, vereinfacht.\cite[Seite 186]{SE_Autosar}
 
 Der modulare Aufbau der BSW bietet einige interessante Vorteile. So ist der Umfang eines Moduls, und damit alle Rechte und Pflichten, durch die Spezifikation klar vorgegeben. Dadurch sind Module austauschbar und einfach testbar. Zusätzlich besteht so die Möglichkeit, einzelne Module von verschiedenen Herstellern zu beziehen. Damit hat ein BSW-Anbieter die Möglichkeit sich auf bestimmte Module oder Modul-Gruppen zu beschränken oder zu spezialisieren. Auch ist es vorstellbar, dass ein Automobil-Hersteller eine konkrete Implementation einiger Module verlangt. So könnte gefordert werden, dass der gesamte Kommunikations-Stack immer von einem Hersteller stammt um absolute Kompatibilität zu gewährleisten.
 
-Durch die starke Modularisierung entstehen jedoch auch ein erhöhter Kommunikationsaufwand. Vor allem in Zeitkritischen Applikationen kann dies ein Nachteil darstellen. Die von Autosar vorgesehene Lösung für dieses Problem sind die \emph{Implementation Conformance Classes}, kurz ICC. Diese mit ICC 1, ICC 2 und ICC 3 benannten Klassen geben Auskunft über die Granulität der Basissoftware. ICC 3 stellt dabei eine Basis-Software dar, bei der alle Module entsprechend der Spezifikation gegliedert und implementiert sind. Bei der Klasse ICC 2, können mehrere Module zu einem Cluster zusammengefasst werden. Dabei müssen nur die Schnittstellen zu den außerhalb liegenden Modulen beziehungsweise Modul-Clustern der Spezifikation entsprechen. Als letzte Klasse stellt die ICC 1 ein einziges Cluster dar. Hier kann die gesamte Basis-Software als proprietärer Gesamtblock gesehen werden. Dabei müssen nur die Schnittstellen zur RTE entsprechend dem Standard definiert sein. Dies kann als Möglichkeit zur Migration von bestehenden Systemen genutzt werden, indem zu erst nur die RTE Autosarkonform eingeführt wird. Zusätzlich bietet dieses Vorgehen Potential zur Optimierung. So können zur Entwicklungs- beziehungsweise Compilezeit die internen Schnittstellen aufgelöst werden, um somit die Kommunikation innerhalb der Basis-Software zu minimieren.
+Durch die starke Modularisierung entstehen jedoch auch ein erhöhter Kommunikationsaufwand. Vor allem in Zeitkritischen Applikationen kann dies ein Nachteil darstellen. Die von AUTOSAR vorgesehene Lösung für dieses Problem sind die \emph{Implementation Conformance Classes}, kurz ICC. Diese mit ICC 1, ICC 2 und ICC 3 benannten Klassen geben Auskunft über die Granulität der Basissoftware. ICC 3 stellt dabei eine Basis-Software dar, bei der alle Module entsprechend der Spezifikation gegliedert und implementiert sind. Bei der Klasse ICC 2, können mehrere Module zu einem Cluster zusammengefasst werden. Dabei müssen nur die Schnittstellen zu den außerhalb liegenden Modulen beziehungsweise Modul-Clustern der Spezifikation entsprechen. Als letzte Klasse stellt die ICC 1 ein einziges Cluster dar. Hier kann die gesamte Basis-Software als proprietärer Gesamtblock gesehen werden. Dabei müssen nur die Schnittstellen zur RTE entsprechend dem Standard definiert sein. Dies kann als Möglichkeit zur Migration von bestehenden Systemen genutzt werden, indem zu erst nur die RTE AUTOSAR-konform eingeführt wird. Zusätzlich bietet dieses Vorgehen Potential zur Optimierung. So können zur Entwicklungs- beziehungsweise Compilezeit die internen Schnittstellen aufgelöst werden, um somit die Kommunikation innerhalb der Basis-Software zu minimieren.
 
 Im weiteren werden die wichtigsten BSW-Module näher betrachtet\cite{SE_Autosar}. Neben diesen existieren noch einige andere Module, die vor allem verschiedene Bus-Systeme und Hardware anbinden. Dazu gehören zum Beispiel: CAN, FlexRay, SPI und PWM.
 
@@ -630,13 +630,13 @@ Unter dem Begriff Complex Driver werden Module zusammengefasst, die eingesetzt w
 
 \subsection{Toolkette}
 \label{sec:Toolkette}
-In diesem Kapitel wird ein Überblick über die nötige Toolkette und die bestehenden Möglichkeiten gegeben. Allgemein werde vier Komponenten benötigt: Basissoftware-Implementation, Basissoftware-Konfigurator, RTE-Generator und ein System-Modell-Werkzeug. Dabei können einzelne Lösungen sowohl eine als auch mehrere dieser Komponenten abdecken. Dadurch fällt die Trennung dieser Schichten zum Teil schwer. In der Theorie soll es bei Autosar möglich sein, einzelne Komponenten der Toolkette auszutauschen. So könnte es möglich sein, Produkte von 4 verschiedenen Herstellern zu nutzen und diese über die standartisierten Schnittstellen miteinander arbeiten zu lassen. Auch der Austausch einzelnener BSW-Module fällt in diesen Bereich. Ob dies jedoch in der Praxis wirklich möglich ist, ist anzuzweifeln, da viele Hersteller bestimmte Teile des Standards nicht oder nicht komplett unterstützen und es so zu Fehlern kommen kann.
+In diesem Kapitel wird ein Überblick über die nötige Toolkette und die bestehenden Möglichkeiten gegeben. Allgemein werde vier Komponenten benötigt: Basissoftware-Implementation, Basissoftware-Konfigurator, RTE-Generator und ein System-Modell-Werkzeug. Dabei können einzelne Lösungen sowohl eine als auch mehrere dieser Komponenten abdecken. Dadurch fällt die Trennung dieser Schichten zum Teil schwer. In der Theorie soll es bei AUTOSAR möglich sein, einzelne Komponenten der Toolkette auszutauschen. So könnte es möglich sein, Produkte von 4 verschiedenen Herstellern zu nutzen und diese über die standartisierten Schnittstellen miteinander arbeiten zu lassen. Auch der Austausch einzelnener BSW-Module fällt in diesen Bereich. Ob dies jedoch in der Praxis wirklich möglich ist, ist anzuzweifeln, da viele Hersteller bestimmte Teile des Standards nicht oder nicht komplett unterstützen und es so zu Fehlern kommen kann.
 
-Im folgenden werden einige Autosar-Distributionen kurz betrachtet\cite{wiki:autosar}. Dabei ist zu sehen, das nicht alle Abschnitte der Toolkette von allen Produkten abgedeckt werden. So spezialisieren sich die Lösungen der Firma dSPACE auf vor allem auf den System-Entwurf, während Elektrobit hierzu keine Software anbietet. Neben den hier erwähnten Herstellern existieren noch eine Reihe weiterer die jedoch nicht näher betrachtet werden sollen.
+Im folgenden werden einige AUTOSAR-Distributionen kurz betrachtet\cite{wiki:autosar}. Dabei ist zu sehen, das nicht alle Abschnitte der Toolkette von allen Produkten abgedeckt werden. So spezialisieren sich die Lösungen der Firma dSPACE auf vor allem auf den System-Entwurf, während Elektrobit hierzu keine Software anbietet. Neben den hier erwähnten Herstellern existieren noch eine Reihe weiterer die jedoch nicht näher betrachtet werden sollen.
 
 % TODO: evtl. durch Tabelle ersetzen
 \paragraph{ArcCore}
-ArcCore bietet eine Autosar Toolkette an, die alle bereiche abdeckt. Dabei werden sowohl die BSW-Implementation als auch die Basis-Version des Entwicklungswerkzeuges als Open-Source unter einer GPL-Lizenz verbreitet. Zudem setzt es mit Eclipse und der GCC auf zwei starke Open-Source Projekte. ArcCore unterstützt Autosar 4.0.
+ArcCore bietet eine AUTOSAR-Toolkette an, die alle bereiche abdeckt. Dabei werden sowohl die BSW-Implementation als auch die Basis-Version des Entwicklungswerkzeuges als Open-Source unter einer GPL-Lizenz verbreitet. Zudem setzt es mit Eclipse und der GCC auf zwei starke Open-Source Projekte. ArcCore unterstützt AUTOSAR 4.0.
 
 \paragraph{dSpace}
 Die Firma dSPACE bietet mit SystemDesk ein Tool zur System-Modellierung an. Dies wird auch in diesem Projekt verwendet, und bietet neben der reinen System-Modellierung auch eine Anbindung an MatLab. Hierdurch kann auch das Verhalten modelliert werden. Zusätzlich wird ein Tool angeboten, mit dem sich die RTE generieren lässt.
@@ -650,34 +650,34 @@ Mit Volcano VSTAR bietet Mentor Graphics eine BSW-Implementation, einen BSW-Konf
 
 
 
-\subsection{Kritik an Autosar}
+\subsection{Kritik an AUTOSAR}
 \label{sec:kritik_autosar}
-Mit Autosar existiert ein Standard, der die Möglichkeit bietet die System-Entwicklung im Automobil-Bereich stark zu vereinfachen und vereinheitlichen. Jedoch handelt es sich bei Autosar nicht um eine Universallösung mit deren Hilfe alle Probleme gelöst sind. Vor allem da Autosar einen großen Umstieg von der klasischen Software-Entwicklung bedeutet, gibt es immer wieder Kritik an den Konzepten. Ob diese Kritikpunkte jedoch ausreichen um das Vermeiden von Autosar zu begründen ist anzuzweifeln. Im folgenden werden einige Kritikpunkte näher betrachtet.
+Mit AUTOSAR existiert ein Standard, der die Möglichkeit bietet die System-Entwicklung im Automobil-Bereich stark zu vereinfachen und vereinheitlichen. Jedoch handelt es sich bei AUTOSAR nicht um eine Universallösung mit deren Hilfe alle Probleme gelöst sind. Vor allem da AUTOSAR einen großen Umstieg von der klasischen Software-Entwicklung bedeutet, gibt es immer wieder Kritik an den Konzepten. Ob diese Kritikpunkte jedoch ausreichen um das Vermeiden von AUTOSAR zu begründen ist anzuzweifeln. Im folgenden werden einige Kritikpunkte näher betrachtet.
 
 \paragraph{Effizienz}
-Speziell auf Anforderungen angepasste Systeme können effektiver entworfen werden als ein Bausatzsystem wie Autosar. Vor allem ECUs mit kleinem Funktionsumfang leiden unter dem Overhead der durch die Abstraktionsschichten und Modularisierung von Autosar entsteht. Auf der anderen Seite können komplexe Systeme von den angebotenen Möglichkeiten profitieren und mittels Autosar die Effizienz steigern.\cite{as_kritik}\cite{wiki:autosar} Da es sich bei der Automobil-Industrie um einen stark Kosten-orientierten Zweig der Wirtschaft handelt, können geringe Mehrkosten durchaus relevant sein. Somit ist eine Abwägung zwischen Kosten und Vorteilen von Autosar in jedem Projekt nötig.\cite[Seite 152]{SE_Autosar} 
+Speziell auf Anforderungen angepasste Systeme können effektiver entworfen werden als ein Bausatzsystem wie AUTOSAR. Vor allem ECUs mit kleinem Funktionsumfang leiden unter dem Overhead der durch die Abstraktionsschichten und Modularisierung von AUTOSAR entsteht. Auf der anderen Seite können komplexe Systeme von den angebotenen Möglichkeiten profitieren und mittels AUTOSAR die Effizienz steigern.\cite{as_kritik}\cite{wiki:autosar} Da es sich bei der Automobil-Industrie um einen stark Kosten-orientierten Zweig der Wirtschaft handelt, können geringe Mehrkosten durchaus relevant sein. Somit ist eine Abwägung zwischen Kosten und Vorteilen von AUTOSAR in jedem Projekt nötig.\cite[Seite 152]{SE_Autosar} 
 
 \paragraph{Zu viel Standard}
-Der Autosar Standard ist sehr Umfangreich, wodurch versucht wird möglichst viele Fälle abzudecken und jegliche nötige Funktionalität zu beschreiben. Dies kann jedoch als Kritikpunkt gesehen werden, da der Standard hierdurch aufgeblasen wird. Vor allem durch den Einfluss verschiedener OEMs ist im Standard Funktionalität enthalten, die nicht der gängigen Praxis entspricht. Als Besipiel hierzu sei der Zeitpunkt der Entscheidung für eine Kommunikations-Strategie (Topologie, Protokolle\dots) genannt.\cite{as_kritik} Der Standard sieht hierbei die zwei Zeitpunkte "`pre-compile-time"' und "`link time"' vor. Jedoch wurde auf Wunsch von Volvo hin auch die Möglichkeit geboten Entscheidung "`post build"' zu treffen. Diese im Standard enthaltene Möglichkeit, wird jedoch anscheinend einzig von Volvo verwendet, und stellt damit für die meißten Hersteller keinen Mehrwert dar. Hierdurch besteht die Gefahr, dass neben dem allgemeinen Autosar-Standard, ebenso OEM spezifische Derivate entstehen.\footnote{So zum Beispiel geschehen mit dem Autosar 3.1.4.DAI.4 Standard von Daimler}
+Der AUTOSAR Standard ist sehr Umfangreich, wodurch versucht wird möglichst viele Fälle abzudecken und jegliche nötige Funktionalität zu beschreiben. Dies kann jedoch als Kritikpunkt gesehen werden, da der Standard hierdurch aufgeblasen wird. Vor allem durch den Einfluss verschiedener OEMs ist im Standard Funktionalität enthalten, die nicht der gängigen Praxis entspricht. Als Besipiel hierzu sei der Zeitpunkt der Entscheidung für eine Kommunikations-Strategie (Topologie, Protokolle\dots) genannt.\cite{as_kritik} Der Standard sieht hierbei die zwei Zeitpunkte "`pre-compile-time"' und "`link time"' vor. Jedoch wurde auf Wunsch von Volvo hin auch die Möglichkeit geboten Entscheidung "`post build"' zu treffen. Diese im Standard enthaltene Möglichkeit, wird jedoch anscheinend einzig von Volvo verwendet, und stellt damit für die meißten Hersteller keinen Mehrwert dar. Hierdurch besteht die Gefahr, dass neben dem allgemeinen AUTOSAR-Standard, ebenso OEM spezifische Derivate entstehen.\footnote{So zum Beispiel geschehen mit dem AUTOSAR 3.1.4.DAI.4 Standard von Daimler}
 
 Zudem sind in der Spezifikation Hinweise und Anforderungen an eine konkrete Implementierung gegeben. So sind immer wieder C-spezifische Anmerkungen zu finden, die umgesetzt werden sollten oder müssen. Hierdurch wird die Offenheit des Standards jedoch eingeschränkt, da konkrete Teile der Implementierung vorgegeben sind.\cite[Seite 20]{autosar_eth} Auch wenn diese Anmerkung dem üblichen Programmier-Standard entsprechen, wiederspricht dieser Ansatz dem Design einer Architektur in der vor allem Schnittstellen und die im Vordergrund stehen sollten.\cite{objektorientierung}
 
 Auch das Fehlen einer Referenzimplementierung kann als Kritik an den Standard angebracht werden.\cite{Hoffmann200803} Vor allem mehrdeutige oder unklare Aussagen im Standard könnten durch eine Referenzimplementierung geklärt werden. Auch würde dies mögliche Designfehler, nicht umsetzbare oder nicht praktikable Entscheidungen überprüfen und könnte frühzeitig Fehler vermeiden.\cite{testing} 
 
-\paragraph{Schnelle Entwicklung von Autosar}
-Die schnelle Entwicklung von Autosar bringt durchaus Probleme mit sich. Seit 2005 ist etwa alle zwei Jahre eine neue Version der Autosar Spezifikation veröffentlicht worden. Mitunter mit umfangreichen Änderungen und Neuerungen. Dieser schnellen Entwicklung müssen zum einen die Toolketten-Anbieter als auch die Automobil-Hersteller folgen. Erstere müssen dabei möglichst schnell die neue Version unterstützen und die neuen BSW-Module anbieten um Wettbewerbsfähig zu sein. Automobil-Hersteller müssen zudem versuchen die aktuellen Versionen in ihren Entwicklungsprozess einzubauen. Da dieser durchaus mehrere Jahre betragen kann, ist eine kurzfristige Umstellung nur schwer möglich. Hinzukommt zudem, dass einige OEMs veränderte und erweiterte Autosar-Variationen verwenden. Auch diese müssen von den eingesetzten Tools unterstütz werden. Diese Punkte zusammen führen dazu, dass der Entwicklungsprozess der Toolkette und der Endprodukte nur schwer dem aktuellen Stand von Autosar folgen kann. Es ist jedoch zu erwarten, dass die Entwicklung von Autosar in Zukunft sich verlangsamt und damit der Entwicklungszyklus erleichtert wird. Die im Moment gängige Praxis mehrere Autosar Versionen zu unterstützen und zu pflegen würde damit auch ein Ende haben.\cite[Seite 179]{SE_Autosar}\cite{as_kritik}
+\paragraph{Schnelle Entwicklung von AUTOSAR}
+Die schnelle Entwicklung von AUTOSAR bringt durchaus Probleme mit sich. Seit 2005 ist etwa alle zwei Jahre eine neue Version der AUTOSAR Spezifikation veröffentlicht worden. Mitunter mit umfangreichen Änderungen und Neuerungen. Dieser schnellen Entwicklung müssen zum einen die Toolketten-Anbieter als auch die Automobil-Hersteller folgen. Erstere müssen dabei möglichst schnell die neue Version unterstützen und die neuen BSW-Module anbieten um Wettbewerbsfähig zu sein. Automobil-Hersteller müssen zudem versuchen die aktuellen Versionen in ihren Entwicklungsprozess einzubauen. Da dieser durchaus mehrere Jahre betragen kann, ist eine kurzfristige Umstellung nur schwer möglich. Hinzukommt zudem, dass einige OEMs veränderte und erweiterte AUTOSAR-Variationen verwenden. Auch diese müssen von den eingesetzten Tools unterstütz werden. Diese Punkte zusammen führen dazu, dass der Entwicklungsprozess der Toolkette und der Endprodukte nur schwer dem aktuellen Stand von AUTOSAR folgen kann. Es ist jedoch zu erwarten, dass die Entwicklung von AUTOSAR in Zukunft sich verlangsamt und damit der Entwicklungszyklus erleichtert wird. Die im Moment gängige Praxis mehrere AUTOSAR Versionen zu unterstützen und zu pflegen würde damit auch ein Ende haben.\cite[Seite 179]{SE_Autosar}\cite{as_kritik}
 
 \paragraph{Bindung an Hersteller}
-Zwar ist im Standard vorgesehen, dass Software-Komponenten, Basissoftware-Module und ähnliches austauschbar sind, jedoch ist anzuzweifeln, dass dieses in der Praxis so einfach möglich ist. Hierdurch entsteht eine Bindung an den Hersteller der Autosar-Distribution, da der Aufwand und die Kosten eines Umstiegs zu einem anderen Hersteller hoch sind.\cite{as_kritik}
+Zwar ist im Standard vorgesehen, dass Software-Komponenten, Basissoftware-Module und ähnliches austauschbar sind, jedoch ist anzuzweifeln, dass dieses in der Praxis so einfach möglich ist. Hierdurch entsteht eine Bindung an den Hersteller der AUTOSAR-Distribution, da der Aufwand und die Kosten eines Umstiegs zu einem anderen Hersteller hoch sind.\cite{as_kritik}
 
 \paragraph{Starke Relevanz der Designphase}
 Durch die Top-Down Methodik gewinnt die Designphase stark an Relevanz. Dies ist einerseits ein Vorteil, da das gesamte System aus einer abstrakten Perspektive entworfen werden kann, auf der anderen Seite jedoch auch ein Nachteil. Fehler die erst in der Umsetzung und Implementation des Systems zu erkennen sind, müssen auf das zurück abgebildet werden. Hierdurch ergibt sich ein erneuter Integrationsaufwand, da die neuen Versionen des Modells wieder eingearbeitet werden müssen. Dies war zum Beispiel auch während dieses Projektes erkennbar. Das Hinzufügen einer CAN-Botschaft führt zu einer Änderung der CAN-Matrix, des System-Designs und zu einer Notwendigkeit die Basissoftware neu zu konfigurieren. In einem klasischen Design, könnte dies wahrscheinlich einfacher gelöst werden, jedoch ist ein Vergleich dieser beiden Methoden an dieser Stelle nicht möglich.
 
 \paragraph{Dokumentation der Konfiguration}
-Da die Konfiguration der Basis-Software und der Entwurf des System-Designs mittels grafischer Tools durchgeführt wird, ist eine Dokumentation der einzelnen Entscheidungen schwierig.\cite[Seite 182 f.]{SE_Autosar} So bietet das EB tresos Studio zum Beispiel keine Möglichkeit Kommentare einzubringen. In der klassischen Entwicklung kann eine Entscheidung mittels eines Kommentars im Quellcode oder ähnlichem erläutert werden. Das bei Autosar eingesetzte XML-Format kann zwar auch Kommentare enthalten, jedoch ist nicht praktikabel als Projektdokumentation einsetzbar. Aus diesem Grund ist es bei dem Einsatz von Autosar notwendig spezielle Vorkehrungen zur Dokumentation einzelner Entscheidungen zu treffen.
+Da die Konfiguration der Basis-Software und der Entwurf des System-Designs mittels grafischer Tools durchgeführt wird, ist eine Dokumentation der einzelnen Entscheidungen schwierig.\cite[Seite 182 f.]{SE_Autosar} So bietet das EB tresos Studio zum Beispiel keine Möglichkeit Kommentare einzubringen. In der klassischen Entwicklung kann eine Entscheidung mittels eines Kommentars im Quellcode oder ähnlichem erläutert werden. Das bei AUTOSAR eingesetzte XML-Format kann zwar auch Kommentare enthalten, jedoch ist nicht praktikabel als Projektdokumentation einsetzbar. Aus diesem Grund ist es bei dem Einsatz von AUTOSAR notwendig spezielle Vorkehrungen zur Dokumentation einzelner Entscheidungen zu treffen.
 
 \paragraph{Portabilität von Softwarekomponenten}
-Die bei Autosar vorgesehene Möglichkeit Software-Komponenten zwischen ECUs zu verschieben bedingt einige Forderungen. So muss die Bandbreite der Kommunikations-Kanäle in betracht gezogen werden. Wenn zum Beispiel zwei intensiv kommunizierende Komponenten von einer ECU auf zwei verteilt werden, kann die Bus-Last stark ansteigen und eventuell Fehler hervorrufen. Auch ist in Betracht zu ziehen, das die von der Softwarekomponente erwartete Hardware vorhanden sein muss. So kann eine Komponente die FlexRay verwendet nicht auf eine ECU verschoben werden, die kein FlexRay bietet. Auch die Anzahl der freien Digital oder Analog Ein/Ausgänge fällt in diese Kategorie. Hierdurch ist die oft erwähnte Verschiebbarkeit der Software-Komponenten nur stark eingeschränkt möglich.
+Die bei AUTOSAR vorgesehene Möglichkeit Software-Komponenten zwischen ECUs zu verschieben bedingt einige Forderungen. So muss die Bandbreite der Kommunikations-Kanäle in betracht gezogen werden. Wenn zum Beispiel zwei intensiv kommunizierende Komponenten von einer ECU auf zwei verteilt werden, kann die Bus-Last stark ansteigen und eventuell Fehler hervorrufen. Auch ist in Betracht zu ziehen, das die von der Softwarekomponente erwartete Hardware vorhanden sein muss. So kann eine Komponente die FlexRay verwendet nicht auf eine ECU verschoben werden, die kein FlexRay bietet. Auch die Anzahl der freien Digital oder Analog Ein/Ausgänge fällt in diese Kategorie. Hierdurch ist die oft erwähnte Verschiebbarkeit der Software-Komponenten nur stark eingeschränkt möglich.
 
 
 
@@ -691,7 +691,7 @@ Die bei Autosar vorgesehene Möglichkeit Software-Komponenten zwischen ECUs zu v
 % TODO: evtl. Bild einfügen mit logischem Ring oder so
 Um den Zustand eines Bus-Systems synchron verändern zu können, wird das sogenannte Netzwerk-Management (kurz NM) verwendet. Hierbei wird mittels spezieller Nachrichten der gewünschte Bus-Zustand mitgeteilt. So kann zum Beispiel ein Bus-System schlafen gelegt werden, wenn alle relevanten Steuergeräte sich ebenfalls schlafen gelegt haben. Das Netzwerk-Management-Prinzip ist vor allem nützlich um Energie zu sparen. Außerdem können hiermit Fehler vermieden werden. Das ist zum Beispiel bei dem Start eines Autos nützlich. Hier existieren Abhängigkeiten zwischen den ECUs. Damit eine ECU ihren Betrieb nicht vor allen anderen beginnt, und somit eventuell eine fehlende Abhägkeit erzeugt wird, können alle Systeme in einem Bereit-Zustand warten. Wenn nun alle ECUs bereit sind kann das gesamte System synchron in einen aktiven Zustand übergehen.
 
-Die Implementation eines NM-Systems ist offen gelassen. So existieren verschiedene Varianten zum Beispiel bei CANopen, OSEK/VDX und Autosar. Das Prinzip ist jedoch überall ähnlich. Nachrichten werden auf einem Braodcast-Kanal umher geschickt und bestimmen den aktuellen Zustand. Mittels eines Zustands-Modells kann das Bus-System zwischen den möglichen Zuständen wechseln. Generell gibt es damit drei Modi: Normal, Low-Power und Sleep. Zusätzlich können benötigte Zustände, wie zum Beispiel "`Initialisierung abgeschlossen"' eingeführt werden.
+Die Implementation eines NM-Systems ist offen gelassen. So existieren verschiedene Varianten zum Beispiel bei CANopen, OSEK/VDX und AUTOSAR. Das Prinzip ist jedoch überall ähnlich. Nachrichten werden auf einem Braodcast-Kanal umher geschickt und bestimmen den aktuellen Zustand. Mittels eines Zustands-Modells kann das Bus-System zwischen den möglichen Zuständen wechseln. Generell gibt es damit drei Modi: Normal, Low-Power und Sleep. Zusätzlich können benötigte Zustände, wie zum Beispiel "`Initialisierung abgeschlossen"' eingeführt werden.
 
 Zudem können zwei Konzepte des Netzwerk-Managements unterschieden werden. Bei dem indirekten Monitoring werden Applikations-Botschaften beobachtet die im Laufe des Betriebs ohnehin gesendet werden. Diese Art des NM bedingt das jeder Bus-Knoten zyklisch Nachrichten sendet. Außerdem ist hierbei eine umfangreiche Konfiguration nötig, da bestimmt werden muss, welche Nachrichten bei welchem Knoten als NM-Nachrichten verwendet werden sollen.
 
@@ -707,8 +707,8 @@ Die CANopen-Implementierung von Netzwerk-Management verwendet ein Master-gesteue
 \paragraph{OSEK/VDX}
 Sowohl direktes als auch indirektes Monitoring wird bei OSEK unterstützt. Dabei begrenzt sich das indirekte Monitoring offensichtlich auf zyklisch sendende Knoten. Beim direkten Monitoring wird ein logischer Ring mit Token eingesetzt. Dies soll mögliche Botschaften-Häufungen vermeiden, und somit die Bus-Last verringern. Das Zustands-Diagramm bei OSEK-NM ist umfangreicher als bei CANopen und soll an dieser Stelle nicht betrachtet werden. NM-Botschaften enthalten folgenden Daten: Quell-ID, Ziel-ID, OpCode und optionale Applikations-spezifische Daten. Dabei stellt das Feld OpCode den aktuellen Zustand beziehungsweise den gewünschten Zustand des Knotens dar. Die verwendeten Botschaften-IDs müssen zur Entwicklungszeit von Hand bestimmt werden.
 
-\paragraph{Autosar}
-Das Netzwerk-Managmenent unter Autosar ähnelt dem von OSEK und ist dementsprechende als direktes Monitoring ohne Master entworfen. Die explizite Unterstützung von OSEK-NM wurde mit Autosar 4.0 entfernt. Diese kann jedoch noch durch eigene Implementierungen ermöglicht werden. Ebenso wie bei OSEK-NM müssen die NM-IDs von Hand zur Entwicklungszeit bestimmt werden. Bei Autosar bedeutet dies zudem das sowohl in der System-Description als auch in der Kommunikations-Matrix die entsprechenden Werte eingepflegt werden müssen. Zudem müssen bei der ECU-Konfiguration die entsprechenden Com-Channel definiert und konfiguriert werden. Die Autosar-typische Modul-Struktur wird auch beim Netzwerk-Management verwendet. So stellt das Modul Nm ein generisches Netzwerk-Management zur Verfügung, während Module wie CanNm, FrNm, LinNm und UdpNm die Bus-Abhängige Verwaltung übernehmen. Die eigentliche Übertragung der Botschaften wird, wie auch bei Applikations-Botschaften, über Module wie Can und CanIf durchgeführt.
+\paragraph{AUTOSAR}
+Das Netzwerk-Managmenent unter AUTOSAR ähnelt dem von OSEK und ist dementsprechende als direktes Monitoring ohne Master entworfen. Die explizite Unterstützung von OSEK-NM wurde mit AUTOSAR 4.0 entfernt. Diese kann jedoch noch durch eigene Implementierungen ermöglicht werden. Ebenso wie bei OSEK-NM müssen die NM-IDs von Hand zur Entwicklungszeit bestimmt werden. Bei AUTOSAR bedeutet dies zudem das sowohl in der System-Description als auch in der Kommunikations-Matrix die entsprechenden Werte eingepflegt werden müssen. Zudem müssen bei der ECU-Konfiguration die entsprechenden Com-Channel definiert und konfiguriert werden. Die AUTOSAR-typische Modul-Struktur wird auch beim Netzwerk-Management verwendet. So stellt das Modul Nm ein generisches Netzwerk-Management zur Verfügung, während Module wie CanNm, FrNm, LinNm und UdpNm die Bus-Abhängige Verwaltung übernehmen. Die eigentliche Übertragung der Botschaften wird, wie auch bei Applikations-Botschaften, über Module wie Can und CanIf durchgeführt.
 
 
 
@@ -780,7 +780,7 @@ Im letzten Schritt werden aus dem ASIL Sicherheitsziele abgeleitet. Diese sind d
 \label{sec:ISO26262_produkt_entwicklung}
 Auf genau Prozesse bei der Produkt Entwicklung soll an dieser Stelle nicht eingegangen werden. Allgemein ist jedoch zu sagen, dass die ISO 26262 einige Vorgaben und Empfehlung macht die bei steigendem ASIL an Umfang zunehmen. So können im Bereich der Softwareentwicklung bei ASIL A oder B Anweisungsüberdeckende Tests ausreichend sein, während bei ASIL D umfangreiche Tests nach dem MC/DC\footnote{Modified Condition/Decision Coverage} Prinzip gefordert sind. Im Hardware-Bereich werden außerdem Anforderungen an die Ausfallrate der Systeme gegeben. Um diese zu bestimmen definiert der Standard eine Reihe von Metriken anhand derer die Berechnung der Ausfallraten erfolgt.
 
-Ein wichtiger Punkt der Norm kann außerdem unter dem Leit-Satz: "`bewährte Architekturen wiederverwenden"' zusammengefasst werden. Diese etwas vage Angabe kann verschieden interpretiert werden. Es kann jedoch Allgemein gesagt werden, das alle Standartisierten Techniken als bewährte Architekturen zu sehen sind. Dazu könnten zum Beispiel die ARM-Architektur, die CAN-Schnittstelle oder der POSIX-Standard gezählt werden. Auch Betriebssysteme und Systemarchitekturen wie OSEK/VDX und Autosar gehören hierzu.
+Ein wichtiger Punkt der Norm kann außerdem unter dem Leit-Satz: "`bewährte Architekturen wiederverwenden"' zusammengefasst werden. Diese etwas vage Angabe kann verschieden interpretiert werden. Es kann jedoch Allgemein gesagt werden, das alle Standartisierten Techniken als bewährte Architekturen zu sehen sind. Dazu könnten zum Beispiel die ARM-Architektur, die CAN-Schnittstelle oder der POSIX-Standard gezählt werden. Auch Betriebssysteme und Systemarchitekturen wie OSEK/VDX und AUTOSAR gehören hierzu.
 
 Neben den Anforderungen an den Entwicklungsprozess und das Endprodukt werden auch Bedingungen an die verwendeten Software-Werkzeuge gestellt. Diese und einige anderen Anforderungen und Empfehlungen sind unter dem Begriff "`Unterstützende Prozesse"' zusammengefasst. Die Qualifizierung von Software-Werkzeugen relevant, da Fehler nicht nur durch Selbstverschulden sondern auch durch Abhängigkeiten zu Dritt-Software entstehen können. Hierzu unterscheidet die Norm Software-Werkzeuge nach zwei Eigenschaften:
 
@@ -794,7 +794,7 @@ Diese Eigenschaften bestimmen mittels einer Tabelle einen \emph{Werkzeugvertraue
 
 
 
-\subsection{Autosar und ISO 26262}
+\subsection{AUTOSAR und ISO 26262}
 \label{sec:ISO26262_autosar}
 % - Timing Protection, Memory Protection, Program Flow Monitoring
 % - Autosar Distributionen die ISO 26262 konform sind bzw. Konformitätsmodule bieten
@@ -803,7 +803,7 @@ Diese Eigenschaften bestimmen mittels einer Tabelle einen \emph{Werkzeugvertraue
 % - http://www.elektronikpraxis.vogel.de/embedded-computing/articles/342436/
 % - Rückwirkungsfreiheit oder „Freedom from Interference“.
 
-Obwohl Autosar und die ISO 26262 auf den ersten Blick keinerlei direkte Verbindungen haben, zeigt sich im weiteren, dass beide Themen zusammen in den letzten Jahren und in der Zukunft stark an Relevanz gewinnen. Dies ergibt sich aus folgendem Auschnitt des Produkthaftungsgesetzes.
+Obwohl AUTOSAR und die ISO 26262 auf den ersten Blick keinerlei direkte Verbindungen haben, zeigt sich im weiteren, dass beide Themen zusammen in den letzten Jahren und in der Zukunft stark an Relevanz gewinnen. Dies ergibt sich aus folgendem Auschnitt des Produkthaftungsgesetzes.
 
 % TODO: eines von diesen Zitaten auswählen...
 %\begin{quote}
@@ -814,9 +814,9 @@ Obwohl Autosar und die ISO 26262 auf den ersten Blick keinerlei direkte Verbindu
 Die Ersatzpflicht des Herstellers ist ausgeschlossen, wenn [\dots] der Fehler nach dem Stand der Wissenschaft und Technik in dem Zeitpunkt, in dem der Hersteller das Produkt in den Verkehr brachte, nicht erkannt werden konnte.\cite{ProdG}
 \end{quote}
 
-Da es sich bei Autosar und der ISO 26262 um den aktuellen Stand der Technik handelt, müssen diese Techniken eingesetzt werden, um Regress-Ansprüche vermeinden zu können und das Produkthaftungsgesetz zu befolgen. Dabei kann dies als Umstieg von OSEK/VDX und DIN 61508, gesehen werden. Beide Umstiege gleichzeitig durchzuführen ist ein umfangreicher Schritt, der viel Einsatz erfordert. 
+Da es sich bei AUTOSAR und der ISO 26262 um den aktuellen Stand der Technik handelt, müssen diese Techniken eingesetzt werden, um Regress-Ansprüche vermeinden zu können und das Produkthaftungsgesetz zu befolgen. Dabei kann dies als Umstieg von OSEK/VDX und DIN 61508, gesehen werden. Beide Umstiege gleichzeitig durchzuführen ist ein umfangreicher Schritt, der viel Einsatz erfordert. 
 
-Da es sich bei Autosar um eine Komponenten- und Modul-orientierte Architektur handelt, lässt sich die ISO Norm gezielt auf einzelne Komponenten anwenden wie es auch im Sicherheits-Standard definiert ist. So können einzelne BSW-Module auf deren Risiko-Potenzial geprüft werden und diese anschließend einer Sicherheitsklasse zugeordnet werden. Daraufhin können die entsprechenden Sicherheitsvorkehrungen getroffen werden. Da dies jedoch sehr umfangreich sein kann ist es nicht praktikabel alle Module nach ISO 26262 zu zertifizieren. Vor allem da BSW-Module einfach getauscht und geupdatet werden können, wäre eine jedes mal eine neue Zertifizierung nötig. Diese Schwierigkeit wird von einigen Herstellern umgangen indem nur Teile der Basissoftware zertifiziert wird um damit die Kernpunkte der ISO 26262 abzudecken.
+Da es sich bei AUTOSAR um eine Komponenten- und Modul-orientierte Architektur handelt, lässt sich die ISO Norm gezielt auf einzelne Komponenten anwenden wie es auch im Sicherheits-Standard definiert ist. So können einzelne BSW-Module auf deren Risiko-Potenzial geprüft werden und diese anschließend einer Sicherheitsklasse zugeordnet werden. Daraufhin können die entsprechenden Sicherheitsvorkehrungen getroffen werden. Da dies jedoch sehr umfangreich sein kann ist es nicht praktikabel alle Module nach ISO 26262 zu zertifizieren. Vor allem da BSW-Module einfach getauscht und geupdatet werden können, wäre eine jedes mal eine neue Zertifizierung nötig. Diese Schwierigkeit wird von einigen Herstellern umgangen indem nur Teile der Basissoftware zertifiziert wird um damit die Kernpunkte der ISO 26262 abzudecken.
 
 % TODO: Quellen:
 % http://www.opensynergy.com/sites/default/files/media/sonstige/COQOS-Datasheet_En.pdf
@@ -856,9 +856,9 @@ Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 bei
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Kommunikation Linux und Autosar}
+\section{Kommunikation Linux und AUTOSAR}
 \label{sec:Kommunikation_L_A}
-Eine Kommunikation zwischen Linux und Autosar kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozess-Kommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Mem bekannt. Diese stehen jedoch unter Autosar nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bus-Systeme wie zum Beispiel LIN oder Flexray sind auch denkbar werden jedach im weiteren nicht näher untersucht. Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriff auf System ermöglichen die keine CAN-Schnittstelle besitzen. Vor- und Nachteile der Techniken sind im folgenden aufgeführt.
+Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozess-Kommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Mem bekannt. Diese stehen jedoch unter AUTOSAR nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bus-Systeme wie zum Beispiel LIN oder Flexray sind auch denkbar werden jedach im weiteren nicht näher untersucht. Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriff auf System ermöglichen die keine CAN-Schnittstelle besitzen. Vor- und Nachteile der Techniken sind im folgenden aufgeführt.
 
 % TODO: hieraus eine Tabelle machen oder vielleicht als texte schreiben?!
 \begin{itemize}
@@ -873,9 +873,9 @@ Eine Kommunikation zwischen Linux und Autosar kann auf verschiedene Wege erfolge
     \begin{itemize}
         \item[$+$] Standard
         \item[$+$] Hohe Übertragungsrate
-        \item[$+$] Autosar soll "of the shelf"-TCP/IP-Stack verwenden der auch zu Linux kompatibel sein kann\cite[S. 21]{autosar_eth}
+        \item[$+$] AUTOSAR soll "of the shelf"-TCP/IP-Stack verwenden der auch zu Linux kompatibel sein kann\cite[S. 21]{autosar_eth}
         \item[$-$] Kollisionen/Latenz und damit nur bedingt Echtzeitfähig
-        \item[$-$] Benötigt Autosar 4.0
+        \item[$-$] Benötigt AUTOSAR 4.0
     \end{itemize}
     \item VCAN
     \begin{itemize}
@@ -919,7 +919,7 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Kommunikation Autosar und Scheinwerfer}
+\section{Kommunikation AUTOSAR und Scheinwerfer}
 \label{sec:Kommunikation_A_S}
 % TODO
 % headlight_final projekt
@@ -927,7 +927,7 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei AUTOSAR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Netzwerk Management (!)
 \section{Einsatz des Netzwerkmanagement}
 \label{sec:AutosarNM}
@@ -1028,7 +1028,7 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 \input{appendix}
 
 
-% TODO: BSW-Modul-Liste; Grafische Notation (Autosar, SPEM); 
+% TODO: BSW-Modul-Liste; Grafische Notation (AUTOSAR, SPEM); 
 
 
 % Alles hier nach hat keine Nummerierung mehr...
