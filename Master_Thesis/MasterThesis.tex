@@ -13,6 +13,7 @@
 %% - Virtualisierte AUTOSAR-Komponente könnte LSMS ersetzen
 %% - "Lizenz Server" am CAN Netz um Nachrichten zu überprüfen und damit evtl. krypto
 %% - Master Arbeit auch als Eval und Einführung von AUTOSAR
+%% - Begriffserlärung virt: z.b. instanz
 
 
 \documentclass[
@@ -101,8 +102,6 @@
 %\usepackage[hang]{subfigure}	% Subabbildungen
 %\usepackage{tikz}				% zum Zeichnen (Frontend zu PGF)
 \usepackage{pgfgantt}           % pgf verwenden um Gantt Diagramme zu erstellen (http://www.ctan.org/pkg/pgfgantt)
-%\usepackage{chronology}         % Chronologien zeichnen (http://www.tug.org/texlive/devsrc/Master/texmf-dist/tex/latex/chronology/chronology.sty)
-%\usepackage{timeline}
 \usepackage{rotating} 			% fuer gedrehte Tabellen und Bilder
 %\usepackage{pdfpages}
 \usepackage[
@@ -113,7 +112,7 @@
   plainpages=false, 
   pdfkeywords={AUTOSAR, Virtualisierung, ECU, Python, CAN},
   pdfsubject={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
-  pdftitle={Master-Arbeit},
+  pdftitle={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
   pdfauthor={Martin Wichmann},
 %  colorlinks=true
 ]{hyperref}
@@ -173,7 +172,7 @@
 
 % TODO: github cite in footnote ändern?!
 \lowertitleback{Diese Arbeit wurde mit Hilfe von Freier Software erstellt: \\
-Gesetzt mit Hilfe von {\KOMAScript} und {\LaTeX}. LibreOffice für die \\ Textverarbeitung und gedit als Editor. Xubuntu als offenes Betriebssystem. \\ \\ Diese Arbeit ist freigegeben unter der Creative Commons CC-BY-SA Lizenz\cite{CCBYSA} und ist zum Teil im Internet erreichbar\cite{github}.
+Gesetzt mit Hilfe von {\KOMAScript} und {\LaTeX}. LibreOffice für die \\ Textverarbeitung und gedit als Editor. Xubuntu als offenes Betriebssystem. \\ \\ Diese Arbeit ist, falls nicht anders angegeben, freigegeben unter der Creative Commons CC-BY-SA Lizenz\cite{CCBYSA} und im Internet erreichbar\cite{github}.
 }
 % TODO: evtl. qoute ändern ;-)
 \dedication{Do or do not... there is no try!\\ \vspace{1cm}
@@ -232,7 +231,6 @@ After almost ten years since the beginning of AUTOSAR, the architecture and deve
 \chapter{Einleitung}
 \label{sec:Einleitung}
 % TODO
-
 Diese Master-Arbeit betrachtet die Möglichkeiten der Virtualisierung im Embedded Bereich anhand eines Fallbeispiels. Dieses Fallbeispiel wird im nächsten Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Die praktische Umsetzung des Fallbeispiels wird danach erläutert. Zum Schluss werden einige Aspekte dieser Arbeit analysiert und die Relevanz für die Praxis betrachtet.
 
 
@@ -299,8 +297,7 @@ Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Grundlagen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Grundlagen}
 \label{sec:Grundlagen}
-Dieses Kapitel enthält Grundlagen zu den Themen AUTOSAR und Virtualisierung.
-% TODO
+Dieses Kapitel enthält Grundlagen zu den Themen AUTOSAR und Virtualisierung. Dabei wird AUTOSAR ausführlich betrachtet, da es sich dabei um ein extrem umfangreiches Thema handelt. Zusätzlich ist dieser Teil der Arbeit als Einführung für zukünftige Arbeit im Bereich von AUTOSAR zu sehen.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -349,8 +346,7 @@ Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Daz
 
 
 \subsection{Vorteile}
-% TODO Sollten vielleicht ein paar Punkte gestrichen werden?!
-Der Einsatz von Virtualisierung hat eine Reihe von Vorteilen\cite{wiki:emb_hyp}.
+Der Einsatz von Virtualisierung bietet eine Reihe von Vorteilen\cite{wiki:emb_hyp}. Im folgenden werden davon einige näher betrachtet.
 
 \paragraph{Betriebssystem Unabhängigkeit}
 Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene Betriebssysteme komplett parallel zu verwenden und die stärken der verschiedenen Systeme zu nutzen. So wird dieser Vorteil zum Beispiel bei COQOS genutzt um AUTOSAR und Android parallel lauffähig zu haben. Dadurch kann AUTOSAR Zeit- und Sicherheitskritische Aufgaben übernehmen und gleichzeitig Android den Infotainment Bereich verwalten.
@@ -365,20 +361,15 @@ Durch die Möglichkeit verschiedene Betriebssysteme einzusetzen, kann alter Code
 
 \paragraph{IP Schutz und Trennung von Software Lizenzen}
 Der Schutz von Intellectual Property spielt in der heutigen Wirtschaft eine große Rolle, jedoch bietet die Open-Source Welt einige Interessante Möglichkeiten. Um diese beiden Welten zu trennen und trotzdem von beidem zu profitieren, können unterschiedliche VMs verwendet werden. So ist es denkbar eine VM für jeglichen GPL-Code zu verwenden und die Kommunikation über Ethernet zu gestalten. Damit muss der eigene Code nicht auch unter der GPL freigegeben werden da nicht gegen GPL-Code gelinkt wurde.
-% TODO: OEMs brauchen nur VM liefern...
-
-% TODO: ergibt sich aus oberen Punkten:
-%\paragraph{Kürzere Entwicklungszeiten}
 
 \paragraph{Hypervisor klein und robust}
-% kann theoretisch formal bewiesen werden
 Ein im Embedded Bereich eingesetzter Hypervisor kann klein und robust sein, da die meißten der aus der Destop-Virtualisierung bekannten Techniken nicht benötigt werden. Daraus folgt das ein Embedded Hypervisor sehr kompakt sein kann und damit gut optimiert werden kann. Theoretisch ist es sogar möglich diesen Formal zu beweisen und somit auf dieser Ebene Sicherheit zu garantieren.
 
 \subsection{Nachteile}
-%TODO
+Natürlich bringt eine so umfangreiche Technik auch einige Nachteile mit, von denen einige im folgenden betrachtet werden.
 
-%\paragraph{Größere Angriffsfläche}
-
+\paragraph{Single Point of Failure}
+Da der Hypervisor eine zentrale Position besitzt, kann ein Ausfall dessen das gesamte System gefährden. Da der Hypervisor für die Ausführung der Instanzen verantwortlich ist, und auch den Speicher und Kommunikations-Dienste verwaltet, würde ein Fehler oder sogar ein Ausfall des Hypervisors, ein Ausfall des Gesamt-Systems verursachen. Dementsprechend ist der Hypervisor nach den höchsten Ansprüchen der Sicherheits-Technik zu entwerfen. Zudem sollten umfangreiche Diagnose-Möglichkeiten vorhanden sein, um das Risiko eines unerwarteten Ausfalls zu minimieren.
 
 \paragraph{Performance Overhead}
 Durch das Einsetzen eines Hypervisors und mehreren VMs kann es zu einem Performance Overhead kommen. Dieser kann jedoch minimiert werden indem die Hardware entsprechend gewählt wird. So bieten moderne CPU-Architekturen verschiedene Virtualisierungs-Eweiterungen mit denen der Overhead minimiert wird. Auch eine angemessene Anzahl der CPU-Kerne kann den Overhead minimieren indem Preemption zwischen den VMs verhindert wird.
@@ -424,32 +415,6 @@ Im folgenden Kapitel wird ein kurzer Überblick der Technik von AUTOSAR gegeben.
 
 Ein Grund für den Einsatz von AUTOSAR ist vor allem die steigende Komplexität von Elektrik/Elektronik Systemen (kurz E/E Systeme) wie sie im Automobil Umfeld vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können bedarf es eines Standard-Systems das genau auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die AUTOSAR verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit. \cite[S. 5]{autosar_techoverview}
 
-% TODO: Tabelle durch Zeitleiste ersetzen?!
-%\begin{chronology}[5]{2000}{2015}{3ex}{0.7\textwidth}
-%  \event{1984}{one}
-%  \event[1985]{1986}{two}
-%  \event{\decimaldate{8}{7}{2005}}{1.0}
-%  \event{\decimaldate{4}{5}{2006}}{2.0}
-%  \event{\decimaldate{4}{12}{2006}}{2.1}
-%  \event{\decimaldate{21}{12}{2007}}{3.0}
-%  \event{\decimaldate{15}{8}{2008}}{3.1}
-%  \event{\decimaldate{18}{12}{2009}}{4.0}
-%  \event{\decimaldate{13}{5}{2011}}{3.2}
-%  \event{\decimaldate{15}{4}{2011}}{4.0.2}
-%  \event{\decimaldate{22}{12}{2011}}{4.0.3}
-%\end{chronology}
-%\begin{timeline}{2000}{2015}{100}{200}
-%  \MonthAndYearEvent{7}{2005}{1.0}
-%  \MonthAndYearEvent{5}{2006}{2.0}
-%  \MonthAndYearEvent{12}{2006}{2.1}
-%  \MonthAndYearEvent{12}{2007}{3.0}
-%  \MonthAndYearEvent{8}{2008}{3.1}
-%  \MonthAndYearEvent{12}{2009}{4.0}
-%  \MonthAndYearEvent{5}{2011}{3.2}
-%  \MonthAndYearEvent{4}{2011}{4.0.2}
-%  \MonthAndYearEvent{12}{2011}{4.0.3}
-%\end{timeline}
-
 \begin{table}[h]
 \center
 \begin{tabular}[h]{c c c l}
@@ -459,16 +424,15 @@ Release & Datum & Phase & Notiz\\
       & Juli 2003  &  & Gründung AUTOSAR\\
 \midrule
 1.0   & 08.07.2005 & \multirow{3}{*}{Phase I} & \\
-2.0	  & 04.05.2006 &  & \\
+2.0	  & 04.05.2006 &  & Entwicklung des Standards\\
 2.1	  & 04.12.2006 &  & \\
 \midrule
 3.0	  & 21.12.2007 & \multirow{3}{*}{Phase II} & \\
-3.1	  & 15.08.2008 &  & \\
-      & 2008       &  & Erste Autos mit AUTOSAR\\
+3.1	  & 15.08.2008 &  & Selektive Verbesserungen\\
 4.0	  & 18.12.2009 &  & \\
 \midrule
-3.2	  & 13.05.2011 & \multirow{3}{*}{Phase III} & \\
-4.0.2 & 15.04.2011 &  & \\
+4.0.2 & 15.04.2011 & \multirow{3}{*}{Phase III} & \\
+3.2	  & 13.05.2011 &  & Wartung\\
 4.0.3 & 22.12.2011 &  & \\
 \bottomrule
 \end{tabular}
@@ -477,6 +441,7 @@ Release & Datum & Phase & Notiz\\
 \end{table}
 
 % TODO: Text zur Zeitleiste
+Tabelle \ref{tab:timeline} zeigt die Versions-Historie von AUTOSAR. 
 
 
 
@@ -554,7 +519,6 @@ Bei einem Sender/Receiver Interface handelt es sich um einen Kommunikationsmecha
 \paragraph{Client/Server Interface}
 Vom Server wird hier eine Funktion bereitgestellt, die vom Client aufgerufen werden kann. Dabei können mit Hilfe der Übergabe- und Rückgabeparameter auch Daten ausgetauscht werden.
 
-% TODO: muss das so mit dem paragraph???
 \paragraph*{}
 Bei der RTE handelt es sich um eine konkrete Implementierung des VFB. Während der VFB zur Design-Phase das komplette Modell abdeckt, wird eine RTE pro ECU verwendet. Diese RTE stellt alle Methoden zur Verfügung, die für die Kommunikation der Komponenten dieser ECU nötig sind. Das bedeutet das auf alle Methoden verzichtet wird, die auf dieser ECU nicht ausgeführt werden können.
 
