@@ -4,7 +4,6 @@
 %% 
 %% Todo:
 %% - Danksagung
-%% - Cite auf mein GitHub ändern oder so?!
 %% - Portabilität PC VM auf embedded Hypervisor
 %% - Relevanz für Testen und Entwicklungsprozess
 %% - AUTOSAR in Titel?!
@@ -18,35 +17,12 @@
 
 \documentclass[
   a4paper,					    % a4paper (sic!)
-  %BCOR10mm,				    % Korrektur des innneren Randes bei Bindung (Bindungskorrektur)
-  %DIV12,					    % je groesser die Zahl, desto kleiner der Rand
-  %11pt,        			    % Schriftgroesse
   %oneside,
   twoside,
-  %openright,   				% doppelseitig und jedes Kapitel faengt auf der rechten Seite an
-  %pagesize,					% schreibt die Seitengroesseninformationen in die PDF Datei
   DIV=calc,     				% KOMA-Script soll den optimalen Satzspiegel berechnen
-  %DIVclassic, 					% mittelalterlicher Buchseitenkanon
-  %headsepline,					% Trennlinie
-  %footsepline,					% Trennlinie
-  %headtopline,					% Trennlinie
-  %footbotline,					% Trennlinie
-  %noonelinecaption,			% setzt die Bildueberschrift unabhaengig von der Laenge immer linksbuendig
-  %liststotoc,
-  %idxtotoc,
   bibliography=totoc,
-  %bibtotocnumbered, liststotocnumbered,
-  %liststotoc, idxtotoc, bibtotoc,
-  %tablecaptionbelow,
-  %tablecaptionabove,	        % Tabellenbeschriftung unter oder oben
   %abstracton,  				% Überschrift der Zusammenfassung aktivieren
-  %chapterprefix,				% "Kapitel xx" vor jeder Kapitelueberschrift
-  %cleardoublestandard,
-  %cleardoubleplain,
   cleardoublepage=empty,
-  %smallheadings,
-  %normalheadings,
-  %makeidx,
   ngerman,     					% allen Paketen die Hauptsprache mitteilen
   %draft       					% draft version  
   final       					% final version
@@ -57,26 +33,17 @@
 \usepackage[english,ngerman]{babel} 	% Unterstuezung fuer englisch und deutsch
 \usepackage{setspace}			% erlaubt 1 1/2 fachen Zeilenabstand
 %%%%%%%%%%%%%%% Tabellen %%%%%%%%%%%%%%%
-%\usepackage{array}
-%\usepackage{tabularx}
 \usepackage{lscape}
 \usepackage{booktabs}			% \toprule, \midrule und \bottomrule in Tabellen
 \usepackage{multirow}
 %%%%%%%%%%%%%%% Mathe %%%%%%%%%%%%%%%
 %\usepackage{amsmath, amsthm, amscd, amssymb, amsfonts}
-%\usepackage{ziffer}
-%\usepackage{icomma}
 %%%%%%%%%%%%%%% Typografie %%%%%%%%%%%%%%%
-%\usepackage{mparhack}			% workaround for a LaTeX bug in marginpars
 \usepackage{ellipsis}			% fix uneven spacing around ellipses in LaTeX text mode.
 \usepackage{microtype} 			% optischer Randausgleich (font expansion and character protrusion)
 %%%%%%%%%%%%%%% Schriften %%%%%%%%%%%%%%%
 \usepackage{lmodern}
-%\usepackage{textcomp} 			% Sonderzeichen
-%\usepackage{mathcomp}
-%\usepackage{chemsym}
 %%%%%%%%%%%%%%% Sonstiges %%%%%%%%%%%%%%%
-%\usepackage{url}
 \usepackage{scrhack}            % KOMA Paket um zussammenarbeit mit anderen Paket (listings) zu verbessern
 \usepackage{listings}			% Code-Abschnitt mit Syntax-Highlighting
 \lstset{
@@ -92,18 +59,14 @@
     inputencoding=utf8,
     breakindent=30pt,
     escapeinside={\%(}{\%)},
-    %xleftmargin=20pt				% Einrückung der listings
 }
-%\usepackage{color} 			% Farben
 %%%%%%%%%%%%%%% Grafiken %%%%%%%%%%%%%%%
 \usepackage[pdftex]{graphicx}	% das pdftex soll das Handling von Bildern verbessern
 \graphicspath{{images/}}		% Bilder im Verzeichnis images suchen
 \usepackage{wrapfig}
 %\usepackage[hang]{subfigure}	% Subabbildungen
-%\usepackage{tikz}				% zum Zeichnen (Frontend zu PGF)
 \usepackage{pgfgantt}           % pgf verwenden um Gantt Diagramme zu erstellen (http://www.ctan.org/pkg/pgfgantt)
 \usepackage{rotating} 			% fuer gedrehte Tabellen und Bilder
-%\usepackage{pdfpages}
 \usepackage[
   pdftex,
   bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
@@ -114,16 +77,10 @@
   pdfsubject={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
   pdftitle={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
   pdfauthor={Martin Wichmann},
-%  colorlinks=true
 ]{hyperref}
 %%%%%%%%%%%%%%% Zitieren und Index %%%%%%%%%%%%%%%
-% Ich habe im Internet gelesen, dass cite nach hyperref stehen soll?!
 \usepackage[numbers]{natbib}
-% Index:
-%\usepackage{makeidx}					% Paket für die Indexerstellung
-%\makeindex
-% Glossar und Liste der Akronyme:
-\usepackage[order=word, toc, acronym, nonumberlist]{glossaries}
+\usepackage[order=word, toc, acronym, nonumberlist]{glossaries} % Glossar und Liste der Akronyme
 \makeglossaries
 \loadglsentries{acronym}
 \loadglsentries{glossary}
@@ -131,13 +88,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%% Eigene Definitionen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%% Bei Verwendung von BibTex: %%%%%%%%%%%%%%%%%%%%
 \addto{\captionsngerman}{\renewcommand*{\bibname}{Quellenverzeichnis}}
-% sonst
-%\renewcommand{\bibname}{Quellenverzeichnis}
 
 %%% Trennungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hyphenation{}
+\hyphenation{Netz-werk-Ma-nage-ment}
 
 %%% 1 1/2 fachen Zeilenabstand wählen %%%%%%%%%%%%%%%%%%%%
 \onehalfspacing
@@ -162,19 +116,9 @@
 
   }
 
-%\uppertitleback{%
-%  Beteiligte Institutionen:\\
-%  \parbox{0.5\textwidth}{%
-%  \centering \includegraphics[width=3.5cm]{logofh} \\
-%  Fakultät Informatik \\ Ostfalia Hochschule für angewandte Wissenschaften } \hfill
-%}
-
-
-% TODO: github cite in footnote ändern?!
 \lowertitleback{Diese Arbeit wurde mit Hilfe von Freier Software erstellt: \\
 Gesetzt mit Hilfe von {\KOMAScript} und {\LaTeX}. LibreOffice für die \\ Textverarbeitung und gedit als Editor. Xubuntu als offenes Betriebssystem. \\ \\ Diese Arbeit ist, falls nicht anders angegeben, freigegeben unter der Creative Commons CC-BY-SA Lizenz\cite{CCBYSA} und im Internet erreichbar\cite{github}.
 }
-% TODO: evtl. qoute ändern ;-)
 \dedication{Do or do not... there is no try!\\ \vspace{1cm}
 \textit{Yoda}
 }
@@ -206,17 +150,7 @@ After almost ten years since the beginning of AUTOSAR, the architecture and deve
 \listoffigures               		% Abbildungsverzeichnis
 %\listoftables             			% Tabellenverzeichnis
 %\lstlistoflistings          		% Listenverzeichnis
-%\listoflistings					% Quellcodeverzeichis
-%\printglossary               		% Formelverzeichnis
 \end{singlespace}
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Zeilenabstand %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Das Setzen eines anderen Abstandes mitten im Dokument kann zu Fehlern führen (vgl. scrguide S. 30)
-%\doublespacing
-%\onehalfspacing
-%\typearea[current]{last}					% stammt aus scrguide S. 30
-%\typearea[current]{calc}					% Neuberechnung des Satzspiegels
 
 
 
@@ -238,14 +172,8 @@ Diese Master-Arbeit betrachtet die Möglichkeiten der Virtualisierung im Embedde
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Vorstellung Fallbeispiel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Gesamtes Modell darstellen
 \chapter{Motivation und Planung}
 \label{sec:MotivationPlanung}
-% Motivation für Autosar und Virtualisierung
-% Wodurch werden Systeme komplexer [SE_Autosar, Seite 11]
-% Ein System partitionieren [SE_Autosar, Seite 27]
-
-% Beispiel in dieser Arbeit
 Das in dieser Master-Arbeit betrachtete Praxis-Beispiel ist eine Scheinwerfer-Steuerung inklusive User-Interface. Dies ist bewusst als minimal Beispiel konzipiert um den Fokus auf die Virtualisierung zu legen.
 
 \begin{figure}[ht]
@@ -261,16 +189,14 @@ Aus dieser Architektur-Beschreibung lassen sich vier Kern-Bereiche dieser Master
 
 \begin{itemize}
     \item Virtualisierung von AUTOSAR und Linux
+    \item Entwicklung der AUTOSAR-Komponente
     \item Kommunikation zwischen Linux und AUTOSAR
-    \item Kommunikation zwischen AUTOSAR und Scheinwerfer
-    \item Zugriff auf Hardware inklusive Betrachtung von Netzwerkmanagement
+    \item Kommunikation zwischen AUTOSAR und der Scheinwerfer ECU (inklusive Netzwerkmanagement)
 \end{itemize}
 
 Hierbei ist zu beachten, dass das aktivieren des Netzwerkmanagements erst möglich ist, sobald eine Kommunikation zwischen AUTOSAR und der Hardware möglich ist.
 
-% TODO: Projektplanung
-Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes ein Monat Arbeit vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen. Jede Phase enthält die Vorbereitung, Umsetzung und Dokmentation des entsprechenden Bereichs.
-
+Da der Zeitaufwand für die einzelnen Phasen zu Beginn nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes ein Monat Arbeit vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen. Jede Phase enthält die Vorbereitung, Umsetzung und Dokmentation des entsprechenden Bereichs.
 
 \begin{figure}[ht]
 \centering
@@ -281,8 +207,8 @@ Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist,
 \gantttitlelist{9,10,11,12,1,2}{2} \\
 \ganttbar{Virtualisierung}{1}{2} \\
 \ganttbar{Kommunikation Linux/AUTOSAR}{3}{4} \\
-\ganttbar{Kommunikation AUTOSAR/Scheinwerfer}{5}{6} \\
-\ganttbar{Zugriff auf Hardware}{7}{8} \\
+\ganttbar{Kommunikation AUTOSAR/ECU}{5}{6} \\
+\ganttbar{AUTOSAR Komponente}{7}{8} \\
 \ganttbar{Evaluation}{9}{10} \\
 \ganttbar{Fertigstellen der Arbeit}{11}{12} 
 \end{ganttchart}
@@ -290,8 +216,6 @@ Da der Zeitaufwand für die einzelnen Phasen nur sehr schwer einzuschätzen ist,
 \caption{Zeitplanung Master-Arbeit}
 \label{fig:gantt}
 \end{figure}
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Grundlagen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -307,7 +231,7 @@ Dieses Kapitel enthält Grundlagen zu den Themen AUTOSAR und Virtualisierung. Da
 \label{sec:Virtualisierung}
 Der Begriff Virtualisierung bezeichnet eine Reihe von Techniken die verwendet werden um die Ressourcen eines Rechner-Systems zu verwalten. Hierdurch kann eine reales System als mehrere logische betrachtet und genutzt werden. Dabei können verschiedene Ziele verfolgt werden.
 
-Aus dem Desktop-Bereich ist die System-Virtualisierung bekannt wie sie zum Beispiel mittels VirtualBox\footnote{VirtualBox zu finden unter \url{www.virtualbox.org}} umgesetzt ist. Hierbei werden die Ressourcen des bestehenden Systems durch einen Hypervisor verwaltet und den virtuellen Instanzen zugeordnet. Diese Art wird vor allem verwendet um zum Beispiel unter Windows Zugriff auf ein Linux zu haben um spezielle Software auszuführen.
+Aus dem Desktop-Bereich ist die System-Virtualisierung bekannt wie sie zum Beispiel mittels VirtualBox\footnote{VirtualBox zu finden unter \url{www.virtualbox.org}} umgesetzt ist. Hierbei werden die Ressourcen des bestehenden Systems durch einen Hypervisor, auch Virtual Machine Monitor (kurz VMM) genannt, verwaltet und den virtuellen Instanzen zugeordnet. Diese Art wird vor allem verwendet um zum Beispiel unter Windows Zugriff auf ein Linux zu haben um spezielle Software auszuführen.
 
 Im Gegensatz dazu wird im Server-Bereich der Fokus auf andere Bereiche gelegt. Die hier verfolgten Ziele sind vor allem eine einfache Wartbarkeit, Ausfallsicherheit und Ressourcenschonung. Mittels virtueller Server können Ausfallzeiten minimiert werden, indem bei einem Ausfall einfach eine andere virtuelle Instanz des Servers gestartet wird und dessen Arbeit übernimmt. 
 
@@ -325,21 +249,28 @@ Virtualisierung kann mittels einer Reihe von Techniken erfolgen. Hier wird zum B
 % Gründe für Embedded Virtualisierung
 \section{Virtualisierung bei eingebetteten Systemen}
 \label{sec:EVirtualisierung}
-Virtualisierung im Bereich der eingebetteten Systeme hat in den letzten Jahren immer mehr an Bedeutung gewonnen. Da Mikrocontroller und SOCs\footnote{System-on-a-Chip, dt. Ein-Chip-System} immer Leistungsfähiger werden ist es sinnvoll diese Leistung auch auszunutzen. Gerade im Automobil-Bereich, in dem die Anzahl der Steuergeräte zum Teil auf mittlerweile über 50 gestiegen ist, kann es die Kosten erheblich reduzieren wenn stattdessen einige dieser System virtualisiert werden können.
+Virtualisierung im Bereich der eingebetteten Systeme, auch bekannt als \emph{Embedded Virtualization} und \emph{Time and Space Partitioning}, hat in den letzten Jahren immer mehr an Bedeutung gewonnen. Da Mikrocontroller und SOCs\footnote{System-on-a-Chip, dt. Ein-Chip-System} immer Leistungsfähiger werden ist es sinnvoll diese Leistung auch auszunutzen. Gerade im Automobil-Bereich, in dem die Anzahl der Steuergeräte zum Teil auf mittlerweile über 50 innerhalb eines Autos gestiegen ist, kann es die Kosten erheblich reduzieren wenn stattdessen einige dieser System virtualisiert werden können.
 
-Hypervisor im embedded Bereich müssen bestimmte Erforderungen erfüllen die viele Hypervisor nicht betrachten. Zu diesen Anforderungen gehört zum Beispiel ein geringer Engerie-Verbrauch und Effiziente Speicher Nutzung. Ein weiterer wichtiger Punkt ist die Echtzeitfähigkeit. Diese ist vor allem kritisch, da meißt eine zwei-stufige Scheduler-Architektur entsteht, einmal der Scheduler des Hypervisors und einmal der Scheduler des Gast-Systems. Eine Echtzeit-Analyse ist in diesem Fall relativ anspruchsvoll.
+Hypervisor im embedded Bereich müssen bestimmte Erforderungen erfüllen die viele Hypervisor nicht betrachten. Zu diesen Anforderungen gehört zum Beispiel ein geringer Engerie-Verbrauch und Effiziente Speicher Nutzung. Ein weiterer wichtiger Punkt ist die Echtzeitfähigkeit. Diese ist vor allem kritisch, da meißt eine zwei-stufige Scheduler-Architektur entsteht, einmal der Scheduler des Hypervisors und einmal der Scheduler des Gast-Systems. Eine Echtzeit-Analyse wird hierdurch verkompliziert.\cite{two_lvl_sched}
 
-Um nur ein einfaches Beispiel zu nennen, könnte ein System mit 4 Sub-Systemen betrachtet werden. Diese Sub-Systeme könnten alle in ein einziges System mit einer 4-Kern CPU vereint werden und genauso wie vorher verwendet werden. Je nach benötigter Leistung könnte das Resultierende System durchaus noch verkleinert und damit kostengünstiger gestaltet werden.
+Um nur ein einfaches Beispiel zu nennen, könnte ein Anwendung mit 4 Sub-Systemen betrachtet werden. Diese Sub-Systeme könnten alle in ein einziges System mit einer 4-Kern CPU vereint werden und genauso wie vorher verwendet werden. Je nach benötigter Leistung könnte das resultierende System durchaus noch verkleinert und damit kostengünstiger gestaltet werden. Jedoch entstehen natürlich auch Probleme. So würde in dem genannten Beispiel ein Overhead entstehen, durch den eine höhere Leistung nöti ist. Außerdem müssen natürlich alle nötigen Ein- und Ausgänge der Sub-Systeme auf dem resultierenden System vorhanden sein.
+
+Die Vorteile eingebetteter Virtualisierung wurden bereits erkannt und von einigen Bereichen der Industrie umgesetzt. In der Avionik ist diese Technik als Integrated Modular Avionics, kurz IMA, bekannt und wird durch verschiedene Standards beschrieben. So existiert seit 1996 die ARINC 653 Spezifikation. Dies ist ein Standard für \emph{sichere, partitionierte Echtzeit-Systeme im Avionik-Bereich}.\cite{arinc653_wr} Ein Ziel der Spezifikation ist die Verbesserung der Wiederverwendbarkeit, Portabilität und Modularität der eingesetzten Komponenten.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{arinc653.png}
+    \caption{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
+    \label{fig:arinc_653}
+\end{figure}
+
+Abbildung \ref{fig:arinc_653} zeigt einen Überblick über so ein System. Das Konzept besteht aus einem zugrundliegenden Echtzeit-Betriebssystem, dass den darauf ausgeführten Software-Instanzen die sogenannte APEX-API\footnote{APplication/EXecutive - Application Programming Interface} anbietet. Diese ist auch eingeschränkt zu POSIX kompatibel\cite{wiki:arinc_653}, wodurch auch POSIX-konforme Applikationen ausgeführt werden können. Die eingesetzten Software-Instanzen können dabei sowohl \emph{bare metal} Anwendungen als auch ein weiteres Betriebssystem sein. Um die hohen Sicherheits-Anforderungen im Avionik-Bereich zu erfüllen, ist das gesamte System der Spezifikation DO-178B entsprechend entworfen. Das bedeutet, dass auf einem Prozessor Software-Instanzen mit verschiedenen Kritikalitäten  ausgeführt werden können. 
+
+Mit diesen Eigenschaften ähnelt ARINC 653 dem AUTOSAR Standard. Auch die Konfiguration des System basiert, wie bei AUTOSAR, auf XML.
 
 
 \subsection{Hypervisor Beispiel}
-% Beispiele genauer betrachten: PikeOS, COQOS
-% http://www.opensynergy.com/Products/COQOS
-% http://www.windriver.com/products/hypervisor/
-% http://www.ok-labs.com/products/okl4-microvisor
-% http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php
-% http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/
-Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}}, Integrity Multivisor\footnote{\url{http://www.ghs.com/products/rtos/integrity_virtualization.html}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}.
+Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}}, Integrity Multivisor\footnote{\url{http://www.ghs.com/products/rtos/integrity_virtualization.html}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}. Auch LynxSecure\footnote{\url{http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php}} und der Wind River Hypervisor\footnote{\url{http://www.windriver.com/products/hypervisor/}} sind bekannte Beispiele. Im weiteren werden einige der Beispiele etwas näher betrachtet.
 
 % TODO: etwas zu den Beispielen schreiben
 
@@ -415,6 +346,8 @@ Im folgenden Kapitel wird ein kurzer Überblick der Technik von AUTOSAR gegeben.
 
 Ein Grund für den Einsatz von AUTOSAR ist vor allem die steigende Komplexität von Elektrik/Elektronik Systemen (kurz E/E Systeme) wie sie im Automobil Umfeld vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können bedarf es eines Standard-Systems das genau auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die AUTOSAR verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit. \cite[S. 5]{autosar_techoverview}
 
+Tabelle \ref{tab:timeline} zeigt die Versions-Historie von AUTOSAR. Die Entwicklung ist in drei Phasen eingeteilt. Die erste Phase beginnt etwa 2 Jahre nach Gründung Entwicklungs-Partnerschaft in 2003, und Beschäftigt sich mit den Grundlagen der Architektur. 2007 lief die Phase II an. Diese hat als Ziel die Erweiterung des Standards um einige nützliche Punkte. Phase III beginnt 2011 und konzentriert sich auf die Wartung und Pflege der Architektur. Dabei ist zu beachten das sowohl die Version 3 als auch 4 des Standards zur Zeit parallel gepflegt wird.
+
 \begin{table}[h]
 \center
 \begin{tabular}[h]{c c c l}
@@ -440,8 +373,7 @@ Release & Datum & Phase & Notiz\\
 \label{tab:timeline}
 \end{table}
 
-% TODO: Text zur Zeitleiste
-Tabelle \ref{tab:timeline} zeigt die Versions-Historie von AUTOSAR. 
+
 
 
 
@@ -598,7 +530,6 @@ In diesem Kapitel wird ein Überblick über die nötige Toolkette und die besteh
 
 Im folgenden werden einige AUTOSAR-Distributionen kurz betrachtet\cite{wiki:autosar}. Dabei ist zu sehen, das nicht alle Abschnitte der Toolkette von allen Produkten abgedeckt werden. So spezialisieren sich die Lösungen der Firma dSPACE auf vor allem auf den System-Entwurf, während Elektrobit hierzu keine Software anbietet. Neben den hier erwähnten Herstellern existieren noch eine Reihe weiterer die jedoch nicht näher betrachtet werden sollen.
 
-% TODO: evtl. durch Tabelle ersetzen
 \paragraph{ArcCore}
 ArcCore bietet eine AUTOSAR-Toolkette an, die alle bereiche abdeckt. Dabei werden sowohl die BSW-Implementation als auch die Basis-Version des Entwicklungswerkzeuges als Open-Source unter einer GPL-Lizenz verbreitet. Zudem setzt es mit Eclipse und der GCC auf zwei starke Open-Source Projekte. ArcCore unterstützt AUTOSAR 4.0.
 
@@ -652,7 +583,6 @@ Die bei AUTOSAR vorgesehene Möglichkeit Software-Komponenten zwischen ECUs zu v
 % Netzwerk Management (!)
 \section{Netzwerk-Management}
 \label{sec:Netzwerk-Management}
-% TODO: evtl. Bild einfügen mit logischem Ring oder so
 Um den Zustand eines Bus-Systems synchron verändern zu können, wird das sogenannte Netzwerk-Management (kurz NM) verwendet. Hierbei wird mittels spezieller Nachrichten der gewünschte Bus-Zustand mitgeteilt. So kann zum Beispiel ein Bus-System schlafen gelegt werden, wenn alle relevanten Steuergeräte sich ebenfalls schlafen gelegt haben. Das Netzwerk-Management-Prinzip ist vor allem nützlich um Energie zu sparen. Außerdem können hiermit Fehler vermieden werden. Das ist zum Beispiel bei dem Start eines Autos nützlich. Hier existieren Abhängigkeiten zwischen den ECUs. Damit eine ECU ihren Betrieb nicht vor allen anderen beginnt, und somit eventuell eine fehlende Abhägkeit erzeugt wird, können alle Systeme in einem Bereit-Zustand warten. Wenn nun alle ECUs bereit sind kann das gesamte System synchron in einen aktiven Zustand übergehen.
 
 Die Implementation eines NM-Systems ist offen gelassen. So existieren verschiedene Varianten zum Beispiel bei CANopen, OSEK/VDX und AUTOSAR. Das Prinzip ist jedoch überall ähnlich. Nachrichten werden auf einem Braodcast-Kanal umher geschickt und bestimmen den aktuellen Zustand. Mittels eines Zustands-Modells kann das Bus-System zwischen den möglichen Zuständen wechseln. Generell gibt es damit drei Modi: Normal, Low-Power und Sleep. Zusätzlich können benötigte Zustände, wie zum Beispiel "`Initialisierung abgeschlossen"' eingeführt werden.
@@ -680,7 +610,6 @@ Das Netzwerk-Managmenent unter AUTOSAR ähnelt dem von OSEK und ist dementsprech
 \section{Funktionale Sicherheit nach ISO 26262}
 \label{sec:Sicherheit}
 % TODO
-% - FuSi im Bezug auf mein Beispiel oder allgemein Autosar und dann in welches Kapitel?!
 % - Rückwirkungsfreiheit und Kernpunkte von ISO 26262 erwähnen
 Der seit 1998 existierende Standard DIN EN 61508 mit dem Namen "`Funktionale Sicherheit sicherheitsbezogener elektrischer/elektronischer/programmierbarer elektronischer Systeme"' gilt als Grund-Norm für funktionale Sicherheit. Da diese jedoch für den Automobil-Bereich zum Teil unklar definiert ist, musste eine Erweiterung geschaffen werden. Als Beispiel für eine Unklarheit kann hier der in der DIN 61508 definierte Produktzyklus betrachtet werden. Dieser endet mit dem Aufstellen des Produktes wie es zum Beispiel bei einer Chemie-Anlagen der Fall ist. Im Automobil-Bereich folgt jedoch auf das Fertigstellen des Produktes, die Serien-Produktion, der Kundendienst und zum Schluss die Außerbetriebname. Daher wurde 2011 die ISO/DIS 26262 freigegeben. In dieser Norm werden genau diese Punkte abgedeckt und Bereiche wie zum Beispiel Hardware und Software Entwicklung näher betrachtet.
 
@@ -691,7 +620,6 @@ Funktionale Sicherheit versucht allgemein einen methodischen Ansatz zur Absicher
 
 Abbildung \ref{fig:lifecycle} zeigt den Sicherheitslebenzyklus nach ISO 26262. Dieser stellt eine konkrete Interpretation des Produktlebenszyklus nach DIN 61508 dar. Die im Bild angegebenen Nummerierungen verweisen auf die jeweiligen Kapitel in der Norm. 
 
-% TODO: dieses Bild vielleicht als wrapfigure?!
 \begin{figure}[!htbp]
 \center
 \includegraphics[width=0.75\textwidth]{ISO_26262_Lifecycle}
@@ -760,19 +688,7 @@ Diese Eigenschaften bestimmen mittels einer Tabelle einen \emph{Werkzeugvertraue
 
 \subsection{AUTOSAR und ISO 26262}
 \label{sec:ISO26262_autosar}
-% - Timing Protection, Memory Protection, Program Flow Monitoring
-% - Autosar Distributionen die ISO 26262 konform sind bzw. Konformitätsmodule bieten
-%   - MICROSAR (Vector Informatics)
-% - http://www.elektroniknet.de/automotive/technik-know-how/sicherheitselektronik/article/31185/2/Entwicklung_von_Steuergeraete-Basis-Software_nach_ISODIS_26262/
-% - http://www.elektronikpraxis.vogel.de/embedded-computing/articles/342436/
-% - Rückwirkungsfreiheit oder „Freedom from Interference“.
-
 Obwohl AUTOSAR und die ISO 26262 auf den ersten Blick keinerlei direkte Verbindungen haben, zeigt sich im weiteren, dass beide Themen zusammen in den letzten Jahren und in der Zukunft stark an Relevanz gewinnen. Dies ergibt sich aus folgendem Auschnitt des Produkthaftungsgesetzes.
-
-% TODO: eines von diesen Zitaten auswählen...
-%\begin{quote}
-%Erforderlich sind die Sicherungsmaßnahmen, die nach dem im Zeitpunkt des Inverkehrbringens des Produkts vorhandenen neuesten Stand der Wissenschaft und Technik konstruktiv möglich sind [\dots] und als geeignet und genügend erscheinen, um Schäden zu verhindern [\dots].\cite{BGH_Urteil}
-%\end{quote}
 
 \begin{quote}
 Die Ersatzpflicht des Herstellers ist ausgeschlossen, wenn [\dots] der Fehler nach dem Stand der Wissenschaft und Technik in dem Zeitpunkt, in dem der Hersteller das Produkt in den Verkehr brachte, nicht erkannt werden konnte.\cite{ProdG}
@@ -782,13 +698,9 @@ Da es sich bei AUTOSAR und der ISO 26262 um den aktuellen Stand der Technik hand
 
 Da es sich bei AUTOSAR um eine Komponenten- und Modul-orientierte Architektur handelt, lässt sich die ISO Norm gezielt auf einzelne Komponenten anwenden wie es auch im Sicherheits-Standard definiert ist. So können einzelne BSW-Module auf deren Risiko-Potenzial geprüft werden und diese anschließend einer Sicherheitsklasse zugeordnet werden. Daraufhin können die entsprechenden Sicherheitsvorkehrungen getroffen werden. Da dies jedoch sehr umfangreich sein kann ist es nicht praktikabel alle Module nach ISO 26262 zu zertifizieren. Vor allem da BSW-Module einfach getauscht und geupdatet werden können, wäre eine jedes mal eine neue Zertifizierung nötig. Diese Schwierigkeit wird von einigen Herstellern umgangen indem nur Teile der Basissoftware zertifiziert wird um damit die Kernpunkte der ISO 26262 abzudecken.
 
-% TODO: Quellen:
-% http://www.opensynergy.com/sites/default/files/media/sonstige/COQOS-Datasheet_En.pdf
-% http://ww.automotive.elektrobit.com/home/ecu-software/autosar/eb-tresos-product-line/eb-tresos-autocore.html
-% http://www.vector.com/vi_microsar_safe_26262_de.html
-Sowohl COQOS als auch EB tresos bieten ein ISO 26262 zertifiziertes OS-Modul an. Das Elektorbit OS-Modul ist dabei bis ASIL-D zertifiziert. Hierbei handelt es sich um Mikrokernel mit einer minimalen Funktionalität. Elektrobit bietet zusätzlich ein QM-OS-Modul an, das nicht nach ISO 26262 zertifiziert ist und somit nicht für sicherheitskritische Anwendungen geeignet ist. Eine Absicherung des OS-Moduls kann vor allem die Rückwirkungsfreiheit des Systems garantieren. Ob jedoch auch andere Punkte der ISO abgedeckt sind ist nicht klar. So findet ein Kernpunkt der Norm, die Kommunikation, vor allem in anderen Modulen (Com, PduR\dots) statt. Somit ist eine allgemeine Ende-zu-Ende-Absicherung der Kommunikation nicht möglich.
+Sowohl COQOS als auch EB tresos bieten ein ISO 26262 zertifiziertes OS-Modul an.\cite{coqos}\cite{eb_tresos} Das Elektrobit OS-Modul ist dabei bis ASIL-D zertifiziert. Hierbei handelt es sich um Mikrokernel mit einer minimalen Funktionalität. Elektrobit bietet zusätzlich ein QM-OS-Modul an, das nicht nach ISO 26262 zertifiziert ist und somit nicht für sicherheitskritische Anwendungen geeignet ist. Eine Absicherung des OS-Moduls kann vor allem die Rückwirkungsfreiheit des Systems garantieren. Ob jedoch auch andere Punkte der ISO abgedeckt sind ist nicht klar. So findet ein Kernpunkt der Norm, die Kommunikation, vor allem in anderen Modulen (Com, PduR\dots) statt. Somit ist eine allgemeine Ende-zu-Ende-Absicherung der Kommunikation nicht möglich.
 
-Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 beinhaltet drei Module. Das Modul "`SafeExecution"' wird verwendet um Rückwirkungsfreiheit via Laufzeitüberwachung, Speicherschutz und Ablaufkontrolle zu gewährleisten. Dieses ähnelt dem Funktionsumfang der beiden bereits vorgestellten Modelle. Durch das Modul "`SafeCom"' wird zusätzlich eine Ende-zu-Ende-Absicherung der Inntra- und Inter-ECU-Kommunikation vorgenommen. Das dritte Modul, "`SafeSelfTest"', wird verwendet um eine Zyklische Überprüfung der Hardware zu ermöglichen.
+Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 beinhaltet drei Module.\cite{microsar} Das Modul "`SafeExecution"' wird verwendet um Rückwirkungsfreiheit via Laufzeitüberwachung, Speicherschutz und Ablaufkontrolle zu gewährleisten. Dieses ähnelt dem Funktionsumfang der beiden bereits vorgestellten Modelle. Durch das Modul "`SafeCom"' wird zusätzlich eine Ende-zu-Ende-Absicherung der Inntra- und Inter-ECU-Kommunikation vorgenommen. Das dritte Modul, "`SafeSelfTest"', wird verwendet um eine Zyklische Überprüfung der Hardware zu ermöglichen.
 
 
 
@@ -896,7 +808,6 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 \section{Einsatz des Netzwerkmanagement}
 \label{sec:AutosarNM}
 % TODO
-
 
 
 
