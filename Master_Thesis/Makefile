@@ -27,6 +27,7 @@ clean:
 	$(REMOVE) $(TARGET).glo
 	$(REMOVE) $(TARGET).gls
 	$(REMOVE) $(TARGET).ist
+	$(REMOVE) $(TARGET).lot
 	$(REMOVE) appendix.aux
 
 .PHONY: all clean
