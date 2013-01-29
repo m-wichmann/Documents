@@ -7,41 +7,47 @@
 \newglossaryentry{glo:interface}
  {
    name=Interface,
-   description={}
+   description={Konkrete Beschreibung eines Ports. Beinhaltet Datenelemente und gibt die Richtung der Kommunikation an (provides und requires).}
 }
 
 \newglossaryentry{glo:swc}
  {
    name=Software Component,
-   description={}
+   description={Kann eine Composition oder eine atomare Software Komponente sein. Compositions enthalt weitere Compositions und atomare Software Komponenten. Eine atomare Software Komponenten enthält eine Implementation und damit Runnables. Kommunikation wird via Ports realisiert}
+}
+
+\newglossaryentry{glo:comp}
+ {
+   name=Composition,
+   description={Fasst andere Compositions und Software-Komponenten zusammen.}
 }
 
 \newglossaryentry{glo:runnable}
  {
    name=Runnable,
-   description={}
+   description={Ausführbarer Teil einer Software Komponente. Wird durch RTE Events aufgerufen und hat Zugriff auf konfigurierte Interfaces.}
 }
 
 \newglossaryentry{glo:bsw}
  {
    name=Basis-Software,
-   description={}
+   description={Eigentliches Betriebssystem von AUTOSAR. Liegt zwischen Hardware und RTE und ist in Module eingeteilt.}
 }
 
 \newglossaryentry{glo:rte}
  {
    name=Runtime-Enviroment,
-   description={}
+   description={Realisiert konkrete Implementierung des VFB und stellt damit Kommunikationsverbindungen zwischen Software-Komponenten und der Basis-Software bereit.}
 }
 
 \newglossaryentry{glo:irv}
  {
    name=Interrunnable-Variable,
-   description={}
+   description={Variable die von mehreren Runnables zugegriffen werden kann. Zugriff muss im Modell festgelegt werden.}
 }
 
 \newglossaryentry{glo:vfb}
  {
    name=Virtual Function Bus,
-   description={}
+   description={Abstraktes Modell der Kommunikation und der Softwarekomponenten. Wird konkret durch eine oder mehrere RTEs realisiert.}
 }

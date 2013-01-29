@@ -68,15 +68,15 @@
 \usepackage{pgfgantt}           % pgf verwenden um Gantt Diagramme zu erstellen (http://www.ctan.org/pkg/pgfgantt)
 \usepackage{rotating} 			% fuer gedrehte Tabellen und Bilder
 \usepackage[
-  pdftex,
-  bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
-  pdfpagemode={UseNone},		% UseNone, FullScreen, UseThumbs, UseOutlines, (UseOC, UseAttachments)
-  pdfpagelayout={TwoPageRight},	% SinglePage, OneColumn, TwoColumnLeft, TwoColumnRight, TwoPageLeft, TwoPageRight
-  plainpages=false, 
-  pdfkeywords={AUTOSAR, Virtualisierung, ECU, Python, CAN},
-  pdfsubject={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
-  pdftitle={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
-  pdfauthor={Martin Wichmann},
+    pdftex,
+    bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
+    pdfpagemode={UseNone},		% UseNone, FullScreen, UseThumbs, UseOutlines, (UseOC, UseAttachments)
+    pdfpagelayout={TwoPageRight},	% SinglePage, OneColumn, TwoColumnLeft, TwoColumnRight, TwoPageLeft, TwoPageRight
+    plainpages=false, 
+    pdfkeywords={AUTOSAR, Virtualisierung, ECU, Python, CAN},
+    pdfsubject={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
+    pdftitle={Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung},
+    pdfauthor={Martin Wichmann},
 ]{hyperref}
 %%%%%%%%%%%%%%% Zitieren und Index %%%%%%%%%%%%%%%
 \usepackage[numbers]{natbib}
@@ -87,6 +87,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%% Eigene Definitionen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Hack um die Underful Hbox Error in der Bibliography zu unterbinden
+% Sollte keine Probleme machen, solange \sloppy nicht von Hand verwendet wird (sollte eh nicht!).
+\usepackage{etoolbox}
+\apptocmd{\sloppy}{\hbadness 10000\relax}{}{}
 
 \addto{\captionsngerman}{\renewcommand*{\bibname}{Quellenverzeichnis}}
 
@@ -257,10 +262,10 @@ Um nur ein einfaches Beispiel zu nennen, könnte ein Anwendung mit 4 Sub-Systeme
 
 Die Vorteile eingebetteter Virtualisierung wurden bereits erkannt und von einigen Bereichen der Industrie umgesetzt. In der Avionik ist diese Technik als Integrated Modular Avionics, kurz IMA, bekannt und wird durch verschiedene Standards beschrieben. So existiert seit 1996 die ARINC 653 Spezifikation. Dies ist ein Standard für \emph{sichere, partitionierte Echtzeit-Systeme im Avionik-Bereich}.\cite{arinc653_wr} Ein Ziel der Spezifikation ist die Verbesserung der Wiederverwendbarkeit, Portabilität und Modularität der eingesetzten Komponenten.
 
-\begin{figure}[h]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=0.7\textwidth]{arinc653.png}
-    \caption{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
+    \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
     \label{fig:arinc_653}
 \end{figure}
 
@@ -270,57 +275,19 @@ Mit diesen Eigenschaften ähnelt ARINC 653 dem AUTOSAR Standard. Auch die Konfig
 
 
 \subsection{Hypervisor Beispiel}
-Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}}, Integrity Multivisor\footnote{\url{http://www.ghs.com/products/rtos/integrity_virtualization.html}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}. Auch LynxSecure\footnote{\url{http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php}} und der Wind River Hypervisor\footnote{\url{http://www.windriver.com/products/hypervisor/}} sind bekannte Beispiele. Im weiteren werden einige der Beispiele etwas näher betrachtet.
+Im Bereich der Embedded Hypervisor gibt es eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4 Micorvisor\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}}, Integrity Multivisor\footnote{\url{http://www.ghs.com/products/rtos/integrity_virtualization.html}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}. Auch LynxSecure\footnote{\url{http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php}} und der Wind River Hypervisor\footnote{\url{http://www.windriver.com/products/hypervisor/}} sind bekannte Beispiele. Im weiteren werden einige der Beispiele etwas näher betrachtet.
 
-% TODO: etwas zu den Beispielen schreiben
+\paragraph{PikeOS}
+Der wahrscheinlich umfangreichste embedded Hypervisor ist PikeOS. Dieses Echtzeit-System der Firma \emph{SYSGO AG} basiert auf einem Microkernel und bietet sowohl volle als auch Para-Virtualisierung. Es ist nach DO-178B und ISO 26262 zertifiziert und ist auf vielen Architekturen lauffähig. Darunter PowerPC, x86, ARM, MIPS und SPARC-V8-LEON. APIs werden angeboten um folgenden Gast-Anwendungen zu ermöglichen: Linux, POSIX,ARINC, AUTOSAR und Real-Time Java. Neben den üblichen API-Funktionen bietet PikeOS einen zertifizierten IP-Stachk und ein Datei-System. Das System wird zum Beispiel im Airbus A350 eingesetzt.
 
+\paragraph{OKL4 Microvisor}
+Der OKL4 Microvisor, entwickelt von den \emph{Open Kernel Labs}, basiert ebenfalls auf einem Microkernel. Der Umfang des Quellcodes wird mit weniger als 10\,000 Zeilen Code angegeben und ist damit extrem kompakt und um einen Faktor 1\,000 kleiner als zum Beispiel der Linux Kernel.\cite{wiki:loc} Das System ist POSIX konform und ist vor allem auf Mobile Geräte optimiert. Daher sind als Gast-System Linux, Symbian und Windows Mobile vorgesehen. Eigenen Angabe zufolge wurden bisher etwa 750 Millionen Geräte verkauft, die den OKL4 Microvisor verwenden.\cite{okl4}
 
+\paragraph{INTEGRITY Multivisor}
+Der von \emph{Green Hills Software} entwickelte INTEGRITY Multivisor ist auf In-Vehicle-Infotainment-Systeme (IVI-Systeme) ausgelegt. Hierzu werden Windows, Linux, Solaris, VxWorks und QNX als Gast-Systeme untersützt. Es ist nach DO-178B und IEC-61508 zertifiziert und für ARM, PowerPC und x86 Plattformen entworfen. Ebenso wie die anderen Hypervisor unterstützt der INTEGRITY Multivisor übliche Funktionen wie Power-Management und IPC.
 
-% PikeOS
-% - ARINC
-% - Micorkernel
-% - Para virt ähnlich XEN
-% - DO-178B, ISO 26262 zertifiziert
-% - Linux, RTOS, POSIX, ARINC, AUTOSAR, Java
-% - PPC, X86, ARM, MIPS, SPARC
-% - Multi-Core
-% - Cert IP stack and file system
-% - Eclipse IDE
-% - Echtzeitfähig
-% - Comm encryption
-% - Health monitoring
-% - Airbus A350
-% - IPC
-
-% OKL4
-% \cite{okl4}
-% - Mobile Phone (750 Million instances shipped)
-% - Linux, Symbian, Windows Mobile
-% - Motorola EvokeTM QA4
-% - POSIX-konform
-% - ARM, MPIS, x86
-% - Microkernel
-% - <10kLOC
-% - IPC
-
-% INTEGRITY Multivisor
-% - SMP
-% - Windows, Linux, Solaris, VxWorks
-% - DO-178B, IEC-61508
-% - IPC
-% - ARM, PPC, x86
-% - Mobile devices
-
-% COQOS
-% - Linux, AUTOSAR
-% - x86, ARM
-% - Firewall in COQOS
-% - ISO 26262, DO-178B
-% - Watchdog in separater Instanz
-
-
-
-
+\paragraph{COQOS}
+Bei COQOS handelt es sich um einen Hypervisor der auf die gleichzeitige Ausführung von Linux, zum Beispiel Android, und AUTOSAR ausgelegt ist. Ebenso wie der INTEGRITY Multivisor ist COQOS auf IVI-Systeme und Fahrassistenzsysteme ausgelegt und ist demnach nach ISO 26262 und DO-178B zertifiziert. Als Plattformen werden x86 und ARM unterstützt. Als Sicherheitskonzept ist eine Firewall in COQOS integriert. Außerdem wird ein Watchdog in einer separaten Instanz unerstütz, um die Funktionalität des Systems zu gewährleisten.
 
 
 
@@ -433,7 +400,7 @@ Release & Datum & Phase & Notiz\\
 \label{sec:Grundkonzepte}
 Diese Kapitel soll einen Überblick über die Grundlagen von AUTOSAR geben. Anhand der Abbildung \ref{fig:autosar_overview} werden im folgenden die verschiedenen Aspekte von AUTOSAR betrachtet. Dieses Kapitel basiert stark auf \cite{autosar_techoverview}.
 
-\begin{figure}[!htbp]
+\begin{figure}[p]
     \centering
     \includegraphics[width=1\textwidth]{autosar_overview.png}
     \caption{Autosar Überblick}
@@ -468,7 +435,7 @@ An zentraler Stelle in der Abbildung steht das "`AUTOSAR Entwicklungswerkzeug"'.
     \item Runtime-Enviroment Generator
 \end{itemize}
 
-\begin{figure}[!htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{Autosar_Prozess.png}
     \caption{AUTOSAR-Entwicklungs-Prozess}
@@ -483,7 +450,7 @@ Die Basis-Software Implementation stellt das eigentliche Betriebssystem, inklusi
 \label{sec:vfb}
 Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikation ist der "`Virtual Functional Bus"' (kurz VFB) und die "`Runtime-Enviroment"' (kurz RTE). Durch diese soll ein Austausch und eine Verlagerung auf eine andere ECU ermöglicht werden. Dies wird ermöglicht durch eine vollständige Trennung zwischen der Basis-Software und der User-Applikation wie es in Abbildung \ref{fig:autosar_layer} zu sehen ist. 
 
-\begin{figure}[!htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{autosar_layer.png}
     \caption{AUTOSAR Schichtenmodell}
@@ -528,7 +495,7 @@ Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu h
 \label{sec:bsw}
 Bei der Basis-Software (kurz BSW) handelt es sich um das eigentlich Betriebssystem. Dieses stellt verschiedene Funktionen bereit. Darunter zum Beispiel ein Scheduler und eine Verwaltung der Tasks. Außerdem sind eine Hardware-Abstraktion und -Treiber hier untergebracht. Dabei ist das gesamte System modular aufgebaut um möglichst Übersichtlich zu sein. Abbildung \ref{fig:autosar_refined_layer} zeigt die grobe Struktur der Basis-Software. Die genaue Einteilung der Module und Abhängigkeiten zwischen diesen wird im Rahmen dieser Arbeit nicht beschrieben. Der geneigte Leser findet jedoch unter \cite{autosar_layer} nähere Informationen dazu.
 
-\begin{figure}[!htbp]
+\begin{figure}[ht]
     \centering
     \includegraphics[width=1\textwidth]{autosar_refined_layer}
     \caption{AUTOSAR Schichtenmodell mit genauerer Aufteilung}
@@ -566,11 +533,17 @@ Unter dem Begriff Complex Driver werden Module zusammengefasst, die eingesetzt w
 
 
 
-% TODO: Bild malen und Beispiel beschreiben
-%\subsection{Beispiel für den Kommunikations-Ablauf}
-%\label{sec:beispiel_komm}
+% TODO
 % vgl. Seite 146
+\subsection{Beispiel für den Kommunikations-Ablauf}
+\label{sec:beispiel_komm}
 
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.45\textwidth]{komm_beispiel}
+    \caption[Beispiel für den AUTOSAR Kommunikations-Ablauf]{Beispiel für den AUTOSAR Kommunikations-Ablauf beim Senden einer CAN-Botschaft}
+    \label{fig:komm_beispiel}
+\end{figure}
 
 
 \subsection{Toolkette}
@@ -658,8 +631,6 @@ Das Netzwerk-Managmenent unter AUTOSAR ähnelt dem von OSEK und ist dementsprech
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit ISO 26262 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Funktionale Sicherheit nach ISO 26262}
 \label{sec:Sicherheit}
-% TODO
-% - Rückwirkungsfreiheit und Kernpunkte von ISO 26262 erwähnen
 Der seit 1998 existierende Standard DIN EN 61508 mit dem Namen "`Funktionale Sicherheit sicherheitsbezogener elektrischer/elektronischer/programmierbarer elektronischer Systeme"' gilt als Grund-Norm für funktionale Sicherheit. Da diese jedoch für den Automobil-Bereich zum Teil unklar definiert ist, musste eine Erweiterung geschaffen werden. Als Beispiel für eine Unklarheit kann hier der in der DIN 61508 definierte Produktzyklus betrachtet werden. Dieser endet mit dem Aufstellen des Produktes wie es zum Beispiel bei einer Chemie-Anlagen der Fall ist. Im Automobil-Bereich folgt jedoch auf das Fertigstellen des Produktes, die Serien-Produktion, der Kundendienst und zum Schluss die Außerbetriebname. Daher wurde 2011 die ISO/DIS 26262 freigegeben. In dieser Norm werden genau diese Punkte abgedeckt und Bereiche wie zum Beispiel Hardware und Software Entwicklung näher betrachtet.
 
 Funktionale Sicherheit versucht allgemein einen methodischen Ansatz zur Absicherung von Systemen zu schaffen. Hierzu werden Anforderungen und Vorgehensweisen beschrieben um die Sicherheits-Eigenschaften möglichst Objektiv betrachten zu können. Der Begriff funktionale Sicherheit beschreibt lediglich ein Konzept. Die Normen ISO 26262 und DIN 61508 stellen konkrete Implementationen dieses Konzeptes dar. Dieses Kapitel basiert vor allem auf \cite{iso26262} und \cite{iso26262_robuste}.
@@ -672,7 +643,7 @@ Abbildung \ref{fig:lifecycle} zeigt den Sicherheitslebenzyklus nach ISO 26262. D
 \begin{figure}[!htbp]
 \center
 \includegraphics[width=0.75\textwidth]{ISO_26262_Lifecycle}
-\caption{Sicheitslebenszyklus nach ISO 26262\cite{iso26262}}
+\caption[Sicherheitslebenszyklus nach ISO 26262]{Sicherheitslebenszyklus nach ISO 26262\cite{iso26262}}
 \label{fig:lifecycle}
 \end{figure}
 
