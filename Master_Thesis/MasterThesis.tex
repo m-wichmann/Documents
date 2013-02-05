@@ -24,8 +24,8 @@
   %abstracton,  				% Überschrift der Zusammenfassung aktivieren
   cleardoublepage=empty,
   ngerman,     					% allen Paketen die Hauptsprache mitteilen
-  draft       					% draft version  
-  %final       					% final version
+  %draft       					% draft version  
+  final       					% final version
 ]{scrbook}	
 %%%%%%%%%%%%%%% Grundlegendes %%%%%%%%%%%%%%%
 \usepackage[utf8]{inputenc}
@@ -184,9 +184,9 @@ Das in dieser Master-Arbeit betrachtete Praxis-Beispiel ist eine Scheinwerfer-St
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{overview.png}
-\caption{Architektur}
-\label{fig:arch}
+\includegraphics[width=0.8\textwidth]{arch_begin.png}
+\caption{Vorläufige Architektur}
+\label{fig:arch_begin}
 \end{figure}
 
 Die geplante Architektur der Scheinwerfer-Steuerung ist in Abbildung \ref{fig:arch} zu sehen. Dabei sind zwei getrennte Hardware Elemente zu sehen. Zum einen das Scheinwerfer-Steuergerät und zum anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles AUTOSAR und Linux auf einem Windows Host.
@@ -734,7 +734,14 @@ Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 bei
 % Gesamtes Modell darstellen
 \chapter{Umsetzung des Fallbeispiels}
 \label{sec:Umsetzung_Fallbeispiel}
-% TODO
+Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des Projekts. Dabei werden Entscheidungen begründet und Alternativen betrachtet.
+
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=0.45\textwidth]{arch_finished}
+    \caption{Vollständige Architektur}
+    \label{fig:arch_finished}
+\end{figure}
 
 
 
