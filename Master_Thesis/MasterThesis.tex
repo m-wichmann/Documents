@@ -189,7 +189,7 @@ Das in dieser Master-Arbeit betrachtete Praxis-Beispiel ist eine Scheinwerfer-St
 \label{fig:arch_begin}
 \end{figure}
 
-Die geplante Architektur der Scheinwerfer-Steuerung ist in Abbildung \ref{fig:arch} zu sehen. Dabei sind zwei getrennte Hardware Elemente zu sehen. Zum einen das Scheinwerfer-Steuergerät und zum anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles AUTOSAR und Linux auf einem Windows Host.
+Die geplante Architektur der Scheinwerfer-Steuerung ist in Abbildung \ref{fig:arch_begin} zu sehen. Dabei sind zwei getrennte Hardware Elemente zu sehen. Zum einen das Scheinwerfer-Steuergerät und zum anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles AUTOSAR und Linux auf einem Windows Host.
 
 Aus dieser Architektur-Beschreibung lassen sich vier Kern-Bereiche dieser Master-Arbeit ableiten:
 
@@ -734,7 +734,17 @@ Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 bei
 % Gesamtes Modell darstellen
 \chapter{Umsetzung des Fallbeispiels}
 \label{sec:Umsetzung_Fallbeispiel}
-Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des Projekts. Dabei werden Entscheidungen begründet und Alternativen betrachtet.
+Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des Projektes. Dabei werden Entscheidungen begründet und Alternativen betrachtet.
+
+Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Architektur stellt die Grundlage für das Fallbeispiel dar. In Abbildung \ref{fig:arch_finished} ist diese Architektur verfeinert dargestellt, wie sie in diesem Projekt umgesetzt wurde. Dabei sind fünf Kernbereiche abzudecken.
+
+\begin{itemize}
+    \item Virtualisierung
+    \item Entwicklung der AUTOSAR Anwendung
+    \item Entwicklung der steuernden Komponente
+    \item Kommunikation Linux und AUTOSAR via VCAN
+    \item Kommunikation zwischen VCAN und Scheinwerfer-ECU
+\end{itemize}
 
 \begin{figure}[ht]
     \centering
@@ -743,7 +753,9 @@ Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des 
     \label{fig:arch_finished}
 \end{figure}
 
-
+% TODO:
+% - Welche Ziele
+% - Lastenheft, Pflichtenheft, Testfälle, Anwendungsfälle...
 
 
 
@@ -752,8 +764,13 @@ Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Virtualisierung}
 \label{sec:Virtualisierung_Umgesetzt}
-% TODO
-
+% TODO:
+% - Warum kein Type 1?
+% - Was für andere Möglichkeiten?
+% - Gibt es Vorteile zwischen Alternativen?
+% - Projekt ist nur Evaluation -> Wahl "egal" -> VirtualBox!
+% - Betrachtung von ARINC Hypervisor...
+% - Umsetzung der Virtualisierung und Versionen etc.
 
 
 
@@ -761,6 +778,12 @@ Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation Linux und AUTOSAR}
 \label{sec:Kommunikation_L_A}
+% TODO:
+% - Wie können Linux und AUTOSAR reden?
+% - Warum VCAN als Lösung?
+% - Welche Vorteile?
+% - Was ist nötig? -> Gateway, API
+
 Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozess-Kommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Mem bekannt. Diese stehen jedoch unter AUTOSAR nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bus-Systeme wie zum Beispiel LIN oder Flexray sind auch denkbar werden jedach im weiteren nicht näher untersucht. Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriff auf System ermöglichen die keine CAN-Schnittstelle besitzen. Vor- und Nachteile der Techniken sind im folgenden aufgeführt.
 
 % TODO: hieraus eine Tabelle machen oder vielleicht als texte schreiben?!
@@ -800,10 +823,11 @@ Im Rahmen dieser Master-Arbeit wurde ein VCAN-Gatway in Python entworfen, das so
 % Der Quellcode steht unter der LGPL\footnote{Lizenz-Bedingung zu finden unter: \url{http://www.gnu.org/licenses/lgpl-3.0.txt}} und ist im Internet\footnote{VCAN-API Git Repository: \url{https://github.com/erebos42/VCAN_API}} zu finden.
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% VCAN-API %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{VCAN-Gateway}
+\subsection{VCAN-Gateway}
 \label{sec:VCAN_Gateway}
+% TODO:
 % Beschreibung der VCAN API
+% Genaue API im Anhang
 Da das VCAN-Gateway von Elektrobit Closed-Source ist, und damit Änderungen und Erweiterungen nur von Elektrobit vorgenommen werden können, wurde im Rahmen dieser Arbeit eine Alternative entworfen. Als Programmiersprache wurde hier Pyhton gewählt, da bereits Erfahrung hiermit vorhanden ist und eine schnelle Entwicklung möglich ist. Außerdem ist hier zu erkennen das eine Kompplung zwischen zwei Bereichen entsteht. Zum einen die Embedded Welt inklusive CAN-Bus in der fast ausschließlich Assembler, C und C++ vorherschen, und auf der anderen Seite eine Hoch- und Skriptsprache die vor allem einfach und umfangreich ist.
 
 Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, und dem Frontend, bestehend aus dem eigentlichen Gateway und dem VCAN-Viewer.
@@ -811,10 +835,9 @@ Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, u
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Aufbau der ECU %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Aufbau des Bordnetzsteuergerätes}
-\label{sec:Aufbau_der_ECU}
-Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM37 genannt, aufgebaut und getestet. Dieses wurde freundlicherweise von VW bereitgestellt. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
+
+
+
 
 
 
@@ -822,20 +845,49 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Kommunikation AUTOSAR und Scheinwerfer}
+\section{Kommunikation AUTOSAR und Scheinwerfer-ECU}
 \label{sec:Kommunikation_A_S}
-% TODO
-% headlight_final projekt
+% TODO:
+% - Wie können die reden?
+% - Probleme? -> Neues Steuergerät;
+% - Alternativen?
+% - 
+
+\subsection{Aufbau des Bordnetzsteuergerätes}
+\label{sec:Aufbau_der_ECU}
+Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM37 genannt, aufgebaut und getestet. Dieses wurde freundlicherweise von VW bereitgestellt. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
 
 
 
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% NM bei AUTOSAR %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Netzwerk Management (!)
-\section{Einsatz des Netzwerkmanagement}
+\subsection{Einsatz des Netzwerkmanagement}
 \label{sec:AutosarNM}
-% TODO
+% TODO:
+% - NM bei AUTOSAR
+% - Im Projekt-Rahmen (Welche IDs, Was war zu beachten)?
 
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der AUTOSAR Anwendung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Entwicklung der AUTOSAR Anwendung}
+\label{sec:entwicklung_autosar}
+% TODO:
+% - headlight_final projekt
+% - Was waren die Vorraussetzungen?
+% - Modell, DBC?
+% - Welche Dinge waren zu beachten?
+% - 
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der steuernden Komponente %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Entwicklung der steuernden Komponente}
+\label{sec:entwicklung_vcan_app}
+% TODO
+% - Python GUI
+% - 
 
 
 
@@ -928,6 +980,9 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 % This file contains sensitive information that is not shared on GitHub!!!
 % If you don't have the appendix.tex, then this line has to be deleted.
 \input{appendix}
+
+
+
 
 
 % TODO: BSW-Modul-Liste; Grafische Notation (AUTOSAR, SPEM); 
