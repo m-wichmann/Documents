@@ -96,6 +96,9 @@
 
 \addto{\captionsngerman}{\renewcommand*{\bibname}{Quellenverzeichnis}}
 
+% Kommando für Klasse/Methoden in description enviroments
+\newcommand{\apiitem}[1]{\item[\texttt{#1}] \hfill \\}
+
 %%% Trennungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \hyphenation{Netz-werk-Ma-nage-ment}
 
@@ -978,7 +981,8 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 \part*{Anhang}
 
 % This file contains sensitive information that is not shared on GitHub!!!
-% If you don't have the appendix.tex, then this line has to be deleted.
+% If you don't have the appendix_nda.tex, then this line has to be deleted.
+\input{appendix_nda}
 \input{appendix}
 
 
