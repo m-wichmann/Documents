@@ -22,7 +22,9 @@ Dieses Kapitel beschreibt die im Laufe des Projektes erstellte Software zur Komm
 % TODO:
 % Dateien, Klassen
 % Abhängigkeiten
-
+\begin{description}
+    \apiitem{test}
+\end{description}
 
 
 \section{Gateway API}
@@ -89,7 +91,7 @@ Dieses Kapitel beschreibt die im Laufe des Projektes erstellte Software zur Komm
 % class VCANMessage
 \begin{description}
     \apiitem{class VCANMessage()}
-    Repräsentiert eine Botschaft in der VCAN-API. Der Konstruktur generiert eine leere Botschaft. Diese kann entweder über \texttt{set\_parameters()} von Hand mit Parametern gefüllt werden, oder über \texttt{parameters\_from\_string() von einer eingehenden Nachricht aus einem Binär-String.}
+    Repräsentiert eine Botschaft in der VCAN-API. Der Konstruktur generiert eine leere Botschaft. Diese kann entweder über \texttt{set\_parameters()} von Hand mit Parametern gefüllt werden, oder über \texttt{parameters\_from\_string()} von einer eingehenden Nachricht aus einem Binär-String.
     \begin{description}
         \apiitem{set\_parameters(can\_id,  data, system, channel, dlc=None)}
         Setzt die Parameter der Nachricht entsprechend den Parametern. Parameter \texttt{can\_id} gibt die ID der Botschaft an. Die Nutzdaten sind werden in \texttt{data} erwartet und müssen als Liste übergeben werden. Die Parameter \texttt{system} und \texttt{channel} geben das entsprechende System und den Kanal an. Standard-Werte sind CAN und Kanal 0. Weitere Möglichkeiten sind in der Datei \texttt{vcan\_message.py} als Konstanten hinterlegt. Der letzte Parameter, \texttt{dlc}, gibt die Länge der Daten an. Falls \texttt{None} übergeben wird, wird die Länge des Daten-Arrays verwendet.
