@@ -790,12 +790,6 @@ Bei der Wahl des Hypervisors kommt zu aller erst die Frage, ob ein Type 1 oder T
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation Linux und AUTOSAR}
 \label{sec:Kommunikation_L_A}
-% TODO:
-% - Wie können Linux und AUTOSAR reden?
-% - Warum VCAN als Lösung?
-% - Welche Vorteile?
-% - Was ist nötig? -> Gateway, API
-
 Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozess-Kommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Memory bekannt. Diese stehen jedoch unter AUTOSAR nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bus-Systeme wie zum Beispiel LIN oder Flexray sind auch denkbar werden jedoch im weiteren nicht näher untersucht. Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriff auf System ermöglichen die keine CAN-Schnittstelle besitzen. Vor- und Nachteile der Techniken sind im folgenden aufgeführt.
 
 % TODO: hieraus eine Tabelle machen oder vielleicht als texte schreiben?!
@@ -833,17 +827,56 @@ Als nächste Alternative wurde der CAN-Bus vorgestellt. Zwar handelt es sich hie
 
 Der Einsatz von Ethernet ist zwar komfortabel, wird jedoch erst ab AUTOSAR 4.0 unterstützt. Da in diesem Projekt AUTOSAR 3.1 eingesetzt wird, ist diese Möglichkeit nicht umsetzbar.
 
-Beim VCAN handelt es sich um eine Mischung aus Ethernet und CAN. Dabei wird zwar Ethernet als Übertragungsmedium genutzt, jedoch das Botschaften-Format von CAN erhalten. Zudem wird dieser vom eingesetzten AUTOSAR unterstützt. Vor allem in den ersten Phasen eines Projektes ist der VCAN von Vorteil, da dieser einfach und flexibel ist. Daher wird auch in diesem Projekt der VCAN gewählt. Ein essenzieller Nachteil hierbei, ist jedoch die Notwendigkeit eines Gateways. Da es sich bei CAN um eine Multicast-Technik handelt, Ethernet jedoch auf Unicast ausgelegt ist, wird eine zentrale Komponente benötigt, die einzelne Botschaften an alle Teilnehmer weitergibt. Genau diese Aufgabe wird vom VCAN-Gateway übernommen. Bereits zu Beginn des Projektes lag ein Gateway der Firma Elektrobit vor. Da es sich hierbei jedoch um eine Closed-Source Anwendung handelt, sind Änderungen nur mit Unterstützung von Elektrobit möglich. Um eine erhöhte Flexibilität zu gewährleisten, wurde im Rahmen dieser Arbeit ein eigenes Gateway und eine API entworfen. Diese VCAN-API ist in Python realisiert und ermöglicht das Senden und Empfangen von VCAN-Botschaften. Das eingesetzte Protokoll wurde dabei Reverse-Engineered. Zudem wurde die Funktionalität des EB-Gateways erweitert. Im folgenden Kapitel wird diese näher beschrieben. Eine genaue API-Dokumentation ist im beigelegten Quellcode und im Anhang \ref{sec:vcan_api} zu finden.
+Beim VCAN handelt es sich um eine Mischung aus Ethernet und CAN. Dabei wird zwar Ethernet als Übertragungsmedium genutzt, jedoch das Botschaften-Format von CAN erhalten. Zudem wird dieser vom eingesetzten AUTOSAR unterstützt. Vor allem in den ersten Phasen eines Projektes ist der VCAN von Vorteil, da dieser einfach und flexibel ist. Daher wird auch in diesem Projekt der VCAN gewählt. Ein essenzieller Nachteil hierbei ist jedoch die Notwendigkeit eines Gateways. Da es sich bei CAN um eine Multicast-Technik handelt, Ethernet jedoch auf Unicast ausgelegt ist, wird eine zentrale Komponente benötigt, die einzelne Botschaften an alle Teilnehmer weitergibt. Genau diese Aufgabe wird vom VCAN-Gateway übernommen. Bereits zu Beginn des Projektes lag ein Gateway der Firma Elektrobit vor. Da es sich hierbei jedoch um eine Closed-Source Anwendung handelt, sind Änderungen nur mit Unterstützung von Elektrobit möglich. Um eine erhöhte Flexibilität zu gewährleisten, wurde im Rahmen dieser Arbeit ein eigenes Gateway und eine API entworfen. Diese VCAN-API ist in Python realisiert und ermöglicht das Senden und Empfangen von VCAN-Botschaften. Zudem wurde die Funktionalität des EB-Gateways implementiert und erweitert. Im folgenden Kapitel wird die API näher beschrieben. Eine genaue API-Dokumentation ist im beigelegten Quellcode und im Anhang \ref{sec:vcan_api} zu finden.
 
 
 \subsection{VCAN-API}
 \label{sec:VCAN_API}
-% TODO:
-% Beschreibung der VCAN API
-% Genaue API im Anhang
-Da das VCAN-Gateway von Elektrobit Closed-Source ist, und damit Änderungen und Erweiterungen nur von Elektrobit vorgenommen werden können, wurde im Rahmen dieser Arbeit eine Alternative entworfen. Als Programmiersprache wurde hier Pyhton gewählt, da bereits Erfahrung hiermit vorhanden ist und eine schnelle Entwicklung möglich ist. Außerdem ist hier zu erkennen das eine Kompplung zwischen zwei Bereichen entsteht. Zum einen die Embedded Welt inklusive CAN-Bus in der fast ausschließlich Assembler, C und C++ vorherschen, und auf der anderen Seite eine Hoch- und Skriptsprache die vor allem einfach und umfangreich ist.
+Die Entwicklung der VCAN-API hatte zu Beginn das primäre Ziel den direkten Zugriff auf den VCAN zu ermöglichen. Im Laufe des Projektes hat sich jedoch herausgestellt, dass die zusätzliche Implementierung des Gateways keinen großen Mehr-Aufwand bedeutet. Aus diesem Grund deckt die VCAN-API sowohl die Client-Seite, dass Senden und Empfangen von Botschaften, als auch die Gateway-Seite ab. Zusätzlich sind damit kurzfristige Änderungen an der API möglich. Als Programmiersprache wurde Python gewählt. Dies ermöglicht eine schnelle und einfache Entwicklung. Zudem wird dadurch die Kopplung zweier unterschiedlicher Bereiche repräsentiert. Zum Einen der Embedded-Bereich, der vor allem auf Assembler, C und C++ basiert, und zum Anderen den Bereich der Hochsprachen, wie er zum Beispiel durch Java oder Python repräsentiert wird.
 
-Das VCAN-Gateway besteht aus zwei Teilen. Zum einen die VCAN-API, das Backend, und dem Frontend, bestehend aus dem eigentlichen Gateway und dem VCAN-Viewer.
+Die Entwicklung der API basiert auf dem VCAN-Protokoll. Da es sich hierbei um kein offenes oder bekanntes Protokoll handelt, wurde dieses im Rahmen dieser Arbeit Reverse Engineered. Hierzu wurden einige VCAN-Botschaften mittels Wireshark\footnote{Wireshark ist zu finden unter: \url{http://www.wireshark.org/}} mitgeschnitten und ausgewertet. Anschließend wurden mittels "`trial and error"' die weiteren Details des Protokolls anhand des bestehenden Gateways ermittelt.
+
+Bei dem VCAN-Protokoll handelt es sich um ein auf TCP basierendes Binär-Format. Dabei wird der TCP-Verbindungsaufbau genutzt um Clients am Gateway anzumelden. Der genaue Aufbau des Protokolls ist im Kapitel \ref{sec:vcan_protokoll} beschrieben. Folgende Daten werden in einer Botschaft übermittelt:
+
+\begin{itemize}
+    \item System
+    \item Kanal
+    \item ID
+    \item Marker für Extended-Frames
+    \item Anzahl der Daten Bytes (DLC\footnote{Data Length Code})
+    \item Nutzdaten
+\end{itemize}
+
+Es ist zu erkennen, dass dieses Protokoll nicht nur für CAN ausgelegt ist. So existieren zum Beispiel Werte im System-Feld für CAN, FlexRay und LIN. Auch die Angabe eines Kanals entspricht nicht dem einfachen CAN-Standard. Aus diesem Grund ist zu erwarten, dass das ermittelte Protokoll nicht komplett ist. Dieses Projekt beschränkt sich jedoch auf die vom AUTOSAR-CAN-Modul gesendeten Botschaften und ignoriert somit \emph{System} und \emph{Kanal} der Nachricht. In einem zukünftigen Projekt könnte diese Protokoll näher analysiert werden. 
+
+% Aufteilung
+% - API (Doku und Beispiele im Anhang)
+% - Kann implementiert werden für Gateway und Client
+% - Gateway GUI
+
+% Features
+% - Gateway
+% - PCAN
+% - Client
+% - Config
+% - Performance
+
+% Mögliche Erweiterungen
+% - DBC, ARXML Support
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
