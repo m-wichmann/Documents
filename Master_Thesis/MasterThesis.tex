@@ -13,6 +13,7 @@
 %% - "Lizenz Server" am CAN Netz um Nachrichten zu überprüfen und damit evtl. krypto
 %% - Master Arbeit auch als Eval und Einführung von AUTOSAR
 %% - Begriffserlärung virt: z.b. instanz
+%% - Type oder Typ (Hypervisor)
 
 
 \documentclass[
@@ -276,7 +277,7 @@ Virtualisierung kann mittels einer Reihe von Techniken realisiert werden. Hier w
 % Gründe für Embedded Virtualisierung
 \section{Virtualisierung bei eingebetteten Systemen}
 \label{sec:EVirtualisierung}
-Virtualisierung im Bereich der eingebetteten Systeme, auch bekannt als \emph{Embedded Virtualization} und \emph{Time and Space Partitioning}, hat in den letzten Jahren immer mehr an Bedeutung gewonnen. Da Mikrocontroller und SOCs\footnote{System-on-a-Chip, dt. Ein-Chip-System} immer Leistungsfähiger werden und mehr Rechenkerne besitzen, ist es sinnvoll diese Leistung auch auszunutzen. Gerade im Automobil-Bereich, in dem die Anzahl der Steuergeräte zum Teil auf mittlerweile über 50 innerhalb eines Autos gestiegen ist, kann es die Kosten erheblich reduzieren wenn stattdessen einige dieser System virtualisiert werden können.
+Virtualisierung im Bereich der eingebetteten Systeme, auch bekannt als \emph{Embedded Virtualization} und \emph{Time and Space Partitioning} (kurz TSP), hat in den letzten Jahren immer mehr an Bedeutung gewonnen. Da Mikrocontroller und SOCs\footnote{System-on-a-Chip, dt. Ein-Chip-System} immer Leistungsfähiger werden und mehr Rechenkerne besitzen, ist es sinnvoll diese Leistung auch auszunutzen. Gerade im Automobil-Bereich, in dem die Anzahl der Steuergeräte zum Teil auf mittlerweile über 50 innerhalb eines Autos gestiegen ist, kann es die Kosten erheblich reduzieren wenn stattdessen einige dieser System virtualisiert werden können.
 
 Hypervisor im embedded Bereich müssen bestimmte Erforderungen erfüllen die viele Hypervisor nicht beachten. Zu diesen Anforderungen gehört zum Beispiel ein geringer Energie-Verbrauch und effiziente Speicher-Nutzung. Ein weiterer wichtiger Punkt ist die Echtzeitfähigkeit. Diese ist vor allem kritisch, da meist eine zwei-stufige Scheduler-Architektur entsteht, zum einen der Scheduler des Hypervisors und zum anderen der Scheduler des Gast-Systems. Eine Echtzeit-Analyse wird hierdurch verkompliziert.\cite{two_lvl_sched}
 
@@ -299,6 +300,7 @@ Mit diesen Eigenschaften ähnelt ARINC 653 dem AUTOSAR Standard. Auch die Konfig
 \subsection{Hypervisor Beispiel}
 Im Bereich der Embedded Hypervisor existieren eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4 Micorvisor\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}}, Integrity Multivisor\footnote{\url{http://www.ghs.com/products/rtos/integrity_virtualization.html}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}. Auch LynxSecure\footnote{\url{http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php}} und der Wind River Hypervisor\footnote{\url{http://www.windriver.com/products/hypervisor/}} sind bekannte Beispiele. Im weiteren werden einige der Beispiele etwas näher betrachtet.
 
+% TODO: quellen hinzufügen
 \paragraph{PikeOS}
 Der wahrscheinlich umfangreichste embedded Hypervisor ist PikeOS. Dieses Echtzeit-System der Firma \emph{SYSGO AG} basiert auf einem Microkernel und bietet sowohl volle Virtualisierung als auch Para-Virtualisierung. Es ist nach DO-178B und ISO 26262 zertifiziert und ist auf vielen Architekturen lauffähig. Darunter PowerPC, x86, ARM, MIPS und SPARC-V8-LEON. APIs werden angeboten um folgende Gast-Anwendungen zu ermöglichen: Linux, POSIX, ARINC, AUTOSAR und Real-Time Java. Neben den üblichen API-Funktionen bietet PikeOS einen zertifizierten IP-Stack und ein Datei-System. Das System wird zum Beispiel im Airbus A350 eingesetzt.
 
@@ -310,6 +312,11 @@ Der von \emph{Green Hills Software} entwickelte INTEGRITY Multivisor ist auf In-
 
 \paragraph{COQOS}
 Bei COQOS handelt es sich um einen Hypervisor der auf die gleichzeitige Ausführung von Linux (Android) und AUTOSAR ausgelegt ist. Ebenso wie der INTEGRITY Multivisor ist COQOS auf IVI-Systeme und Fahrerassistenzsysteme ausgelegt und ist demnach nach ISO 26262 und DO-178B zertifiziert. Als Plattformen werden x86 und ARM unterstützt. Als Sicherheitskonzept ist eine Firewall in COQOS integriert. Außerdem wird ein Watchdog in einer separaten Instanz unterstützt, um die Funktionalität des Systems zu gewährleisten.
+
+\paragraph{XtratuM}
+Der Hypervisor XtratuM\footnote{\url{http://www.xtratum.org/}} wird von der \emph{Universidad Politécnica de Valencia} in Spanien entwickelt und ist unter der GNU General Public License freigegeben. Als Ausführungsplattformen werden x86, SPARC-V8-LEON und ARM unterstützt. XtratuM ist für eingebettete Echtzeit-System ausgelegt. Konkret ähnelt die angebotene API dem ARINC-653 Standard und ist damit vor allem für entsprechende Bereich ausgelegt. Da dieser Hypervisor frei zugänglich und unter einer Open-Source-Lizenz freigegeben ist, wird er im Laufe dieser Arbeit etwas näher betrachtet.
+
+
 
 
 
@@ -739,12 +746,12 @@ Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 bei
 \label{sec:Umsetzung_Fallbeispiel}
 Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des Projektes. Dabei werden Entscheidungen begründet und Alternativen betrachtet.
 
-Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Architektur stellt die Grundlage für das Fallbeispiel dar. In Abbildung \ref{fig:arch_finished} ist diese Architektur verfeinert dargestellt, wie sie in diesem Projekt umgesetzt wurde. Dabei sind fünf Kernbereiche abzudecken.
+Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Architektur stellt die Grundlage für das Fallbeispiel dar. In Abbildung \ref{fig:arch_finished} ist diese Architektur verfeinert dargestellt, wie sie in diesem Projekt umgesetzt wurde. Dabei sind fünf Kernbereiche identifizierbar.
 
 \begin{itemize}
     \item Virtualisierung
-    \item Entwicklung der AUTOSAR Anwendung
-    \item Entwicklung der steuernden Komponente
+    \item Entwicklung der AUTOSAR-Komponente
+    \item Entwicklung der Steuerungs-Anwendung
     \item Kommunikation Linux und AUTOSAR via VCAN
     \item Kommunikation zwischen VCAN und Scheinwerfer-ECU
 \end{itemize}
@@ -767,15 +774,17 @@ Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Archite
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Virtualisierung}
 \label{sec:Virtualisierung_Umgesetzt}
+Der Bereich Virtualisierung deckt die Bereitstellung der virtuellen Maschinen in diesem Projekt ab. Dabei werden zwei Instanzen benötigt. In der ersten VM wird die AUTOSAR-Komponente ausgeführt. Da diese mittels EB tresos WinCore für Windows erstellt wird, wird hier ein Windows eingesetzt. Wie sich im Laufe des Projektes herausgestellt hat, ist die Ausführung der AUTOSAR-Komponente keineswegs stabil, sodass nach einer zufälligen Zeit, meist etwa ein paar Minuten, die Komponente nicht mehr reagiert. Zu Testzwecken wurde daher die Ausführung mittels Wine unter Linux getestet. Wie sich herausgestellt hat tritt der Fehler in diesem Fall nicht auf. Da Kompatibilitätsprobleme bei einer Windows-Anwendung unter Linux nicht auszuschließen sind, ist dies jedoch auch keine ideale Lösung. Aus diesem Grund wird für die erste VM sowohl Windows als auch Linux parallel gepflegt getestet. Hierdurch können sowohl Kompatibilitäts- als auch Stabilitätsprobleme, je nach konkreter Wahl, vermieden werden.
+
+Die zweite VM wird verwendet um die Steuerungs-Anwendung auszuführen. Da diese auf der VCAN-API basiert (siehe \ref{sec:vcan_api} und \ref{sec:Kommunikation_L_A}) ist die Wahl des Betriebssystems auf alle von Python unterstützen Plattformen beschränkt. Aus persönlicher Vorliebe des Autors wird an dieser Stelle Linux gewählt. Die entsprechende Anwendung kann jedoch auch ohne umfangreiche Portierung zum Beispiel unter Windows ausgeführt werden.
+
+Bei der Wahl des Hypervisors kommt zu aller erst die Frage, ob ein Type 1 oder Type 2 Hypervisor gewählt wird. Da es sich bei diesem Projekt um eine Evaluierung der Virtualisierung geht wird ein Type 2 Hypervisor gewählt. Zudem würde der Einsatz eines Type 1 Hypervisors den zeitlichen Rahmen dieser Arbeit sprengen, da der Aufbau und die Konfiguration kompliziert und umfangreich ist. Um trotzdem Einblick in diesen Bereich der Virtualisierung zu geben, wird ein Hypervisor näher betrachtet. Hier wird XtratuM gewählt, da es sich dabei um ein freies Open-Source Projekt handelt. Im Rahmen dieses Projekts wird VirtualBox als Hypervisor verwendet.
+
+% TODO: genaue Versionen etc. erwähnen
+
+\subsection{XtratuM}
+\label{sec:xtratum}
 % TODO:
-% - Warum kein Type 1?
-% - Was für andere Möglichkeiten?
-% - Gibt es Vorteile zwischen Alternativen?
-% - Projekt ist nur Evaluation -> Wahl "egal" -> VirtualBox!
-% - Betrachtung von ARINC Hypervisor...
-% - Umsetzung der Virtualisierung und Versionen etc.
-
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -787,47 +796,48 @@ Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Archite
 % - Welche Vorteile?
 % - Was ist nötig? -> Gateway, API
 
-Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozess-Kommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Mem bekannt. Diese stehen jedoch unter AUTOSAR nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bus-Systeme wie zum Beispiel LIN oder Flexray sind auch denkbar werden jedach im weiteren nicht näher untersucht. Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriff auf System ermöglichen die keine CAN-Schnittstelle besitzen. Vor- und Nachteile der Techniken sind im folgenden aufgeführt.
+Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozess-Kommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Memory bekannt. Diese stehen jedoch unter AUTOSAR nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bus-Systeme wie zum Beispiel LIN oder Flexray sind auch denkbar werden jedoch im weiteren nicht näher untersucht. Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriff auf System ermöglichen die keine CAN-Schnittstelle besitzen. Vor- und Nachteile der Techniken sind im folgenden aufgeführt.
 
 % TODO: hieraus eine Tabelle machen oder vielleicht als texte schreiben?!
 \begin{itemize}
     \item CAN
     \begin{itemize}
-        \item[$+$] Standard
+        \item[$+$] Fester Standard in der Automobilindustrie
         \item[$+$] Deterministisch durch Arbitrierung und Zyklische Sender
         \item[$-$] Linux benötigt vollen CAN Zugriff
-        \item[$-$] Jedes Linux System CAN-Hardware (Kosten)
+        \item[$-$] Jedes Linux-System benötigt CAN-Hardware (Kosten)
     \end{itemize}
     \item Ethernet
     \begin{itemize}
-        \item[$+$] Standard
+        \item[$+$] Standard in der allgemeinen Übertragungstechnik
         \item[$+$] Hohe Übertragungsrate
-        \item[$+$] AUTOSAR soll "of the shelf"-TCP/IP-Stack verwenden der auch zu Linux kompatibel sein kann\cite[S. 21]{autosar_eth}
-        \item[$-$] Kollisionen/Latenz und damit nur bedingt Echtzeitfähig
-        \item[$-$] Benötigt AUTOSAR 4.0
+        \item[$+$] AUTOSAR kann "`of the shelf"'-TCP/IP-Stack verwenden, der damit auch zu Linux voll kompatibel sein kann\cite[S. 21]{autosar_eth}
+        \item[$-$] Nicht-Deterministische Kollisionen und Latenz. Damit nur bedingt Echtzeitfähig
+        \item[$-$] Erst ab AUTOSAR 4.0 unterstützt
     \end{itemize}
     \item VCAN
     \begin{itemize}
         \item[$+$] Baut auf Ethernet auf
-        \item[$+$] Gut umsetzbar im Evaluations-Prozess
+        \item[$+$] Gut im Evaluations-Prozess umsetzbar
         \item[$+$] Eigene "Logik" lässt sich im Gateway implementieren (Firewall, Kommunikations Matrix)
-        \item[$-$] Nicht geeignet für Prouktiv-Systeme
-        \item[$-$] Auf Elektrobit tresos beschränt
-        \item[$-$] EB Gateway Protokoll muss implementiert werden
+        \item[$-$] Nicht geeignet für Produktiv-Systeme
+        \item[$-$] Auf Elektrobit tresos beschränkt
+        \item[$-$] Gateway wird benötigt
     \end{itemize}
 \end{itemize}
 
 % Warum VCAN?!
-Sowohl die Kommunikation via Ethernet als auch CAN sind in diesem Projekt nicht weiter relevant, da beide nicht in der verwendeten Version 3.1 von WinCore zur Verfügung stehen. Somit wird in dieser Arbeit der VCAN betrachtet. Dieser ist einfach und flexibel und damit vor allem in den ersten Phasen eines Projektes von Vorteil.
+Als Kommunikations-Technik wird für dieses Projekt VCAN gewählt. Dies lässt sich vor allem mit der schlechten, beziehungsweise nicht möglichen Umsetzung der anderen Techniken begründen. Die zu Beginn bereits angesprochenen Techniken zur Inter-Process-Kommunikation werden von AUTOSAR nicht unterstützt, da es der dort beschriebenen Architektur widerspricht. Laut dieser muss jegliche Kommunikation über die RTE realisiert werden. Dies bezüglich wäre es eventuell möglich eine externe Anwendung an diese anzubinden. Auch eine Implementierung mittels eines Complex-Driver ist vorstellbar, jedoch sehr aufwendig. Diese Lösungen wären sehr unsauber und vermutlich mit viel Aufwand verbunden.
 
-% Deswegen VCAN-API geschrieben
-Im Rahmen dieser Master-Arbeit wurde ein VCAN-Gatway in Python entworfen, das sowohl das Senden als auch Empfangen von CAN-Botschaften ermöglicht. Zusätzlich wurde die Funktionalität des von Elektrobit bereitgestellten Closed-Source VCAN-Gateways Reverse-Engineered und leicht erweitert. Im folgenden Kapitel wird die API näher beschrieben.
+Als nächste Alternative wurde der CAN-Bus vorgestellt. Zwar handelt es sich hierbei um einen etablierten Standard, der auch von AUTOSAR unterstützt wird, jedoch ist dies in diesem Projekt nicht sinnvoll. So wäre eine separate Hardware-Anbindung für jede Anwendung nötig. Diese müsste jeweils mit einem USB-Adapter realisiert werden und somit nicht praktikabel.
 
-% Der Quellcode steht unter der LGPL\footnote{Lizenz-Bedingung zu finden unter: \url{http://www.gnu.org/licenses/lgpl-3.0.txt}} und ist im Internet\footnote{VCAN-API Git Repository: \url{https://github.com/erebos42/VCAN_API}} zu finden.
+Der Einsatz von Ethernet ist zwar komfortabel, wird jedoch erst ab AUTOSAR 4.0 unterstützt. Da in diesem Projekt AUTOSAR 3.1 eingesetzt wird, ist diese Möglichkeit nicht umsetzbar.
+
+Beim VCAN handelt es sich um eine Mischung aus Ethernet und CAN. Dabei wird zwar Ethernet als Übertragungsmedium genutzt, jedoch das Botschaften-Format von CAN erhalten. Zudem wird dieser vom eingesetzten AUTOSAR unterstützt. Vor allem in den ersten Phasen eines Projektes ist der VCAN von Vorteil, da dieser einfach und flexibel ist. Daher wird auch in diesem Projekt der VCAN gewählt. Ein essenzieller Nachteil hierbei, ist jedoch die Notwendigkeit eines Gateways. Da es sich bei CAN um eine Multicast-Technik handelt, Ethernet jedoch auf Unicast ausgelegt ist, wird eine zentrale Komponente benötigt, die einzelne Botschaften an alle Teilnehmer weitergibt. Genau diese Aufgabe wird vom VCAN-Gateway übernommen. Bereits zu Beginn des Projektes lag ein Gateway der Firma Elektrobit vor. Da es sich hierbei jedoch um eine Closed-Source Anwendung handelt, sind Änderungen nur mit Unterstützung von Elektrobit möglich. Um eine erhöhte Flexibilität zu gewährleisten, wurde im Rahmen dieser Arbeit ein eigenes Gateway und eine API entworfen. Diese VCAN-API ist in Python realisiert und ermöglicht das Senden und Empfangen von VCAN-Botschaften. Das eingesetzte Protokoll wurde dabei Reverse-Engineered. Zudem wurde die Funktionalität des EB-Gateways erweitert. Im folgenden Kapitel wird diese näher beschrieben. Eine genaue API-Dokumentation ist im beigelegten Quellcode und im Anhang \ref{sec:vcan_api} zu finden.
 
 
-\subsection{VCAN-Gateway}
-\label{sec:VCAN_Gateway}
+\subsection{VCAN-API}
+\label{sec:VCAN_API}
 % TODO:
 % Beschreibung der VCAN API
 % Genaue API im Anhang

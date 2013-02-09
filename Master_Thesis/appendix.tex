@@ -23,7 +23,32 @@ Dieses Kapitel beschreibt die im Laufe des Projektes erstellte Software zur Komm
 % Dateien, Klassen
 % Abhängigkeiten
 \begin{description}
-    \apiitem{test}
+    \apiitem{./vcan\_api/}
+    Dieses Verzeichnis enthält die gesamte VCAN-API.
+    \begin{description}
+        \apiitem{./vcan\_api/\_\_init\_\_.py}
+        VCAN-API Python Pyackage.
+        \apiitem{./vcan\_api/PCANBasic.py}
+        API zur Nutzung des PEAK-PCAN-USB-Adapters. Diese Datei stammt von PEAK.
+        \apiitem{./vcan\_api/vcan\_client.py}
+        Enthält die Klasse VCANClient.
+        \apiitem{./vcan\_api/vcan\_config.py}
+        Enthält die Klasse VCANConfig.
+        \apiitem{./vcan\_api/vcan\_config.xsd}
+        XML-Schema für Firewall-Konfigurationen.
+        \apiitem{./vcan\_api/vcan\_exception.py}
+        Enthält die Klasse VCANException.
+        \apiitem{./vcan\_api/vcan\_gateway.py}
+        Enthält die Klasse VCANGateway.
+        \apiitem{./vcan\_api/vcan\_message.py}
+        Enthält die Klasse VCANMessage und einige Konstanten um diese zu Nutzen.
+    \end{description}
+    \apiitem{./gateway.py}
+    Ein simples Gateway mit grafischer Oberfläche.
+    \apiitem{./gateway\_rules.xml}
+    Eine Beispiel-Konfiguration der im Gateway eingebauten Firewall-Regeln.
+    \apiitem{./sample\_*.py}
+    Verschiedene Python-Beispiele, die die VCAN-API nutzen.
 \end{description}
 
 
