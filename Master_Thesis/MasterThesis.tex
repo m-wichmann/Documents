@@ -764,7 +764,7 @@ Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Archite
 \end{figure}
 
 % TODO:
-% - Welche Ziele
+% - Ziele konkret formulieren
 % - Lastenheft, Pflichtenheft, Testfälle, Anwendungsfälle...
 
 
@@ -820,7 +820,6 @@ Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolge
     \end{itemize}
 \end{itemize}
 
-% Warum VCAN?!
 Als Kommunikations-Technik wird für dieses Projekt VCAN gewählt. Dies lässt sich vor allem mit der schlechten, beziehungsweise nicht möglichen Umsetzung der anderen Techniken begründen. Die zu Beginn bereits angesprochenen Techniken zur Inter-Process-Kommunikation werden von AUTOSAR nicht unterstützt, da es der dort beschriebenen Architektur widerspricht. Laut dieser muss jegliche Kommunikation über die RTE realisiert werden. Dies bezüglich wäre es eventuell möglich eine externe Anwendung an diese anzubinden. Auch eine Implementierung mittels eines Complex-Driver ist vorstellbar, jedoch sehr aufwendig. Diese Lösungen wären sehr unsauber und vermutlich mit viel Aufwand verbunden.
 
 Als nächste Alternative wurde der CAN-Bus vorgestellt. Zwar handelt es sich hierbei um einen etablierten Standard, der auch von AUTOSAR unterstützt wird, jedoch ist dies in diesem Projekt nicht sinnvoll. So wäre eine separate Hardware-Anbindung für jede Anwendung nötig. Diese müsste jeweils mit einem USB-Adapter realisiert werden und somit nicht praktikabel.
@@ -847,22 +846,16 @@ Bei dem VCAN-Protokoll handelt es sich um ein auf TCP basierendes Binär-Format.
     \item Nutzdaten
 \end{itemize}
 
-Es ist zu erkennen, dass dieses Protokoll nicht nur für CAN ausgelegt ist. So existieren zum Beispiel Werte im System-Feld für CAN, FlexRay und LIN. Auch die Angabe eines Kanals entspricht nicht dem einfachen CAN-Standard. Aus diesem Grund ist zu erwarten, dass das ermittelte Protokoll nicht komplett ist. Dieses Projekt beschränkt sich jedoch auf die vom AUTOSAR-CAN-Modul gesendeten Botschaften und ignoriert somit \emph{System} und \emph{Kanal} der Nachricht. In einem zukünftigen Projekt könnte diese Protokoll näher analysiert werden. 
+Es ist zu erkennen, dass dieses Protokoll nicht nur für CAN ausgelegt ist. So existieren zum Beispiel Werte im System-Feld für CAN, FlexRay und LIN. Auch die Angabe eines Kanals entspricht nicht dem einfachen CAN-Standard. Aus diesem Grund ist zu erwarten, dass das ermittelte Protokoll nicht komplett ist. Dieses Projekt beschränkt sich jedoch auf die vom AUTOSAR-CAN-Modul gesendeten Botschaften und ignoriert somit \emph{System} und \emph{Kanal} der Nachricht. In einem zukünftigen Projekt könnte dies jedoch näher untersucht werden, und weitere Funktionalität implementiert werden.
 
-% Aufteilung
-% - API (Doku und Beispiele im Anhang)
-% - Kann implementiert werden für Gateway und Client
-% - Gateway GUI
+Bei der erstellten VCAN-API handelt es sich um ein reines Backend. Eine Dokumentation und Beispiele zum Erstellen eines Gateways, beziehungsweise Clients, sind im Anhang zu finden. Im Rahmen dieser Arbeit wurde ein Gateway-Anwendung inklusive grafische Oberfläche entwickelt. Die Funktionalität des von Elektrobit bereitgestellten Gateways, inklusive des PCAN-Supports, ist hierin komplett nachgebildet. Ebenso lassen sich einfach Clients erstellen, die Botschaften senden und empfangen können.
 
-% Features
-% - Gateway
-% - PCAN
-% - Client
-% - Config
-% - Performance
+Neben der Grund-Funktionalität bietet die VCAN-API einige Vorteile der Elektrobit-Lösung gegenüber. So haben das Original-Gateway, sowie die AUTOSAR-Komponenten, Probleme mit schnellen Zyklus-Zeiten. Ab etwa 200 ms kommt es immer häufiger vor, dass einzelne Pakete nicht registriert werden. Das hier erstellte Gateway zeigt in diesem Bereich eine gewisse Robustheit. Einig Tests haben jedoch gezeigt, dass auch das eingesetzte Betriebssystem Einfluss auf dieses Problem hat. So scheinen Paketverluste häufiger zu sein, wenn sowohl Client als auch Gateway unter Windows ausgeführt werden. Dahingegen zeigt sich ein besseres Verhalten, wenn beide Anwendungen unter Linux ausgeführt werden. Das deutet auf unterschiedliche Betriebssystemeigene Netzwerkeinstellungen hin. So könnten zum Beispiel unterschiedliche TCP-Receive-Windows so ein Verhalten hervorrufen. Auch eine unterschiedliche Timer-Auflösung könnte hier Einfluss haben. In diesem Projekt konnte jedoch keinerlei Unterschied festgestellt werden.
+% TODO: Warum Paket-Velust?
 
-% Mögliche Erweiterungen
-% - DBC, ARXML Support
+Ein prototypisch implementiertes Feature ist eine Zugriffskontrolle. Hierzu können mittels einer XML-Datei Whitelists angelegt werden. Hierbei kann jeweils pro IP festgelegt werden, welche CAN-IDs gesendet, und welche empfangen werden dürfen. Eine Beispiel-Konfiguration, sowie das XML-Schema liegen dem Quellcode bei.
+
+Sollte das Gateway in Zukunft auch weiter eingesetzt werden, bietet es sich an, einige Erweiterungen vorzunehmen. So ist Unterstützung für das DBC-Format vorstellbar\footnote{Eine erste Entwicklung hat bereits begonnen, wurde jedoch nicht fertiggestellt.}. Auch Unterstützung für ARXML-Dateien ist möglich. Somit könnte eine Zugriffskontrolle aufgrund des importierten Modells erfolgen. Zudem wäre hierdurch eine symbolische Benennung, sowie eine Auswertung der Botschaften und Signale möglich.
 
 
 

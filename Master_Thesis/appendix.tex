@@ -12,8 +12,7 @@ Dieses Kapitel beschreibt die im Laufe des Projektes erstellte Software zur Komm
 
 \section{Protokoll}
 \label{sec:vcan_protokoll}
-% TODO:
-% Protokoll, duh?!
+Das VCAN-Protokoll besteht aus einem Binär-Format, dass per TCP-Socket übertragen wird. Der Aufbau und Abbau der TCP-Verbindungen wird verwendet um Clients am Gateway an- und abzumelden. Zudem müssen Socket-Fehler abgefangen werden, da ein ordnungsgemäßer Verbindungsabbau nicht gegeben sein muss.
 
 \begin{figure}[ht]
 \centering
@@ -22,13 +21,86 @@ Dieses Kapitel beschreibt die im Laufe des Projektes erstellte Software zur Komm
 \label{fig:vcan_protokoll}
 \end{figure}
 
+Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_protokoll} zu sehen. Das Format besteht aus einem Header, dem DLC-Feld und den eigentlichen Daten. Der Header enthält unter anderem die ID der Botschaft. Die Nutzdaten können 1 bis 8 Byte lang sein. Im folgenden ist eine ausfürliche Auflistung der Felder dargestellt. Die Byte-Reheinfolge entspricht Big-Endian. Tabelle \ref{tab:vcanbotschaft} zeigt eine Beispiel-Botschaft ohne TCP- und Ethernet-Header.
+
+\begin{description}
+    \item[System] \hfill \\ Angabe eines Systems (zum Beispiel CAN oder LIN). Eine Auflistung der möglichen Werte ist in Tabelle \ref{tab:vcansysteme} zu finden. Die symbolischen Namen stammen dabei aus dem Elektrobit Gateway
+    \item[Channel] \hfill \\ Enthält eine Kanal-Nummer. Kann Werte von 0 bis 255 annehmen.
+    \item[ID] \hfill \\ CAN-ID der Botschaft.
+    \item[Marker] \hfill \\ Markiert extended CAN Frames. 0 steht für einen standard frame, jeder andere Wert für ein extendend Frame. Dies Byte könnte weitere Funktionalität bei LIN oder FlexRay Systemen haben.
+    \item[DLC] \hfill \\ Anzahl der Daten-Bytes. Kann bei CAN nur Werte von 1 bis 8 annehmen. 
+    \item[Data] \hfill \\ Nutzdaten. Die Anzahl der Bytes entspricht dem Wert im DLC-Feld.
+\end{description}
+
+\begin{table}[ht]
+    \center
+    \begin{tabular}[h]{c l}
+        Hex Wert & Symbolischer Name \\
+        \toprule
+        0 & Unknown\\
+        1 & Flexray1\\
+        2 & Flexray2\\
+        3 & CAN1\\
+        4 & CAN2\\
+        5 & CAN3\\
+        6 & CAN4\\
+        7 & LIN1\\
+        8 & LIN2\\
+        9 & bad allocation\\
+        a & æI@\\
+        b & <null>\\
+        \bottomrule
+    \end{tabular}
+    \caption{Liste der VCAN Systeme}
+    \label{tab:vcansysteme}
+\end{table}
+
+\begin{table}[ht]
+    \center
+    \begin{tabular}[h]{c l}
+        Hex Wert & Bedeutung \\
+        \toprule
+        03 & System: CAN1\\
+        \midrule
+        00 & Channel: 0\\
+        \midrule
+        42 & \multirow{4}{*}{CAN-ID (hex): 742}\\
+        07 & \\
+        00 & \\
+        00 & \\
+        \midrule
+        00 & Standard Frame\\
+        \midrule
+        04 & \multirow{2}{*}{DLC: 4 Bytes}\\
+        00 & \\
+        \midrule
+        00 & \multirow{4}{*}{Daten: 00:00:2A:00}\\
+        00 & \\
+        2a & \\
+        00 & \\
+        \bottomrule
+    \end{tabular}
+    \caption{Beispiel VCAN Botschaft}
+    \label{tab:vcanbotschaft}
+\end{table}
+
+Das Protokoll, wie es im Elektrobit-Gateway eingesetzt wird, hat einige Besonderheiten. So werden gelegentlich die Daten-Bytes mehrerer Botschaften angehängt. Hierbei wird der Header nur einmal, jedoch die Daten mehrerer Botschaften übermittelt. Auch wird zeitweise der Daten-Bereich einer Botschaft mehrfach angehängt. Das Verhalten konnte nicht zuverlässig nachvollzogen werden. Es hat jedoch den Anschein, dass diese Probleme durch eine hohe Netzwerk-Last beziehungsweise -Latenz hervorgerufen werden. Da nicht eindeutig eine Mehrfachsendung einer Botschaft von verschiedene Botschaften in einem Paket unterschieden werden kann, wurde dieses Verhalten nicht implementiert. 
 
 
 \section{Projekt Struktur}
 \label{sec:vcan_struktur}
 % TODO:
-% Dateien, Klassen
 % Abhängigkeiten
+
+Im folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \ref{fig:vcan_api_uml} zeigt eine UML-Klassendiagramm der VCAN-API.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.8\textwidth]{vcan_api_uml}
+\caption{UML-Klassendiagramm der VCAN-API}
+\label{fig:vcan_api_uml}
+\end{figure}
+
 \begin{description}
     \apiitem{./vcan\_api/}
     Dieses Verzeichnis enthält die gesamte VCAN-API.
