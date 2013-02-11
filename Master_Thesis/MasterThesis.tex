@@ -60,6 +60,7 @@
     inputencoding=utf8,
     breakindent=30pt,
     escapeinside={\%(}{\%)},
+    captionpos=b
 }
 %%%%%%%%%%%%%%% Grafiken %%%%%%%%%%%%%%%
 \usepackage[pdftex]{graphicx}	% das pdftex soll das Handling von Bildern verbessern
@@ -158,8 +159,8 @@ After almost ten years since the beginning of AUTOSAR, the architecture and deve
 
 \tableofcontents               	% Inhaltsverzeichnis
 \listoffigures               		% Abbildungsverzeichnis
-%\listoftables             			% Tabellenverzeichnis
-%\lstlistoflistings          		% Listenverzeichnis
+\listoftables             			% Tabellenverzeichnis
+\lstlistoflistings          		% Listenverzeichnis
 \end{singlespace}
 
 
@@ -460,7 +461,7 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
     \label{fig:autosar_layer}
 \end{figure}
 
-Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compile-Zeit beziehungsweise Lauf-Zeit. So wird während der System-Modellierung ein VFB für das gesamte Modell entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Bei Ports handelt es sich um Interaktionspunkte zwischen Softwarekomponenten. Dabei wird zwischen PPorts (provide ports), die etwas bereitstellen, und RPorts (require ports), die etwas benötigen, unterschieden. Um einen Port verwenden zu können muss diesem ein Port-Interface zugeordnet sein.
+Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Design-Phase und Compile-Zeit beziehungsweise Lauf-Zeit. So wird während der System-Modellierung ein VFB für das gesamte Modell entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. So werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Bei Ports handelt es sich um Interaktionspunkte zwischen Softwarekomponenten. Dabei wird zwischen Provide-Ports (kurz PPorts), die etwas bereitstellen, und Required-Ports (kurz RPorts), die etwas benötigen, unterschieden. Um einen Port verwenden zu können muss diesem ein Port-Interface zugeordnet sein.
 
 Die zwei wichtigsten Interface-Typen werden im weiteren kurz betrachtet. Analog zu diesen existieren noch zwei AUTOSAR-Service-Interfaces, die intern in AUTOSAR verwendet werden. Also zum Beispiel ein Aufruf zum ECU-State-Manager (EcuM). Außerdem wird noch ein Kalibrierungs-Interface angeboten, mit Hilfe dessen sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen. Zusätzlich kann beim Zugriff auf ein Port zwischen einem expliziten und impliziten Zugriff unterschieden werden. Diese Modi, sowie die Multiplizität der Interface soll an dieser Stelle nicht erläutert werden. Nähere Informationen dazu sind unter \cite[Seite 101 ff.]{SE_Autosar} zu finden.
 
@@ -785,6 +786,96 @@ Bei der Wahl des Hypervisors kommt zu aller erst die Frage, ob ein Type 1 oder T
 \subsection{XtratuM}
 \label{sec:xtratum}
 % TODO:
+% \cite{xm:usermanual}
+% \cite{xm:reference}
+% System und Normal Partition -> Zugriff und Kontrolle über andere Partitionen -> System Flag
+% Schedule Plan (Multiple)
+% IPC
+% .xef -> Binär Partition die anschließend mit Core integriert werden kann -> single file (.bin)
+% No Dynamic memory alloc
+
+Als Beispiel für den Einsatz von Virtualisierung im embedded Bereich soll der Hypervisor XtratuM näher betrachtet werden. Dieser wird von der \emph{Universitat Politècnica de València} entwickelt und ist unter einer Open-Source Lizenz freigegeben. Da der Einsatz von virtualisierten Betriebssystemen sehr aufwendig, und mit Änderungen in diesen verbunden ist, wird im Folgenden der Fokus auf bare-metal Anwendungen gelegt. Analog dazu wird jedoch der Einsatz eines Betriebssystems realisiert.
+
+% TODO: allgemein: partition, xef, xml, core...
+
+Im Folgenden soll ein kurzes Hello-World-Beispiel betrachtet werden. Die entsprechende Toolkette basiert dazu auf der GNU Compiler Collection und wird im weiteren nicht näher erläutert. 
+
+\begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={XtratuM Beispiel Partition}, label={lst:xtratum_partition}]
+#include <stdio.h>
+#include <xm.h>
+
+void PartitionMain(void)
+{
+  printf("[P%d] Hello World!\n", XM_PARTITION_SELF);
+  XM_halt_partition(XM_PARTITION_SELF);
+}
+\end{lstlisting}
+
+Listing \ref{lst:xtratum_partition} zeigt den nötigen C-Code für das Beispiel-Projekt. Dieser ist sehr einfach aufgebaut und beinhaltet übliche Merkmale, wie zum Beispiel die \texttt{printf}-Funktion. XtratuM-spezifische Funktionen und Defines werden durch den Header \texttt{xm.h} inkludiert. Diese werden im weiteren Code verwendet, um zum Beispiel die eigene Partition anzuhalten, wie es in Zeile sieben zu sehen ist. Neben den hier gezeigt Funktionen bietet XtratuM auch ein Reihe weiterer an. Darunter zum Beispiel IPC-Techniken mittels Funktionen wie \texttt{XM\_write\_sampling\_message}. Die Main-Funktion einer Partition wird bei XtratuM \texttt{PartitionMain} genannt.
+
+\begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM XML-Konfiguration}, label={lst:xtratum_xml}]
+<HwDescription>
+  <!-- Hardware Description (Siehe Listing %(\ref{lst:xtratum_xml_1}%)) -->
+</HwDescription>
+<XMHypervisor console="Uart">
+  <PhysicalMemoryArea size="1MB" />
+</XMHypervisor>
+<PartitionTable>
+  <!-- Partition Table (Siehe Listing %(\ref{lst:xtratum_xml_2}%))-->
+</PartitionTable>
+\end{lstlisting}
+
+Die nötige System-Konfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. Dabei sind der Übersicht halber zwei Teilabschnitte, die Hardware Description und die Partition Table, in Listing \ref{lst:xtratum_xml_1} und \ref{lst:xtratum_xml_2} ausgelagert.
+
+\begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM Hardware Description}, label={lst:xtratum_xml_1}]
+<MemoryLayout>
+  <Region type="rom" start="0x0" size="4MB" />
+  <Region type="sdram" start="0x40000000" size="4MB" />
+</MemoryLayout>
+<ProcessorTable>
+  <Processor id="0" frequency="50Mhz">
+    <CyclicPlanTable>
+      <Plan id="0" majorFrame="200ms">
+        <Slot id="0" start="0ms" duration="100ms" partitionId="0" />
+        <Slot id="1" start="100ms" duration="100ms" partitionId="1" />
+      </Plan>
+    </CyclicPlanTable>
+  </Processor>
+</ProcessorTable>
+<Devices>
+  <Uart id="0" baudRate="115200" name="Uart" />
+</Devices>
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM Partition Table}, label={lst:xtratum_xml_2}]
+<Partition id="0" name="Partition1" flags="system" console="Uart">
+  <PhysicalMemoryAreas>
+    <Area start="0x40200000" size="1MB" />
+  </PhysicalMemoryAreas>
+</Partition>
+\end{lstlisting}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -903,6 +994,13 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 % TODO:
 % - NM bei AUTOSAR
 % - Im Projekt-Rahmen (Welche IDs, Was war zu beachten)?
+
+
+
+
+
+
+
 
 
 
