@@ -785,20 +785,11 @@ Bei der Wahl des Hypervisors kommt zu aller erst die Frage, ob ein Type 1 oder T
 
 \subsection{XtratuM}
 \label{sec:xtratum}
-% TODO:
-% \cite{xm:usermanual}
-% \cite{xm:reference}
-% System und Normal Partition -> Zugriff und Kontrolle über andere Partitionen -> System Flag
-% Schedule Plan (Multiple)
-% IPC
-% .xef -> Binär Partition die anschließend mit Core integriert werden kann -> single file (.bin)
-% No Dynamic memory alloc
+Als Beispiel für den Einsatz von Virtualisierung im embedded Bereich soll der Hypervisor XtratuM näher betrachtet werden. Dieser wird von der \emph{Universitat Politècnica de València} entwickelt und ist unter einer Open-Source Lizenz freigegeben. Die hier genutzten Informationen stammen aus \cite{xm:usermanual} und \cite{xm:reference}. Da der Einsatz von virtualisierten Betriebssystemen sehr aufwendig, und mit Änderungen in diesen verbunden ist, wird im Folgenden der Fokus auf bare-metal Anwendungen gelegt. Analog dazu wird jedoch der Einsatz eines Betriebssystems realisiert.
 
-Als Beispiel für den Einsatz von Virtualisierung im embedded Bereich soll der Hypervisor XtratuM näher betrachtet werden. Dieser wird von der \emph{Universitat Politècnica de València} entwickelt und ist unter einer Open-Source Lizenz freigegeben. Da der Einsatz von virtualisierten Betriebssystemen sehr aufwendig, und mit Änderungen in diesen verbunden ist, wird im Folgenden der Fokus auf bare-metal Anwendungen gelegt. Analog dazu wird jedoch der Einsatz eines Betriebssystems realisiert.
+Da XtratuM an den Avionik-Standard ARINC-653 angelehnt ist, wird auch die Namensgebung dessen übernommen. Daher sieht sich XtratuM als Hypervisor für partitionierte\footnote{Entsprechend des \emph{space and time partitioning des ARINC-Standards}} Systeme. Aus diesem Grund werden die virtuellen Instanzen hier auch Partitionen genannt. Der Arbeits-Ablauf ähnelt dem von AUTOSAR. So wird zu aller erst eine System-Beschreibung in Form einer XML-Datei erstellt. Hier werden die verschiedenen Partitionen und deren Speicherbereiche definiert. Im Gegensatz zu AUTOSAR wird hier jedoch weniger eine Aussage über den Inhalt der Partitionen gemacht. Anschließend können die Partitionen in Form von C-Dateien erstellt und zu Binär-Containern\footnote{Diese Container tragen die Endung .xef und sind in \cite[Seite 68]{xm:usermanual} näher beschrieben.} compiliert werden. Diese Container werden im letzten Schritt, zusammen mit dem XtratuM-Kern und dem Bootloader zu einer Binär-Datei verbunden.
 
-% TODO: allgemein: partition, xef, xml, core...
-
-Im Folgenden soll ein kurzes Hello-World-Beispiel betrachtet werden. Die entsprechende Toolkette basiert dazu auf der GNU Compiler Collection und wird im weiteren nicht näher erläutert. 
+Im Folgenden wird ein kurzes Hello-World-Beispiel betrachtet. Die entsprechende Toolkette basiert dazu auf der GNU Compiler Collection und wird im weiteren nicht näher erläutert. Der gesamte Code ist auf der beigelegten CD zu finden. 
 
 \begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={XtratuM Beispiel Partition}, label={lst:xtratum_partition}]
 #include <stdio.h>
@@ -813,25 +804,30 @@ void PartitionMain(void)
 
 Listing \ref{lst:xtratum_partition} zeigt den nötigen C-Code für das Beispiel-Projekt. Dieser ist sehr einfach aufgebaut und beinhaltet übliche Merkmale, wie zum Beispiel die \texttt{printf}-Funktion. XtratuM-spezifische Funktionen und Defines werden durch den Header \texttt{xm.h} inkludiert. Diese werden im weiteren Code verwendet, um zum Beispiel die eigene Partition anzuhalten, wie es in Zeile sieben zu sehen ist. Neben den hier gezeigt Funktionen bietet XtratuM auch ein Reihe weiterer an. Darunter zum Beispiel IPC-Techniken mittels Funktionen wie \texttt{XM\_write\_sampling\_message}. Die Main-Funktion einer Partition wird bei XtratuM \texttt{PartitionMain} genannt.
 
-\begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM XML-Konfiguration}, label={lst:xtratum_xml}]
-<HwDescription>
-  <!-- Hardware Description (Siehe Listing %(\ref{lst:xtratum_xml_1}%)) -->
-</HwDescription>
-<XMHypervisor console="Uart">
-  <PhysicalMemoryArea size="1MB" />
-</XMHypervisor>
-<PartitionTable>
-  <!-- Partition Table (Siehe Listing %(\ref{lst:xtratum_xml_2}%))-->
-</PartitionTable>
+\begin{lstlisting}[frame=single, language=, basicstyle=\footnotesize, caption={XtratuM XML-Konfiguration}, label={lst:xtratum_xml}]
+<SystemDescription xmlns="http://www.xtratum.org/xm-3.x" version="1.0.0" name="hello_world">
+  <HwDescription>
+    <!-- Hardware Description (Siehe Listing %(\ref{lst:xtratum_xml_1}%)) -->
+  </HwDescription>
+  <XMHypervisor console="Uart">
+    <PhysicalMemoryArea size="1MB" />
+  </XMHypervisor>
+  <PartitionTable>
+    <!-- Partition Table (Siehe Listing %(\ref{lst:xtratum_xml_2}%))-->
+  </PartitionTable>
+</SystemDescription>
 \end{lstlisting}
 
-Die nötige System-Konfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. Dabei sind der Übersicht halber zwei Teilabschnitte, die Hardware Description und die Partition Table, in Listing \ref{lst:xtratum_xml_1} und \ref{lst:xtratum_xml_2} ausgelagert.
+Die nötige System-Konfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. Wie zu erkennen ist, handelt es sich bei der Konfiguration um eine einfache XML-Datei. Der Übersicht halber sind die zwei Teilabschnitte \emph{Hardware Description} und \emph{Partition Table} in Listing \ref{lst:xtratum_xml_1} und \ref{lst:xtratum_xml_2} ausgelagert. Die Zeilen fünf bis sieben geben die Konfiguration des eigentlichen Hypervisors an. Hier werden lediglich die Konsole für die Ausgabe ausgewählt, sowie der Speicher des Hypervisors reserviert.
 
 \begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM Hardware Description}, label={lst:xtratum_xml_1}]
 <MemoryLayout>
   <Region type="rom" start="0x0" size="4MB" />
   <Region type="sdram" start="0x40000000" size="4MB" />
 </MemoryLayout>
+<Devices>
+  <Uart id="0" baudRate="115200" name="Uart" />
+</Devices>
 <ProcessorTable>
   <Processor id="0" frequency="50Mhz">
     <CyclicPlanTable>
@@ -842,10 +838,13 @@ Die nötige System-Konfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. 
     </CyclicPlanTable>
   </Processor>
 </ProcessorTable>
-<Devices>
-  <Uart id="0" baudRate="115200" name="Uart" />
-</Devices>
 \end{lstlisting}
+
+Die in Listing \ref{lst:xtratum_xml_1} zu sehende Hardware Description enthält bereits konkretere Informationen. Zu Beginn werden in den Zeile eins bis vier die Speicher-Bereiche festgelegt. Dieses Format ähnelt den üblichen Linker-Skripten und beinhaltet alle Speicher-Bereiche die von Xtratum beziehungsweise dessen Partitionen genutzt wird. Anschließend wird in den Zeilen fünf bis sieben eine UART-Schnittstelle definiert. Diese Konsole kann für Ausgaben der Partitionen und des Hypervisors genutzt werden und wird im Rahmen dieser Konfiguration mehrfach referenziert.
+
+Der letzte große Block dieses Listings ist die Prozessor-Tabelle. Diese enthält für jeden Physikalisch vorhandenen Prozessor-Kern einen entsprechenden Block. Als Parameter wird hier zum Beispiel die Prozessor-Frequenz definiert. In Zeile neun ist diese mit 50 MHz angegeben, da das Beispiel für einen SPARC-LEON-Simulator ausgelegt ist und dieser etwa eine entsprechende Leistung erreicht. Dieses Beispiel ist für ein Einzel-Prozessor System ausgelegt und beinhaltet daher nur einen Prozessor-Block.
+
+Eine Ebene tiefer wird in den Zeilen 10 bis 15 eine Scheduler-Tabelle erstellt. Diese gibt vor wann und wie lange eine Partition rechnen darf. Dabei wird der feste Plan zyklisch wiederholt. Um einen Init-Vorgang oder einen Debug-Modus unterstützen zu können, sind an dieser Stelle mehrerer Scheduler-Pläne möglich. So können für verschiedene System-Zustände, auch verschiedene Scheduler-Regeln eingesetzt werden.
 
 \begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM Partition Table}, label={lst:xtratum_xml_2}]
 <Partition id="0" name="Partition1" flags="system" console="Uart">
@@ -855,8 +854,14 @@ Die nötige System-Konfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. 
 </Partition>
 \end{lstlisting}
 
+Listing \ref{lst:xtratum_xml_2} zeigt einen Eintrag der \emph{Partition Table}. Dieser definiert in Zeile 1 einen Namen und eine ID. Ebenfalls wird die zu nutzende Konsole sowie ein Flag-Parameter angegeben, der anzeigt das es sich hierbei um eine System-Partition handelt. Die Zeilen zwei bis vier geben den von dieser Partition genutzten Speicher-Bereich an.
 
-
+% TODO:
+% Fazit
+% Statisches System
+% No Dynamic memory alloc
+% Timing Kram wird sehr fest definiert
+% Virt eines OS nicht ganz trivial
 
 
 
@@ -1133,7 +1138,12 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 
 \chapter{Beigelegte CD}
 \label{sec:BeigelegteCD}
-
+% TODO:
+% XtratuM Projekt
+% tresos Projekt
+% VCAN-Gateway
+% VCAN-API
+% VCAN-App
 
 
 %%%%%%%%%%%%%%%%%%%%%%% Erklärung und CD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
