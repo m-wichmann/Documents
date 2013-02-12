@@ -2,7 +2,7 @@
 %% Master Thesis
 %% Autor: Martin Wichmann
 %% 
-%% Todo:
+%% TODO:
 %% - Danksagung
 %% - Portabilität PC VM auf embedded Hypervisor
 %% - Relevanz für Testen und Entwicklungsprozess
@@ -14,6 +14,7 @@
 %% - Master Arbeit auch als Eval und Einführung von AUTOSAR
 %% - Begriffserlärung virt: z.b. instanz
 %% - Type oder Typ (Hypervisor)
+%% - NDA/IP klären!!! (VW, EB, evtl. dSPACE?!)
 
 
 \documentclass[
@@ -889,7 +890,7 @@ Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolge
     \item CAN
     \begin{itemize}
         \item[$+$] Fester Standard in der Automobilindustrie
-        \item[$+$] Deterministisch durch Arbitrierung und Zyklische Sender
+        \item[$+$] Deterministisch durch Arbitrierung und zyklische Sender
         \item[$-$] Linux benötigt vollen CAN Zugriff
         \item[$-$] Jedes Linux-System benötigt CAN-Hardware (Kosten)
     \end{itemize}
@@ -940,14 +941,14 @@ Bei dem VCAN-Protokoll handelt es sich um ein auf TCP basierendes Binär-Format.
 
 Es ist zu erkennen, dass dieses Protokoll nicht nur für CAN ausgelegt ist. So existieren zum Beispiel Werte im System-Feld für CAN, FlexRay und LIN. Auch die Angabe eines Kanals entspricht nicht dem einfachen CAN-Standard. Aus diesem Grund ist zu erwarten, dass das ermittelte Protokoll nicht komplett ist. Dieses Projekt beschränkt sich jedoch auf die vom AUTOSAR-CAN-Modul gesendeten Botschaften und ignoriert somit \emph{System} und \emph{Kanal} der Nachricht. In einem zukünftigen Projekt könnte dies jedoch näher untersucht werden, und weitere Funktionalität implementiert werden.
 
-Bei der erstellten VCAN-API handelt es sich um ein reines Backend. Eine Dokumentation und Beispiele zum Erstellen eines Gateways, beziehungsweise Clients, sind im Anhang zu finden. Im Rahmen dieser Arbeit wurde ein Gateway-Anwendung inklusive grafische Oberfläche entwickelt. Die Funktionalität des von Elektrobit bereitgestellten Gateways, inklusive des PCAN-Supports, ist hierin komplett nachgebildet. Ebenso lassen sich einfach Clients erstellen, die Botschaften senden und empfangen können.
+Bei der erstellten VCAN-API handelt es sich um ein reines Backend. Eine Dokumentation und Beispiele zum Erstellen eines Gateways, beziehungsweise Clients, sind im Anhang zu finden. Im Rahmen dieser Arbeit wurde ein Gateway-Anwendung inklusive grafische Oberfläche entwickelt. Die Funktionalität des von Elektrobit bereitgestellten Gateways, inklusive des PCAN-Supports, ist hierin komplett nachgebildet. Unterstützung für die PCAN Hardware ist zur Zeit nur unter Windows gegeben, da sich die entsprechenden Linux-Treiber noch in der Entwicklung befinden. Mit der VCAN-API lassen sich ebenso einfach Clients erstellen, die Botschaften senden und empfangen können.
 
-Neben der Grund-Funktionalität bietet die VCAN-API einige Vorteile der Elektrobit-Lösung gegenüber. So haben das Original-Gateway, sowie die AUTOSAR-Komponenten, Probleme mit schnellen Zyklus-Zeiten. Ab etwa 200 ms kommt es immer häufiger vor, dass einzelne Pakete nicht registriert werden. Das hier erstellte Gateway zeigt in diesem Bereich eine gewisse Robustheit. Einig Tests haben jedoch gezeigt, dass auch das eingesetzte Betriebssystem Einfluss auf dieses Problem hat. So scheinen Paketverluste häufiger zu sein, wenn sowohl Client als auch Gateway unter Windows ausgeführt werden. Dahingegen zeigt sich ein besseres Verhalten, wenn beide Anwendungen unter Linux ausgeführt werden. Das deutet auf unterschiedliche Betriebssystemeigene Netzwerkeinstellungen hin. So könnten zum Beispiel unterschiedliche TCP-Receive-Windows so ein Verhalten hervorrufen. Auch eine unterschiedliche Timer-Auflösung könnte hier Einfluss haben. In diesem Projekt konnte jedoch keinerlei Unterschied festgestellt werden.
+Neben der Grund-Funktionalität bietet die VCAN-API einige Vorteile der Elektrobit-Lösung gegenüber. So haben das Original-Gateway, sowie die AUTOSAR-Komponenten, Probleme mit schnellen Zyklus-Zeiten. Ab etwa 200 ms kommt es immer häufiger vor, dass einzelne Pakete nicht registriert werden. Das hier erstellte Gateway zeigt in diesem Bereich eine gewisse Robustheit. Einig Tests haben jedoch gezeigt, dass auch das eingesetzte Betriebssystem Einfluss auf dieses Problem hat. So scheinen Paketverluste häufiger zu sein, wenn sowohl Client als auch Gateway unter Windows ausgeführt werden. Da hingegen zeigt sich ein besseres Verhalten, wenn beide Anwendungen unter Linux ausgeführt werden. Das deutet auf unterschiedliche Betriebssystemeigene Netzwerkeinstellungen hin. So könnten zum Beispiel unterschiedliche TCP-Receive-Windows so ein Verhalten hervorrufen. Auch eine unterschiedliche Timer-Auflösung könnte hier Einfluss haben. In diesem Projekt konnte jedoch keinerlei Unterschied festgestellt werden.
 % TODO: Warum Paket-Velust?
 
 Ein prototypisch implementiertes Feature ist eine Zugriffskontrolle. Hierzu können mittels einer XML-Datei Whitelists angelegt werden. Hierbei kann jeweils pro IP festgelegt werden, welche CAN-IDs gesendet, und welche empfangen werden dürfen. Eine Beispiel-Konfiguration, sowie das XML-Schema liegen dem Quellcode bei.
 
-Sollte das Gateway in Zukunft auch weiter eingesetzt werden, bietet es sich an, einige Erweiterungen vorzunehmen. So ist Unterstützung für das DBC-Format vorstellbar\footnote{Eine erste Entwicklung hat bereits begonnen, wurde jedoch nicht fertiggestellt.}. Auch Unterstützung für ARXML-Dateien ist möglich. Somit könnte eine Zugriffskontrolle aufgrund des importierten Modells erfolgen. Zudem wäre hierdurch eine symbolische Benennung, sowie eine Auswertung der Botschaften und Signale möglich.
+Sollte das Gateway in Zukunft auch weiter eingesetzt werden, bietet es sich an, einige Erweiterungen vorzunehmen. So ist Unterstützung für das DBC-Format vorstellbar\footnote{Eine erste Entwicklung hat bereits begonnen, wurde jedoch nicht fertiggestellt.}. Auch Unterstützung für ARXML-Dateien ist möglich. Somit könnte eine Zugriffskontrolle aufgrund des importierten Modells erfolgen. Zudem wäre hierdurch eine symbolische Benennung, sowie eine Auswertung der Botschaften und Signale möglich. Um die Arbitrierung des CANs zu simulieren, ist es ebenfalls vorstellbar, eine ID-basierte Priorisierung zu erlauben.
 
 
 
@@ -978,26 +979,50 @@ Sollte das Gateway in Zukunft auch weiter eingesetzt werden, bietet es sich an, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation AUTOSAR und Scheinwerfer-ECU}
 \label{sec:Kommunikation_A_S}
-% TODO:
-% - Wie können die reden?
-% - Probleme? -> Neues Steuergerät;
-% - Alternativen?
-% - 
+Die Kommunikation zwischen der AUTOSAR-Komponente und der Scheinwerfer-ECU erfolgt per CAN. Hierzu wird ein PEAK-PCAN-USB-Adapter verwendet. Da die AUTOSAR-Komponente in einer virtualisierten Umgebung ausgeführt wird, ist direkte Zugang zum PCAN-Adapter nicht gegeben. Daher wird dies über das VCAN-Gateway ermöglicht.
+
+Der zu Beginn des Projektes bestehende Versuchsaufbau beinhaltet ein älteres Bordnetzsteuergerät. Dieses unterstützt nur den Low-Speed CAN-Standard ist damit nicht vollständig mit anderen Systemen, wie zum Beispiel dem PCAN-Adapter, kompatibel. Außerdem verwendet dieses Steuergerät eine veraltete Version des Netzwerkmanagements und ist damit nicht mit dem eingesetzten AUTOSAR kompatibel. Die volle Funktionalität der ECU ist damit unter Umständen nicht nutzbar. Aus diesen Gründen wurde im Rahmen dieser Arbeit der Versuchsaufbau durch ein aktuelles Steuergerät erneuert. Die dazugehörigen Informationen sind im folgenden Kapitel nachzulesen. Darauf folgt ein Kapitel zum Einsatz des Netzwerkmanagements.
+
+Anschließend wird in einem Kapitel eine Restbussimulation von VW näher betrachtet. Im Laufe des Projekts hat sich herausgestellt, das bestimmte Funktionen der ECU nur zugreifbar sind, wenn eine gültige Checksumme berechnet wird. Freundlicherweise wurde von VW eine Restbussimulation bereitgestellt, die die Berechnung des CRC vornimmt. 
+
+
+
 
 \subsection{Aufbau des Bordnetzsteuergerätes}
 \label{sec:Aufbau_der_ECU}
-Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM37 genannt, aufgebaut und getestet. Dieses wurde freundlicherweise von VW bereitgestellt. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
+% TODO:
+% - Bild vom Aufbau
+% - Vernetzungsplan
+% - 500 kbits (kbaud?)
+% - Klemme 15
+Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM37 genannt, aufgebaut und getestet. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
 
 
 
-\subsection{Einsatz des Netzwerkmanagement}
+
+
+
+\subsection{Einsatz des Netzwerkmanagements}
 \label{sec:AutosarNM}
 % TODO:
+% - NM (High-NM)
 % - NM bei AUTOSAR
 % - Im Projekt-Rahmen (Welche IDs, Was war zu beachten)?
 
 
 
+
+
+
+
+\subsection{Restbussimulation und CRC Berechnung}
+\label{sec:RBS}
+Nach dem Aufbau der neuen ECU wurde die Funktionalität getestet. Einige Funktionen konnten von Anfang an verwendet werden, Standlicht, bei einigen anderen kam es jedoch zu Problemen. Dabei wurde der Fokus auf die Blinker-Funktion gelegt. Obwohl sowohl das Standlicht, als auch der Blinker die selben CAN-Signale verwendet, und lediglich über die Klemme 15 unterschieden werden, konnte die Blink-Funktion nicht aktiviert werden. Nach einigen Versuchen und Gesprächen mit einem VW-Mitarbeiter hat sich herausgestellt, dass die Blinker Funktionalität über eine End-to-End-Absicherung geschützt wird. Diese besteht aus einer Checksumme, über die gesamte Botschaft. Freundlicherweise wurde eine Restbussimulation, kurz RBS, von VW zur Verfügung gestellt, mit deren Hilfe die entsprechenden Botschaft generiert werden können. 
+
+Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit die Berechnung des CRC nicht ausgeführt werden kann, wurde ein anderer Weg gewählt. Da es sich hauptsächlich um zwei Bit-Signale und einen 4-Bit Botschaften-Zähler handelt, die hier angesteuert werden beziehungsweise veränderlich sind, beträgt die Anzahl\footnote{CRC-Summen: Zwei 1-Bit Signale und ein 4-Bit Signal: $ 2^1 \times 2^1 \times 2^4 = 2 \times 2 \times 16 = 64 $} der möglichen CRC-Summen 64. Diese wurde kurzerhand manuell durch Tests aus der Restbussimulation erstellt. Die daraus resultierende Tabelle ist im Anhang \ref{sec:CRC Werte} zu finden. Hiermit ist es möglich die Blinker-Signale zu verwenden. Es wird angenommen, dass alle anderen Signale null sind.
+
+% TODO:
+% Restbussimulation von VW
 
 
 
@@ -1033,7 +1058,18 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 \label{sec:entwicklung_vcan_app}
 % TODO
 % - Python GUI
-% - 
+% - Vorraussetzungen und Ziele
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1092,7 +1128,7 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 \section{Sicherheitsbetrachtung des Fallbeispiels}
 \label{sec:Sicherheit_Beispiel}
 % TODO
-% krypto instanz in embedded hyp
+% krypto/Zertifikat instanz in embedded hyp
 
 
 
