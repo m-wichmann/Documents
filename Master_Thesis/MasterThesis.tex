@@ -840,7 +840,7 @@ Die nötige System-Konfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. 
 </ProcessorTable>
 \end{lstlisting}
 
-Die in Listing \ref{lst:xtratum_xml_1} zu sehende Hardware Description enthält bereits konkretere Informationen. Zu Beginn werden in den Zeile eins bis vier die Speicher-Bereiche festgelegt. Dieses Format ähnelt den üblichen Linker-Skripten und beinhaltet alle Speicher-Bereiche die von Xtratum beziehungsweise dessen Partitionen genutzt wird. Anschließend wird in den Zeilen fünf bis sieben eine UART-Schnittstelle definiert. Diese Konsole kann für Ausgaben der Partitionen und des Hypervisors genutzt werden und wird im Rahmen dieser Konfiguration mehrfach referenziert.
+Die in Listing \ref{lst:xtratum_xml_1} zu sehende \emph{Hardware Description} enthält bereits konkretere Informationen. Zu Beginn werden in den Zeile eins bis vier die Speicher-Bereiche festgelegt. Dieses Format ähnelt den üblichen Linker-Skripten und beinhaltet alle Speicher-Bereiche die von XtratuM beziehungsweise dessen Partitionen genutzt wird. Anschließend wird in den Zeilen fünf bis sieben eine UART-Schnittstelle definiert. Diese Konsole kann für Ausgaben der Partitionen und des Hypervisors genutzt werden und wird im Rahmen dieser Konfiguration mehrfach referenziert.
 
 Der letzte große Block dieses Listings ist die Prozessor-Tabelle. Diese enthält für jeden Physikalisch vorhandenen Prozessor-Kern einen entsprechenden Block. Als Parameter wird hier zum Beispiel die Prozessor-Frequenz definiert. In Zeile neun ist diese mit 50 MHz angegeben, da das Beispiel für einen SPARC-LEON-Simulator ausgelegt ist und dieser etwa eine entsprechende Leistung erreicht. Dieses Beispiel ist für ein Einzel-Prozessor System ausgelegt und beinhaltet daher nur einen Prozessor-Block.
 
@@ -856,13 +856,9 @@ Eine Ebene tiefer wird in den Zeilen 10 bis 15 eine Scheduler-Tabelle erstellt. 
 
 Listing \ref{lst:xtratum_xml_2} zeigt einen Eintrag der \emph{Partition Table}. Dieser definiert in Zeile 1 einen Namen und eine ID. Ebenfalls wird die zu nutzende Konsole sowie ein Flag-Parameter angegeben, der anzeigt das es sich hierbei um eine System-Partition handelt. Die Zeilen zwei bis vier geben den von dieser Partition genutzten Speicher-Bereich an.
 
-% TODO:
-% Fazit
-% Statisches System
-% No Dynamic memory alloc
-% Timing Kram wird sehr fest definiert
-% Virt eines OS nicht ganz trivial
+Wie an diesem Beispiel zu sehen ist, handelt es sich bei XtratuM um ein statisches System. Dieses verzichtet auf dynamische Speicher-Allokation und setzt ein fest definierten Scheduler-Plan voraus. Damit ist gut geeignet für embedded Anwendungen, sowie den Echtzeit-Bereich. Der Einsatz eines üblichen Betriebssystems erfordert jedoch einen gewissen Aufwand. Hierzu muss sowohl die entsprechende Hardware, als auch der Speicher-Bereich in der Konfiguration vorgesehen werden. Ebenso muss eine Hierarchische-Scheduler-Architektur vorgesehen werden. Zum Einen der statische Zeitscheiben-Scheduler von XtratuM, und zum Anderen der im darauf aufsetzenden Betriebssystem eingesetzte Scheduler. Dies ist der von XtratuM empfohlene Ansatz, der jedoch zu einer gewissen Komplexität führt. Diese muss vor allem im Echtzeit-Bereich beachtet werden um alle Fristen einhalten zu können.\cite{two_lvl_sched}
 
+Abschließend lässt sich sagen, dass der Hypervisor XtratuM, durchaus einen einfachen Einstieg in die Welt der embedded Virtualisierung gibt. Der Einsatz eines aufbauenden Betriebssystems sowie Echtzeit-Betrachtungen, erfordern jedoch sehr viel mehr Aufwand.
 
 
 
@@ -1021,7 +1017,15 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 % - Was waren die Vorraussetzungen?
 % - Modell, DBC?
 % - Welche Dinge waren zu beachten?
-% - 
+% - Bild des Modells
+% - Welche Botschaften wurden eingesetzt?
+
+
+
+
+
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der steuernden Komponente %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
