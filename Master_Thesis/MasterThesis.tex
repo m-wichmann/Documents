@@ -15,6 +15,7 @@
 %% - Begriffserlärung virt: z.b. instanz
 %% - Type oder Typ (Hypervisor)
 %% - NDA/IP klären!!! (VW, EB, evtl. dSPACE?!)
+%% - Warum kein Tool AUTOSAR konforme Grafiken?! Nicht einmal die Spec!!!
 
 
 \documentclass[
@@ -190,7 +191,7 @@ Das in dieser Master-Arbeit betrachtete Praxis-Beispiel ist eine Scheinwerfer-St
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{arch_begin.png}
+\includegraphics[width=0.8\textwidth]{arch_begin}
 \caption{Vorläufige Architektur}
 \label{fig:arch_begin}
 \end{figure}
@@ -289,7 +290,7 @@ Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkan
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{arinc653.png}
+    \includegraphics[width=0.7\textwidth]{arinc653}
     \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
     \label{fig:arinc_653}
 \end{figure}
@@ -407,7 +408,7 @@ Diese Kapitel soll einen Überblick über die Grundlagen von AUTOSAR geben. Anha
 
 \begin{figure}[p]
     \centering
-    \includegraphics[width=1\textwidth]{autosar_overview.png}
+    \includegraphics[width=1\textwidth]{autosar_overview}
     \caption{Autosar Überblick}
     \label{fig:autosar_overview}
 \end{figure}
@@ -442,7 +443,7 @@ An zentraler Stelle steht das "`AUTOSAR Entwicklungswerkzeug"'. Dies besteht gen
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{Autosar_Prozess.png}
+    \includegraphics[width=1\textwidth]{Autosar_Prozess}
     \caption{AUTOSAR-Entwicklungs-Prozess}
     \label{fig:autosar_prozess}
 \end{figure}
@@ -457,7 +458,7 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{autosar_layer.png}
+    \includegraphics[width=1\textwidth]{autosar_layer}
     \caption{AUTOSAR Schichtenmodell}
     \label{fig:autosar_layer}
 \end{figure}
@@ -783,6 +784,10 @@ Die zweite VM wird verwendet um die Steuerungs-Anwendung auszuführen. Da diese 
 Bei der Wahl des Hypervisors kommt zu aller erst die Frage, ob ein Type 1 oder Type 2 Hypervisor gewählt wird. Da es sich bei diesem Projekt um eine Evaluierung der Virtualisierung geht wird ein Type 2 Hypervisor gewählt. Zudem würde der Einsatz eines Type 1 Hypervisors den zeitlichen Rahmen dieser Arbeit sprengen, da der Aufbau und die Konfiguration kompliziert und umfangreich ist. Um trotzdem Einblick in diesen Bereich der Virtualisierung zu geben, wird ein Hypervisor näher betrachtet. Hier wird XtratuM gewählt, da es sich dabei um ein freies Open-Source Projekt handelt. Im Rahmen dieses Projekts wird VirtualBox als Hypervisor verwendet.
 
 % TODO: genaue Versionen etc. erwähnen
+% - Oracle VirtualBox 4.1.18
+% - Ubuntu 12.04.1
+% - Windows 7 Professional (Sowohl Host als auch Gast)
+
 
 \subsection{XtratuM}
 \label{sec:xtratum}
@@ -1005,9 +1010,28 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 \subsection{Einsatz des Netzwerkmanagements}
 \label{sec:AutosarNM}
 % TODO:
-% - NM (High-NM)
+% - NM (NM High)
 % - NM bei AUTOSAR
 % - Im Projekt-Rahmen (Welche IDs, Was war zu beachten)?
+%   - SMLS 1B00000C - 0C 00 04 00 00 00 00 00 <- 1. Byte: Node ID; 3. Byte: Status?!
+%   - BCM  1B00000E - 0E 00 08 01 11 00 0C 00 <- 1. Byte: Node ID; 3. Byte: Status?!; Rest unklar!
+% - Nötige AUTOSAR Änderungen
+%   - DBC und ARXML anpassen und importieren
+%   - Add modules: CanNm, CanSm, ComM, Nm
+%   - Nm: ComM Channel einstellen
+%   - CanNm: Node Identifier (aktivieren, wert zuweisen, Position zuweisen)
+%   - Rte_Call_UserReuqest_RequestComNode(FULL_COMMUNICATION oder NO_COMMUNICATION)
+
+
+% - NM PDU senden wenn SRC-Node Bus wach haben möchte; Wenn nicht mehr -> keine NM mehr senden aber wach bleiben bis alle anderen aufhören
+% - default NM-PDU Format: ID, Control bit vector, User data 0 - 5 [Seite 51, AUTOSAR CANNM]
+
+% CanSM überwacht Bus etc. -> z.b. BUSOFF
+
+% Warum ist NM nötig?
+% Projekt-Spezifischer Kram -> Welche IDs waren nötig
+
+
 
 
 
@@ -1044,6 +1068,27 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
 % - Welche Dinge waren zu beachten?
 % - Bild des Modells
 % - Welche Botschaften wurden eingesetzt?
+% - Liste der App Signale
+% App_01 0x742 4 Byte 100ms
+% APP_Blinker_li          1   0   1
+% APP_Blinker_re          1   1   1
+% APP_Lichthupe           1   2   1
+% APP_Fernlicht           1   3   1
+% APP_Demo0               2   0   1
+% APP_Demo0_Peridoe_li    3   0   4
+% APP_Demo0_Periode_re    3   4   4
+% APP_Demo1               4   0   1
+% APP_Demo1_Periode       4   4   4
+
+% TODO: evtl. Runnable noch in das Bild?! Wäre aber zu voll dann...
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{SMLS_Modell}
+\caption{Entwickeltes AUTOSAR Modell}
+\label{fig:smls_modell}
+\end{figure}
+
+
 
 
 
@@ -1129,6 +1174,7 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
 \label{sec:Sicherheit_Beispiel}
 % TODO
 % krypto/Zertifikat instanz in embedded hyp
+% AUTOSAR CryptoServiceManager ab Version 4.0
 
 
 
@@ -1160,8 +1206,8 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
 \part*{Anhang}
 
 % This file contains sensitive information that is not shared on GitHub!!!
-% If you don't have the appendix_nda.tex, then this line has to be deleted.
-\input{appendix_nda}
+\InputIfFileExists{appendix_nda}{}
+
 \input{appendix}
 
 
@@ -1184,6 +1230,7 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
 % VCAN-Gateway
 % VCAN-API
 % VCAN-App
+% AUTOSAR-Specs...
 
 
 %%%%%%%%%%%%%%%%%%%%%%% Erklärung und CD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
