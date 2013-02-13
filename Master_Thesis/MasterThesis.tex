@@ -39,6 +39,7 @@
 \usepackage{lscape}
 \usepackage{booktabs}			% \toprule, \midrule und \bottomrule in Tabellen
 \usepackage{multirow}
+\usepackage{paralist}
 %%%%%%%%%%%%%%% Mathe %%%%%%%%%%%%%%%
 %\usepackage{amsmath, amsthm, amscd, amssymb, amsfonts}
 %%%%%%%%%%%%%%% Typografie %%%%%%%%%%%%%%%
@@ -1000,7 +1001,7 @@ Anschließend wird in einem Kapitel eine Restbussimulation von VW näher betrach
 % - Vernetzungsplan
 % - 500 kbits (kbaud?)
 % - Klemme 15
-Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM37 genannt, aufgebaut und getestet. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
+Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM genannt, aufgebaut und getestet. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
 
 
 
@@ -1042,13 +1043,18 @@ Nachdem das Mapping der Service Ports in der RTE vorgenommen wurde, kann über d
 
 \subsection{Restbussimulation und CRC Berechnung}
 \label{sec:RBS}
-Nach dem Aufbau der neuen ECU wurde die Funktionalität getestet. Einige Funktionen konnten von Anfang an verwendet werden, Standlicht, bei einigen anderen kam es jedoch zu Problemen. Dabei wurde der Fokus auf die Blinker-Funktion gelegt. Obwohl sowohl das Standlicht, als auch der Blinker die selben CAN-Signale verwendet, und lediglich über die Klemme 15 unterschieden werden, konnte die Blink-Funktion nicht aktiviert werden. Nach einigen Versuchen und Gesprächen mit einem VW-Mitarbeiter hat sich herausgestellt, dass die Blinker Funktionalität über eine End-to-End-Absicherung geschützt wird. Diese besteht aus einer Checksumme, über die gesamte Botschaft. Freundlicherweise wurde eine Restbussimulation, kurz RBS, von VW zur Verfügung gestellt, mit deren Hilfe die entsprechenden Botschaft generiert werden können. 
+Nach dem Aufbau der neuen ECU wurde die Funktionalität getestet. Einige Funktionen konnten von Anfang an verwendet werden, Standlicht, bei einigen anderen kam es jedoch zu Problemen. Dabei wurde der Fokus auf die Blinker-Funktion gelegt. Obwohl sowohl das Standlicht, als auch der Blinker die selben CAN-Signale verwendet, und lediglich über die Klemme 15 unterschieden werden, konnte die Blink-Funktion nicht aktiviert werden. Nach einigen Versuchen und Gesprächen mit einem VW-Mitarbeiter hat sich herausgestellt, dass die Blinker Funktionalität über eine End-to-End-Absicherung geschützt wird. Diese besteht aus einer Checksumme, über die gesamte Botschaft. Freundlicherweise wurde eine Restbussimulation, kurz RBS, von VW zur Verfügung gestellt, mit deren Hilfe die entsprechenden Botschaft und die dazu gehörige Checksumme generiert werden können. 
 
-Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit die Berechnung des CRC nicht ausgeführt werden kann, wurde ein anderer Weg gewählt. Da es sich hauptsächlich um zwei Bit-Signale und einen 4-Bit Botschaften-Zähler handelt, die hier angesteuert werden beziehungsweise veränderlich sind, beträgt die Anzahl\footnote{CRC-Summen: Zwei 1-Bit Signale und ein 4-Bit Signal: $ 2^1 \times 2^1 \times 2^4 = 2 \times 2 \times 16 = 64 $} der möglichen CRC-Summen 64. Diese wurde kurzerhand manuell durch Tests aus der Restbussimulation erstellt. Die daraus resultierende Tabelle ist im Anhang \ref{sec:CRC Werte} zu finden. Hiermit ist es möglich die Blinker-Signale zu verwenden. Es wird angenommen, dass alle anderen Signale null sind.
+Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit die Berechnung des CRC nicht ausgeführt werden kann, wurde ein anderer Weg gewählt. Da es sich hauptsächlich um zwei Bit-Signale und einen 4-Bit Botschaften-Zähler handelt, die hier angesteuert werden beziehungsweise veränderlich sind, beträgt die Anzahl\footnote{CRC-Summen: Zwei 1-Bit Signale und ein 4-Bit Signal: $ 2^1 \times 2^1 \times 2^4 = 2 \times 2 \times 16 = 64 $} der möglichen CRC-Summen 64. Diese wurden kurzerhand manuell durch Tests aus der Restbussimulation erstellt. Die daraus resultierende Tabelle ist im Anhang \ref{sec:CRC Werte} zu finden. Hiermit ist es möglich die Blinker-Signale zu verwenden. Es wird angenommen, dass alle anderen Signale null sind.
 
-% TODO:
-% Restbussimulation von VW
+\begin{figure}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{rbs_ausschnitt}
+    \caption{Auschnitt der RBS Übersicht}
+    \label{fig:rbs}
+\end{figure}
 
+Die Restbussimulation bietet noch weitere interessante Möglichkeiten. Abbildung \ref{fig:rbs} zeigt einen Ausschnitt der Simulations-Übersicht in Vector CANoe. Hier lassen sich alle Steuergeräte ein- und ausschalten. Hierdurch kann eine beliebige Kombination von Hardware getestet werden, während der Rest per Software simuliert wird. Dabei können einzelne Signale von Hand ausgelöst und deren Werte umgestellt werden. Die Kommunikation zur Hardware wird dabei durch einen USB zu CAN Adapter von Vector realisiert.
 
 
 
@@ -1062,25 +1068,7 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der AUTOSAR Anwendung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Entwicklung der AUTOSAR Anwendung}
 \label{sec:entwicklung_autosar}
-% TODO:
-% - headlight_final projekt
-% - Was waren die Vorraussetzungen?
-% - Modell, DBC?
-% - Welche Dinge waren zu beachten?
-% - Bild des Modells
-% - Welche Botschaften wurden eingesetzt?
-% - Liste der App Signale
-
-
-% TODO: evtl. Runnable noch in das Bild?! Wäre aber zu voll dann...
-\begin{figure}[ht]
-\centering
-\includegraphics[width=\textwidth]{SMLS_Modell}
-\caption{Entwickeltes AUTOSAR Modell}
-\label{fig:smls_modell}
-\end{figure}
-
-
+Ziel der AUTOSAR-Komponente ist die Kommunikation mit, und das Befehle Empfangen von der steuernden Komponente die im nächsten Kapitel entwickelt wird. Zur Realisierung der Kommunikation wird die Botschaft APP\_01 verwendet. Die darin enthaltenen Signale sind in Tabelle \ref{tab:App_Botschaft} zu sehen. Die Botschaft verwendet die ID 0x742, hat eine Länge von 4 Byte, und wird mit einer Zykluszeit von 100 ms gesendet.
 
 \begin{table}[ht]
     \centering
@@ -1102,7 +1090,27 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
     \label{tab:App_Botschaft}
 \end{table}
 
-Tabelle \ref{tab:App_Botschaft} zeigt die Signale der Botschaft APP\_01. Diese Botschaft hat die ID 0x742, eine Länge von 4 Byte, und wird mit einer Zykluszeit von 100 ms gesendet.
+Hierbei bieten die ersten vier Signale direkten Zugriff auf die entsprechenden Funktionen des BCM. Die restlichen Signale werden verwendet um zwei Demo-Modi anzusteuern. Diese sollen verdeutlichen, dass durch die Kommunikations-Kette, Python-AUTOSAR-BCM, eine Entkopplung der Funktionalität erreicht wird. So kann die steuernde Komponente zwar über die Botschaft einen Befehl senden, jedoch nicht direkt die Hardware beeinflussen. Dies übernimmt die AUTOSAR-Komponente und wirkt damit als Puffer zwischen Anwender und Hardware.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{SMLS_Modell}
+\caption{Entwickeltes AUTOSAR Modell}
+\label{fig:smls_modell}
+\end{figure}
+
+Das gesamte System Modell ist in Abbildung \ref{fig:smls_modell} zu sehen. Auf der rechten Seite ist die steuernde Komponente, SWC\_APP, dargestellt. Diese ist in Python realisiert und nutzt den VCAN. Die Software Komponente SWC\_BCM stellt die ECU-Hardware dar. Obwohl beide Komponenten nicht mittels AUTOSAR realisiert werden, sind sie im Modell nötig, um die entsprechenden Ports zu definieren. Die hier erstellte AUTOSAR-Komponente ist als SWC\_SMLS im Modell sichtbar. Die Botschaften Licht\_vorne\_01 und Klemmen\_Status\_01 werden verwendet um den aktuellen Status anzeigen zu können. Die letzte verbleibende Botschaft, SMLS\_01, beinhaltet die Steuer-Signale vom SMLS zum BCM hin.
+
+% TODO: vielleicht noch etwas mehr über DBC schreiben
+Auch die nötige CAN-Datenbank in Form einer .dbc-Datei entspricht dem Modell. Hier sind die ECUs und Botschaften ebenfalls nachgebildet. Ein besonderes Augenmerk ist dabei auf das Layout der Signale innerhalb der Botschaften zu legen. Sowohl die .dbc-Datei, als auch das SystemDesk Projekt, sowie die daraus resultierende .arxml-Datei sind auf der beigelegten CD zu finden.
+
+% tresos
+
+% Code schreiben
+
+
+
+
 
 
 
@@ -1239,10 +1247,12 @@ Tabelle \ref{tab:App_Botschaft} zeigt die Signale der Botschaft APP\_01. Diese B
 % TODO:
 % XtratuM Projekt
 % tresos Projekt
+% SD, arxml, dbc
 % VCAN-Gateway
 % VCAN-API
 % VCAN-App
 % AUTOSAR-Specs...
+% Quellen
 
 
 %%%%%%%%%%%%%%%%%%%%%%% Erklärung und CD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%

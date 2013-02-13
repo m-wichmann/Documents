@@ -2,7 +2,187 @@
 %%%%%%%%%%%%%%%% Nm Tutorial %%%%%%%%%%%%%%%%%%%%
 \chapter{Netzwerk-Management Anleitung}
 \label{sec:nm_tutorial}
-% TODO:
+Diese Anleitung basiert auf dem entsprechenden AUTOSAR Workshop von Elektrobit vom 11.12.2012 und wurde an einigen Stellen gekürzt und erweitert. \\
+
+\begin{compactitem}
+    \item Module importieren (CanNm, CanSM, ComM, Nm)
+    \item System Description und DBC anpassen
+    \begin{compactitem}
+        \item Service Ports einrichten
+        \item NM Botschaften erstellen und Nodes zuordnen
+        \item ARXML und DBC importieren
+        \item Wizard "`Calculate Handle IDs"' ausführen
+        \item Wizard "`Calculate Derivable Values"' ausführen
+    \end{compactitem}
+    \item ComM
+    \begin{compactitem}
+        \item ./General/Enable Rte Usage: True
+        \item ./Optimization/Network Start Indication Failure: DISABLE
+        \item ./Users/: Add User
+        \item ./Network Channel/: Channel hinzufügen
+        \begin{compactitem}
+            \item Main Function Period: 0.01
+            \item User Per Channel: User inzufügen
+        \end{compactitem}
+    \end{compactitem}
+    \item Nm
+    \begin{compactitem}
+        \item Number of Nm Channels: 1
+        \item ./List of Nm Channels/: Channel hinzufügen und ComM Channel Reference setzen
+    \end{compactitem}
+    \item CanIf
+    \begin{compactitem}
+        \item ./CanIfInitConfiguration/CanIfTxPduConfig/: NM PDU auswählen
+        \item CanIfTxUserType: CAN\_NM
+        \item CanIfRxUserType: CAN\_NM
+    \end{compactitem}
+    \item CanNM
+    \begin{compactitem}
+        \item ./CanNmGlobalConfig/Optimization/
+        \begin{compactitem}
+            \item CanNm Network Timeout: DISABLE
+            \item CanIf Transmission Error: DISABLE
+        \end{compactitem}
+        \item ./CanNmGlobalConfig/Channel Configuration/: Channel hinzufügen
+        \begin{compactitem}
+            \item NM Channel Reference: Vorher erstellter
+            \item Main Funtion Period: 0.01
+            \item PDU Length: 0
+            \item Node Identifier Position: CANNM\_PDU\_OFF (CANNM\_PDU\_BYTE0 für NM-High)
+            \item Control Bit Vector Position: CANNM\_PDU\_OFF
+            \item PDU User Data Length: 0 (6 bei NM-High)
+            \item Message Cycle Time: 0.5
+            \item Message Cycle Offset: 0
+            \item Messag Timeout Time: 4
+            \item Timeout Time: 1
+            \item Wait Bus Sleep Time: 4
+            \item Repeat Message Time: 0.5
+            \item Transmit PDU Referece: NM PDU
+        \end{compactitem}
+    \end{compactitem}
+    \item CanSM
+    \begin{compactitem}
+        \item ./List of Configurations/: Config hinzufügen und öffnen
+        \item ./List of Can Networks/: Hinzufügen und öffnen
+        \item ComM Channel: Vorher ersteller
+        \item Com Rx PDU Group: RXPDUS\_GLOBAL
+        \item Com Tx PDU Group: TXPDUS\_GLOBAL
+        \item Can Controller hinzufügen und Can Config auswählen
+    \end{compactitem}
+
+
+
+
+
+    \item SchMMainFunctionMapping
+    \begin{compactitem}
+        \item SchMMappedToTask immer auf zyklische OS Task setzen
+        \item CanSM Main Function hinzufügen
+        \begin{compactitem}
+            \item SchMMainFunctionRef: CanSM\_MainFunction
+            \item SchMMainFunctionHeader: CanSM\_SchM.h
+        \end{compactitem}
+        \item ComM Main Function hinzufügen
+        \begin{compactitem}
+            \item SchMMainFunctionRef: ComM\_MainFunction\_0
+            \item SchMMainFunctionHeader: ComM.h
+        \end{compactitem}
+        \item CanNM Main Function hinzufügen
+        \begin{compactitem}
+            \item SchMMainFunctionRef: CanNm\_MainFunction\_0
+            \item SchMMainFunctionHeader: CanNM.h
+        \end{compactitem}
+    \end{compactitem}
+
+    \item SchMModuleConfiguration
+    \begin{compactitem}
+        \item CanNm Konfiguration hinzufügen
+        \begin{compactitem}
+            \item SchMModuleLiteral: CanNm
+            \item SchMUseInstanceId: False
+            \item InstanceConfiguration hinzufügen
+            \item SchMInstanceId: 0
+            \item SchMInstanceLiteral: SCHM\_CANNM\_INSTANCE\_0
+            \item ExcelusiveAreaConf hinzufügen
+            \item SchmExclusiveAreaId: 0
+            \item SchMExclusiveAreaLiteral: SCHM\_CANNM\_EXCLUSIVE\_AREA\_0
+            \item SchMExclusiveAreaType: EB\_FAST\_LOCK
+        \end{compactitem}
+        \item ComM Konfiguration hinzufügen
+        \begin{compactitem}
+            \item SchMModuleLiteral: ComM
+            \item SchMUseInstanceId: False
+            \item InstanceConfiguration hinzufügen
+            \item SchMInstanceId: 0
+            \item SchMInstanceLiteral: SCHM\_COMM\_INSTANCE\_0
+            \item ExcelusiveAreaConf hinzufügen
+            \item SchmExclusiveAreaId: 0
+            \item SchMExclusiveAreaLiteral: SCHM\_COMM\_EXCLUSIVE\_AREA\_0
+            \item SchMExclusiveAreaType: EB\_FAST\_LOCK
+        \end{compactitem}
+    \end{compactitem}
+
+
+
+    \item EcuM
+    \begin{compactitem}
+        \item ./Configuration/Init List Two/
+        \begin{compactitem}
+            \item Element hinzufügen
+            \item ModuleID: CanSM
+            \item ModuleService: Init
+            \item Element hinzufügen
+            \item ModuleID: CanNm
+            \item ModuleService: Init
+            \item Module Config String: \&CanNmGlobalConfig
+            \item Element hinzufügen
+            \item ModuleID: Nm
+            \item ModuleService: Init
+            \item Module Config String: ((void*)-1)
+        \end{compactitem}
+        \item ./Configuration/Init List Three/
+        \begin{compactitem}
+            \item Element hinzufügen
+            \item ModuleID: ComM
+            \item ModuleService: Init
+        \end{compactitem}
+    \end{compactitem}
+    \item Rte
+    \begin{compactitem}
+        \item Service Port Mapping: Service Port Generation
+        \item SWC\_XX/UserRequest mit ComM/UR\_ComMUser\_0 verbinden
+        \item SWC\_XX/CurrentMode mit ComM/UM\_ComMUser\_0 verbinden
+    \end{compactitem}
+    \item Implementation
+    \begin{compactitem}
+        \item Rte\_Call\_UserRequest\_RequestComMode(FULL\_COMMUNICATION)
+        \item Rte\_Call\_UserRequest\_RequestComMode(NO\_COMMUNICATION)
+    \end{compactitem}
+
+
+
+
+
+\end{compactitem}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
