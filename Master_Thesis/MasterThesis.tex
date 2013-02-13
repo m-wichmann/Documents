@@ -1009,32 +1009,33 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 
 \subsection{Einsatz des Netzwerkmanagements}
 \label{sec:AutosarNM}
-% TODO:
-% - NM (NM High)
-% - NM bei AUTOSAR
-% - Im Projekt-Rahmen (Welche IDs, Was war zu beachten)?
-%   - SMLS 1B00000C - 0C 00 04 00 00 00 00 00 <- 1. Byte: Node ID; 3. Byte: Status?!
-%   - BCM  1B00000E - 0E 00 08 01 11 00 0C 00 <- 1. Byte: Node ID; 3. Byte: Status?!; Rest unklar!
-% - Nötige AUTOSAR Änderungen
-%   - DBC und ARXML anpassen und importieren
-%   - Add modules: CanNm, CanSm, ComM, Nm
-%   - Nm: ComM Channel einstellen
-%   - CanNm: Node Identifier (aktivieren, wert zuweisen, Position zuweisen)
-%   - Rte_Call_UserReuqest_RequestComNode(FULL_COMMUNICATION oder NO_COMMUNICATION)
+% TODO: NM wirklich nicht geschafft?!
+Um das volle System um die ECU nachbilden zu können, wird der Einsatz eines Netzwerkmanagements benötigt. Hier wird das bei VW eingesetzte NM-High verwendet. Der allgemeine Einsatz, sowie AUTOSAR-spezifische Punkte wurde bereits in Kapitel \ref{sec:Netzwerkmanagement} betrachtet, und sollen im weiteren auf das konkrete Beispiel angewendet werden. Leider konnte aus Zeitgründen das Netzwerkmanagement nicht erfolgreich im Projekt implementiert werden. Trotzdem sollen hier alle relevanten Punkte der Konfiguration betrachtet werden. Eine Schritt-für-Schritt Anleitung, basierend auf einem Workshop von Elektrobit, ist in Anhang \ref{sec:nm_tutorial} zu finden.
 
+% TODO: mehr botschaften
+\begin{lstlisting}[frame=single, language=, basicstyle=\footnotesize, caption={Beispiel NM Botschaften}, label={lst:nm_botschaften}]
+SMLS: 0x1B00000C - 0C:00:04:00:00:00:00:00
+????: 0x1B00000D - 0D:00:04:00:00:00:00:00
+BCM : 0x1B00000E - 0E:00:08:01:11:00:0C:00
+\end{lstlisting}
 
-% - NM PDU senden wenn SRC-Node Bus wach haben möchte; Wenn nicht mehr -> keine NM mehr senden aber wach bleiben bis alle anderen aufhören
-% - default NM-PDU Format: ID, Control bit vector, User data 0 - 5 [Seite 51, AUTOSAR CANNM]
+Für einen ersten Einstieg, sind in Listing \ref{lst:nm_botschaften} einige Beispiel-Botschaft des Netzwerk-Managements zu sehen. Dort ist nach dem Node-Namen, die CAN-ID der Botschaft aufgeführt. Diese beginnen bei 0x1B000000 und enthalten im letzten Teil auch eine Node-ID. Diese ID ist in der eigentlichen Botschaften im ersten Byte wiederzufinden. Das zweite Byte hat immer den Wert null, während das dritte Byte anscheinend einen Status angibt. Diese Werte ändern sich, je nach System-Status. Diesen kann zum Beispiel die Klemme 15 ändern, und damit das Einschlafen des Bus-Systems veranlassen. Alle weiteren Bytes sind ausschließlich beim BCM-Node ungleich null. Diese ersten Beobachtungen des Protokolls werden nun anhand der AUTOSAR-Spezifikation untersucht.
 
-% CanSM überwacht Bus etc. -> z.b. BUSOFF
+Die in AUTOSAR eingesetzten Netzerwerkmanagement-PDUs sind nach einem festen Schema aufgebaut.\cite[Seite 51]{autosar_cannm} Byte eins repräsentiert einen \emph{Source Node Identifier}. Dies deckt sich auch mit der Beobachtungen aus den Beispiel Botschaften. Die Form der Botschaften-IDs wird jedoch im Standard nicht vorgegeben. Damit handelt es sich bei den Botschaften-IDs im Bereich 0x1B000000 um eine Design-Entscheidung, bei der der \emph{Source Node Identifier} ebenfalls untergebracht worden ist.
 
-% Warum ist NM nötig?
-% Projekt-Spezifischer Kram -> Welche IDs waren nötig
+Das in den Beispiel-Botschaften durchgehen leere Byte an Position zwei ist im AUTOSAR Standard als \emph{Control Bit Vector} definiert. Dieser wird damit also bei dieser Form des NM nicht verwendet. Die Positionen des \emph{Source Node Identifiers} und des \emph{Control Bit Vectors} kann in der ECU-Konfiguration ausgewählt werden. Dabei beschränkt sich die Auswahl auf Byte 1, Byte 2 oder das deaktivieren eines oder beider Felder. 
 
+Das \emph{Control Bit Vector} Feld wird für einige Management-Funktionen verwendet. So wird über das \emph{NM Coordinator Sleep} Bit, ein synchrones Herunterfahren eines Bus-Systems mit mehreren Koordinatoren bewirkt. Hierbei setzt der Haupt-Koordinator das entsprechende Bit, und alle anderen Koordinatoren bereiten ein Herunterfahren ihres eigenen Teil-Busses vor. Eine weitere Funktion des \emph{Control Bit Vector} Feldes, ist der \emph{Repeat Message Request}. Über diesen kann ein Koordinator das Senden von NM-Botschaften aller Teilnehmer erzwingen. Hierdurch ist eine Identifikation aller Nodes möglich.
 
+Die restlichen Bytes der NM-Botschaften enthält User-Daten, und implementiert damit ein VW eigenes Protokoll. Allgemein senden Nodes NM-Botschaften, solange ein Wach-Bleiben des Busses erwünscht ist. Sobald ein Node die Bus nicht mehr benötigt, sendet dieser auch keine NM-Botschaften mehr.
 
+Im folgenden wird der Prozess beschrieben, um das Netzwerk-Management in AUTOSAR, speziell EB tresos, zu aktivieren. Dabei wird ein vollständig konfiguriertes Beispiel vorausgesetzt. Im ersten Schritt müssen das System Modell und die CAN-Datenbank angepasst werden. Im System Modell sind die Service-Ports es ComM-Moduls hinzuzufügen. Über diese kann später die User-Runnable das Netzwerk-Management steuern. In der CAN-Datenbank müssen Botschaften angelegt werden, die als NM-Botschaften verwendet werden sollen. An diesem Punkt ist die ID der Botschaften zu bestimmen.
 
+Nachdem die veränderten .arxml und .dbc Dateien ins tresos-Projekt importiert wurde sind, können die nötigen Module importiert werden. Hier sind die Module CanNm, CanSm, ComM und Nm nötig. Die Module CanNm und Nm stellen das generische und Bus-spezifische Netzwerkmanagement zur Verfügung. Um Zustandsübergänge zu ermöglichen, werden die Module CanSM und ComM benötigt. Letzteres stellt der User-Applikation Funktionen zur Verfügung, mit deren Hilfe der Zustand des Netzwerkmanagements bestimmt werden kann.
 
+Der generische Teil des NM wird eingerichtet, indem ein ComM Channel angelegt wird, und dieser im Modul Nm referenziert wird. Einstellungen zum Format der NM-PDU, speziell zum \emph{Source Node Identifiers} und dem \emph{Control Bit Vector}, können im Modul CanNm vorgenommen werden. Ebenfalls können dort einige Zeit konfiguriert werden, die vom Netzwerkmanagement genutzt werden.
+
+Nachdem das Mapping der Service Ports in der RTE vorgenommen wurde, kann über die Funktion das \texttt{Rte\_Call\_UserRequest\_RequestComNode} Netzwerkmanagement genutzt werden. Dabei gibt der Übergabeparameter den gewünschten Bus-Zustand an. Mögliche Parameter sind \texttt{FULL\_COMMUNICATION} und \texttt{NO\_COMMUNICATION}.
 
 
 
@@ -1069,16 +1070,7 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
 % - Bild des Modells
 % - Welche Botschaften wurden eingesetzt?
 % - Liste der App Signale
-% App_01 0x742 4 Byte 100ms
-% APP_Blinker_li          1   0   1
-% APP_Blinker_re          1   1   1
-% APP_Lichthupe           1   2   1
-% APP_Fernlicht           1   3   1
-% APP_Demo0               2   0   1
-% APP_Demo0_Peridoe_li    3   0   4
-% APP_Demo0_Periode_re    3   4   4
-% APP_Demo1               4   0   1
-% APP_Demo1_Periode       4   4   4
+
 
 % TODO: evtl. Runnable noch in das Bild?! Wäre aber zu voll dann...
 \begin{figure}[ht]
@@ -1090,7 +1082,27 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
 
 
 
+\begin{table}[ht]
+    \centering
+    \begin{tabular}[h]{l c c c}
+        Name & Byte & Bit & Länge\\
+        \toprule
+        APP\_Blinker\_li        & 1 &  0  & 1\\
+        APP\_Blinker\_re        & 1 &  1  & 1\\
+        APP\_Lichthupe          & 1 &  2  & 1\\
+        APP\_Fernlicht          & 1 &  3  & 1\\
+        APP\_Demo0              & 2 &  0  & 1\\
+        APP\_Demo0\_Peridoe\_li & 3 &  0  & 4\\
+        APP\_Demo0\_Periode\_re & 3 &  4  & 4\\
+        APP\_Demo1              & 4 &  0  & 1\\
+        APP\_Demo1\_Periode     & 4 &  4  & 4\\
+        \bottomrule
+    \end{tabular}
+    \caption{Signale der Botschaft APP\_01}
+    \label{tab:App_Botschaft}
+\end{table}
 
+Tabelle \ref{tab:App_Botschaft} zeigt die Signale der Botschaft APP\_01. Diese Botschaft hat die ID 0x742, eine Länge von 4 Byte, und wird mit einer Zykluszeit von 100 ms gesendet.
 
 
 
