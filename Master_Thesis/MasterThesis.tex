@@ -1013,14 +1013,14 @@ Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteue
 % TODO: NM wirklich nicht geschafft?!
 Um das volle System um die ECU nachbilden zu können, wird der Einsatz eines Netzwerkmanagements benötigt. Hier wird das bei VW eingesetzte NM-High verwendet. Der allgemeine Einsatz, sowie AUTOSAR-spezifische Punkte wurde bereits in Kapitel \ref{sec:Netzwerkmanagement} betrachtet, und sollen im weiteren auf das konkrete Beispiel angewendet werden. Leider konnte aus Zeitgründen das Netzwerkmanagement nicht erfolgreich im Projekt implementiert werden. Trotzdem sollen hier alle relevanten Punkte der Konfiguration betrachtet werden. Eine Schritt-für-Schritt Anleitung, basierend auf einem Workshop von Elektrobit, ist in Anhang \ref{sec:nm_tutorial} zu finden.
 
-% TODO: mehr botschaften
 \begin{lstlisting}[frame=single, language=, basicstyle=\footnotesize, caption={Beispiel NM Botschaften}, label={lst:nm_botschaften}]
 SMLS: 0x1B00000C - 0C:00:04:00:00:00:00:00
-????: 0x1B00000D - 0D:00:04:00:00:00:00:00
-BCM : 0x1B00000E - 0E:00:08:01:11:00:0C:00
+BCM : 0x1B00000E - 0E:00:04:01:11:00:0C:00
+----: 0x1B000010 - 10:00:04:00:00:00:00:00
+----: 0x1B000014 - 14:00:04:00:00:00:00:00
 \end{lstlisting}
 
-Für einen ersten Einstieg, sind in Listing \ref{lst:nm_botschaften} einige Beispiel-Botschaft des Netzwerk-Managements zu sehen. Dort ist nach dem Node-Namen, die CAN-ID der Botschaft aufgeführt. Diese beginnen bei 0x1B000000 und enthalten im letzten Teil auch eine Node-ID. Diese ID ist in der eigentlichen Botschaften im ersten Byte wiederzufinden. Das zweite Byte hat immer den Wert null, während das dritte Byte anscheinend einen Status angibt. Diese Werte ändern sich, je nach System-Status. Diesen kann zum Beispiel die Klemme 15 ändern, und damit das Einschlafen des Bus-Systems veranlassen. Alle weiteren Bytes sind ausschließlich beim BCM-Node ungleich null. Diese ersten Beobachtungen des Protokolls werden nun anhand der AUTOSAR-Spezifikation untersucht.
+Für einen ersten Einstieg, sind in Listing \ref{lst:nm_botschaften} einige Beispiel-Botschaft des Netzwerk-Managements zu sehen. Dort ist nach dem Node-Namen, die CAN-ID der Botschaft aufgeführt. Diese beginnen etwa bei 0x1B000000 und enthalten im letzten Teil auch eine Node-ID. Diese ID ist in der eigentlichen Botschaften im ersten Byte wiederzufinden. Das zweite Byte hat immer den Wert null, während das dritte Byte anscheinend einen Status angibt. Diese Werte ändern sich, je nach System-Status. Diesen kann zum Beispiel die Klemme 15 ändern, und damit das Einschlafen des Bus-Systems veranlassen. Alle weiteren Bytes sind ausschließlich beim BCM-Node ungleich null. Diese ersten Beobachtungen des Protokolls werden nun anhand der AUTOSAR-Spezifikation untersucht.
 
 Die in AUTOSAR eingesetzten Netzerwerkmanagement-PDUs sind nach einem festen Schema aufgebaut.\cite[Seite 51]{autosar_cannm} Byte eins repräsentiert einen \emph{Source Node Identifier}. Dies deckt sich auch mit der Beobachtungen aus den Beispiel Botschaften. Die Form der Botschaften-IDs wird jedoch im Standard nicht vorgegeben. Damit handelt es sich bei den Botschaften-IDs im Bereich 0x1B000000 um eine Design-Entscheidung, bei der der \emph{Source Node Identifier} ebenfalls untergebracht worden ist.
 
