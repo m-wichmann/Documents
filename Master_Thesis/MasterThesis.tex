@@ -1124,8 +1124,25 @@ Auch die nötige CAN-Datenbank in Form einer .dbc-Datei entspricht dem Modell. H
 % TODO
 % - Python GUI
 % - Vorraussetzungen und Ziele
+Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, mit deren Hilfe sich die Demo-Funktionen leicht aktiveren lassen. Zudem werden aktuelle Status-Informationen vom CAN-Bus übersichtlich angezeigt. 
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.6\textwidth]{vcan_app_status}
+\caption{Status-Fenster der VCAN-Applikation}
+\label{fig:vcan_app_status}
+\end{figure}
 
+\begin{figure}[ht]
+\centering
+\includegraphics[width=0.4  \textwidth]{vcan_app_control}
+\caption{Kontroll-Fenster der VCAN-Applikation}
+\label{fig:vcan_app_control}
+\end{figure}
+
+Die Oberfläche der in dieser Arbeit entwickelten Anwendungen besteht aus zwei Fenstern. Die Oberfläche ist mittels wxPython realisiert und bewusst minimalistisch gehalten. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, stellt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung dar.
+
+Das in Abbildung \ref{fig:vcan_app_control} zu sehende Fenster, bietet direkten Zugriff auf alle Signale der \texttt{APP\_01} Botschaft.
 
 
 
