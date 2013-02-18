@@ -247,6 +247,7 @@ Dieses Kapitel enthält Grundlagen zu den Themen AUTOSAR und Virtualisierung. Da
 % Class 1 und 2
 \section{Virtualisierung}
 \label{sec:Virtualisierung}
+% TODO: Begriffe Host/Gast expliziter erklären
 Der Begriff \emph{Virtualisierung} bezeichnet eine Reihe von Techniken, die verwendet werden, um die Ressourcen eines Rechner-Systems zu verwalten. Hierdurch kann ein reales System, auf mehrere virtuelle Systeme aufgeteilt, und als solche genutzt werden. Dabei können verschiedene Ziele im Vordergrund stehen.
 
 Aus dem Desktop-Bereich ist die System-Virtualisierung bekannt, wie sie zum Beispiel mittels VirtualBox\footnote{VirtualBox zu finden unter \url{www.virtualbox.org}} umgesetzt ist. Hierbei werden die Ressourcen des bestehenden Systems durch einen Hypervisor, auch Virtual Machine Monitor (kurz VMM) genannt, verwaltet und den virtuellen Instanzen zugeordnet. Diese Variante wird vor allem eingesetzt, um Zugriff auf einen anderes Betriebssystem zu erhalten, um so spezielle Software ausführen zu können.
@@ -738,7 +739,7 @@ Obwohl AUTOSAR und die ISO 26262 auf den ersten Blick keinerlei direkte Verbindu
 Die Ersatzpflicht des Herstellers ist ausgeschlossen, wenn [\dots] der Fehler nach dem Stand der Wissenschaft und Technik in dem Zeitpunkt, in dem der Hersteller das Produkt in den Verkehr brachte, nicht erkannt werden konnte.\cite{ProdG}
 \end{quote}
 
-% TODO: Notiz Marks (?): Komisches Argument
+% TODO: Notiz Markus (?): Komisches Argument
 % "Dabei kann dies als Umstieg" umschreiben?
 Da es sich bei AUTOSAR und der ISO 26262 um den aktuellen Stand der Technik handelt, müssen diese Techniken eingesetzt werden, um Regressansprüche vermeiden zu können und das Produkthaftungsgesetz zu befolgen. Dabei kann dies als Umstieg von OSEK/VDX und DIN 61508 gesehen werden. Um beide Umstiege gleichzeitig durchzuführen ist ein großer Einsatz erforderlich. 
 
@@ -790,17 +791,11 @@ Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Archite
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Virtualisierung}
 \label{sec:Virtualisierung_Umgesetzt}
-Der Bereich Virtualisierung deckt die Bereitstellung der virtuellen Maschinen in diesem Projekt ab. Dabei werden zwei Instanzen benötigt. In der ersten VM wird die AUTOSAR-Komponente ausgeführt. Da diese mittels EB tresos WinCore für Windows erstellt wird, wird hier ein Windows eingesetzt. Wie sich im Laufe des Projektes herausgestellt hat, ist die Ausführung der AUTOSAR-Komponente keineswegs stabil, sodass nach einer zufälligen Zeit, meist etwa ein paar Minuten, die Komponente nicht mehr reagiert. Zu Testzwecken wurde daher die Ausführung mittels Wine unter Linux getestet. Wie sich herausgestellt hat tritt der Fehler in diesem Fall nicht auf. Da Kompatibilitätsprobleme bei einer Windows-Anwendung unter Linux nicht auszuschließen sind, ist dies jedoch auch keine ideale Lösung. Aus diesem Grund wird für die erste VM sowohl Windows als auch Linux parallel gepflegt getestet. Hierdurch können sowohl Kompatibilitäts- als auch Stabilitätsprobleme, je nach konkreter Wahl, vermieden werden.
+Der Bereich Virtualisierung deckt die Bereitstellung der virtuellen Maschinen in diesem Projekt ab. Dabei werden zwei Instanzen benötigt. In der ersten VM wird die AUTOSAR-Komponente ausgeführt. Da diese mittels EB tresos WinCore für Windows erstellt wird, wird hier ein Windows eingesetzt. Wie sich im Laufe des Projektes herausgestellt hat, ist die Ausführung der AUTOSAR-Komponente keineswegs stabil, sodass nach einer zufälligen Zeit, meist etwa ein paar Minuten, die Komponente nicht mehr reagiert. Zu Testzwecken wurde daher die Ausführung mittels Wine unter Linux getestet. Wie sich herausgestellt hat tritt der Fehler in diesem Fall nicht auf. Da Kompatibilitätsprobleme bei einer Windows-Anwendung unter Linux nicht auszuschließen sind, ist dies jedoch auch keine ideale Lösung. Aus diesem Grund wird für die erste VM sowohl Windows als auch Linux parallel gepflegt getestet. Hierdurch können sowohl Kompatibilitäts- als auch Stabilitätsprobleme, je nach Wahl, vermieden werden. Konkret wird Orcale VirtualBox 4.1.18, Ubuntu 12.04.1 und Windows 7 Professional in diesem Projekt eingesetzt.
 
 Die zweite VM wird verwendet um die Steuerungs-Anwendung auszuführen. Da diese auf der VCAN-API basiert (siehe \ref{sec:vcan_api} und \ref{sec:Kommunikation_L_A}) ist die Wahl des Betriebssystems auf alle von Python unterstützen Plattformen beschränkt. Aus persönlicher Vorliebe des Autors wird an dieser Stelle Linux gewählt. Die entsprechende Anwendung kann jedoch auch ohne umfangreiche Portierung zum Beispiel unter Windows ausgeführt werden.
 
 Bei der Wahl des Hypervisors kommt zu aller erst die Frage, ob ein Type 1 oder Type 2 Hypervisor gewählt wird. Da es sich bei diesem Projekt um eine Evaluierung der Virtualisierung geht wird ein Type 2 Hypervisor gewählt. Zudem würde der Einsatz eines Type 1 Hypervisors den zeitlichen Rahmen dieser Arbeit sprengen, da der Aufbau und die Konfiguration kompliziert und umfangreich ist. Um trotzdem Einblick in diesen Bereich der Virtualisierung zu geben, wird ein Hypervisor näher betrachtet. Hier wird XtratuM gewählt, da es sich dabei um ein freies Open-Source Projekt handelt. Im Rahmen dieses Projekts wird VirtualBox als Hypervisor verwendet.
-
-% TODO: genaue Versionen etc. erwähnen
-% - Oracle VirtualBox 4.1.18
-% - Ubuntu 12.04.1
-% - Windows 7 Professional (Sowohl Host als auch Gast)
-
 
 \subsection{XtratuM}
 \label{sec:xtratum}
@@ -1008,14 +1003,10 @@ Anschließend wird in einem Kapitel eine Restbussimulation von VW näher betrach
 
 \subsection{Aufbau des Bordnetzsteuergerätes}
 \label{sec:Aufbau_der_ECU}
-% TODO:
-% - Bild vom Aufbau
-% - Vernetzungsplan
-% - 500 kbits (kbaud?)
-% - Klemme 15
 Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM genannt, aufgebaut und getestet. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
 
-
+% TODO: kbit oder kbaud?!
+Die Ansteuerung des BCM erfolgt pre CAN mit einer Baudrate von 500 kbaud. Der am Versuchsaufbau angebrachte Schalter stellt die Klemme 15 sowie Klemme S dar. In diesem Aufbau sind diese Signale nicht getrennt und werden somit immer gleich geschaltet.
 
 
 
@@ -1113,14 +1104,35 @@ Hierbei bieten die ersten vier Signale direkten Zugriff auf die entsprechenden F
 
 Das gesamte System Modell ist in Abbildung \ref{fig:smls_modell} zu sehen. Auf der rechten Seite ist die steuernde Komponente, SWC\_APP, dargestellt. Diese ist in Python realisiert und nutzt den VCAN. Die Software Komponente SWC\_BCM stellt die ECU-Hardware dar. Obwohl beide Komponenten nicht mittels AUTOSAR realisiert werden, sind sie im Modell nötig, um die entsprechenden Ports zu definieren. Die hier erstellte AUTOSAR-Komponente ist als SWC\_SMLS im Modell sichtbar. Die Botschaften Licht\_vorne\_01 und Klemmen\_Status\_01 werden verwendet um den aktuellen Status anzeigen zu können. Die letzte verbleibende Botschaft, SMLS\_01, beinhaltet die Steuer-Signale vom SMLS zum BCM hin.
 
-% TODO: vielleicht noch etwas mehr über DBC schreiben
 Auch die nötige CAN-Datenbank in Form einer .dbc-Datei entspricht dem Modell. Hier sind die ECUs und Botschaften ebenfalls nachgebildet. Ein besonderes Augenmerk ist dabei auf das Layout der Signale innerhalb der Botschaften zu legen. Sowohl die .dbc-Datei, als auch das SystemDesk Projekt, sowie die daraus resultierende .arxml-Datei sind auf der beigelegten CD zu finden.
 
-% tresos
+% TODO: tresos; Was war einzurichten...
 
-% Code schreiben
+\begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={Implementation der Runnable}, label={lst:headlight_final}]
+void SWC_SMLS_R_SMLS (void) {
+  init_iwrite_vars();
+  read_values();
 
+  if (DE_APP_Demo0) {
+    /* run demo 0 */
+  } else if (DE_APP_Demo1) {
+    /* run demo 1 */
+  } else if (DE_APP_Fernlicht || DE_APP_Lichthupe || DE_APP_Blinker_re || DE_APP_Blinker_li) {
+    Rte_IWrite_R_SMLS_P_SMLS_01_DE_BH_Fernlicht(DE_APP_Fernlicht);
+    Rte_IWrite_R_SMLS_P_SMLS_01_DE_BH_Lichthupe(DE_APP_Lichthupe);
+    Rte_IWrite_R_SMLS_P_SMLS_01_DE_BH_Blinker_li(DE_APP_Blinker_li);
+    Rte_IWrite_R_SMLS_P_SMLS_01_DE_BH_Blinker_re(DE_APP_Blinker_re);	
+  }
 
+  calc_crc();
+  Rte_IWrite_R_SMLS_P_SMLS_01_DE_SMLS_01_BZ(bz_counter);
+  increment_bz();	
+}
+\end{lstlisting}
+
+Die Implementation des Kern-Elements der AUTOSAR-Anwendung, die Runnable, ist in Listing \ref{lst:headlight_final} aufgeführt. Dabei ist der Code der Übersicht halber gekürzt. Der komplette Quellcode ist auf der beigelegten CD enthalten. Zeile eins des Listings zeigt die Signatur der Runnable. Diese ist durch die RTE fest definiert. Die Zeilen zwei und drei enthalten Aufrufe von Initialisierungs-Funktionen. Diese lesen alle aktuellen Werte der CAN-Botschaften ein, und speichern diese in Variablen. Die eigentliche Funktionalität ist in den Zeilen 5 bis 14 enthalten. Hier wird aufgrund der verschiedenen Modi eine bestimmte Aktion ausgeführt. So werden in den Zeilen 10 bis 13, die APP-Signale direkt auf SMLS-Signale geschrieben, falls kein Demo-Modus aktiv ist.
+
+Zum Schluss der Funktion, wird in den Zeilen 16 bis 18, die endgültige Botschaft gesendet. Dazu wird zuerst der CRC durch eine Lookup-Table bestimmt, und anschließend der Botschaftenzähler gesendet und inkrementiert. Durch das Nutzen des impliziten Sendens, sichtbar durch die \texttt{IWrite}-Methodenaufrufe, führt dazu, dass die eigentliche Botschaft erst gesendet wird, sobald die Runnable vorbei ist. Bis dahin werden die geschriebenen Werte zwischengespeichert.
 
 
 
