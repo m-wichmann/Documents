@@ -1017,8 +1017,7 @@ Anschließend wird in einem Kapitel eine Restbussimulation von VW näher betrach
 \label{sec:Aufbau_der_ECU}
 Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM genannt, aufgebaut und getestet. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
 
-% TODO: kbit oder kbaud?!
-Die Ansteuerung des BCM erfolgt pre CAN mit einer Baudrate von 500 kbaud. Der am Versuchsaufbau angebrachte Schalter stellt die Klemme 15 sowie Klemme S dar. In diesem Aufbau sind diese Signale nicht getrennt und werden somit immer gleich geschaltet.
+Die Ansteuerung des BCM erfolgt pre CAN mit einer Baudrate von 500 kbit/s. Der am Versuchsaufbau angebrachte Schalter stellt die Klemme 15 sowie Klemme S dar. In diesem Aufbau sind diese Signale nicht getrennt und werden somit immer gleich geschaltet.
 
 
 
@@ -1119,6 +1118,7 @@ Das gesamte System Modell ist in Abbildung \ref{fig:smls_modell} zu sehen. Auf d
 Auch die nötige CAN-Datenbank in Form einer .dbc-Datei entspricht dem Modell. Hier sind die ECUs und Botschaften ebenfalls nachgebildet. Ein besonderes Augenmerk ist dabei auf das Layout der Signale innerhalb der Botschaften zu legen. Sowohl die .dbc-Datei, als auch das SystemDesk Projekt, sowie die daraus resultierende .arxml-Datei sind auf der beigelegten CD zu finden.
 
 % TODO: tresos; Was war einzurichten...
+
 
 \begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={Implementation der Runnable}, label={lst:headlight_final}]
 void SWC_SMLS_R_SMLS (void) {
@@ -1243,17 +1243,16 @@ Das in Abbildung \ref{fig:vcan_app_control} zu sehende Fenster, bietet direkten 
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{boxplot_as}
-        \caption{}
+        \caption{Timing AUTOSAR}
         \label{fig:boxplot_as}
     \end{subfigure}
-%    \qquad
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{boxplot_vcan}
-        \caption{}
+        \caption{Timing VCAN-API}
         \label{fig:boxplot_vcan}
     \end{subfigure}
-    \caption{Timinganalyse des VCAN}
+    \caption{Timinganalyse des VCAN als Boxplot}
     \label{fig:timinganalyse}
 \end{figure}
 

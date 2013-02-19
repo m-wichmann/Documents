@@ -209,7 +209,7 @@ Das VCAN-Protokoll besteht aus einem Binär-Format, dass per TCP-Socket übertra
 Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_protokoll} zu sehen. Das Format besteht aus einem Header, dem DLC-Feld und den eigentlichen Daten. Der Header enthält unter anderem die ID der Botschaft. Die Nutzdaten können 1 bis 8 Byte lang sein. Im folgenden ist eine ausfürliche Auflistung der Felder dargestellt. Die Byte-Reheinfolge entspricht Big-Endian. Tabelle \ref{tab:vcanbotschaft} zeigt eine Beispiel-Botschaft ohne TCP- und Ethernet-Header.
 
 \begin{description}
-    \item[System] \hfill \\ Angabe eines Systems (zum Beispiel CAN oder LIN). Eine Auflistung der möglichen Werte ist in Tabelle \ref{tab:vcansysteme} zu finden. Die symbolischen Namen stammen dabei aus dem Elektrobit Gateway
+    \item[System] \hfill \\ Angabe eines Systems (zum Beispiel CAN oder LIN). Eine Auflistung der möglichen Werte ist in Tabelle \ref{tab:vcansysteme} zu finden. Die symbolischen Namen stammen dabei aus dem Elektrobit Gateway. Höhere Werte führen beim EB Gateway zu Fehlern beziehungsweise Abstürzen.
     \item[Channel] \hfill \\ Enthält eine Kanal-Nummer. Kann Werte von 0 bis 255 annehmen.
     \item[ID] \hfill \\ CAN-ID der Botschaft.
     \item[Marker] \hfill \\ Markiert extended CAN Frames. 0 steht für einen standard frame, jeder andere Wert für ein extendend Frame. Dies Byte könnte weitere Funktionalität bei LIN oder FlexRay Systemen haben.
@@ -218,55 +218,58 @@ Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_prot
 \end{description}
 
 \begin{table}[ht]
-    \center
-    \begin{tabular}[h]{c l}
-        Hex Wert & Symbolischer Name \\
-        \toprule
-        0 & Unknown\\
-        1 & Flexray1\\
-        2 & Flexray2\\
-        3 & CAN1\\
-        4 & CAN2\\
-        5 & CAN3\\
-        6 & CAN4\\
-        7 & LIN1\\
-        8 & LIN2\\
-        9 & bad allocation\\
-        a & æI@\\
-        b & <null>\\
-        \bottomrule
-    \end{tabular}
-    \caption{Liste der VCAN Systeme}
-    \label{tab:vcansysteme}
-\end{table}
-
-\begin{table}[ht]
-    \center
-    \begin{tabular}[h]{c l}
-        Hex Wert & Bedeutung \\
-        \toprule
-        03 & System: CAN1\\
-        \midrule
-        00 & Channel: 0\\
-        \midrule
-        42 & \multirow{4}{*}{CAN-ID (hex): 742}\\
-        07 & \\
-        00 & \\
-        00 & \\
-        \midrule
-        00 & Standard Frame\\
-        \midrule
-        04 & \multirow{2}{*}{DLC: 4 Bytes}\\
-        00 & \\
-        \midrule
-        00 & \multirow{4}{*}{Daten: 00:00:2A:00}\\
-        00 & \\
-        2a & \\
-        00 & \\
-        \bottomrule
-    \end{tabular}
-    \caption{Beispiel VCAN Botschaft}
-    \label{tab:vcanbotschaft}
+    \centering
+    \begin{minipage}{0.45\textwidth}		
+        \begin{tabular}[h]{c l}
+            Hex Wert & Symbolischer Name \\
+            \toprule
+            0 & Unknown\\
+            1 & Flexray1\\
+            2 & Flexray2\\
+            3 & CAN1\\
+            4 & CAN2\\
+            5 & CAN3\\
+            6 & CAN4\\
+            7 & LIN1\\
+            8 & LIN2\\
+            9 & bad allocation\\
+            a & æI@\\
+            b & <null>\\
+            c & Fehler\\
+            d & Fehler\\
+            \dots & \dots\\
+            \bottomrule
+        \end{tabular}
+        \caption{Liste der VCAN Systeme}
+        \label{tab:vcansysteme}
+    \end{minipage}\hfill
+    \begin{minipage}{0.45\textwidth}
+        \begin{tabular}[h]{c l}
+            Hex Wert & Bedeutung \\
+            \toprule
+            03 & System: CAN1\\
+            \midrule
+            00 & Channel: 0\\
+            \midrule
+            42 & \multirow{4}{*}{CAN-ID (hex): 742}\\
+            07 & \\
+            00 & \\
+            00 & \\
+            \midrule
+            00 & Standard Frame\\
+            \midrule
+            04 & \multirow{2}{*}{DLC: 4 Bytes}\\
+            00 & \\
+            \midrule
+            00 & \multirow{4}{*}{Daten: 00:00:2A:00}\\
+            00 & \\
+            2a & \\
+            00 & \\
+            \bottomrule
+        \end{tabular}
+        \caption{Beispiel VCAN Botschaft}
+        \label{tab:vcanbotschaft}
+    \end{minipage}
 \end{table}
 
 Das Protokoll, wie es im Elektrobit-Gateway eingesetzt wird, hat einige Besonderheiten. So werden gelegentlich die Daten-Bytes mehrerer Botschaften angehängt. Hierbei wird der Header nur einmal, jedoch die Daten mehrerer Botschaften übermittelt. Auch wird zeitweise der Daten-Bereich einer Botschaft mehrfach angehängt. Das Verhalten konnte nicht zuverlässig nachvollzogen werden. Es hat jedoch den Anschein, dass diese Probleme durch eine hohe Netzwerk-Last beziehungsweise -Latenz hervorgerufen werden. Da nicht eindeutig eine Mehrfachsendung einer Botschaft von verschiedene Botschaften in einem Paket unterschieden werden kann, wurde dieses Verhalten nicht implementiert. 
@@ -405,11 +408,122 @@ Im folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \
 
 \section{Beispiel Anwendungen}
 \label{sec:vcan_beispiele}
+Im Folgenden sind einige Beispiel Anwendungen aufgeführt, die den VCAN nutzen. Da der Quellcode weitreichend selbsterklärend ist, wird auf eine Erläuterung der Beispiele verzichtet.
 
+\subsection{Gateway}
+\label{sec:vcan_gateway_beispiele}
+\begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Einfaches Gateway}, label={lst:bsp_gateway1}]
+import vcan_api
 
+gw = vcan_api.VCANGateway()
+gw.start_gateway(host='127.0.0.1', port=10020)
+raw_input("Press key to stop...\n")
+gw.stop_gateway()
+\end{lstlisting}
 
+\begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Gateway mit Callbacks}, label={lst:bsp_gateway2}]
+import vcan_api
 
+def __message_callback(message):
+  print message
 
+def __connection_callback(connection, accepting):
+  if accepting == True:
+    print "Connection accepted: " + str(connection)
+  else:
+    print "Connection closed: " + str(connection)
+
+gw = vcan_api.VCANGateway(receive_callback=__message_callback, connection_callback=__connection_callback)
+gw.start_gateway(host='127.0.0.1', port=10020)
+raw_input("Press key to stop...\n")
+gw.stop_gateway()
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Gateway mit PCAN-Anbindung}, label={lst:bsp_gateway3}]
+import vcan_api
+
+gw = vcan_api.VCANGateway()
+gw.start_gateway(host='127.0.0.1', port=10020)
+gw.pcan_init()
+raw_input("Press key to stop...\n")
+gw.pcan_uninit()
+gw.stop_gateway()
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Gateway mit Verbindung zu anderem Gateway}, label={lst:bsp_gateway4}]
+import vcan_api
+
+gw = vcan_api.VCANGateway()
+gw.start_gateway(host='127.0.0.1', port=10020)
+try:
+  gw.connect_other_gateway('141.41.31.148', port=10020)
+except vcan_api.VCANException:
+  print "Could not connect to other gateway!"
+raw_input("Press key to stop...\n")
+gw.stop_gateway()
+\end{lstlisting}
+
+\subsection{Client Beispiele}
+\label{sec:vcan_client_beispiele}
+\begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Empfangsclient via Callback}, label={lst:bsp_client1}]
+import time
+import vcan_api
+
+def __receive_message(message):
+  m = vcan_api.VCANMessage()
+  m.parameters_from_string(message)
+  print m
+
+client = vcan_api.VCANClient()
+client.connect('127.0.0.1', port=10020, callback=__receive_message)
+
+while True:
+  time.sleep(0.5)
+
+client.close()
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Empfangsclient via Polling}, label={lst:bsp_client2}]
+import time
+import vcan_api
+
+client = vcan_api.VCANClient()
+client.connect('127.0.0.1', port=10020)
+
+while True:
+  time.sleep(0.1)
+  message = client.get_received_item()
+  if message == None:
+    continue
+  m = vcan_api.VCANMessage()
+  m.parameters_from_string(message)
+  print m
+
+client.close()
+\end{lstlisting}
+
+\begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Zyklisch sendender Client via Threads}, label={lst:bsp_client3}]
+import thread
+import time
+import vcan_api
+
+def __send(client, value):
+  while (True):
+    print "sending..."
+    data = [0,0,1,value,0,0,0,0]
+    m = vcan_api.VCANMessage()
+    m.set_parameters(int("3c0", 16),  data)
+    sclient.send(m,sleep_time=0.5)
+
+client = vcan_api.VCANClient()
+client.connect('127.0.0.1', port=10020)
+
+value = 42
+thread.start_new_thread(__send, (client, value,))
+
+raw_input("Press key to exit...\n")
+client.close()
+\end{lstlisting}
 
 
 
