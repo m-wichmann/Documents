@@ -7,7 +7,7 @@
 \newglossaryentry{glo:interface}
  {
    name=Interface,
-   description={Konkrete Beschreibung eines Ports. Beinhaltet Datenelemente und gibt die Richtung der Kommunikation an (provides und requires).}
+   description={Konkrete Beschreibung eines Ports. Beinhaltet Datenelemente und gibt die Richtung der Kommunikation an (provides und requires)}
 }
 
 \newglossaryentry{glo:swc}
@@ -19,35 +19,47 @@
 \newglossaryentry{glo:comp}
  {
    name=Composition,
-   description={Fasst andere Compositions und Software-Komponenten zusammen.}
+   description={Fasst andere Compositions und Software-Komponenten zusammen}
 }
 
 \newglossaryentry{glo:runnable}
  {
    name=Runnable,
-   description={Ausführbarer Teil einer Software Komponente. Wird durch RTE Events aufgerufen und hat Zugriff auf konfigurierte Interfaces.}
+   description={Ausführbarer Teil einer Software Komponente. Wird durch RTE Events aufgerufen und hat Zugriff auf konfigurierte Interfaces}
 }
 
 \newglossaryentry{glo:bsw}
  {
    name=Basis-Software,
-   description={Eigentliches Betriebssystem von AUTOSAR. Liegt zwischen Hardware und RTE und ist in Module eingeteilt.}
+   description={Eigentliches Betriebssystem von AUTOSAR. Liegt zwischen Hardware und RTE und ist in Module eingeteilt}
 }
 
 \newglossaryentry{glo:rte}
  {
    name=Runtime-Enviroment,
-   description={Realisiert konkrete Implementierung des VFB und stellt damit Kommunikationsverbindungen zwischen Software-Komponenten und der Basis-Software bereit.}
+   description={Realisiert konkrete Implementierung des VFB und stellt damit Kommunikationsverbindungen zwischen Software-Komponenten und der Basis-Software bereit}
 }
 
 \newglossaryentry{glo:irv}
  {
    name=Interrunnable-Variable,
-   description={Variable die von mehreren Runnables zugegriffen werden kann. Zugriff muss im Modell festgelegt werden.}
+   description={Variable die von mehreren Runnables zugegriffen werden kann. Zugriff muss im Modell festgelegt werden}
 }
 
 \newglossaryentry{glo:vfb}
  {
    name=Virtual Function Bus,
-   description={Abstraktes Modell der Kommunikation und der Softwarekomponenten. Wird konkret durch eine oder mehrere RTEs realisiert.}
+   description={Abstraktes Modell der Kommunikation und der Softwarekomponenten. Wird konkret durch eine oder mehrere RTEs realisiert}
+}
+
+\newglossaryentry{glo:host}
+ {
+   name=Host,
+   description={Der Host ist bei der Virtualisierung das System, dass den Hypervisor ausführt}
+}
+
+\newglossaryentry{glo:gast}
+ {
+   name=Gast,
+   description={System das virtuell auf dem Hypervisor ausgeführt wird}
 }

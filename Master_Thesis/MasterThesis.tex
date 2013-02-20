@@ -6,14 +6,8 @@
 %% - Danksagung
 %% - Portabilität PC VM auf embedded Hypervisor
 %% - Relevanz für Testen und Entwicklungsprozess
-%% - AUTOSAR in Titel?!
 %% - Ethernet Kosten im Gegensatz zu CAN? Vorteile/Nachteile?
 %% - AUTOSAR MISRA-Konform? 
-%% - Virtualisierte AUTOSAR-Komponente könnte LSMS ersetzen
-%% - "Lizenz Server" am CAN Netz um Nachrichten zu überprüfen und damit evtl. krypto
-%% - Master Arbeit auch als Eval und Einführung von AUTOSAR
-%% - Begriffserlärung virt: z.b. instanz
-%% - Type oder Typ (Hypervisor)
 %% - NDA/IP klären!!! (VW, EB, evtl. dSPACE?!)
 %% - Warum kein Tool AUTOSAR konforme Grafiken?! Nicht einmal die Spec!!!
 %% - Embedded-Hypervisor <- Schreibweise einheitlich
@@ -121,7 +115,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Titel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \titlehead{\center{\large \textsc{Ostfalia Hochschule für angewandte Wissenschaften}}}
 \subject{Master-Arbeit}
-\title{Virtualisierung von Autosar Softwarekomponenten für die Erprobung}
+\title{Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung}
 \author{Martin Wichmann\\Matrikel 701\,277\,37}
 \date{Eingereicht am TODO}
 \publishers{Prüfer: 
@@ -135,19 +129,9 @@
 \lowertitleback{Diese Arbeit wurde mit Hilfe von Freier Software erstellt: \\
 Gesetzt mit Hilfe von {\KOMAScript} und {\LaTeX}. LibreOffice für die \\ Textverarbeitung und gedit als Editor. Xubuntu als offenes Betriebssystem. \\ \\ Diese Arbeit ist, falls nicht anders angegeben, freigegeben unter der Creative Commons CC-BY-SA Lizenz\cite{CCBYSA} und ist erreichbar unter: \url{https://github.com/erebos42/Documents/tree/master/Master_Thesis}.
 }
-\dedication{Do or do not... there is no try!\\ \vspace{1cm}
-\textit{Yoda}
+\dedication{Einfachheit ist Voraussetzung für Zuverlässigkeit.\\ \vspace{1cm}
+\textit{Edsger Wybe Dijkstra}
 }
-
-% Richards Feynman
-% And you will find someday that, after all, it isn’t as horrible as it looks.
-
-% Linus Torvalds
-% Portability is for people who cannot write new programs.
-
-% Edsger W. Dijkstra
-% Simplicity is a great virtue but it requires hard work to achieve it and education to appreciate it. And to make matters worse: complexity sells better.
-% Simplicity is prerequisite for reliability.
 
 
 
@@ -255,12 +239,9 @@ Dieses Kapitel enthält Grundlagen zu den Themen AUTOSAR und Virtualisierung. Da
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Allgemeine Virtualisierung
-% Class 1 und 2
 \section{Virtualisierung}
 \label{sec:Virtualisierung}
-% TODO: Begriffe Host/Gast expliziter erklären
-Der Begriff \emph{Virtualisierung} bezeichnet eine Reihe von Techniken, die verwendet werden, um die Ressourcen eines Rechner-Systems zu verwalten. Hierdurch kann ein reales System, auf mehrere virtuelle Systeme aufgeteilt, und als solche genutzt werden. Dabei können verschiedene Ziele im Vordergrund stehen.
+Der Begriff \emph{Virtualisierung} bezeichnet eine Reihe von Techniken, die verwendet werden, um die Ressourcen eines Rechner-Systems zu verwalten. Hierdurch kann ein reales System, auf mehrere virtuelle Systeme aufgeteilt, und als solche genutzt werden. Dabei können verschiedene Ziele im Vordergrund stehen. Im Bereich der Virtualisierung wird dass System, dass den Hypervisor ausführt Host genannt. Ein Gastsystem hingegen, wird vom Hypervisor verwaltet.
 
 Aus dem Desktop-Bereich ist die System-Virtualisierung bekannt, wie sie zum Beispiel mittels VirtualBox\footnote{VirtualBox zu finden unter \url{www.virtualbox.org}} umgesetzt ist. Hierbei werden die Ressourcen des bestehenden Systems durch einen Hypervisor, auch Virtual Machine Monitor (kurz VMM) genannt, verwaltet und den virtuellen Instanzen zugeordnet. Diese Variante wird vor allem eingesetzt, um Zugriff auf einen anderes Betriebssystem zu erhalten, um so spezielle Software ausführen zu können.
 
@@ -296,7 +277,6 @@ Virtualisierung kann mittels einer Reihe von Techniken realisiert werden. Hier w
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Gründe für Embedded Virtualisierung
 \section{Virtualisierung bei eingebetteten Systemen}
 \label{sec:EVirtualisierung}
 Virtualisierung im Bereich der eingebetteten Systeme, auch bekannt als \emph{Embedded Virtualization} und \emph{Time and Space Partitioning} (kurz TSP), hat in den letzten Jahren immer mehr an Bedeutung gewonnen. Da Mikrocontroller und SOCs\footnote{System-on-a-Chip, dt. Ein-Chip-System} immer leistungsfähiger werden und mehr Rechenkerne besitzen, ist es sinnvoll diese Leistung auszunutzen, um die Effektivität zu erhöhen und Kosten zu sparen. Gerade im Automobil-Bereich, in dem die Anzahl der Steuergeräte zum Teil auf mittlerweile über 50 innerhalb eines Autos gestiegen ist, kann es die Kosten erheblich reduzieren, wenn stattdessen einige dieser System virtualisiert werden können.
@@ -322,7 +302,6 @@ Mit diesen Eigenschaften ähnelt ARINC 653 dem AUTOSAR-Standard. Auch die Konfig
 \subsection{Marktübersicht}
 Im Bereich der Embedded-Hypervisoren existieren eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4 Micorvisor\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}}, Integrity Multivisor\footnote{\url{http://www.ghs.com/products/rtos/integrity_virtualization.html}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}. Auch LynxSecure\footnote{\url{http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php}} und der Wind River Hypervisor\footnote{\url{http://www.windriver.com/products/hypervisor/}} sind bekannte Beispiele. Im Weiteren werden einige der Produkte etwas näher betrachtet.
 
-% TODO: quellen hinzufügen
 \paragraph{PikeOS}
 Der wahrscheinlich umfangreichste embedded Hypervisor ist PikeOS. Dieses Echtzeit-System der Firma \emph{SYSGO AG} basiert auf einem Microkernel und bietet sowohl volle Virtualisierung als auch Para-Virtualisierung. Es ist nach DO-178B und ISO 26262 zertifiziert und auf vielen Architekturen lauffähig. Darunter PowerPC, x86, ARM, MIPS und SPARC-V8-LEON. APIs werden angeboten um folgende Gast-Anwendungen zu ermöglichen: Linux, POSIX, ARINC, AUTOSAR und Real-Time Java. Neben den üblichen API-Funktionen bietet PikeOS einen zertifizierten IP-Stack und ein Dateisystem. Das System wird zum Beispiel im Airbus A350 eingesetzt.
 
@@ -333,10 +312,10 @@ Der OKL4 Microvisor, entwickelt von den \emph{Open Kernel Labs}, basiert ebenfal
 Der von \emph{Green Hills Software} entwickelte INTEGRITY Multivisor ist auf In-Vehicle-Infotainment-Systeme (IVI-Systeme) ausgelegt. Hierzu werden Windows, Linux, Solaris, VxWorks und QNX als Gast-Systeme unterstützt. Es ist nach DO-178B und IEC-61508 zertifiziert und für ARM, PowerPC und x86 Plattformen entworfen. Ebenso wie die anderen Hypervisor unterstützt der INTEGRITY Multivisor übliche Funktionen wie Power-Management und IPC.
 
 \paragraph{COQOS}
-Bei COQOS handelt es sich um einen Hypervisor, der auf die gleichzeitige Ausführung von Linux (Android) und AUTOSAR ausgelegt ist. Ebenso wie der INTEGRITY Multivisor ist COQOS auf IVI-Systeme und Fahrerassistenzsysteme ausgelegt und ist demnach nach ISO 26262 und DO-178B zertifiziert. Als Plattformen werden x86 und ARM unterstützt. Als Sicherheitskonzept ist eine Firewall in COQOS integriert. Außerdem wird ein Watchdog in einer separaten Instanz unterstützt, um die Funktionalität des Systems zu gewährleisten.
+Bei COQOS handelt es sich um einen Hypervisor, der auf die gleichzeitige Ausführung von Linux (Android) und AUTOSAR ausgelegt ist. Ebenso wie der INTEGRITY Multivisor ist COQOS auf IVI-Systeme und Fahrerassistenzsysteme ausgelegt und ist demnach nach ISO 26262 und DO-178B zertifiziert. Als Plattformen werden x86 und ARM unterstützt. Als Sicherheitskonzept ist eine Firewall in COQOS integriert. Außerdem wird ein Watchdog in einer separaten Instanz unterstützt, um die Funktionalität des Systems zu gewährleisten.\cite{coqos}
 
 \paragraph{XtratuM}
-Der Hypervisor XtratuM\footnote{\url{http://www.xtratum.org/}} wird von der \emph{Universidad Politécnica de Valencia} in Spanien entwickelt und ist unter der GNU General Public License freigegeben. Als Ausführungsplattformen werden x86, SPARC-V8-LEON und ARM unterstützt. XtratuM ist für eingebettete Echtzeit-System ausgelegt. Konkret ähnelt die angebotene API dem ARINC-653 Standard und ist damit vor allem für entsprechende Bereich ausgelegt. Da dieser Hypervisor frei zugänglich und unter einer Open-Source-Lizenz freigegeben ist, wird er im Laufe dieser Arbeit etwas näher betrachtet.
+Der Hypervisor XtratuM\footnote{\url{http://www.xtratum.org/}} wird von der \emph{Universidad Politécnica de Valencia} in Spanien entwickelt und ist unter der GNU General Public License freigegeben. Als Ausführungsplattformen werden x86, SPARC-V8-LEON und ARM unterstützt. XtratuM ist für eingebettete Echtzeit-System ausgelegt. Konkret ähnelt die angebotene API dem ARINC-653 Standard und ist damit vor allem für entsprechende Bereich ausgelegt. Da dieser Hypervisor frei zugänglich und unter einer Open-Source-Lizenz freigegeben ist, wird er im Laufe dieser Arbeit etwas näher betrachtet.\cite{xm:usermanual}
 
 
 
@@ -373,7 +352,6 @@ Durch das Einsetzen eines Hypervisors und mehreren VMs kann es zu Leistungseinbu
 
 \paragraph{Größere Folgen eines Ausfalls}
 Da sich die Anzahl der Steuergeräte durch Virtualisierung verringert, verringert sich auch die Hardware-Redundanz. Der Ausfall eines Steuergerätes führt somit Ausfall einer Reihe von Funktionen. Auf der anderen Seite könnte dieser Nachteil jedoch durch Virtualisierung auch stark verbessert werden. So ist es möglich das ein anderes Steuergerät einen Ausfall erkennt und direkt eine Ersatz-VM startet um so die Sicherheit weiter zu gewährleisten. 
-% TODO: evtl. FuSi Rechnung einbauen
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -585,8 +563,7 @@ Wie gesehen, wird eine strikte Trennung der AUTOSAR-Module und deren Aufgaben vo
 \label{sec:Toolkette}
 In diesem Kapitel wird ein Überblick über die nötige Toolkette und die bestehenden Möglichkeiten gegeben. Allgemein werden vier Komponenten benötigt: Basissoftware-Implementation und -Konfigurator, RTE-Generator und ein System-Modellierungs-Werkzeug. Dabei können einzelne Lösungen sowohl eine als auch mehrere dieser Komponenten abdecken. Dadurch fällt die Trennung dieser Schichten zum Teil schwer. In der Theorie soll es bei AUTOSAR möglich sein, einzelne Komponenten der Toolkette auszutauschen. So könnte es möglich sein, Produkte von vier verschiedenen Herstellern zu nutzen und diese über die standardisierten Schnittstellen miteinander arbeiten zu lassen. Auch der Austausch einzelner BSW-Module fällt in diesen Bereich. Ob dies jedoch in der Praxis wirklich möglich ist, ist anzuzweifeln, da viele Hersteller bestimmte Teile des Standards nicht oder nicht komplett unterstützen und es so zu Fehlern kommen kann.
 
-% TODO: warum diese?
-Im Folgenden werden einige AUTOSAR-Distributionen kurz betrachtet\cite{wiki:autosar}. Dabei ist zu sehen, das nicht alle Abschnitte der Toolkette von allen Produkten abgedeckt werden. So spezialisieren sich die Lösungen der Firma dSPACE vor allem auf den System-Entwurf, während Elektrobit hierzu keine Software anbietet. Neben den hier erwähnten Herstellern existieren noch eine Reihe weiterer, die jedoch nicht näher betrachtet werden sollen.
+Im Folgenden werden einige AUTOSAR-Distributionen kurz betrachtet\cite{wiki:autosar}. Die Auswahl der Produkte ist nicht repräsentativ für derern Verbreitung, sondern soll lediglich einen Marktüberblick schaffen. Dabei ist zu sehen, das nicht alle Abschnitte der Toolkette von allen Produkten abgedeckt werden. So spezialisieren sich die Lösungen der Firma dSPACE vor allem auf den System-Entwurf, während Elektrobit hierzu keine Software anbietet. Neben den hier erwähnten Herstellern existieren noch eine Reihe weiterer, die jedoch nicht näher betrachtet werden sollen.
 
 \paragraph{ArcCore}
 ArcCore bietet eine AUTOSAR-Toolkette an, die alle Bereiche abdeckt. Dabei werden sowohl die BSW-Implementation als auch die Basisversion des Entwicklungswerkzeuges als Open-Source unter einer GPL-Lizenz vertrieben. Zudem setzt es mit Eclipse und der GNU-Compiler-Collection auf zwei starke Open-Source Projekte. ArcCore unterstützt AUTOSAR 4.0.
@@ -787,7 +764,7 @@ Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Archite
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.45\textwidth]{arch_finished}
+    \includegraphics[width=0.9\textwidth]{arch_finished}
     \caption{Vollständige Architektur}
     \label{fig:arch_finished}
 \end{figure}
@@ -795,8 +772,14 @@ Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Archite
 % TODO:
 % - Ziele konkret formulieren
 % - Lastenheft, Pflichtenheft, Testfälle, Anwendungsfälle...
+% - Steurende Komponente auch VCAN-Applikation genannt.
+% - Was sollen die Demo-Modi machen?!
 
-
+% Ziele:
+% - Trennung zwischen zwei Ebenen (AUTOSAR und Python)
+% - Demonstration des Konzeptes über Demomodi
+%   - Demo 0: Gleichgeschaltetes Blinken
+%   - Demo 1: Freies Blinken L/R
 
 
 
@@ -1117,8 +1100,7 @@ Das gesamte System Modell ist in Abbildung \ref{fig:smls_modell} zu sehen. Auf d
 
 Auch die nötige CAN-Datenbank in Form einer .dbc-Datei entspricht dem Modell. Hier sind die ECUs und Botschaften ebenfalls nachgebildet. Ein besonderes Augenmerk ist dabei auf das Layout der Signale innerhalb der Botschaften zu legen. Sowohl die .dbc-Datei, als auch das SystemDesk Projekt, sowie die daraus resultierende .arxml-Datei sind auf der beigelegten CD zu finden.
 
-% TODO: tresos; Was war einzurichten...
-
+Die ECU-Konfiguration mittels EB tresos wird nach den üblichen Verfahren durchgeführt. Dabei wurden als Grundlage der von EB durchgeführte Workshop, sowie die Unterlagen zur AUTOSAR-Lehrveranstaltung an der Ostfalia aus dem Wintersemester 2012/2013 genutzt. Die einzelnen Schritte zur Konfiguration der ECU sollen an dieser Stelle nicht aufgeführt werden, da diese in den genannten Dokumenten umfangreich erläutert sind. An dieser Stelle ist zu erwähnen, dass die ECU-Konfiguration mehr Zeit in Anspruch genommen hat, als zu Beginn des Projektes geplannt. Dies folgt vor allem aus der häufig nötigen und langwierigen Fehlersuche.
 
 \begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={Implementation der Runnable}, label={lst:headlight_final}]
 void SWC_SMLS_R_SMLS (void) {
@@ -1157,28 +1139,30 @@ Zum Schluss der Funktion, wird in den Zeilen 16 bis 18, die endgültige Botschaf
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der steuernden Komponente %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Entwicklung der steuernden Komponente}
 \label{sec:entwicklung_vcan_app}
-% TODO
-% - Python GUI
-% - Vorraussetzungen und Ziele
 Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, mit deren Hilfe sich die Demo-Funktionen leicht aktiveren lassen. Zudem werden aktuelle Status-Informationen vom CAN-Bus übersichtlich angezeigt. 
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.6\textwidth]{vcan_app_status}
-\caption{Status-Fenster der VCAN-Applikation}
-\label{fig:vcan_app_status}
+% TODO: Status Bild ersetzen
+\begin{figure}
+    \centering
+    \begin{subfigure}[b]{0.39\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{vcan_app_control}
+        \caption{Kontroll-Fenster}
+        \label{fig:vcan_app_control}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.59\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{vcan_app_status}
+        \caption{Status-Fenster}
+        \label{fig:vcan_app_status}
+    \end{subfigure}
+    \caption{Oberfläche der VCAN-Applikation}
+    \label{fig:vcan_app}
 \end{figure}
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.4  \textwidth]{vcan_app_control}
-\caption{Kontroll-Fenster der VCAN-Applikation}
-\label{fig:vcan_app_control}
-\end{figure}
+Die Oberfläche der in diesem Projekt entwickelten Anwendungen besteht aus zwei Fenstern. Die Oberfläche ist mittels wxPython realisiert, da dieses Plattformübergreifend ohne Anpassungen unterstützt wird. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, stellt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung dar.
 
-Die Oberfläche der in dieser Arbeit entwickelten Anwendungen besteht aus zwei Fenstern. Die Oberfläche ist mittels wxPython realisiert und bewusst minimalistisch gehalten. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, stellt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung dar.
-
-Das in Abbildung \ref{fig:vcan_app_control} zu sehende Fenster, bietet direkten Zugriff auf alle Signale der \texttt{APP\_01} Botschaft.
+Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet direkten Zugriff auf alle Signale der \texttt{APP\_01} Botschaft. Zudem können die zwei Demomodi über die Reiter angesprochen werden.
 
 
 
@@ -1237,7 +1221,9 @@ Das in Abbildung \ref{fig:vcan_app_control} zu sehende Fenster, bietet direkten 
 %   - Fehlerhaftes Steuergerät das z.B. dauernd sendet?!
 %   - Ethernet
 
+% - High Precision Timer könnte bis 100 ns Sekunden runter
 
+% - WxWidget oder pygame für präzise timer -> jitter von 1 ms möglich (unter Linux)
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
@@ -1255,6 +1241,26 @@ Das in Abbildung \ref{fig:vcan_app_control} zu sehende Fenster, bietet direkten 
     \caption{Timinganalyse des VCAN als Boxplot}
     \label{fig:timinganalyse}
 \end{figure}
+
+% Größe der stichprobe: 1000 Botschaften
+% AUTOSAR zum Teil sehr viel schlechter (Senden in Bursts)
+\begin{table}[ht]
+    \centering
+    \begin{tabular}[h]{r  r r}
+            & Stichprobe AUTOSAR & Stichprobe VCAN\\
+        \toprule
+        Durchschnitt        & 122 ms & 100 ms\\
+        Median              & 120 ms & 100 ms\\
+        Maximal Wert           & 140 ms & 100 ms\\
+        Minimal Wert           & 113 ms & 97 ms\\
+        25\% Quantil        & 119 ms & 100 ms\\
+        75\% Quantil        & 129 ms & 100 ms\\
+        Standard Abweichung & 4 ms & 0 ms\\
+        \bottomrule
+    \end{tabular}
+    \caption{Statistische Eigenschaften der Stichproben}
+    \label{tab:jitter_statistik}
+\end{table}
 
 
 
