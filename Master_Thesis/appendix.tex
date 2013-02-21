@@ -198,10 +198,11 @@ Dieses Kapitel beschreibt die im Laufe des Projektes erstellte Software zur Komm
 Das VCAN-Protokoll besteht aus einem Binär-Format, dass per TCP-Socket übertragen wird. Der Aufbau und Abbau der TCP-Verbindungen wird verwendet um Clients am Gateway an- und abzumelden. Zudem müssen Socket-Fehler abgefangen werden, da ein ordnungsgemäßer Verbindungsabbau nicht gegeben sein muss.
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{vcan_protokoll}
-\caption{Überblick über das VCAN Protkoll}
-\label{fig:vcan_protokoll}
+    \centering
+    \input{./images/vcan_protokoll.dia}
+%    \includegraphics[width=0.8\textwidth]{vcan_protokoll}
+    \caption{Überblick über das VCAN Protkoll}
+    \label{fig:vcan_protokoll}
 \end{figure}
 
 Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_protokoll} zu sehen. Das Format besteht aus einem Header, dem DLC-Feld und den eigentlichen Daten. Der Header enthält unter anderem die ID der Botschaft. Die Nutzdaten können 1 bis 8 Byte lang sein. Im folgenden ist eine ausfürliche Auflistung der Felder dargestellt. Die Byte-Reheinfolge entspricht Big-Endian. Tabelle \ref{tab:vcanbotschaft} zeigt eine Beispiel-Botschaft ohne TCP- und Ethernet-Header.
@@ -282,10 +283,11 @@ Die reine VCAN-API besitzt als Abhängigkeit lediglich Module der \emph{CPython}
 Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert auf \emph{wxPython}\footnote{\url{http://www.wxpython.org/}}. Der Benchmark benötigt das Modul \emph{pygame}\footnote{\url{http://www.pygame.org/}} für konstante Timer und \emph{rpy}\footnote{\url{http://rpy.sourceforge.net/}} für die Auswertung der Ergebnisse mittels \emph{R}\footnote{\url{http://www.r-project.org/}}.
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=0.8\textwidth]{vcan_api_uml}
-\caption{UML-Klassendiagramm der VCAN-API}
-\label{fig:vcan_api_uml}
+    \centering
+    \input{./images/vcan_api_uml.dia}
+%    \includegraphics[width=0.8\textwidth]{vcan_api_uml}
+    \caption{UML-Klassendiagramm der VCAN-API}
+    \label{fig:vcan_api_uml}
 \end{figure}
 
 \begin{description}
