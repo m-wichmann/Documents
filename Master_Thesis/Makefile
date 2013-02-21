@@ -4,6 +4,7 @@ TARGET = MasterThesis
 REMOVE = rm -rf
 
 all:
+	./convert_dia2pgf.sh
 	pdflatex $(TARGET)
 	bibtex $(TARGET)
 	makeglossaries $(TARGET)
