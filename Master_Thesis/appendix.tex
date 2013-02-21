@@ -277,10 +277,11 @@ Das Protokoll, wie es im Elektrobit-Gateway eingesetzt wird, hat einige Besonder
 
 \section{Projekt Struktur}
 \label{sec:vcan_struktur}
-% TODO:
-% Abhängigkeiten
+Im Folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \ref{fig:vcan_api_uml} zeigt ein UML-Klassendiagramm der VCAN-API.
 
-Im folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \ref{fig:vcan_api_uml} zeigt eine UML-Klassendiagramm der VCAN-API.
+Die reine VCAN-API besitzt als Abhängigkeit lediglich Module der \emph{CPython} Standardbibliothek. Andere Python Interpreter wie Jython werden zur Zeit nicht unterstützt. Support für PCAN ist nur unter Windows verfügbar und benötigt die PCAN-Basic-API.
+
+Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert auf \emph{wxPython}\footnote{\url{http://www.wxpython.org/}}. Der Benchmark benötigt das Modul \emph{pygame}\footnote{\url{http://www.pygame.org/}} für konstante Timer und \emph{rpy}\footnote{\url{http://rpy.sourceforge.net/}} für die Auswertung der Ergebnisse mittels \emph{R}\footnote{\url{http://www.r-project.org/}}.
 
 \begin{figure}[ht]
 \centering
@@ -310,7 +311,6 @@ Im folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \
         \apiitem{./vcan\_api/vcan\_message.py}
         Enthält die Klasse VCANMessage und einige Konstanten um diese zu Nutzen.
     \end{description}
-    % TODO
     \apiitem{./example\_client.py}
     Verschiedene Beispiele für die Implementierung eines VCAN-Clients.
     \apiitem{./example\_gateway.py}
@@ -319,6 +319,8 @@ Im folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \
     Ein simples Gateway mit grafischer Oberfläche.
     \apiitem{./gateway\_rules.xml}
     Eine Beispiel-Konfiguration der im Gateway eingebauten Firewall-Regeln.
+    \apiitem{./vcan\_app.py}
+    VCAN Applikation um den Scheinwerfer-Versuchsaufbau anzusteuern.
 \end{description}
 
 

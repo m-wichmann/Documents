@@ -9,7 +9,7 @@
 %% - Ethernet Kosten im Gegensatz zu CAN? Vorteile/Nachteile?
 %% - AUTOSAR MISRA-Konform? 
 %% - NDA/IP klären!!! (VW, EB, evtl. dSPACE?!)
-%% - Warum kein Tool AUTOSAR konforme Grafiken?! Nicht einmal die Spec!!!
+%% - Warum kein Tool AUTOSAR konforme Grafiken?! Nicht einmal die Spec!!! <- Dia Shapes erwähnen ;-)
 %% - Embedded-Hypervisor <- Schreibweise einheitlich
 %% - Zitate immer mit "vgl."?
 
@@ -1139,28 +1139,27 @@ Zum Schluss der Funktion, wird in den Zeilen 16 bis 18, die endgültige Botschaf
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der steuernden Komponente %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Entwicklung der steuernden Komponente}
 \label{sec:entwicklung_vcan_app}
-Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, mit deren Hilfe sich die Demo-Funktionen leicht aktiveren lassen. Zudem werden aktuelle Status-Informationen vom CAN-Bus übersichtlich angezeigt. 
+Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, mit deren Hilfe sich die Demo-Funktionen leicht aktiveren lassen. Zudem werden aktuelle Status-Informationen vom CAN-Bus übersichtlich dargestellt. 
 
-% TODO: Status Bild ersetzen
 \begin{figure}
     \centering
-    \begin{subfigure}[b]{0.39\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{vcan_app_control}
-        \caption{Kontroll-Fenster}
-        \label{fig:vcan_app_control}
-    \end{subfigure}
     \begin{subfigure}[b]{0.59\textwidth}
         \centering
         \includegraphics[width=\textwidth]{vcan_app_status}
         \caption{Status-Fenster}
         \label{fig:vcan_app_status}
     \end{subfigure}
+    \begin{subfigure}[b]{0.39\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{vcan_app_control}
+        \caption{Kontroll-Fenster}
+        \label{fig:vcan_app_control}
+    \end{subfigure}
     \caption{Oberfläche der VCAN-Applikation}
     \label{fig:vcan_app}
 \end{figure}
 
-Die Oberfläche der in diesem Projekt entwickelten Anwendungen besteht aus zwei Fenstern. Die Oberfläche ist mittels wxPython realisiert, da dieses Plattformübergreifend ohne Anpassungen unterstützt wird. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, stellt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung dar.
+Die Oberfläche der in diesem Projekt entwickelten Anwendungen besteht aus zwei Fenstern. Sie ist mittels wxPython realisiert, da dieses Plattformübergreifend ohne Anpassungen unterstützt wird. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, stellt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung dar.
 
 Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet direkten Zugriff auf alle Signale der \texttt{APP\_01} Botschaft. Zudem können die zwei Demomodi über die Reiter angesprochen werden.
 
@@ -1195,7 +1194,8 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 % Multi-Core CPUs und leistungsfähige SOCs sind billig
 % Sicherheit (ISO 26262) erfordert viel Aufmerksamkeit
 % Kurze "time-to-market" durch Evaluation auf Windows/Linux Platformen
-% 
+% WinCore ist einfach zu verwenden <- Kein Aufwand wegen emedded
+% Vor allem interessant für Lehre da simpel und schnell. Zudem VCAN zugriff per python
 
 
 
@@ -1204,26 +1204,13 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 \section{Benchmark und Betrachtung der Echtzeitfähigkeit}
 \label{sec:Benchmark}
 % TODO
-%
-% Teile sollten vielleicht in separate Kapitel?!
-%
-% - Echtzeitfähigkeit
-%   - WinCore
-%       - Jitter messen
-%       - Kann Windows Echtzeitfähig sein? Auch mit WinCore?
-%       - Wie verhält sich der Testaufbau unter Last? CPU-Last auf Windows/WinCore/Linux?
-%   - Ethernet
-%       - Verhalten unter Last?
-%   - Embedded Virt
 % - Overhead
 %   - WinCore
-% - Robustheit
-%   - Fehlerhaftes Steuergerät das z.B. dauernd sendet?!
-%   - Ethernet
 
 % - High Precision Timer könnte bis 100 ns Sekunden runter
 
-% - WxWidget oder pygame für präzise timer -> jitter von 1 ms möglich (unter Linux)
+% - WxWidget oder pygame für konstante timer -> jitter von 1 ms möglich (unter Linux)
+% - pygame besser als wxwidget
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
@@ -1242,8 +1229,9 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
     \label{fig:timinganalyse}
 \end{figure}
 
+% TODO:
 % Größe der stichprobe: 1000 Botschaften
-% AUTOSAR zum Teil sehr viel schlechter (Senden in Bursts)
+% AUTOSAR zum Teil sehr viel schlechter (Senden in Bursts) konnte jedoch heir nicht gezeigt werden.
 \begin{table}[ht]
     \centering
     \begin{tabular}[h]{r  r r}
@@ -1251,8 +1239,8 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
         \toprule
         Durchschnitt        & 122 ms & 100 ms\\
         Median              & 120 ms & 100 ms\\
-        Maximal Wert           & 140 ms & 100 ms\\
-        Minimal Wert           & 113 ms & 97 ms\\
+        Maximal Wert        & 140 ms & 100 ms\\
+        Minimal Wert        & 113 ms & 97 ms\\
         25\% Quantil        & 119 ms & 100 ms\\
         75\% Quantil        & 129 ms & 100 ms\\
         Standard Abweichung & 4 ms & 0 ms\\
@@ -1268,7 +1256,7 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 \section{Sicherheitsbetrachtung des Fallbeispiels}
 \label{sec:Sicherheit_Beispiel}
 % TODO
-% krypto/Zertifikat instanz in embedded hyp
+% Immer mehr Internet etc. -> krypto/Zertifikat instanz in embedded hyp
 % AUTOSAR CryptoServiceManager ab Version 4.0
 
 
