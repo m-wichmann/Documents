@@ -1203,52 +1203,56 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 % 
 \section{Benchmark und Betrachtung der Echtzeitfähigkeit}
 \label{sec:Benchmark}
-% TODO
-% - Overhead
-%   - WinCore
+Dieses Kapitel betrachtet das Zeitverhalten des VCAN. Dabei wird versucht eine Aussage zur Echtzeitfähigkeit zu machen. Die Analyse beschränkt sich auf einige wenige Anwendungsfälle. Alle Kombinationen aus Betriebssystem, Netzwerk-, CPU-Last und anderen Faktoren zu testen ist nicht praktikabel.
 
-% - High Precision Timer könnte bis 100 ns Sekunden runter
+Allgemein ist zu sagen, dass Ethernet nicht geeignet ist für harte Echtzeitanforderungen. Da der VCAN jedoch vor allem für die Evaluation und einfache Tests ausgelegt ist, lässt sich Ethernet an dieser Stelle trotzdem gut einsetzen. Die Latenz kann dabei verringert werden, indem die Netzwerklast verringert, sowie Netzwerkarchitektur vereinfacht wird. Das bedeutet, dass die Kommunikation das Testsystems in einem separaten Teilnetz stattfindet, auf das möglichst keine anderen Geräte zugreifen können. 
 
-% - WxWidget oder pygame für konstante timer -> jitter von 1 ms möglich (unter Linux)
-% - pygame besser als wxwidget
+Zur Analyse des Zeitverhaltens wurde eine Benchmark Anwendung entwickelt. Diese startet ein VCAN-Gateway und speichert die Zeiten eingehender Botschaften. Diese können anschließend ausgewertet werden. Abbildung \ref{fig:timinganalyse} zeigt die Ergebnisse zweier Testreihen als Boxplots. Dabei beträgt die Größe der Stichproben jeweils 1\,000 Botschaften. Wie in Abbildung \ref{fig:boxplot_as} zu erkennen ist, liegen die Werte etwa im Bereich von 20 ms um den Median 120 ms herum. Diese Streuung ist für die vorgesehenen Anwendungen durchaus akzeptabel. Der Mittelwert der Messungen scheint jedoch von der Netzwerkarchitektur abzuhängen. So wurden diese Werte im FH-Netz gemessen. In zwei anderen Netzwerken konnten Durchschnitts werden von 110 ms sowie 130 ms festgestellt werden. Die Ursache dieser Abweichung ist nicht geklärt. Da es sich jedoch um einen relativ konstanten Wert handelt, kann dieser durch Maßnahmen innerhalb des System-Modells oder der RTE-Konfiguration ausgeglichen werden.
+
+Zudem wurde während des Projektes eine Eigenheit des WinCore VCAN beobachtet, die jedoch in dieser Auswertung nicht reproduziert werden konnte. Hierbei wurden Botschaften als Häufungen gesendet. Es kamen Zykluszeiten von 1 s vor, direkt gefolgt einigen Botschaften mit Pausezeiten im Bereich von wenigen millisekunden.
+
+Abbildung \ref{fig:boxplot_vcan} zeigt die Ergebnisse der Analyse bei Benutzung der VCAN-API. Hier ist zu erkennen, dass eine Genauigkeit von etwa einer millisekunde möglich ist. Lediglich einzelne Ausreißer, in diesem Fall nur einer, weichen einige Millisekunden vom gewünschten Wert ab.
+
+% TODO: einheiten in plots?!
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{boxplot_as}
-        \caption{Timing AUTOSAR}
+        \caption{Zeitverhalten AUTOSAR}
         \label{fig:boxplot_as}
     \end{subfigure}
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \includegraphics[width=\textwidth]{boxplot_vcan}
-        \caption{Timing VCAN-API}
+        \caption{Zeitverhalten VCAN-API}
         \label{fig:boxplot_vcan}
     \end{subfigure}
-    \caption{Timinganalyse des VCAN als Boxplot}
+    \caption{Zeitanalyse des VCAN als Boxplots}
     \label{fig:timinganalyse}
 \end{figure}
 
-% TODO:
-% Größe der stichprobe: 1000 Botschaften
-% AUTOSAR zum Teil sehr viel schlechter (Senden in Bursts) konnte jedoch heir nicht gezeigt werden.
+Tabelle \ref{tab:jitter_statistik} führt die Eigenschaften der Stichproben auf. Auch hier zeigen sich die beschriebenen Ergebnise. Die Standard Abweichung beim Einsatz der VCAN-API beträgt lediglich 0.1 ms, während diese beim Einsatz von AUTOSAR 4.8 ms beträgt. Damit sind beide Werte im akzeptablen Bereich um weiche Echtzeit für die vorgesehenen Anwendungen zu ermöglichen.
+
 \begin{table}[ht]
     \centering
     \begin{tabular}[h]{r  r r}
             & Stichprobe AUTOSAR & Stichprobe VCAN\\
         \toprule
-        Durchschnitt        & 122 ms & 100 ms\\
-        Median              & 120 ms & 100 ms\\
-        Maximal Wert        & 140 ms & 100 ms\\
-        Minimal Wert        & 113 ms & 97 ms\\
-        25\% Quantil        & 119 ms & 100 ms\\
-        75\% Quantil        & 129 ms & 100 ms\\
-        Standard Abweichung & 4 ms & 0 ms\\
+        Durchschnitt        & 122.9 ms & 100.0 ms\\
+        Median              & 120.1 ms & 100.0 ms\\
+        Maximal Wert        & 140.2 ms & 100.3 ms\\
+        Minimal Wert        & 113.4 ms & 97.2 ms\\
+        25\% Quantil        & 119.7 ms & 100.0 ms\\
+        75\% Quantil        & 129.4 ms & 100.0 ms\\
+        Standard Abweichung & 4.8 ms & 0.1 ms\\
         \bottomrule
     \end{tabular}
     \caption{Statistische Eigenschaften der Stichproben}
     \label{tab:jitter_statistik}
 \end{table}
+
+Da die Implementation des WinCore nicht offen liegt, lässt sich das Zeitverhalten hier nicht verbessern. Beim Einsatz der VCAN-API sind jedoch einige Möglichkeiten denkbar. Bisher wurden wxPython uns pygame eingesetzt um konstante Timer zu erhalten. Diese sorgen dafür, dass Teile der Ausführungszeit nicht zur Wartezeit hinzukommen. Dabei konnten mittels pygame zuverlässig Zeiten bis 1 ms getestet werden. Damit ist der Bereich üblich genutzter Zeiten abgedeckt. Um den Jitter noch weiter zu verringern ist es denkbar High Precision Timer zu nutzen. Diese können Zeiten bis 100 ns auflösen.
 
 
 
