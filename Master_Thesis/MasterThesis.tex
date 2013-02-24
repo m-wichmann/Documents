@@ -189,7 +189,8 @@ Das in dieser Master-Arbeit betrachtete Praxisbeispiel ist eine Scheinwerfersteu
 
 \begin{figure}[ht]
 \centering
-\includegraphics[width=0.8\textwidth]{arch_begin}
+\input{./images/arch_begin.dia}
+%\includegraphics[width=0.8\textwidth]{arch_begin}
 \caption{Vorläufige Architektur}
 \label{fig:arch_begin}
 \end{figure}
@@ -250,14 +251,16 @@ Virtualisierung kann mittels einer Reihe von Techniken realisiert werden. Hier w
     \centering
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{virt_type1}
+        \input{./images/virt_type1.dia}
+%        \includegraphics[width=\textwidth]{virt_type1}
         \caption{Type 1-Hypervisor}
         \label{fig:hypervisor_type1}
     \end{subfigure}
     \qquad
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
-        \includegraphics[width=\textwidth]{virt_type2}
+        \input{./images/virt_type2.dia}
+%        \includegraphics[width=\textwidth]{virt_type2}
         \caption{Type 2-Hypervisor}
         \label{fig:hypervisor_type2}
     \end{subfigure}
@@ -286,7 +289,8 @@ Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkan
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{arinc653}
+    \input{./images/arinc653.dia}
+%    \includegraphics[width=0.7\textwidth]{arinc653}
     \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
     \label{fig:arinc_653}
 \end{figure}
@@ -402,7 +406,8 @@ Diese Kapitel soll einen Überblick über die \emph{Grundlagen von AUTOSAR} gebe
 
 \begin{figure}[p]
     \centering
-    \includegraphics[width=1\textwidth]{autosar_overview}
+    \resizebox{\linewidth}{!}{\input{./images/autosar_overview.dia}}
+%    \includegraphics[width=1\textwidth]{autosar_overview}
     \caption{Autosar Überblick}
     \label{fig:autosar_overview}
 \end{figure}
@@ -435,7 +440,8 @@ An zentraler Stelle steht das "`AUTOSAR Entwicklungswerkzeug"'. Dieses besteht i
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{Autosar_Prozess}
+    \resizebox{\linewidth}{!}{\input{./images/Autosar_Prozess.dia}}
+%    \includegraphics[width=1\textwidth]{Autosar_Prozess}
     \caption{AUTOSAR-Entwicklungs-Prozess}
     \label{fig:autosar_prozess}
 \end{figure}
@@ -450,7 +456,8 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{autosar_layer}
+    \resizebox{\linewidth}{!}{\input{./images/autosar_layer.dia}}
+%    \includegraphics[width=1\textwidth]{autosar_layer}
     \caption{AUTOSAR-Schichtenmodell}
     \label{fig:autosar_layer}
 \end{figure}
@@ -494,7 +501,8 @@ Bei der \emph{Basis-Software} (kurz BSW) handelt es sich um das eigentlich Betri
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=1\textwidth]{autosar_refined_layer}
+    \resizebox{\linewidth}{!}{\input{./images/autosar_refined_layer.dia}}
+%    \includegraphics[width=1\textwidth]{autosar_refined_layer}
     \caption{AUTOSAR-Schichtenmodell mit genauerer Aufteilung}
     \label{fig:autosar_refined_layer}
 \end{figure}
@@ -535,7 +543,8 @@ Die in Abbildung \ref{fig:komm_beispiel} zu sehende, und im Weiteren erläuterte
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.45\textwidth]{komm_beispiel}
+    \input{./images/komm_beispiel.dia}
+%    \includegraphics[width=0.45\textwidth]{komm_beispiel}
     \caption[Struktur der AUTOSAR-Kommunikation]{Struktur der AUTOSAR-Kommunikation für das Senden und Empfangen einer CAN-Botschaft}
     \label{fig:komm_beispiel}
 \end{figure}
@@ -647,10 +656,11 @@ Funktionale Sicherheit versucht einen allgemeinen methodischen Ansatz zur Absich
 Abbildung \ref{fig:lifecycle} zeigt den Sicherheitslebenzyklus nach ISO 26262. Dieser stellt eine konkrete Interpretation des Produktlebenszyklus nach DIN 61508 dar. Die im Bild angegebenen Nummerierungen verweisen auf die jeweiligen Kapitel in der Norm. 
 
 \begin{figure}[!htbp]
-\center
-\includegraphics[width=0.75\textwidth]{ISO_26262_Lifecycle}
-\caption[Sicherheitslebenszyklus nach ISO 26262]{Sicherheitslebenszyklus nach ISO 26262 (vgl. \cite{iso26262})}
-\label{fig:lifecycle}
+    \center
+    \input{./images/ISO_26262_Lifecycle.dia}
+%    \includegraphics[width=0.75\textwidth]{ISO_26262_Lifecycle}
+    \caption[Sicherheitslebenszyklus nach ISO 26262]{Sicherheitslebenszyklus nach ISO 26262 (vgl. \cite{iso26262})}
+    \label{fig:lifecycle}
 \end{figure}
 
 Der Lebenszyklus lässt sich in drei Phasen aufteilen. In der \emph{Concept phase} werden die Produkt-Anforderungen definiert. Zusätzlich wird hier eine Gefährdungsanalyse und Risikoeinschätzung vorgenommen und ein Sicherheitsplan zur funktionalen Sicherheit entworfen der alle weiteren Phasen abdeckt.
@@ -754,7 +764,8 @@ Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Archite
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{arch_finished}
+    \input{./images/arch_finished.dia}
+%    \includegraphics[width=0.9\textwidth]{arch_finished}
     \caption{Vollständige Architektur}
     \label{fig:arch_finished}
 \end{figure}
@@ -1080,10 +1091,11 @@ Ziel der AUTOSAR-Komponente ist die Kommunikation mit, und das Befehle Empfangen
 Hierbei bieten die ersten vier Signale direkten Zugriff auf die entsprechenden Funktionen des BCM. Die restlichen Signale werden verwendet um zwei Demo-Modi anzusteuern. Diese sollen verdeutlichen, dass durch die Kommunikations-Kette, Python-AUTOSAR-BCM, eine Entkopplung der Funktionalität erreicht wird. So kann die steuernde Komponente zwar über die Botschaft einen Befehl senden, jedoch nicht direkt die Hardware beeinflussen. Dies übernimmt die AUTOSAR-Komponente und wirkt damit als Puffer zwischen Anwender und Hardware.
 
 \begin{figure}[ht]
-\centering
-\includegraphics[width=\textwidth]{SMLS_Modell}
-\caption{Entwickeltes AUTOSAR Modell}
-\label{fig:smls_modell}
+    \centering
+    \resizebox{\linewidth}{!}{\input{./images/SMLS_Modell.dia}}
+%    \includegraphics[width=\textwidth]{SMLS_Modell}
+    \caption{Entwickeltes AUTOSAR Modell}
+    \label{fig:smls_modell}
 \end{figure}
 
 Das gesamte System Modell ist in Abbildung \ref{fig:smls_modell} zu sehen. Auf der rechten Seite ist die steuernde Komponente, SWC\_APP, dargestellt. Diese ist in Python realisiert und nutzt den VCAN. Die Software Komponente SWC\_BCM stellt die ECU-Hardware dar. Obwohl beide Komponenten nicht mittels AUTOSAR realisiert werden, sind sie im Modell nötig, um die entsprechenden Ports zu definieren. Die hier erstellte AUTOSAR-Komponente ist als SWC\_SMLS im Modell sichtbar. Die Botschaften Licht\_vorne\_01 und Klemmen\_Status\_01 werden verwendet um den aktuellen Status anzeigen zu können. Die letzte verbleibende Botschaft, SMLS\_01, beinhaltet die Steuer-Signale vom SMLS zum BCM hin.
