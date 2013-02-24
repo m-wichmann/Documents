@@ -188,11 +188,11 @@ Im darauf folgenden Kapitel wird das Fallbeispiel und dessen Umsetzung vorgestel
 Das in dieser Master-Arbeit betrachtete Praxisbeispiel ist eine Scheinwerfersteuerung inklusive User-Interface. Dies ist bewusst als minimales Beispiel konzipiert, um den Fokus auf die Virtualisierung und Evaluierung zu legen.
 
 \begin{figure}[ht]
-\centering
-\input{./images/arch_begin.dia}
-%\includegraphics[width=0.8\textwidth]{arch_begin}
-\caption{Vorläufige Architektur}
-\label{fig:arch_begin}
+    \centering
+    \input{./images/arch_begin.dia}
+    %\includegraphics[width=0.8\textwidth]{arch_begin}
+    \caption{Vorläufige Architektur}
+    \label{fig:arch_begin}
 \end{figure}
 
 Die geplante Architektur der Scheinwerfersteuerung ist in Abbildung \ref{fig:arch_begin} zu sehen. Dabei sind zwei getrennte Hardwareelemente zu sehen. Zum Einen das Scheinwerfersteuergerät und zum Anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles AUTOSAR und Linux auf einem Windows Host.
@@ -211,22 +211,22 @@ Hierbei ist zu beachten, dass das Aktivieren des Netzwerkmanagements erst mögli
 Da der Zeitaufwand für die einzelnen Phasen zu Beginn nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes der Zeitraum eines Monats vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen. Jede Phase enthält die Vorbereitung, Umsetzung und Dokumentation des entsprechenden Bereichs.
 
 \begin{figure}[ht]
-\centering
+    \centering
 
-\begin{ganttchart}{12}
-\gantttitle{2012}{8} 
-\gantttitle{2013}{4} \\
-\gantttitlelist{9,10,11,12,1,2}{2} \\
-\ganttbar{Virtualisierung}{1}{2} \\
-\ganttbar{Kommunikation Linux/AUTOSAR}{3}{4} \\
-\ganttbar{Kommunikation AUTOSAR/ECU}{5}{6} \\
-\ganttbar{AUTOSAR Komponente}{7}{8} \\
-\ganttbar{Evaluation}{9}{10} \\
-\ganttbar{Fertigstellen der Arbeit}{11}{12} 
-\end{ganttchart}
+    \begin{ganttchart}{12}
+    \gantttitle{2012}{8} 
+    \gantttitle{2013}{4} \\
+    \gantttitlelist{9,10,11,12,1,2}{2} \\
+    \ganttbar{Virtualisierung}{1}{2} \\
+    \ganttbar{Kommunikation Linux/AUTOSAR}{3}{4} \\
+    \ganttbar{Kommunikation AUTOSAR/ECU}{5}{6} \\
+    \ganttbar{AUTOSAR Komponente}{7}{8} \\
+    \ganttbar{Evaluation}{9}{10} \\
+    \ganttbar{Fertigstellen der Arbeit}{11}{12} 
+    \end{ganttchart}
 
-\caption{Zeitplanung Master-Arbeit}
-\label{fig:gantt}
+    \caption{Zeitplanung Master-Arbeit}
+    \label{fig:gantt}
 \end{figure}
 
 
@@ -369,28 +369,28 @@ Ein Grund für den Einsatz von AUTOSAR ist vor allem die steigende Komplexität 
 Tabelle \ref{tab:timeline} zeigt die Versionshistorie von AUTOSAR. Die Entwicklung ist in drei Phasen eingeteilt. Die erste Phase beginnt etwa zwei Jahre nach Gründung Entwicklungspartnerschaft in 2003, und beschäftigt sich mit den Grundlagen der Architektur. 2007 lief die Phase II an, mit dem Ziel der Erweiterung des Standards. Phase III begann 2011 und konzentriert sich auf die Wartung und Pflege der Architektur. Dabei ist zu beachten, dass sowohl die Version 3 als auch Version 4 des Standards zur Zeit parallel gepflegt werden.
 
 \begin{table}[h]
-\center
-\begin{tabular}[h]{c c c l}
-\toprule
-Release & Datum & Phase & Notiz\\
-\midrule
-      & Juli 2003  &  & Gründung AUTOSAR\\
-\midrule
-1.0   & 08.07.2005 & \multirow{3}{*}{Phase I} & \\
-2.0	  & 04.05.2006 &  & Entwicklung des Standards\\
-2.1	  & 04.12.2006 &  & \\
-\midrule
-3.0	  & 21.12.2007 & \multirow{3}{*}{Phase II} & \\
-3.1	  & 15.08.2008 &  & Selektive Verbesserungen\\
-4.0	  & 18.12.2009 &  & \\
-\midrule
-4.0.2 & 15.04.2011 & \multirow{3}{*}{Phase III} & \\
-3.2	  & 13.05.2011 &  & Wartung\\
-4.0.3 & 22.12.2011 &  & \\
-\bottomrule
-\end{tabular}
-\caption{Zeitlicher Ablauf der AUTOSAR-Entwicklung (vgl. \cite{as_background}\cite{as_roadmap}\cite{wiki:autosar_de})}
-\label{tab:timeline}
+    \centering
+    \begin{tabular}[h]{c c c l}
+    \toprule
+    Release & Datum & Phase & Notiz\\
+    \midrule
+          & Juli 2003  &  & Gründung AUTOSAR\\
+    \midrule
+    1.0   & 08.07.2005 & \multirow{3}{*}{Phase I} & \\
+    2.0	  & 04.05.2006 &  & Entwicklung des Standards\\
+    2.1	  & 04.12.2006 &  & \\
+    \midrule
+    3.0	  & 21.12.2007 & \multirow{3}{*}{Phase II} & \\
+    3.1	  & 15.08.2008 &  & Selektive Verbesserungen\\
+    4.0	  & 18.12.2009 &  & \\
+    \midrule
+    4.0.2 & 15.04.2011 & \multirow{3}{*}{Phase III} & \\
+    3.2	  & 13.05.2011 &  & Wartung\\
+    4.0.3 & 22.12.2011 &  & \\
+    \bottomrule
+    \end{tabular}
+    \caption{Zeitlicher Ablauf der AUTOSAR-Entwicklung (vgl. \cite{as_background}\cite{as_roadmap}\cite{wiki:autosar_de})}
+    \label{tab:timeline}
 \end{table}
 
 
