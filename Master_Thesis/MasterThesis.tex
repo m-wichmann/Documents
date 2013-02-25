@@ -140,7 +140,7 @@ Gesetzt mit Hilfe von {\KOMAScript} und {\LaTeX}. LibreOffice für die \\ Textve
 \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
 Nach fast zehn Jahren seit den ersten Bemühungen um AUTOSAR, haben sich die Architektur und die Entwicklungsmethoden mittlerweile in der Automobilindustrie etabliert. Diese Master-Arbeit betrachtet die Möglichkeiten AUTOSAR Komponenten virtualisiert einzusetzen. Hierzu wird ein Fallbeispiel betrachtet, mit Hilfe dessen sowohl die Virtualisierung, inklusive der Kommunikation, als auch AUTOSAR selber evaluiert wird. Um den Bedarf an AUTOSAR-Entwicklern zu decken, wird an der Ostfalia Hochschule für angewandte Wissenschaften seit einige Jahren AUTOSAR in der Lehre eingesetzt. Um diese Bemühungen zu unterstützen soll diese Arbeit zusätzlich als Grundlagen-Einführung dienen.
 
-\textbf{Schlüsselwörter}: AUTOSAR, Eingebettete-Virtualisierung, ISO 26262
+\textbf{Schlüsselwörter}: AUTOSAR, eingebettete Virtualisierung, ISO 26262
 \vfill
 
 \foreignlanguage{english}{
@@ -190,7 +190,6 @@ Das in dieser Master-Arbeit betrachtete Praxisbeispiel ist eine Scheinwerfersteu
 \begin{figure}[ht]
     \centering
     \input{./images/arch_begin.dia}
-    %\includegraphics[width=0.8\textwidth]{arch_begin}
     \caption{Vorläufige Architektur}
     \label{fig:arch_begin}
 \end{figure}
@@ -252,7 +251,6 @@ Virtualisierung kann mittels einer Reihe von Techniken realisiert werden. Hier w
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
         \input{./images/virt_type1.dia}
-%        \includegraphics[width=\textwidth]{virt_type1}
         \caption{Type 1-Hypervisor}
         \label{fig:hypervisor_type1}
     \end{subfigure}
@@ -260,7 +258,6 @@ Virtualisierung kann mittels einer Reihe von Techniken realisiert werden. Hier w
     \begin{subfigure}[b]{0.4\textwidth}
         \centering
         \input{./images/virt_type2.dia}
-%        \includegraphics[width=\textwidth]{virt_type2}
         \caption{Type 2-Hypervisor}
         \label{fig:hypervisor_type2}
     \end{subfigure}
@@ -281,7 +278,7 @@ Virtualisierung kann mittels einer Reihe von Techniken realisiert werden. Hier w
 \label{sec:EVirtualisierung}
 Virtualisierung im Bereich der eingebetteten Systeme, auch bekannt als \emph{Embedded Virtualization} und \emph{Time and Space Partitioning} (kurz TSP), hat in den letzten Jahren immer mehr an Bedeutung gewonnen. Da Mikrocontroller und SOCs\footnote{System-on-a-Chip, dt. Ein-Chip-System} immer leistungsfähiger werden und mehr Rechenkerne besitzen, ist es sinnvoll diese Leistung auszunutzen, um die Effektivität zu erhöhen und Kosten zu sparen. Gerade im Automobil-Bereich, in dem die Anzahl der Steuergeräte zum Teil auf mittlerweile über 50 innerhalb eines Autos gestiegen ist, kann es die Kosten erheblich reduzieren, wenn stattdessen einige dieser System virtualisiert werden können.
 
-Hypervisor im Embedded-Bereich müssen bestimmte Anforderungen erfüllen die viele Hypervisoren nicht beachten. Zu diesen Anforderungen gehört ein geringer Energieverbrauch und effiziente Speichernutzung. Ein weiterer wichtiger Punkt ist die Echtzeitfähigkeit. Diese ist vor allem kritisch, da meist eine zweistufige Schedulerarchitektur entsteht, zum einen der Scheduler des Hypervisors und zum anderen der Scheduler des Gastsystems. Eine Echtzeitanalyse wird hierdurch verkompliziert (vgl. \cite{two_lvl_sched}).
+Hypervisor im embedded Bereich müssen bestimmte Anforderungen erfüllen die viele Hypervisoren nicht beachten. Zu diesen Anforderungen gehört ein geringer Energieverbrauch und effiziente Speichernutzung. Ein weiterer wichtiger Punkt ist die Echtzeitfähigkeit. Diese ist vor allem kritisch, da meist eine zweistufige Schedulerarchitektur entsteht, zum einen der Scheduler des Hypervisors und zum anderen der Scheduler des Gastsystems. Eine Echtzeitanalyse wird hierdurch verkompliziert (vgl. \cite{two_lvl_sched}).
 
 Um nur ein einfaches Beispiel zu nennen, könnte ein Anwendung mit vier Subsystemen betrachtet werden. Diese Subsysteme könnten alle in ein einziges System mit einer 4-Kern CPU vereint und genauso wie vorher verwendet werden. Je nach benötigter Leistung könnte das resultierende System durchaus auch verkleinert und damit kostengünstiger gestaltet werden. Jedoch entstehen auch Probleme, wie ein Overhead durch den Hypervisor, durch den eine höhere Leistung nötig ist. Außerdem müssen natürlich alle nötigen Ein- und Ausgänge der Subsysteme auf dem resultierenden System vorhanden sein.
 
@@ -290,7 +287,6 @@ Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkan
 \begin{figure}[ht]
     \centering
     \input{./images/arinc653.dia}
-%    \includegraphics[width=0.7\textwidth]{arinc653}
     \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
     \label{fig:arinc_653}
 \end{figure}
@@ -301,7 +297,7 @@ Mit diesen Eigenschaften ähnelt ARINC 653 dem AUTOSAR-Standard. Auch die Konfig
 
 
 \subsection{Marktübersicht}
-Im Bereich der Embedded-Hypervisoren existieren eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4 Micorvisor\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}}, Integrity Multivisor\footnote{\url{http://www.ghs.com/products/rtos/integrity_virtualization.html}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}. Auch LynxSecure\footnote{\url{http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php}} und der Wind River Hypervisor\footnote{\url{http://www.windriver.com/products/hypervisor/}} sind bekannte Beispiele. Im Weiteren werden einige der Produkte etwas näher betrachtet.
+Im Bereich der embedded Hypervisoren existieren eine Reihe verbreiteter Produkte. Dazu gehören zum Beispiel PikeOS\footnote{\url{http://www.sysgo.com/products/pikeos-rtos-and-virtualization-concept/embedded-virtualization/}}, OKL4 Micorvisor\footnote{\url{http://www.ok-labs.com/products/okl4-microvisor}}, Integrity Multivisor\footnote{\url{http://www.ghs.com/products/rtos/integrity_virtualization.html}} und COQOS\footnote{\url{http://www.opensynergy.com/Products/COQOS}}. Auch LynxSecure\footnote{\url{http://www.lynuxworks.com/embedded-linux/embedded-linux-virtualization.php}} und der Wind River Hypervisor\footnote{\url{http://www.windriver.com/products/hypervisor/}} sind bekannte Beispiele. Im Weiteren werden einige der Produkte etwas näher betrachtet.
 
 \paragraph{PikeOS}
 Der wahrscheinlich umfangreichste embedded Hypervisor ist PikeOS. Dieses Echtzeitsystem der Firma \emph{SYSGO AG} basiert auf einem Microkernel und bietet sowohl volle Virtualisierung als auch Paravirtualisierung. Es ist nach DO-178B und ISO 26262 zertifiziert und auf vielen Architekturen lauffähig. Darunter PowerPC, x86, ARM, MIPS und SPARC-V8-LEON. APIs werden angeboten um folgende Gastanwendungen zu ermöglichen: Linux, POSIX, ARINC, AUTOSAR und Real-Time Java. Neben den üblichen API-Funktionen bietet PikeOS einen zertifizierten IP-Stack und ein Dateisystem. Das System wird zum Beispiel im Airbus A350 eingesetzt.
@@ -340,7 +336,7 @@ Durch die Möglichkeit verschiedene Betriebssysteme einzusetzen, lässt sich alt
 Der Schutz von \emph{Intellectual Property} spielt in der heutigen Wirtschaft eine große Rolle, jedoch bietet die Open-Source-Welt einige interessante Möglichkeiten. Um diese beiden Welten zu trennen und trotzdem von beidem zu profitieren, können unterschiedliche VMs verwendet werden. So ist es denkbar eine VM für jeglichen GPL-Code zu nutzen, die über Ethernet mit dem Rest des Systems kommuniziert. Damit muss der eigene Code nicht unter der GPL freigegeben werden, da nicht gegen GPL-Code gelinkt wurde.
 
 \paragraph{Hypervisor klein und robust}
-Ein im Embedded Bereich eingesetzter Hypervisor kann klein und robust sein, da die meisten der aus der Desktopvirtualisierung bekannten Techniken nicht benötigt werden. Daraus folgt, dass ein embedded Hypervisor sehr kompakt ist und gut optimiert werden kann. Theoretisch ist es sogar möglich, diesen oder Teile davon, formal zu beweisen und somit auf dieser Ebene Sicherheit zu garantieren.
+Ein im embedded Bereich eingesetzter Hypervisor kann klein und robust sein, da die meisten der aus der Desktopvirtualisierung bekannten Techniken nicht benötigt werden. Daraus folgt, dass ein embedded Hypervisor sehr kompakt ist und gut optimiert werden kann. Theoretisch ist es sogar möglich, diesen oder Teile davon, formal zu beweisen und somit auf dieser Ebene Sicherheit zu garantieren.
 
 \subsection{Nachteile}
 Neben den bisher genannten Vorteilen bietet embedded Virtualisierung auch einige Nachteile. Diese werden im Folgenden betrachtet.
@@ -407,7 +403,6 @@ Diese Kapitel soll einen Überblick über die \emph{Grundlagen von AUTOSAR} gebe
 \begin{figure}[p]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/autosar_overview.dia}}
-%    \includegraphics[width=1\textwidth]{autosar_overview}
     \caption{Autosar Überblick}
     \label{fig:autosar_overview}
 \end{figure}
@@ -441,7 +436,6 @@ An zentraler Stelle steht das "`AUTOSAR Entwicklungswerkzeug"'. Dieses besteht i
 \begin{figure}[ht]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/Autosar_Prozess.dia}}
-%    \includegraphics[width=1\textwidth]{Autosar_Prozess}
     \caption{AUTOSAR-Entwicklungs-Prozess}
     \label{fig:autosar_prozess}
 \end{figure}
@@ -457,7 +451,6 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
 \begin{figure}[ht]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/autosar_layer.dia}}
-%    \includegraphics[width=1\textwidth]{autosar_layer}
     \caption{AUTOSAR-Schichtenmodell}
     \label{fig:autosar_layer}
 \end{figure}
@@ -502,7 +495,6 @@ Bei der \emph{Basis-Software} (kurz BSW) handelt es sich um das eigentlich Betri
 \begin{figure}[ht]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/autosar_refined_layer.dia}}
-%    \includegraphics[width=1\textwidth]{autosar_refined_layer}
     \caption{AUTOSAR-Schichtenmodell mit genauerer Aufteilung}
     \label{fig:autosar_refined_layer}
 \end{figure}
@@ -544,7 +536,6 @@ Die in Abbildung \ref{fig:komm_beispiel} zu sehende, und im Weiteren erläuterte
 \begin{figure}[ht]
     \centering
     \input{./images/komm_beispiel.dia}
-%    \includegraphics[width=0.45\textwidth]{komm_beispiel}
     \caption[Struktur der AUTOSAR-Kommunikation]{Struktur der AUTOSAR-Kommunikation für das Senden und Empfangen einer CAN-Botschaft}
     \label{fig:komm_beispiel}
 \end{figure}
@@ -597,12 +588,10 @@ Auch das Fehlen einer Referenzimplementierung kann als Kritik an den Standard an
 
 \paragraph{Schnelle Entwicklung von AUTOSAR}
 Die schnelle Entwicklung von AUTOSAR bringt durchaus Probleme mit sich. Seit 2005 ist etwa alle zwei Jahre eine neue Version der AUTOSAR-Spezifikation veröffentlicht worden -- mitunter mit umfangreichen Änderungen und Neuerungen. Dieser schnellen Entwicklung müssen die Toolketten-Anbieter und die Automobil-Hersteller folgen. Erstere müssen dabei möglichst schnell die neue Version unterstützen und die neuen BSW-Module anbieten, um Wettbewerbsfähig zu sein. Automobilhersteller müssen zudem versuchen, die aktuellen Versionen in ihren Entwicklungsprozess einzubauen. Da dieser durchaus mehrere Jahre betragen kann, ist eine kurzfristige Umstellung nur schwer möglich. Hinzu kommt zudem, dass einige OEMs veränderte und erweiterte AUTOSAR-Variationen verwenden. Auch diese müssen von den eingesetzten Tools unterstützt werden. Diese Punkte zusammen führen dazu, dass der Entwicklungsprozess der Toolkette und der Endprodukte nur schwer dem aktuellen Stand von AUTOSAR folgen kann. Es ist jedoch zu erwarten, dass sich die Entwicklung von AUTOSAR in Zukunft verlangsamt und damit das Nachvollziehen der Änderungen erleichtert wird. Die im Moment gängige Praxis mehrere AUTOSAR-Versionen zu unterstützen und zu pflegen würde damit auch ein Ende haben (vgl. \cite{as_kritik}\cite[Seite 179]{SE_Autosar}).
-% TODO: Notiz von Markus (?): Eingehen auf Entstehung des Standards?
 
 \paragraph{Bindung an Hersteller}
 Im Standard ist vorgesehen, dass Soft\-ware-Kom\-po\-nen\-ten, Basissoftware-Module und ähnliches austauschbar sind. Jedoch ist anzuzweifeln, ob dieses in der Praxis so einfach möglich ist. Hierdurch entsteht eine Bindung an den Hersteller der AUTOSAR-Distribution, da der Aufwand und die Kosten eines Umstiegs zu einem anderen Hersteller hoch sind (vgl. \cite{as_kritik}).
 
-% TODO: Spiralmodell erwähnen?!
 \paragraph{Starke Relevanz der Designphase}
 Durch die Top-Down-Methodik gewinnt die Designphase stark an Relevanz. Dies ist einerseits ein Vorteil, da das gesamte System aus einer abstrakten Perspektive entworfen werden kann, auf der anderen Seite jedoch auch ein Nachteil. Fehler, die erst in der Umsetzung und Implementation des Systems zu erkennen sind, müssen auf das Modell zurück abgebildet werden. Hierdurch ergibt sich ein erneuter Integrationsaufwand, da die neuen Versionen des Modells wieder eingearbeitet werden müssen. Dies ist zum Beispiel auch während dieses Projektes erkennbar. Das Hinzufügen einer CAN-Botschaft führt zu einer Änderung der CAN-Matrix, des System-Designs und zu einer Notwendigkeit die Basissoftware neu zu konfigurieren. In einem klassischen Design, könnte dies wahrscheinlich einfacher gelöst werden, jedoch ist ein Vergleich dieser beiden Methoden an dieser Stelle nicht möglich.
 
@@ -658,7 +647,6 @@ Abbildung \ref{fig:lifecycle} zeigt den Sicherheitslebenzyklus nach ISO 26262. D
 \begin{figure}[!htbp]
     \center
     \input{./images/ISO_26262_Lifecycle.dia}
-%    \includegraphics[width=0.75\textwidth]{ISO_26262_Lifecycle}
     \caption[Sicherheitslebenszyklus nach ISO 26262]{Sicherheitslebenszyklus nach ISO 26262 (vgl. \cite{iso26262})}
     \label{fig:lifecycle}
 \end{figure}
@@ -752,35 +740,31 @@ Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 bei
 \label{sec:Umsetzung_Fallbeispiel}
 Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des Projektes. Dabei werden Entscheidungen begründet und Alternativen betrachtet.
 
-Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Architektur stellt die Grundlage für das Fallbeispiel dar. In Abbildung \ref{fig:arch_finished} ist diese Architektur verfeinert dargestellt, wie sie in diesem Projekt umgesetzt wurde. Dabei sind fünf Kernbereiche identifizierbar.
-
-\begin{itemize}
-    \item Virtualisierung
-    \item Entwicklung der AUTOSAR-Komponente
-    \item Entwicklung der Steuerungs-Anwendung
-    \item Kommunikation Linux und AUTOSAR via VCAN
-    \item Kommunikation zwischen VCAN und Scheinwerfer-ECU
-\end{itemize}
-
 \begin{figure}[ht]
     \centering
     \input{./images/arch_finished.dia}
-%    \includegraphics[width=0.9\textwidth]{arch_finished}
     \caption{Vollständige Architektur}
     \label{fig:arch_finished}
 \end{figure}
 
-% TODO:
-% - Ziele konkret formulieren
-% - Lastenheft, Pflichtenheft, Testfälle, Anwendungsfälle...
-% - Steurende Komponente auch VCAN-Applikation genannt.
-% - Was sollen die Demo-Modi machen?!
+Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Architektur stellt die Grundlage für das Fallbeispiel dar. In Abbildung \ref{fig:arch_finished} ist diese Architektur verfeinert dargestellt, wie sie in diesem Projekt umgesetzt wurde. Dabei sind fünf Kernbereiche identifizierbar.
 
-% Ziele:
-% - Trennung zwischen zwei Ebenen (AUTOSAR und Python)
-% - Demonstration des Konzeptes über Demomodi
-%   - Demo 0: Gleichgeschaltetes Blinken
-%   - Demo 1: Freies Blinken L/R
+\begin{itemize}
+    \item Virtualisierung
+    \item Kommunikation Linux und AUTOSAR via VCAN
+    \item Kommunikation zwischen VCAN und Scheinwerfer-ECU
+    \item Entwicklung der AUTOSAR-Komponente
+    \item Entwicklung der steuernden Anwendung
+\end{itemize}
+
+Diese Kernbereiche werden im Folgenden einzeln näher betrachtet. Das Hauptziel des Fallbeispiels ist die Evaluation des Konzeptes der \emph{eingebetteten Virtualisierung}. Dabei wird der Fokus auf die Trennung zwischen verschiedenen Ebenen gelegt. Zum Einen die hardwarenahe Ebene, repräsentiert durch die AUTOSAR Komponente, und zum Anderen die highlevel Ebene, realisiert durch die steuernde Komponente, die im weiteren auch VCAN Applikation genannt wird.
+
+% TODO: Das Wort "geblinkt" ist echt doof!
+Zur Demonstration des Konzeptes sind verschiedene Modi geplant. Der erste Modus bietet direkt Kontrolle der Scheinwerfer Funktionen. Dies kann vor allem eingesetzt werden um Funktionalität des Systems zu überprüfen. Des Weiteren werden zwei Demo-Modi angeboten die eine etwas umfangreichere Steuerung bieten. Der erste Modus implementiert einen Pause-Modus für das Blinken. Dabei wird eine definierbare Anzahl an Zyklen sowohl links als auch rechts geblinkt, gefolgt von einer eben so langen Pausendauer.
+
+Der Demo-Modus zwei ähnelt dem ersten, ermöglicht jedoch das getrennte konfigurieren der Intervall-Zeiten für die linke und rechte Seite. Die Intervall-Zeiten, sowie alle anderen relevanten Signale werden von der VCAN-Applikation zur AUTOSAR Komponente gesendet. Diese wertet die Signale aus und regelt die Ausführung der Funktionen und steuert die Scheinwerfer-ECU Komponente an.
+
+% TODO: hier muss irgendwie noch mehr hin.
 
 
 
@@ -933,7 +917,7 @@ Beim VCAN handelt es sich um eine Mischung aus Ethernet und CAN. Dabei wird zwar
 
 \subsection{VCAN-API}
 \label{sec:VCAN_API}
-Die Entwicklung der VCAN-API hatte zu Beginn das primäre Ziel den direkten Zugriff auf den VCAN zu ermöglichen. Im Laufe des Projektes hat sich jedoch herausgestellt, dass die zusätzliche Implementierung des Gateways keinen großen Mehr-Aufwand bedeutet. Aus diesem Grund deckt die VCAN-API sowohl die Client-Seite, dass Senden und Empfangen von Botschaften, als auch die Gateway-Seite ab. Zusätzlich sind damit kurzfristige Änderungen an der API möglich. Als Programmiersprache wurde Python gewählt. Dies ermöglicht eine schnelle und einfache Entwicklung. Zudem wird dadurch die Kopplung zweier unterschiedlicher Bereiche repräsentiert. Zum Einen der Embedded-Bereich, der vor allem auf Assembler, C und C++ basiert, und zum Anderen den Bereich der Hochsprachen, wie er zum Beispiel durch Java oder Python repräsentiert wird.
+Die Entwicklung der VCAN-API hatte zu Beginn das primäre Ziel den direkten Zugriff auf den VCAN zu ermöglichen. Im Laufe des Projektes hat sich jedoch herausgestellt, dass die zusätzliche Implementierung des Gateways keinen großen Mehr-Aufwand bedeutet. Aus diesem Grund deckt die VCAN-API sowohl die Client-Seite, dass Senden und Empfangen von Botschaften, als auch die Gateway-Seite ab. Zusätzlich sind damit kurzfristige Änderungen an der API möglich. Als Programmiersprache wurde Python gewählt. Dies ermöglicht eine schnelle und einfache Entwicklung. Zudem wird dadurch die Kopplung zweier unterschiedlicher Bereiche repräsentiert. Zum Einen der embedded Bereich, der vor allem auf Assembler, C und C++ basiert, und zum Anderen den Bereich der Hochsprachen, wie er zum Beispiel durch Java oder Python repräsentiert wird.
 
 Die Entwicklung der API basiert auf dem VCAN-Protokoll. Da es sich hierbei um kein offenes oder bekanntes Protokoll handelt, wurde dieses im Rahmen dieser Arbeit Reverse Engineered. Hierzu wurden einige VCAN-Botschaften mittels Wireshark\footnote{Wireshark ist zu finden unter: \url{http://www.wireshark.org/}} mitgeschnitten und ausgewertet. Anschließend wurden mittels "`trial and error"' die weiteren Details des Protokolls anhand des bestehenden Gateways ermittelt.
 
@@ -952,7 +936,7 @@ Es ist zu erkennen, dass dieses Protokoll nicht nur für CAN ausgelegt ist. So e
 
 Bei der erstellten VCAN-API handelt es sich um ein reines Backend. Eine Dokumentation und Beispiele zum Erstellen eines Gateways, beziehungsweise Clients, sind im Anhang zu finden. Im Rahmen dieser Arbeit wurde ein Gateway-Anwendung inklusive grafische Oberfläche entwickelt. Die Funktionalität des von Elektrobit bereitgestellten Gateways, inklusive des PCAN-Supports, ist hierin komplett nachgebildet. Unterstützung für die PCAN Hardware ist zur Zeit nur unter Windows gegeben, da sich die entsprechenden Linux-Treiber noch in der Entwicklung befinden. Mit der VCAN-API lassen sich ebenso einfach Clients erstellen, die Botschaften senden und empfangen können.
 
-Neben der Grund-Funktionalität bietet die VCAN-API einige Vorteile der Elektrobit-Lösung gegenüber. So haben das Original-Gateway, sowie die AUTOSAR-Komponenten, Probleme mit schnellen Zyklus-Zeiten. Ab etwa 200 ms kommt es immer häufiger vor, dass einzelne Pakete nicht registriert werden. Das hier erstellte Gateway zeigt in diesem Bereich eine gewisse Robustheit. Einig Tests haben jedoch gezeigt, dass auch das eingesetzte Betriebssystem Einfluss auf dieses Problem hat. So scheinen Paketverluste häufiger zu sein, wenn sowohl Client als auch Gateway unter Windows ausgeführt werden. Da hingegen zeigt sich ein besseres Verhalten, wenn beide Anwendungen unter Linux ausgeführt werden. Das deutet auf unterschiedliche Betriebssystemeigene Netzwerkeinstellungen hin. So könnten zum Beispiel unterschiedliche TCP-Receive-Windows so ein Verhalten hervorrufen. Auch eine unterschiedliche Timer-Auflösung könnte hier Einfluss haben. In diesem Projekt konnte jedoch keinerlei Unterschied festgestellt werden.
+Neben der Grund-Funktionalität bietet die VCAN-API einige Vorteile der Elektrobit-Lösung gegenüber. So haben das Original-Gateway, sowie die AUTOSAR Komponenten, Probleme mit schnellen Zyklus-Zeiten. Ab etwa 200 ms kommt es immer häufiger vor, dass einzelne Pakete nicht registriert werden. Das hier erstellte Gateway zeigt in diesem Bereich eine gewisse Robustheit. Einig Tests haben jedoch gezeigt, dass auch das eingesetzte Betriebssystem Einfluss auf dieses Problem hat. So scheinen Paketverluste häufiger zu sein, wenn sowohl Client als auch Gateway unter Windows ausgeführt werden. Da hingegen zeigt sich ein besseres Verhalten, wenn beide Anwendungen unter Linux ausgeführt werden. Das deutet auf unterschiedliche Betriebssystemeigene Netzwerkeinstellungen hin. So könnten zum Beispiel unterschiedliche TCP-Receive-Windows so ein Verhalten hervorrufen. Auch eine unterschiedliche Timer-Auflösung könnte hier Einfluss haben. In diesem Projekt konnte jedoch keinerlei Unterschied festgestellt werden.
 % TODO: Warum Paket-Velust?
 
 Ein prototypisch implementiertes Feature ist eine Zugriffskontrolle. Hierzu können mittels einer XML-Datei Whitelists angelegt werden. Hierbei kann jeweils pro IP festgelegt werden, welche CAN-IDs gesendet, und welche empfangen werden dürfen. Eine Beispiel-Konfiguration, sowie das XML-Schema liegen dem Quellcode bei.
@@ -1093,7 +1077,6 @@ Hierbei bieten die ersten vier Signale direkten Zugriff auf die entsprechenden F
 \begin{figure}[ht]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/SMLS_Modell.dia}}
-%    \includegraphics[width=\textwidth]{SMLS_Modell}
     \caption{Entwickeltes AUTOSAR Modell}
     \label{fig:smls_modell}
 \end{figure}
@@ -1215,7 +1198,6 @@ Zudem wurde während des Projektes eine Eigenheit des WinCore VCAN beobachtet, d
 
 Abbildung \ref{fig:boxplot_vcan} zeigt die Ergebnisse der Analyse bei Benutzung der VCAN-API. Hier ist zu erkennen, dass eine Genauigkeit von etwa einer millisekunde möglich ist. Lediglich einzelne Ausreißer, in diesem Fall nur einer, weichen einige Millisekunden vom gewünschten Wert ab.
 
-% TODO: einheiten in plots?!
 \begin{figure}
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
