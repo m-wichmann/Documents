@@ -200,7 +200,6 @@ Das VCAN-Protokoll besteht aus einem Binär-Format, dass per TCP-Socket übertra
 \begin{figure}[ht]
     \centering
     \input{./images/vcan_protokoll.dia}
-%    \includegraphics[width=0.8\textwidth]{vcan_protokoll}
     \caption{Überblick über das VCAN Protkoll}
     \label{fig:vcan_protokoll}
 \end{figure}
@@ -285,7 +284,6 @@ Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert
 \begin{figure}[ht]
     \centering
     \input{./images/vcan_api_uml.dia}
-%    \includegraphics[width=0.8\textwidth]{vcan_api_uml}
     \caption{UML-Klassendiagramm der VCAN-API}
     \label{fig:vcan_api_uml}
 \end{figure}
@@ -415,16 +413,16 @@ Im Folgenden sind einige Beispiel Anwendungen aufgeführt, die den VCAN nutzen. 
 \subsection{Gateway}
 \label{sec:vcan_gateway_beispiele}
 \begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Einfaches Gateway}, label={lst:bsp_gateway1}]
-import vcan_api
+from vcan_api import *
 
-gw = vcan_api.VCANGateway()
+gw = VCANGateway()
 gw.start_gateway(host='127.0.0.1', port=10020)
 raw_input("Press key to stop...\n")
 gw.stop_gateway()
 \end{lstlisting}
 
 \begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Gateway mit Callbacks}, label={lst:bsp_gateway2}]
-import vcan_api
+from vcan_api import *
 
 def __message_callback(message):
   print message
@@ -435,16 +433,16 @@ def __connection_callback(connection, accepting):
   else:
     print "Connection closed: " + str(connection)
 
-gw = vcan_api.VCANGateway(receive_callback=__message_callback, connection_callback=__connection_callback)
+gw = VCANGateway(receive_callback=__message_callback, connection_callback=__connection_callback)
 gw.start_gateway(host='127.0.0.1', port=10020)
 raw_input("Press key to stop...\n")
 gw.stop_gateway()
 \end{lstlisting}
 
 \begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Gateway mit PCAN-Anbindung}, label={lst:bsp_gateway3}]
-import vcan_api
+from vcan_api import *
 
-gw = vcan_api.VCANGateway()
+gw = VCANGateway()
 gw.start_gateway(host='127.0.0.1', port=10020)
 gw.pcan_init()
 raw_input("Press key to stop...\n")
@@ -453,13 +451,13 @@ gw.stop_gateway()
 \end{lstlisting}
 
 \begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Gateway mit Verbindung zu anderem Gateway}, label={lst:bsp_gateway4}]
-import vcan_api
+from vcan_api import *
 
-gw = vcan_api.VCANGateway()
+gw = VCANGateway()
 gw.start_gateway(host='127.0.0.1', port=10020)
 try:
   gw.connect_other_gateway('141.41.31.148', port=10020)
-except vcan_api.VCANException:
+except VCANException:
   print "Could not connect to other gateway!"
 raw_input("Press key to stop...\n")
 gw.stop_gateway()
@@ -469,14 +467,14 @@ gw.stop_gateway()
 \label{sec:vcan_client_beispiele}
 \begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Empfangsclient via Callback}, label={lst:bsp_client1}]
 import time
-import vcan_api
+from vcan_api import *
 
 def __receive_message(message):
-  m = vcan_api.VCANMessage()
+  m = VCANMessage()
   m.parameters_from_string(message)
   print m
 
-client = vcan_api.VCANClient()
+client = VCANClient()
 client.connect('127.0.0.1', port=10020, callback=__receive_message)
 
 while True:
@@ -487,9 +485,9 @@ client.close()
 
 \begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Empfangsclient via Polling}, label={lst:bsp_client2}]
 import time
-import vcan_api
+from vcan_api import *
 
-client = vcan_api.VCANClient()
+client = VCANClient()
 client.connect('127.0.0.1', port=10020)
 
 while True:
@@ -497,7 +495,7 @@ while True:
   message = client.get_received_item()
   if message == None:
     continue
-  m = vcan_api.VCANMessage()
+  m = VCANMessage()
   m.parameters_from_string(message)
   print m
 
@@ -507,17 +505,17 @@ client.close()
 \begin{lstlisting}[frame=single, language=Python, basicstyle=\footnotesize, caption={Zyklisch sendender Client via Threads}, label={lst:bsp_client3}]
 import thread
 import time
-import vcan_api
+from vcan_api import *
 
 def __send(client, value):
   while (True):
     print "sending..."
     data = [0,0,1,value,0,0,0,0]
-    m = vcan_api.VCANMessage()
+    m = VCANMessage()
     m.set_parameters(int("3c0", 16),  data)
     sclient.send(m,sleep_time=0.5)
 
-client = vcan_api.VCANClient()
+client = VCANClient()
 client.connect('127.0.0.1', port=10020)
 
 value = 42

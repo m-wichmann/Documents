@@ -39,7 +39,7 @@
 %%%%%%%%%%%%%%% Schriften %%%%%%%%%%%%%%%
 \usepackage{lmodern}
 %%%%%%%%%%%%%%% Sonstiges %%%%%%%%%%%%%%%
-\usepackage{scrhack}            % KOMA Paket um zussammenarbeit mit anderen Paket (listings) zu verbessern
+\usepackage{scrhack}            % KOMA Paket um zusammenarbeit mit anderen Paket (listings) zu verbessern
 \usepackage{listings}			% Code-Abschnitt mit Syntax-Highlighting
 \lstset{
     language=C,
@@ -109,7 +109,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Titel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \titlehead{\center{\large \textsc{Ostfalia Hochschule für angewandte Wissenschaften}}}
-\subject{Master-Arbeit}
+\subject{Masterarbeit}
 \title{Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung}
 \author{Martin Wichmann\\Matrikel 701\,277\,37}
 \date{Eingereicht am TODO}
@@ -138,7 +138,7 @@ Gesetzt mit Hilfe von {\KOMAScript} und {\LaTeX}. LibreOffice für die \\ Textve
 
 \section*{Zusammenfassung}
 \pdfbookmark[1]{Zusammenfassung}{Zusammenfassung}
-Nach fast zehn Jahren seit den ersten Bemühungen um AUTOSAR, haben sich die Architektur und die Entwicklungsmethoden mittlerweile in der Automobilindustrie etabliert. Diese Master-Arbeit betrachtet die Möglichkeiten AUTOSAR Komponenten virtualisiert einzusetzen. Hierzu wird ein Fallbeispiel betrachtet, mit Hilfe dessen sowohl die Virtualisierung, inklusive der Kommunikation, als auch AUTOSAR selber evaluiert wird. Um den Bedarf an AUTOSAR-Entwicklern zu decken, wird an der Ostfalia Hochschule für angewandte Wissenschaften seit einige Jahren AUTOSAR in der Lehre eingesetzt. Um diese Bemühungen zu unterstützen soll diese Arbeit zusätzlich als Grundlagen-Einführung dienen.
+Nach fast zehn Jahren seit den ersten Bemühungen um AUTOSAR, haben sich die Architektur und die Entwicklungsmethoden mittlerweile in der Automobilindustrie etabliert. Diese Masterarbeit betrachtet die Möglichkeiten AUTOSAR Komponenten virtualisiert einzusetzen. Hierzu wird ein Fallbeispiel betrachtet, mit Hilfe dessen sowohl die Virtualisierung, inklusive der Kommunikation, als auch AUTOSAR selber evaluiert wird. Um den Bedarf an AUTOSAR-Entwicklern zu decken, wird an der Ostfalia Hochschule für angewandte Wissenschaften seit einige Jahren AUTOSAR in der Lehre eingesetzt. Um diese Bemühungen zu unterstützen soll diese Arbeit zusätzlich als Grundlagen-Einführung dienen.
 
 \textbf{Schlüsselwörter}: AUTOSAR, eingebettete Virtualisierung, ISO 26262
 \vfill
@@ -175,7 +175,7 @@ After almost ten years since the beginning of AUTOSAR, the architecture and deve
 \label{sec:Einleitung}
 Die Möglichkeiten der Virtualisierung werden im Serverbereich bereits seit Jahren genutzt. Aber auch eingebettete Systeme können von diesen Techniken profitieren und damit die Anzahl der Steuergeräte vermindern und Kosten sparen. Vor allem eine steigende Komplexität und Umfang zwingen die Automobilindustrie zum Umdenken. An diesem Punkt setzt AUTOSAR an. Diese moderne Systemarchitektur erfährt seit einigen Jahren eine immer stärkere Verbreitung. 
 
-Diese Master-Arbeit betrachtet die Möglichkeiten der Virtualisierung im embedded Bereich anhand eines Fallbeispiels. In diesem Zusammenhang wird ebenfalls AUTOSAR näher untersucht und in die Virtualisierung eingebunden. Das betrachtete Fallbeispiel wird im folgenden Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Dabei werden die Themengebiete \emph{Virtualisierung} und \emph{AUTOSAR} betrachtet. Die in diesem Zusammenhang ebenfalls interessante funktionale Sicherheit nach \emph{ISO 26262} wird ebenso untersucht.
+Diese Masterarbeit betrachtet die Möglichkeiten der Virtualisierung im embedded Bereich anhand eines Fallbeispiels. In diesem Zusammenhang wird ebenfalls AUTOSAR näher untersucht und in die Virtualisierung eingebunden. Das betrachtete Fallbeispiel wird im folgenden Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Dabei werden die Themengebiete \emph{Virtualisierung} und \emph{AUTOSAR} betrachtet. Die in diesem Zusammenhang ebenfalls interessante funktionale Sicherheit nach \emph{ISO 26262} wird ebenso untersucht.
 
 Im darauf folgenden Kapitel wird das Fallbeispiel und dessen Umsetzung vorgestellt. Dabei wird auf alle relevanten Punkte näher eingegangen. Die Ergebnisse des Fallbeispiels werden im letzten Kapitel analysiert, und untersucht ob die vorgestellten Techniken eine Zukunft in realen Projekten haben.
 
@@ -185,7 +185,7 @@ Im darauf folgenden Kapitel wird das Fallbeispiel und dessen Umsetzung vorgestel
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Vorstellung Fallbeispiel %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Motivation und Planung}
 \label{sec:MotivationPlanung}
-Das in dieser Master-Arbeit betrachtete Praxisbeispiel ist eine Scheinwerfersteuerung inklusive User-Interface. Dies ist bewusst als minimales Beispiel konzipiert, um den Fokus auf die Virtualisierung und Evaluierung zu legen.
+Das in dieser Masterarbeit betrachtete Praxisbeispiel ist eine Scheinwerfersteuerung inklusive User-Interface. Dies ist bewusst als minimales Beispiel konzipiert, um den Fokus auf die Virtualisierung und Evaluierung zu legen.
 
 \begin{figure}[ht]
     \centering
@@ -194,9 +194,10 @@ Das in dieser Master-Arbeit betrachtete Praxisbeispiel ist eine Scheinwerfersteu
     \label{fig:arch_begin}
 \end{figure}
 
+% TODO: Das Beispiel besser beschreiben. Konkrete Namen vergeben, und diese auch in Bild und Text einhalten!
 Die geplante Architektur der Scheinwerfersteuerung ist in Abbildung \ref{fig:arch_begin} zu sehen. Dabei sind zwei getrennte Hardwareelemente zu sehen. Zum Einen das Scheinwerfersteuergerät und zum Anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles AUTOSAR und Linux auf einem Windows Host.
 
-Aus dieser Architekturbeschreibung lassen sich vier Kernbereiche dieser Master-Arbeit ableiten:
+Aus dieser Architekturbeschreibung lassen sich vier Kernbereiche dieser Masterarbeit ableiten:
 
 \begin{itemize}
     \item Virtualisierung von AUTOSAR und Linux
@@ -209,6 +210,7 @@ Hierbei ist zu beachten, dass das Aktivieren des Netzwerkmanagements erst mögli
 
 Da der Zeitaufwand für die einzelnen Phasen zu Beginn nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes der Zeitraum eines Monats vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen. Jede Phase enthält die Vorbereitung, Umsetzung und Dokumentation des entsprechenden Bereichs.
 
+% TODO: Das Diagramm sieht irgendwie nicht gut aus...
 \begin{figure}[ht]
     \centering
 
@@ -224,7 +226,7 @@ Da der Zeitaufwand für die einzelnen Phasen zu Beginn nur sehr schwer einzusch�
     \ganttbar{Fertigstellen der Arbeit}{11}{12} 
     \end{ganttchart}
 
-    \caption{Zeitplanung Master-Arbeit}
+    \caption{Zeitplanung Masterarbeit}
     \label{fig:gantt}
 \end{figure}
 
@@ -248,14 +250,13 @@ Virtualisierung kann mittels einer Reihe von Techniken realisiert werden. Hier w
 
 \begin{figure}
     \centering
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \input{./images/virt_type1.dia}
         \caption{Type 1-Hypervisor}
         \label{fig:hypervisor_type1}
     \end{subfigure}
-    \qquad
-    \begin{subfigure}[b]{0.4\textwidth}
+    \begin{subfigure}[b]{0.49\textwidth}
         \centering
         \input{./images/virt_type2.dia}
         \caption{Type 2-Hypervisor}
@@ -291,9 +292,11 @@ Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkan
     \label{fig:arinc_653}
 \end{figure}
 
-Abbildung \ref{fig:arinc_653} zeigt einen Überblick über dieses System. Das Konzept besteht aus einem zugrunde liegendem Echtzeit-Betriebssystem, dass den darauf ausgeführten Softwareinstanzen die sogenannte APEX-API\footnote{APplication/EXecutive-API} anbietet. Diese ist auch eingeschränkt zu POSIX kompatibel (vgl. \cite{wiki:arinc_653}), wodurch auch POSIX-konforme Applikationen ausgeführt werden können. Die eingesetzten Software-Instanzen können dabei sowohl \emph{bare-metal-Anwendungen} als auch ein weiteres Betriebssystem sein. Um die hohen Sicherheitsanforderungen im Avionikbereich zu erfüllen, ist das gesamte System der Spezifikation DO-178B\footnote{Die Spezifikation DO-178B beschreibt Sicherheitsanforderungen an Software im Avionik Bereich. Damit ähnelt diese den Standards DIN 61508 und ISO 26262.} entsprechend entworfen. Hierdurch können auf einem Prozessor Softwareinstanzen mit verschiedenen Kritikalitäten ausgeführt werden können. 
+Abbildung \ref{fig:arinc_653} zeigt einen Überblick über dieses System. Das Konzept besteht aus einem zugrunde liegendem Echtzeit-Betriebssystem, dass den darauf ausgeführten Softwareinstanzen die sogenannte APEX-API\footnote{APplication/EXecutive-API} anbietet. Diese ist auch eingeschränkt zu POSIX kompatibel (vgl. \cite{wiki:arinc_653}), wodurch auch POSIX-konforme Applikationen ausgeführt werden können. Die eingesetzten Software-Instanzen können dabei sowohl \emph{bare-metal-Anwendungen} als auch ein weiteres Betriebssystem sein.
 
-Mit diesen Eigenschaften ähnelt ARINC 653 dem AUTOSAR-Standard. Auch die Konfiguration des System basiert, wie bei AUTOSAR, auf XML.
+Um die hohen Sicherheitsanforderungen im Avionikbereich zu erfüllen, ist das gesamte System der Spezifikation DO-178B\footnote{Die Spezifikation DO-178B beschreibt Sicherheitsanforderungen an Software im Avionik Bereich. Damit ähnelt diese den Standards DIN 61508 und ISO 26262.} entsprechend entworfen. Hierdurch können auf einem Prozessor Softwareinstanzen mit verschiedenen Kritikalitäten ausgeführt werden können. 
+
+Der ARINC 653 ähnelt mit den genannten Eigenschaften dem AUTOSAR-Standard. Auch die Konfiguration des System basiert, wie bei AUTOSAR, auf XML.
 
 
 \subsection{Marktübersicht}
@@ -345,7 +348,7 @@ Neben den bisher genannten Vorteilen bietet embedded Virtualisierung auch einige
 Da der Hypervisor eine zentrale Position besitzt, kann sein Ausfall das gesamte System gefährden. Da der Hypervisor für die Ausführung der Instanzen verantwortlich ist, den Speicher und die Kommunikationsdienste verwaltet, würde ein Fehler oder sogar ein Ausfall des Hypervisors, ein Ausfall des Gesamtsystems verursachen. Dementsprechend ist der Hypervisor nach den höchsten Ansprüchen der Sicherheitstechnik zu entwerfen. Zudem sollten umfangreiche Diagnosemöglichkeiten vorhanden sein, um das Risiko eines unerwarteten Ausfalls zu minimieren.
 
 \paragraph{Leistungseinbußen}
-Durch das Einsetzen eines Hypervisors und mehreren VMs kann es zu Leistungseinbußen kommen. Diese können jedoch minimiert werden, indem die Hardware entsprechend gewählt wird. So bieten moderne CPU-Architekturen verschiedene Virtualisierungs-Erweiterungen\footnote{Zum Beispiel Intel VT oder ARM VE} mit denen der Overhead minimiert wird. Durch eine angemessene Anzahl der CPU-Kerne entfällt der Wechsel zwischen den VMs. Zudem bieten klassische embedded Architekturen, wie ARM, eine bessere Interruptperformance als die häufig eingesetzte x86-Architektur und sind damit gut für Virtualisierung geeignet (vgl. \cite{okl4}).
+Durch das Einsetzen eines Hypervisors und mehrerer virtueller Maschinen kann es zu Leistungseinbußen kommen. Diese können jedoch minimiert werden, indem die Hardware entsprechend gewählt wird. So bieten moderne CPU-Architekturen verschiedene Virtualisierungserweiterungen\footnote{Zum Beispiel Intel VT oder ARM VE} mit denen der Overhead minimiert wird. Durch eine angemessene Anzahl der CPU-Kerne entfällt der Wechsel zwischen den VMs. Zudem bieten klassische embedded Architekturen, wie ARM, eine bessere Interruptperformance als die häufig eingesetzte x86-Architektur und sind damit gut für Virtualisierung geeignet (vgl. \cite{okl4}).
 
 \paragraph{Größere Folgen eines Ausfalls}
 Da sich die Anzahl der Steuergeräte durch Virtualisierung verringert, verringert sich auch die Hardware-Redundanz. Der Ausfall eines Steuergerätes führt somit Ausfall einer Reihe von Funktionen. Auf der anderen Seite könnte dieser Nachteil jedoch durch Virtualisierung auch stark verbessert werden. So ist es möglich das ein anderes Steuergerät einen Ausfall erkennt und direkt eine Ersatz-VM startet um so die Sicherheit weiter zu gewährleisten. 
@@ -724,7 +727,7 @@ Da es sich bei AUTOSAR um eine Komponenten- und Modulorientierte Architektur han
 
 Sowohl COQOS als auch EB tresos bieten ein ISO 26262 zertifiziertes OS-Modul an (vgl. \cite{eb_tresos}\cite{coqos}). Das Elektrobit Os-Modul ist dabei bis ASIL-D zertifiziert. Dies ist ein Mikrokernel mit einer minimalen Funktionalität. Elektrobit bietet zusätzlich ein QM-Os-Modul an, das nicht nach ISO 26262 zertifiziert ist und somit nicht für sicherheitskritische Anwendungen geeignet ist. Eine Absicherung des Os-Moduls kann vor allem die Rückwirkungsfreiheit des Systems garantieren. Ob auch andere Punkte der ISO abgedeckt sind, ist nicht klar. So findet ein Kernpunkt der Norm, die Kommunikation, vor allem in anderen Modulen (Com, PduR\dots) statt. Somit ist eine allgemeine Ende-zu-Ende-Absicherung der Kommunikation nicht möglich.
 
-Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 beinhaltet drei Module (vgl. \cite{microsar}). Das Modul "`SafeExecution"' wird verwendet, um Rückwirkungsfreiheit via Laufzeitüberwachung, Speicherschutz und Ablaufkontrolle zu gewährleisten. Dieses ähnelt dem Funktionsumfang der beiden bereits vorgestellten Modelle. Durch das Modul "`SafeCom"' wird zusätzlich eine Ende-zu-Ende-Absicherung der Intra- und Inter-ECU-Kommunikation vorgenommen. Das dritte Modul, "`SafeSelfTest"' ermöglicht eine zyklische Überprüfung der Hardware.
+Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 basiert auf drei Modulen (vgl. \cite{microsar}). Das Modul \emph{SafeExecution} wird verwendet, um Rückwirkungsfreiheit via Laufzeitüberwachung, Speicherschutz und Ablaufkontrolle zu gewährleisten. Dieses ähnelt dem Funktionsumfang der beiden bereits vorgestellten Modelle. Durch das Modul \emph{SafeCom} wird zusätzlich eine Ende-zu-Ende-Absicherung der Intra- und Inter-ECU-Kommunikation vorgenommen. Das dritte Modul, \emph{SafeSelfTest} ermöglicht eine zyklische Überprüfung der Hardware.
 
 
 
@@ -838,7 +841,7 @@ Die in Listing \ref{lst:xtratum_xml_1} zu sehende \emph{Hardware Description} en
 
 Der letzte große Block dieses Listings ist die Prozessor-Tabelle. Diese enthält für jeden Physikalisch vorhandenen Prozessor-Kern einen entsprechenden Block. Als Parameter wird hier zum Beispiel die Prozessor-Frequenz definiert. In Zeile neun ist diese mit 50 MHz angegeben, da das Beispiel für einen SPARC-LEON-Simulator ausgelegt ist und dieser etwa eine entsprechende Leistung erreicht. Dieses Beispiel ist für ein Einzel-Prozessor System ausgelegt und beinhaltet daher nur einen Prozessor-Block.
 
-Eine Ebene tiefer wird in den Zeilen 10 bis 15 eine Scheduler-Tabelle erstellt. Diese gibt vor wann und wie lange eine Partition rechnen darf. Dabei wird der feste Plan zyklisch wiederholt. Um einen Init-Vorgang oder einen Debug-Modus unterstützen zu können, sind an dieser Stelle mehrerer Scheduler-Pläne möglich. So können für verschiedene System-Zustände, auch verschiedene Scheduler-Regeln eingesetzt werden.
+Eine Ebene tiefer wird in den Zeilen 10 bis 15 eine Scheduler-Tabelle erstellt. Diese gibt vor wann und wie lange eine Partition rechnen darf. Dabei wird der feste Plan zyklisch wiederholt. Um einen Initvorgang oder einen Debugmodus unterstützen zu können, sind an dieser Stelle mehrerer Schedulerpläne möglich. So können für verschiedene System-Zustände, auch verschiedene Schedulerregeln eingesetzt werden.
 
 \begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM Partition Table}, label={lst:xtratum_xml_2}]
 <Partition id="0" name="Partition1" flags="system" console="Uart">
@@ -1166,7 +1169,7 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 \chapter{Analyse des Fallbeispiels}
 \label{sec:Beispiel_Analyse}
 % TODO
-
+Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächsten Kapitel auf die Praxisrelevanz der Techniken eingegangen. Anschließend wird das Zeitverhalten des VCAN Systems untersucht. Dies ist vor allem im Hinblick auf die Echtzeitfähigkeit interessant. Ein weiteres in der Praxis relevantes Thema ist die Sicherheit. Diese wird anhand dieses Fallbeispiels im darauf folgenden Kapitels betrachtet.
 
 
 
@@ -1175,12 +1178,30 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 \section{Relevanz für reale Projekte}
 \label{sec:Relevanz}
 % TODO
-% Es gibt bereits einige Embedded Hypervisor
-% Multi-Core CPUs und leistungsfähige SOCs sind billig
-% Sicherheit (ISO 26262) erfordert viel Aufmerksamkeit
-% Kurze "time-to-market" durch Evaluation auf Windows/Linux Platformen
-% WinCore ist einfach zu verwenden <- Kein Aufwand wegen emedded
-% Vor allem interessant für Lehre da simpel und schnell. Zudem VCAN zugriff per python
+% - Es gibt bereits einige Embedded Hypervisor
+%   - Technik bereits fortgeschritten
+%   - ARINC 653 demonstriert Konzept schon länger
+% - Multi-Core CPUs und leistungsfähige SOCs sind billig
+%   - armv7
+%   - Tegra 3: ~20 $
+%       - ARM Cortex A9 (Application)
+%       - 4 Cores @ 1.6 GHz + 1 Core @ 500 MHz
+%       - IOs: wahrscheinlich weniger aber USB, MIPI, I2C, UART, SPI
+%   - LPC4310FBD144: 8 $
+%       - ARM Cortex M4 (Microcontroller)
+%       - 200 MHz
+%       - IOs: 83
+%   - Umsetzung natürlich nicht so einfach, jedoch sollte Richtung sichtbar sein
+% - Sicherheit (ISO 26262) erfordert viel Aufmerksamkeit
+%   - Virtualisierung könnte Konzept vereinheitlichen
+%   - "Bausatz-System"
+% - Kurze "time-to-market" durch Evaluation auf Windows/Linux Platformen
+% - Testen kann vereinheitlicht werden -> RBS durch VMs
+% - WinCore ist einfach zu verwenden
+%   - Erster Aufwand aufgrund embedded Plattform entfällt
+%   - Vor allem interessant für Lehre da simpel und schnell
+%   - VCAN Zugriff (per Python)
+% - Portierungsaufwand kann verteilt werden
 
 
 
