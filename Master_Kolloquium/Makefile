@@ -1,4 +1,4 @@
-TARGET		=	beamer
+TARGET		=	MasterKolloquium
 
 PDFLATEX	= 	pdflatex
 RM  		=	rm -rf
