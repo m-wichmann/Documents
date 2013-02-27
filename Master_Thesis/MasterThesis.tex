@@ -7,6 +7,8 @@
 %% - NDA/IP klären!!! (VW, EB, evtl. dSPACE?!)
 %% - Warum kein Tool AUTOSAR konforme Grafiken?! Nicht einmal die Spec!!! <- Dia Shapes erwähnen ;-)
 %% - Embedded-Hypervisor <- Schreibweise einheitlich
+%% - steuernde Komponente oder Steuerungskomponente
+%% - bare-metal oder baremetal oder bare metal
 
 
 \documentclass[
@@ -751,7 +753,7 @@ Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des 
     \label{fig:arch_finished}
 \end{figure}
 
-Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Architektur stellt die Grundlage für das Fallbeispiel dar. In Abbildung \ref{fig:arch_finished} ist diese Architektur verfeinert dargestellt, wie sie in diesem Projekt umgesetzt wurde. Dabei sind fünf Kernbereiche identifizierbar.
+Die zu Beginn dieser Arbeit, in Abbildung \ref{fig:arch_begin}, skizzierte Architektur stellt die Grundlage für das Fallbeispiel dar. In Abbildung \ref{fig:arch_finished} ist diese Architektur verfeinert dargestellt, wie sie in diesem Projekt umgesetzt wurde. Dabei sind fünf Kernbereiche identifizierbar.
 
 \begin{itemize}
     \item Virtualisierung
@@ -761,12 +763,12 @@ Die zu Beginn dieser Arbeit in Abbildung \ref{fig:arch_begin} skizzierte Archite
     \item Entwicklung der steuernden Anwendung
 \end{itemize}
 
-Diese Kernbereiche werden im Folgenden einzeln näher betrachtet. Das Hauptziel des Fallbeispiels ist die Evaluation des Konzeptes der \emph{eingebetteten Virtualisierung}. Dabei wird der Fokus auf die Trennung zwischen verschiedenen Ebenen gelegt. Zum Einen die hardwarenahe Ebene, repräsentiert durch die AUTOSAR Komponente, und zum Anderen die highlevel Ebene, realisiert durch die steuernde Komponente, die im weiteren auch VCAN Applikation genannt wird.
+Diese Kernbereiche werden im Folgenden einzeln näher betrachtet. Das Hauptziel des Fallbeispiels ist die Evaluation des Konzeptes der \emph{eingebetteten Virtualisierung}. Dabei wird der Fokus auf die Trennung zwischen zwei verschiedenen Ebenen gelegt. Zum Einen die hardwarenahe Ebene, repräsentiert durch die AUTOSAR Komponente, und zum Anderen die highlevel Ebene, realisiert durch die steuernde Komponente, die im weiteren auch VCAN Applikation genannt wird.
 
 % TODO: Das Wort "geblinkt" ist echt doof!
-Zur Demonstration des Konzeptes sind verschiedene Modi geplant. Der erste Modus bietet direkt Kontrolle der Scheinwerfer Funktionen. Dies kann vor allem eingesetzt werden um Funktionalität des Systems zu überprüfen. Des Weiteren werden zwei Demo-Modi angeboten die eine etwas umfangreichere Steuerung bieten. Der erste Modus implementiert einen Pause-Modus für das Blinken. Dabei wird eine definierbare Anzahl an Zyklen sowohl links als auch rechts geblinkt, gefolgt von einer eben so langen Pausendauer.
+Zur Demonstration des Konzeptes sind verschiedene Modi geplant. Der erste Modus bietet direkt Kontrolle der Scheinwerfer Funktionen. Dies kann eingesetzt werden um die Funktionalität des Systems zu überprüfen. Des Weiteren werden zwei Demomodi implementiert, die eine etwas umfangreichere Steuerung bieten. Der erste Modus implementiert einen Pausemodus für das Blinken. Dabei wird eine definierbare Anzahl an Zyklen sowohl links als auch rechts geblinkt, gefolgt von einer eben so langen Pausendauer.
 
-Der Demo-Modus zwei ähnelt dem ersten, ermöglicht jedoch das getrennte konfigurieren der Intervall-Zeiten für die linke und rechte Seite. Die Intervall-Zeiten, sowie alle anderen relevanten Signale werden von der VCAN-Applikation zur AUTOSAR Komponente gesendet. Diese wertet die Signale aus und regelt die Ausführung der Funktionen und steuert die Scheinwerfer-ECU Komponente an.
+Der zweite Demo-Modus ähnelt dem ersten, ermöglicht jedoch das getrennte Konfigurieren der Intervallzeiten für die linke und rechte Seite. Die Intervallzeiten, sowie alle anderen relevanten Signale werden von der VCAN-Applikation zur AUTOSAR Komponente gesendet. Diese wertet die Signale aus und regelt die Ausführung der Funktionen und steuert die Scheinwerfer-ECU Komponente an.
 
 % TODO: hier muss irgendwie noch mehr hin.
 
@@ -775,19 +777,21 @@ Der Demo-Modus zwei ähnelt dem ersten, ermöglicht jedoch das getrennte konfigu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Virtualisierung}
 \label{sec:Virtualisierung_Umgesetzt}
-Der Bereich Virtualisierung deckt die Bereitstellung der virtuellen Maschinen in diesem Projekt ab. Dabei werden zwei Instanzen benötigt. In der ersten VM wird die AUTOSAR-Komponente ausgeführt. Da diese mittels EB tresos WinCore für Windows erstellt wird, wird hier ein Windows eingesetzt. Wie sich im Laufe des Projektes herausgestellt hat, ist die Ausführung der AUTOSAR-Komponente keineswegs stabil, sodass nach einer zufälligen Zeit, meist etwa ein paar Minuten, die Komponente nicht mehr reagiert. Zu Testzwecken wurde daher die Ausführung mittels Wine unter Linux getestet. Wie sich herausgestellt hat tritt der Fehler in diesem Fall nicht auf. Da Kompatibilitätsprobleme bei einer Windows-Anwendung unter Linux nicht auszuschließen sind, ist dies jedoch auch keine ideale Lösung. Aus diesem Grund wird für die erste VM sowohl Windows als auch Linux parallel gepflegt getestet. Hierdurch können sowohl Kompatibilitäts- als auch Stabilitätsprobleme, je nach Wahl, vermieden werden. Konkret wird Orcale VirtualBox 4.1.18, Ubuntu 12.04.1 und Windows 7 Professional in diesem Projekt eingesetzt.
+Der Bereich Virtualisierung deckt die Bereitstellung der virtuellen Maschinen in diesem Projekt ab. Dabei werden zwei Instanzen benötigt. In der ersten VM wird die AUTOSAR-Komponente ausgeführt. Da diese mittels EB tresos WinCore erstellt wird, ist hier ein Windows Voraussetzung.
 
-Die zweite VM wird verwendet um die Steuerungs-Anwendung auszuführen. Da diese auf der VCAN-API basiert (siehe \ref{sec:vcan_api} und \ref{sec:Kommunikation_L_A}) ist die Wahl des Betriebssystems auf alle von Python unterstützen Plattformen beschränkt. Aus persönlicher Vorliebe des Autors wird an dieser Stelle Linux gewählt. Die entsprechende Anwendung kann jedoch auch ohne umfangreiche Portierung zum Beispiel unter Windows ausgeführt werden.
+Wie sich im Laufe des Projektes herausgestellt hat, ist die Ausführung der AUTOSAR-Komponente keineswegs stabil, sodass nach einer zufälligen Zeit, meist etwa ein paar Minuten, die Komponente nicht mehr reagiert. Zu Testzwecken wurde daher die Ausführung mittels Wine unter Linux getestet. Wie sich herausgestellt hat, tritt der Fehler in diesem Fall seltener auf. Da Kompatibilitätsprobleme bei einer Windows-Anwendung unter Linux nicht auszuschließen sind, ist dies jedoch auch keine ideale Lösung. Aus diesem Grund wird für die erste VM sowohl Windows als auch Linux parallel gepflegt und getestet. Hierdurch können sowohl Kompatibilitäts- als auch Stabilitätsprobleme, je nach Wahl, vermieden werden. Konkret wird Orcale VirtualBox 4.1.18, Ubuntu 12.04.1 und Windows 7 Professional in diesem Projekt eingesetzt.
 
-Bei der Wahl des Hypervisors kommt zu aller erst die Frage, ob ein Type 1 oder Type 2 Hypervisor gewählt wird. Da es sich bei diesem Projekt um eine Evaluierung der Virtualisierung geht wird ein Type 2 Hypervisor gewählt. Zudem würde der Einsatz eines Type 1 Hypervisors den zeitlichen Rahmen dieser Arbeit sprengen, da der Aufbau und die Konfiguration kompliziert und umfangreich ist. Um trotzdem Einblick in diesen Bereich der Virtualisierung zu geben, wird ein Hypervisor näher betrachtet. Hier wird XtratuM gewählt, da es sich dabei um ein freies Open-Source Projekt handelt. Im Rahmen dieses Projekts wird VirtualBox als Hypervisor verwendet.
+Die zweite VM wird verwendet um die Steuerungsanwendung auszuführen. Da diese auf der VCAN-API basiert (siehe \ref{sec:vcan_api} und \ref{sec:Kommunikation_L_A}), ist die Wahl des Betriebssystems auf alle von Python unterstützen Plattformen beschränkt. Aus persönlicher Vorliebe des Autors wird an dieser Stelle Linux gewählt. Die entsprechende Anwendung kann jedoch auch ohne umfangreiche Portierung zum Beispiel unter Windows ausgeführt werden.
+
+Bei der Wahl des Hypervisors stellt sich zu Beginn die Frage, ob ein Type 1 oder Type 2 Hypervisor gewählt wird. Da es sich bei diesem Projekt um eine Evaluierung der Virtualisierung handelt, wird ein Type 2 Hypervisor gewählt. Zudem würde der Einsatz eines Type 1 Hypervisors den zeitlichen Rahmen dieser Arbeit sprengen, da der Aufbau und die Konfiguration kompliziert und umfangreich ist. Um trotzdem einen Einblick in diesen Bereich der Virtualisierung zu geben, wird ein Hypervisor näher betrachtet. Hier wird XtratuM gewählt, da es sich dabei um ein freies Open-Source Projekt handelt. Im Rahmen dieses Projektes wird VirtualBox als Hypervisor verwendet.
 
 \subsection{XtratuM}
 \label{sec:xtratum}
-Als Beispiel für den Einsatz von Virtualisierung im embedded Bereich soll der Hypervisor XtratuM näher betrachtet werden. Dieser wird von der \emph{Universitat Politècnica de València} entwickelt und ist unter einer Open-Source Lizenz freigegeben. Die hier genutzten Informationen stammen aus \cite{xm:usermanual} und \cite{xm:reference}. Da der Einsatz von virtualisierten Betriebssystemen sehr aufwendig, und mit Änderungen in diesen verbunden ist, wird im Folgenden der Fokus auf bare-metal Anwendungen gelegt. Analog dazu wird jedoch der Einsatz eines Betriebssystems realisiert.
+Als Beispiel für den Einsatz von Virtualisierung im embedded Bereich, wird der Hypervisor XtratuM näher betrachtet. Dieser wird von der \emph{Universitat Politècnica de València} entwickelt und ist unter einer Open-Source Lizenz freigegeben. Die hier genutzten Informationen stammen aus \cite{xm:usermanual} und \cite{xm:reference}. Da der Einsatz von virtualisierten Betriebssystemen sehr aufwendig, und mit Änderungen in diesen verbunden ist, wird im Folgenden der Fokus auf bare-metal Anwendungen gelegt. Analog dazu kann jedoch der Einsatz eines Betriebssystems realisiert werden.
 
-Da XtratuM an den Avionik-Standard ARINC-653 angelehnt ist, wird auch die Namensgebung dessen übernommen. Daher sieht sich XtratuM als Hypervisor für partitionierte\footnote{Entsprechend des \emph{space and time partitioning des ARINC-Standards}} Systeme. Aus diesem Grund werden die virtuellen Instanzen hier auch Partitionen genannt. Der Arbeits-Ablauf ähnelt dem von AUTOSAR. So wird zu aller erst eine System-Beschreibung in Form einer XML-Datei erstellt. Hier werden die verschiedenen Partitionen und deren Speicherbereiche definiert. Im Gegensatz zu AUTOSAR wird hier jedoch weniger eine Aussage über den Inhalt der Partitionen gemacht. Anschließend können die Partitionen in Form von C-Dateien erstellt und zu Binär-Containern\footnote{Diese Container tragen die Endung .xef und sind in \cite[Seite 68]{xm:usermanual} näher beschrieben.} compiliert werden. Diese Container werden im letzten Schritt, zusammen mit dem XtratuM-Kern und dem Bootloader zu einer Binär-Datei verbunden.
+Da XtratuM an den Avionik-Standard ARINC-653 angelehnt ist, wird auch die Namensgebung dessen übernommen. Daher sieht sich XtratuM als Hypervisor für partitionierte\footnote{Entsprechend des \emph{space and time partitioning des ARINC-Standards}} Systeme. Aus diesem Grund werden die virtuellen Instanzen hier auch Partitionen genannt. Der Arbeitsablauf ähnelt dem von AUTOSAR. So wird zu Beginn eine Systembeschreibung in Form einer XML-Datei erstellt. Hier werden die verschiedenen Partitionen und deren Speicherbereiche definiert. Im Gegensatz zu AUTOSAR wird jedoch weniger eine Aussage über den Inhalt der Partitionen gemacht. Anschließend können die Partitionen in Form von C-Dateien erstellt und zu Binärcontainern\footnote{Diese Container tragen die Endung .xef und sind in \cite[Seite 68]{xm:usermanual} näher beschrieben.} compiliert werden. Diese Container werden im letzten Schritt, zusammen mit dem XtratuM-Kern und dem Bootloader, zu einer Binär-Datei verbunden.
 
-Im Folgenden wird ein kurzes Hello-World-Beispiel betrachtet. Die entsprechende Toolkette basiert dazu auf der GNU Compiler Collection und wird im weiteren nicht näher erläutert. Der gesamte Code ist auf der beigelegten CD zu finden. 
+Im Folgenden wird ein kurzes Hello-World-Beispiel betrachtet. Die entsprechende Toolkette basiert dazu auf der GNU Compiler Collection und wird im Weiteren nicht näher erläutert. Der gesamte Code ist auf der beigelegten CD zu finden. 
 
 \begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={XtratuM Beispiel Partition}, label={lst:xtratum_partition}]
 #include <stdio.h>
@@ -1170,7 +1174,7 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 \chapter{Analyse des Fallbeispiels}
 \label{sec:Beispiel_Analyse}
 % TODO
-Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächsten Kapitel auf die Praxisrelevanz der Techniken eingegangen. Anschließend wird das Zeitverhalten des VCAN Systems untersucht. Dies ist vor allem im Hinblick auf die Echtzeitfähigkeit interessant. Ein weiteres in der Praxis relevantes Thema ist die Sicherheit. Diese wird anhand dieses Fallbeispiels im darauf folgenden Kapitels betrachtet.
+Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächsten Kapitel auf die Praxisrelevanz der Techniken eingegangen. Anschließend wird das Zeitverhalten des VCAN Systems untersucht. Dies ist vor allem im Hinblick auf die Echtzeitfähigkeit interessant. Ein weiteres, in der Praxis relevantes Thema, ist die Sicherheit. Diese wird anhand dieses Fallbeispiels im darauf folgenden Kapitels betrachtet.
 
 
 
@@ -1178,16 +1182,10 @@ Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächs
 % Wie könnte das erarbeitete sinnvoll in der Wirtschaft umgesetzt werden?!
 \section{Relevanz für reale Projekte}
 \label{sec:Relevanz}
-% TODO: multicore ist toll!
-% - Motivation 
-%   - Infotainment, Fahrerassitenzsysteme etc brauchen immer mehr Leistung/"Libraries" -> Sicherheit -> Virtualisierung sinnvoll!
-%   - Es gibt bereits einige Embedded Hypervisor
-%   - Technik bereits fortgeschritten
-%   - ARINC 653 demonstriert Konzept schon länger
 Die Zukunft der Elektronik in der Automotiveindustrie ist stark durch Infotainment und Fahrerassistenzsysteme geprägt. Diese Systeme liegen zwischen zwei Ebenen. Zum Einen die Lowlevel Ebene, die die Anbindung an die Fahrzeughardware bietet und dem klassischen Modell entspricht, und zum Anderen eine Highlevel Ebene, die eine Anbindung an Car2X Netzwerke und und ähnliches bietet. Genau dieser immer größer werdende Bereich kann von den Vorteilen der embedded Virtualisierung profitieren. Wie in den bisherigen Kapiteln klar geworden ist, handelt es sich um eine ausgereifte Technik. Es existieren schon einige Hypervisor, die auch zum Beispiel in der Mobilfunkbranche bereits eingesetzt wird. Auch die Avionik hat die Vorteile bereits seit einigen Jahren erkannt und setzt die Techniken erfolgreich ein.
 
 % TODO: das beispiel muss irgendwie besser werden...
-% - Multi-Core CPUs und leistungsfähige SOCs sind billig
+% - Multi-Core CPUs und leistungsfähige SOCs sind billig -> effektiv
 %   - armv7
 %   - Tegra 3: ~20 $
 %       - ARM Cortex A9 (Application)
@@ -1204,25 +1202,13 @@ Die Zukunft der Elektronik in der Automotiveindustrie ist stark durch Infotainme
 %
 %Der langsame Kern kann dediziert den Hypervisor übernehmen, während die anderen vier Kerne die Funktionalität der ECU übernehmen. Da für jede ECU nun ein vielfaches der Leistung vorhanden ist, sollte die Echtzeitfähigkeit kein Problem darstellen. Mit dieser Umstellung werden die Kosten in diesem Beispiel von 40 \$ auf 20 \$ halbiert. Hinzukommen ebenso Ersparnisse hinsichtlich der eingesetzten Boards beziehungsweise Peripherie, sowie unter Umständen ein vereinfachter Kabelbaum. Entsprechende Kosten werden hier jedoch nicht betrachtet, da diese nicht einfach einzuschätzen sind. Ebenso wird ein nötiger Integrationsaufwand nicht betrachtet. Trotz dieser Einschränkungen ist eine Richtung zu erkennen: Die Kosten sowie die Hardwarekomplexität des Systems kann verringert werden.
 
-% TODO:
-% - Sicherheit (ISO 26262) erfordert viel Aufmerksamkeit
-%   - Virtualisierung könnte Konzept vereinheitlichen
-%   - "Bausatz-System"
-Ebenso kann die Umsetzung der funktionalen Sicherheit nach ISO 26262 von eingebetteter Virtualisierung profitieren. Virtuelle Maschinen trennen dabei Teilsystem ab und können Sicherheitsbetrachtungen auf mehrere Domänen aufteilen. Einzig der Hypervisor, als zentrales Element, erhöht die Komplexität des Systems und Bedarf so umfangreicher Untersuchung. Anschließend ist jedoch ein Bausatzsystem vorstellbar, in dem Funktionalität in virtuellen Maschinen gekapselt wird und anschließend diese als Bausteine eingesetzt werden. 
+Ebenso kann die Umsetzung der funktionalen Sicherheit nach ISO 26262 von eingebetteter Virtualisierung profitieren. Virtuelle Maschinen trennen dabei Teilsystem ab und können die Sicherheitsbetrachtung auf mehrere Domänen aufteilen. Einzig der Hypervisor, als zentrales Element, erhöht die Komplexität des Systems und Bedarf umfangreicher Sicherheitsuntersuchung. Anschließend ist jedoch ein Bausatzsystem vorstellbar, in dem Funktionalität in virtuellen Maschinen gekapselt wird und anschließend diese als abgesicherte und getestete Bausteine eingesetzt werden. Integrationstests sind jedoch auch hier nötig.
 
-% TODO:
-% - Kurze "time-to-market" durch Evaluation auf Windows/Linux Plattformen
-% - Testen kann vereinheitlicht werden -> RBS durch VMs
-% - Portierungsaufwand kann verteilt werden
+Der Bereich des Testens kann ebenfalls durch Virtualisierung erweitert werden. Da eine virtuelle Maschine auf einer abstrakten Ebene ausgeführt wird, ist es auch mögliche diese portabel zu gestalten, um so sowohl auf der embedded Hardware als auch auf einer Testhardware lauffähig zu sein. So ist es denkbar das Produktivcode, gekapselt in einer VM, auch im Testeinsatz Verwendung findet und somit als Restbussimulation für echte Hardware dient.
 
+Ein ähnliches Konzept wird auch durch EB tresos WinCore erreicht. Da durch EB tresos sowohl Projekte für Windows, als auch für embedded Plattformen erstellt werden können, kann der Programmcode komplett übernommen werden. Jedoch ist hier eine umfangreiche Konfiguration der RTE und der restlichen Module nötig. Daher eignet sich WinCore vor allem für die ersten Phasen eines Projektes, sowie die Lehre. Da die Applikation auf üblichen Betriebssystemen und Rechnern lauffähig ist, werden die Komplikation bei der Nutzung einer embedded Plattform vermieden beziehungsweise verschoben.
 
-% TODO:
-% - WinCore ist einfach zu verwenden
-%   - Erster Aufwand aufgrund embedded Plattform entfällt
-%   - Vor allem interessant für Lehre da simpel und schnell
-%   - VCAN Zugriff (per Python)
-
-
+Vor allem der Einsatz des VCANs erleichtert viele Arbeiten und erste Tests. Da hier auf Ethernet, und damit auf eine ausgereifte und weit verbreitete Technik gesetzt wird, ist der Zugriff sehr einfach zu realisieren. In diesem Projekt wurde auf Python gesetzt. Aber auch praktisch jede andere Programmierumgebung ist denkbar, da der Zugriff auf TCP-Sockets nahezu immer möglich ist. Und da der Umgang mit Highlevel-Umgebungen dieser Art relativ einfach ist, ist eine erweiterte Funktionalität vorstellbar. Dies reicht vom auslesen einer Konfigurationsdatei um Stimuli einzurichten, bis hin zu einer Weboberfläche um den Zugriff auf den gesamten Bus zu erlauben.
 
 
 
@@ -1283,17 +1269,26 @@ Da die Implementation des WinCore nicht offen liegt, lässt sich das Zeitverhalt
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit bei Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Sicherheitsbetrachtung des Fallbeispiels}
+\section{Sicherheitsbetrachtung}
 \label{sec:Sicherheit_Beispiel}
-% TODO
-% - Da VCAN nur in Evaluation -> Nicht kritisch
-% - Angriffe auf Ethernet genauso wie auf CAN möglich -> Physikalischer Schutz nötig
-% - Ausfall Hypervisor -> Ausfall System
-% - Immer mehr Internet etc. -> krypto/Zertifikat instanz in embedded hyp
-% - AUTOSAR CryptoServiceManager ab Version 4.0
+Da es sich bei dem Beispielsystem lediglich um eine Scheinwerfersteuerung handelt, ist Sicherheit kein besonders kritisches Thema. Die Folgenden Punkte jedoch genauso auf jedes andere System anwendbar und sind somit relevant. Bei dem Begriff \emph{Sicherheit} müssen zwei Arten unterschieden werden. Zum Einen die Angriffssicherheit, die einen böswilligen Angreifer annimmt, und zum Anderen die Betriebssicherheit, bei der ein technischer Ausfall betrachtet wird.
+
+\paragraph{Angriffssicherheit}
+Das hier betrachtete System bietet im Prinzip die selben Angriffsmöglichkeiten wie klassische Systeme. Sobald ein physischer Zugriff auf das System möglich ist, existieren eine Reihe von Möglichkeiten das System zu kompromittieren. Dabei zeigt ein virtualisiertes System keine Vorteile einem klassischen System gegenüber. Ein zentraler Hypervisor bietet zwar die Möglichkeit die Integrität der virtuellen Maschinen zu überprüfen, jedoch kann auch dieser selbst kompromittiert sein. Seitenkanalangriffe\footnote{Seitenkanalangriffe bezeichnen eine Gruppe von Angriffszenarien, bei denen das System von außen analysiert wird. Hierbei kann zum Beispiel anhand des Energieverbrauchs auf ausgeführte Befehle geschlossen werden.} könnten durch die erhöhte Komplexität des Systems erschwert werden. Eine Verhinderung dieser ist jedoch wahrscheinlich nicht möglich.
+
+Ein weiterer Angriffsweg ist durch eine Internet- beziehungsweise Netzwerkanbindung gegeben. Diese erfahren eine immer größere Verbreitung, durch Car2Car-Kommunikation und das Nutzen des Internets für, zum Beispiel Stauinformationen. Hier besteht eine durchaus große Gefahr. Eine kompromittierte VM kann durch eventuelle Sicherheitslücken im Hypervisor das ganze System lahmlegen. Daher muss dieser mit großer Sorgfalt entwickelt werden. Die Folgen einer Übernahme sind jedoch bei einem virtualisierten System nicht umfangreicher als bei einem klassischen System. Hier könnte ein kompromittiertes Steuergerät den gesamten Bus lahmlegen, indem dauerhaft Nachrichten gesendet werden.
+
+\paragraph{Betriebssicherheit}
+% - Safety
+%   - Host/Hypervisor stellt Single-point-of-Failure dar
+Die Umstellung auf eine virtualisierte Umgebung bedeutet auch die Umstellung von einem verteilten System, hin zu einem vereinten System. Das bedeutet das weniger Hardware Redundanz vorhanden ist, und somit ein Ausfall der Hardware zum Verlust von mehr Funktionalität führt. Damit stellt die Hardware des Hosts, ebenso wie der Hypervisor, einen \emph{single point of failure} dar. Damit besitzt ein virtualisiertes System einen relevanten Nachteil. Da jedoch die Kosten für ein solches System niedriger Ausfallen können, kann zusätzlicher Aufwand betrieben werden, um zuverlässigere Bauteile einzusetzen und die Sicherheitsüberprüfungen auszuweiten. Ob sich diese Rechnung für konkrete Projekt lohnt, muss im Einzelfall entschieden werden. Ein zentraler Hypervisor bietet jedoch auch einige Möglichkeiten. So kann eben hier eine Diagnose stattfinden, um die Zuverlässigkeit der virtuellen Maschinen zu gewährleisten. 
 
 
-
+\paragraph{}
+% - Anderes
+%   - VCAN Protokoll nicht wirklich stabil, jedoch nicht relevant da nur Eval
+%   - Immer mehr Internet etc. -> krypto/Zertifikat instanz in embedded hyp
+%   - AUTOSAR CryptoServiceManager ab Version 4.0
 
 
 
