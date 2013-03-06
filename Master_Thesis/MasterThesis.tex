@@ -5,10 +5,8 @@
 %% TODO:
 %% - Danksagung
 %% - NDA/IP klären!!! (VW, EB, evtl. dSPACE?!)
-%% - Warum kein Tool AUTOSAR konforme Grafiken?! Nicht einmal die Spec!!! <- Dia Shapes erwähnen ;-)
-%% - Embedded-Hypervisor <- Schreibweise einheitlich
 %% - steuernde Komponente oder Steuerungskomponente
-%% - bare-metal oder baremetal oder bare metal
+%% - netzwerk-management oder netzwerkmanagment
 
 
 \documentclass[
@@ -197,8 +195,7 @@ Das in dieser Masterarbeit betrachtete Praxisbeispiel ist eine Scheinwerfersteue
     \label{fig:arch_begin}
 \end{figure}
 
-% TODO: Das Beispiel besser beschreiben. Konkrete Namen vergeben, und diese auch in Bild und Text einhalten!
-Die geplante Architektur der Scheinwerfersteuerung ist in Abbildung \ref{fig:arch_begin} zu sehen. Dabei sind zwei getrennte Hardwareelemente zu sehen. Zum Einen das Scheinwerfersteuergerät und zum Anderen das in dieser Arbeit betrachtete System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen System verbunden.  Dieses beherbergt ein virtuelles AUTOSAR und Linux auf einem Windows Host.
+Die geplante Architektur der Scheinwerfersteuerung ist in Abbildung \ref{fig:arch_begin} zu sehen. Dabei sind zwei getrennte Hardwareelemente zu erkennen. Zum Einen das Scheinwerfersteuergerät und zum Anderen das in dieser Arbeit betrachtete steuernde System. Das Steuergerät übernimmt die direkte Steuerung der Scheinwerfer und ist per CAN-Bus mit dem anderen steuernden System verbunden.  Dieses beherbergt ein virtuelles AUTOSAR und Linux auf einem Windows Host.
 
 Aus dieser Architekturbeschreibung lassen sich vier Kernbereiche dieser Masterarbeit ableiten:
 
@@ -295,7 +292,7 @@ Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkan
     \label{fig:arinc_653}
 \end{figure}
 
-Abbildung \ref{fig:arinc_653} zeigt einen Überblick über dieses System. Das Konzept besteht aus einem zugrunde liegendem Echtzeit-Betriebssystem, dass den darauf ausgeführten Softwareinstanzen die sogenannte APEX-API\footnote{APplication/EXecutive-API} anbietet. Diese ist auch eingeschränkt zu POSIX kompatibel (vgl. \cite{wiki:arinc_653}), wodurch auch POSIX-konforme Applikationen ausgeführt werden können. Die eingesetzten Software-Instanzen können dabei sowohl \emph{bare-metal-Anwendungen} als auch ein weiteres Betriebssystem sein.
+Abbildung \ref{fig:arinc_653} zeigt einen Überblick über dieses System. Das Konzept besteht aus einem zugrunde liegendem Echtzeit-Betriebssystem, dass den darauf ausgeführten Softwareinstanzen die sogenannte APEX-API\footnote{APplication/EXecutive-API} anbietet. Diese ist auch eingeschränkt zu POSIX kompatibel (vgl. \cite{wiki:arinc_653}), wodurch auch POSIX-konforme Applikationen ausgeführt werden können. Die eingesetzten Software-Instanzen können dabei sowohl \emph{bare metal Anwendungen} als auch ein weiteres Betriebssystem sein.
 
 Um die hohen Sicherheitsanforderungen im Avionikbereich zu erfüllen, ist das gesamte System der Spezifikation DO-178B\footnote{Die Spezifikation DO-178B beschreibt Sicherheitsanforderungen an Software im Avionik Bereich. Damit ähnelt diese den Standards DIN 61508 und ISO 26262.} entsprechend entworfen. Hierdurch können auf einem Prozessor Softwareinstanzen mit verschiedenen Kritikalitäten ausgeführt werden können. 
 
@@ -404,7 +401,7 @@ Tabelle \ref{tab:timeline} zeigt die Versionshistorie von AUTOSAR. Die Entwicklu
 
 \subsection{Grundkonzepte}
 \label{sec:Grundkonzepte}
-Diese Kapitel soll einen Überblick über die \emph{Grundlagen von AUTOSAR} geben. Anhand der Abbildung \ref{fig:autosar_overview} werden im folgenden die verschiedenen Aspekte von AUTOSAR betrachtet (vgl. \cite{autosar_techoverview}). Dieses Dokument verwendet die offizielle, in \cite{autosar_graph} definierte, grafische Notation. Neben dieser Notation werden in verschiedenen Tools, und selbst in offiziellen AUTOSAR Dokumenten, verschiedene andere, unoffizielle, Notationen verwendet. Die Abbildungen dieses Dokuments wurde zum Großteil mit Hilfe von Dia erstellt. In diesem Rahmen wurde auch ein, noch unvollständiges, Profil erstellt, mit dem AUTOSAR-konforme Diagramme erstellt werden können. Dieses Profil ist unter der LGPL Version 3 lizenziert und ist im Internet zu finden\footnote{\url{https://github.com/erebos42/dia_sheets}}.
+Diese Kapitel soll einen Überblick über die \emph{Grundlagen von AUTOSAR} geben. Anhand der Abbildung \ref{fig:autosar_overview} werden im folgenden die verschiedenen Aspekte von AUTOSAR betrachtet (vgl. \cite{autosar_techoverview}). Dieses Dokument verwendet die offizielle, in \cite{autosar_graph} definierte, grafische Notation. Neben dieser Notation werden in verschiedenen Tools, und selbst in offiziellen AUTOSAR Dokumenten, verschiedene andere, unoffizielle, Notationen verwendet. Die Abbildungen dieses Dokuments wurde zum Großteil mit Hilfe von Dia erstellt. In diesem Rahmen wurde auch ein, noch unvollständiges, Profil entwickelt, mit dem AUTOSAR-konforme Diagramme erstellt werden können. Dieses Profil ist unter der LGPL Version 3 lizenziert und ist im Internet zu finden\footnote{\url{https://github.com/erebos42/dia_sheets}}.
 
 \begin{figure}[p]
     \centering
@@ -763,12 +760,12 @@ Die zu Beginn dieser Arbeit, in Abbildung \ref{fig:arch_begin}, skizzierte Archi
     \item Entwicklung der steuernden Anwendung
 \end{itemize}
 
-Diese Kernbereiche werden im Folgenden einzeln näher betrachtet. Das Hauptziel des Fallbeispiels ist die Evaluation des Konzeptes der \emph{eingebetteten Virtualisierung}. Dabei wird der Fokus auf die Trennung zwischen zwei verschiedenen Ebenen gelegt. Zum Einen die hardwarenahe Ebene, repräsentiert durch die AUTOSAR Komponente, und zum Anderen die highlevel Ebene, realisiert durch die steuernde Komponente, die im weiteren auch VCAN Applikation genannt wird.
+Diese Kernbereiche werden im Folgenden einzeln näher betrachtet. Das Hauptziel des Fallbeispiels ist die Evaluation des Konzeptes der \emph{eingebetteten Virtualisierung}. Dabei wird der Fokus auf die Trennung zwischen zwei verschiedenen Ebenen gelegt. Zum Einen die hardwarenahe Ebene, repräsentiert durch die AUTOSAR Komponente, und zum Anderen die highlevel Ebene, realisiert durch die steuernde Komponente, die im weiteren auch VCAN-Applikation genannt wird.
 
 % TODO: Das Wort "geblinkt" ist echt doof!
-Zur Demonstration des Konzeptes sind verschiedene Modi geplant. Der erste Modus bietet direkt Kontrolle der Scheinwerfer Funktionen. Dies kann eingesetzt werden um die Funktionalität des Systems zu überprüfen. Des Weiteren werden zwei Demomodi implementiert, die eine etwas umfangreichere Steuerung bieten. Der erste Modus implementiert einen Pausemodus für das Blinken. Dabei wird eine definierbare Anzahl an Zyklen sowohl links als auch rechts geblinkt, gefolgt von einer eben so langen Pausendauer.
+Zur Demonstration des Konzeptes sind verschiedene Modi geplant. Der erste Modus bietet eine direkte Kontrolle der Scheinwerfer Funktionen. Dies kann eingesetzt werden um die Funktionalität des Systems zu überprüfen. Des Weiteren werden zwei Demomodi implementiert, die eine etwas umfangreichere Steuerung bieten. Der erste Modus implementiert einen Pausemodus für das Blinken. Dabei wird eine definierbare Anzahl an Zyklen sowohl links als auch rechts geblinkt, gefolgt von einer eben so langen Pausendauer.
 
-Der zweite Demo-Modus ähnelt dem ersten, ermöglicht jedoch das getrennte Konfigurieren der Intervallzeiten für die linke und rechte Seite. Die Intervallzeiten, sowie alle anderen relevanten Signale werden von der VCAN-Applikation zur AUTOSAR Komponente gesendet. Diese wertet die Signale aus und regelt die Ausführung der Funktionen und steuert die Scheinwerfer-ECU Komponente an.
+Der zweite Demo-Modus ähnelt dem ersten, ermöglicht jedoch das getrennte Konfigurieren der Intervallzeiten für die linke und rechte Seite. Die Intervallzeiten, sowie alle anderen relevanten Signale werden von der VCAN-Applikation zur AUTOSAR Komponente gesendet. Diese wertet die Signale aus und steuert die Scheinwerfer-ECU Komponente entsprechend an.
 
 % TODO: hier muss irgendwie noch mehr hin.
 
@@ -779,19 +776,21 @@ Der zweite Demo-Modus ähnelt dem ersten, ermöglicht jedoch das getrennte Konfi
 \label{sec:Virtualisierung_Umgesetzt}
 Der Bereich Virtualisierung deckt die Bereitstellung der virtuellen Maschinen in diesem Projekt ab. Dabei werden zwei Instanzen benötigt. In der ersten VM wird die AUTOSAR-Komponente ausgeführt. Da diese mittels EB tresos WinCore erstellt wird, ist hier ein Windows Voraussetzung.
 
-Wie sich im Laufe des Projektes herausgestellt hat, ist die Ausführung der AUTOSAR-Komponente keineswegs stabil, sodass nach einer zufälligen Zeit, meist etwa ein paar Minuten, die Komponente nicht mehr reagiert. Zu Testzwecken wurde daher die Ausführung mittels Wine unter Linux getestet. Wie sich herausgestellt hat, tritt der Fehler in diesem Fall seltener auf. Da Kompatibilitätsprobleme bei einer Windows-Anwendung unter Linux nicht auszuschließen sind, ist dies jedoch auch keine ideale Lösung. Aus diesem Grund wird für die erste VM sowohl Windows als auch Linux parallel gepflegt und getestet. Hierdurch können sowohl Kompatibilitäts- als auch Stabilitätsprobleme, je nach Wahl, vermieden werden. Konkret wird Orcale VirtualBox 4.1.18, Ubuntu 12.04.1 und Windows 7 Professional in diesem Projekt eingesetzt.
+Wie sich im Laufe des Projektes herausgestellt hat, ist die Ausführung der AUTOSAR-Komponente keineswegs stabil, sodass nach einer zufälligen Zeit, meist etwa ein paar Minuten, die Komponente nicht mehr reagiert. Zu Testzwecken wurde daher die Ausführung mittels Wine unter Linux getestet. Wie sich herausgestellt hat, tritt der Fehler in diesem Fall seltener auf. Da Kompatibilitätsprobleme bei einer Windows-Anwendung unter Linux nicht auszuschließen sind, ist dies jedoch auch keine ideale Lösung. Aus diesem Grund wird für die erste VM sowohl Windows als auch Linux parallel gepflegt und getestet. Hierdurch können sowohl Kompatibilitäts- als auch Stabilitätsprobleme, je nach Wahl, vermieden werden. Konkret wird Oracle VirtualBox 4.1.18, Ubuntu 12.04.1 und Windows 7 Professional in diesem Projekt eingesetzt.
 
-Die zweite VM wird verwendet um die Steuerungsanwendung auszuführen. Da diese auf der VCAN-API basiert (siehe \ref{sec:vcan_api} und \ref{sec:Kommunikation_L_A}), ist die Wahl des Betriebssystems auf alle von Python unterstützen Plattformen beschränkt. Aus persönlicher Vorliebe des Autors wird an dieser Stelle Linux gewählt. Die entsprechende Anwendung kann jedoch auch ohne umfangreiche Portierung zum Beispiel unter Windows ausgeführt werden.
+Die zweite VM wird verwendet um die VCAN-Applikation auszuführen. Da diese auf der VCAN-API basiert (siehe \ref{sec:vcan_api} und \ref{sec:Kommunikation_L_A}), ist die Wahl des Betriebssystems auf alle von Python unterstützten Plattformen beschränkt. Aus persönlicher Vorliebe des Autors wird an dieser Stelle Linux gewählt. Die entsprechende Anwendung kann jedoch auch ohne umfangreiche Portierung zum Beispiel unter Windows ausgeführt werden.
 
 Bei der Wahl des Hypervisors stellt sich zu Beginn die Frage, ob ein Type 1 oder Type 2 Hypervisor gewählt wird. Da es sich bei diesem Projekt um eine Evaluierung der Virtualisierung handelt, wird ein Type 2 Hypervisor gewählt. Zudem würde der Einsatz eines Type 1 Hypervisors den zeitlichen Rahmen dieser Arbeit sprengen, da der Aufbau und die Konfiguration kompliziert und umfangreich ist. Um trotzdem einen Einblick in diesen Bereich der Virtualisierung zu geben, wird ein Hypervisor näher betrachtet. Hier wird XtratuM gewählt, da es sich dabei um ein freies Open-Source Projekt handelt. Im Rahmen dieses Projektes wird VirtualBox als Hypervisor verwendet.
 
 \subsection{XtratuM}
 \label{sec:xtratum}
-Als Beispiel für den Einsatz von Virtualisierung im embedded Bereich, wird der Hypervisor XtratuM näher betrachtet. Dieser wird von der \emph{Universitat Politècnica de València} entwickelt und ist unter einer Open-Source Lizenz freigegeben. Die hier genutzten Informationen stammen aus \cite{xm:usermanual} und \cite{xm:reference}. Da der Einsatz von virtualisierten Betriebssystemen sehr aufwendig, und mit Änderungen in diesen verbunden ist, wird im Folgenden der Fokus auf bare-metal Anwendungen gelegt. Analog dazu kann jedoch der Einsatz eines Betriebssystems realisiert werden.
+Als Beispiel für den Einsatz von Virtualisierung im embedded Bereich, wird der Hypervisor XtratuM näher betrachtet. Dieser wird von der \emph{Universitat Politècnica de València} entwickelt und ist unter einer Open-Source Lizenz freigegeben. Die hier genutzten Informationen stammen aus \cite{xm:usermanual} und \cite{xm:reference}. Da der Einsatz von virtualisierten Betriebssystemen sehr aufwendig, und mit Änderungen in diesen verbunden ist, wird im Folgenden der Fokus auf bare metal Anwendungen gelegt. Analog dazu kann jedoch der Einsatz eines Betriebssystems realisiert werden. Für den Einsatz von Linux unter XtratuM wird ein entsprechender Patch angeboten.
 
-Da XtratuM an den Avionik-Standard ARINC-653 angelehnt ist, wird auch die Namensgebung dessen übernommen. Daher sieht sich XtratuM als Hypervisor für partitionierte\footnote{Entsprechend des \emph{space and time partitioning des ARINC-Standards}} Systeme. Aus diesem Grund werden die virtuellen Instanzen hier auch Partitionen genannt. Der Arbeitsablauf ähnelt dem von AUTOSAR. So wird zu Beginn eine Systembeschreibung in Form einer XML-Datei erstellt. Hier werden die verschiedenen Partitionen und deren Speicherbereiche definiert. Im Gegensatz zu AUTOSAR wird jedoch weniger eine Aussage über den Inhalt der Partitionen gemacht. Anschließend können die Partitionen in Form von C-Dateien erstellt und zu Binärcontainern\footnote{Diese Container tragen die Endung .xef und sind in \cite[Seite 68]{xm:usermanual} näher beschrieben.} compiliert werden. Diese Container werden im letzten Schritt, zusammen mit dem XtratuM-Kern und dem Bootloader, zu einer Binär-Datei verbunden.
+Da XtratuM an den Avionik-Standard ARINC-653 angelehnt ist, wird auch die Namensgebung von diesem übernommen. Daher sieht sich XtratuM als Hypervisor für partitionierte\footnote{Entsprechend des \emph{space and time partitioning des ARINC-Standards}} Systeme. Aus diesem Grund werden die virtuellen Instanzen hier auch Partitionen genannt. Der Arbeitsablauf ähnelt dem von AUTOSAR. So wird zu Beginn eine Systembeschreibung in Form einer XML-Datei erstellt. Hier werden die verschiedenen Partitionen und deren Speicherbereiche definiert. Im Gegensatz zu AUTOSAR wird hier weniger eine Aussage über den Inhalt der Partitionen gemacht.
 
-Im Folgenden wird ein kurzes Hello-World-Beispiel betrachtet. Die entsprechende Toolkette basiert dazu auf der GNU Compiler Collection und wird im Weiteren nicht näher erläutert. Der gesamte Code ist auf der beigelegten CD zu finden. 
+Anschließend können die Partitionen in Form von C-Dateien erstellt und zu Binärcontainern\footnote{Diese Container tragen die Endung .xef und sind in \cite[Seite 68]{xm:usermanual} näher beschrieben.} compiliert werden. Diese Container werden im letzten Schritt, zusammen mit dem XtratuM-Kern und dem Bootloader, zu einer Binärdatei verbunden.
+
+Im Folgenden wird ein kurzes Hello-World-Beispiel betrachtet. Die entsprechende Toolkette basiert dazu auf der GNU Compiler Collection und wird im Weiteren nicht näher erläutert. Einige Beispiel Projekte sind auf der beigelegten CD zu finden.
 
 \begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={XtratuM Beispiel Partition}, label={lst:xtratum_partition}]
 #include <stdio.h>
@@ -804,7 +803,7 @@ void PartitionMain(void)
 }
 \end{lstlisting}
 
-Listing \ref{lst:xtratum_partition} zeigt den nötigen C-Code für das Beispiel-Projekt. Dieser ist sehr einfach aufgebaut und beinhaltet übliche Merkmale, wie zum Beispiel die \texttt{printf}-Funktion. XtratuM-spezifische Funktionen und Defines werden durch den Header \texttt{xm.h} inkludiert. Diese werden im weiteren Code verwendet, um zum Beispiel die eigene Partition anzuhalten, wie es in Zeile sieben zu sehen ist. Neben den hier gezeigt Funktionen bietet XtratuM auch ein Reihe weiterer an. Darunter zum Beispiel IPC-Techniken mittels Funktionen wie \texttt{XM\_write\_sampling\_message}. Die Main-Funktion einer Partition wird bei XtratuM \texttt{PartitionMain} genannt.
+Listing \ref{lst:xtratum_partition} zeigt den nötigen C-Code für das Beispielprojekt. Dieser ist sehr einfach aufgebaut und beinhaltet übliche Merkmale, wie zum Beispiel die \texttt{printf}-Funktion. XtratuM-spezifische Funktionen und Defines werden durch den Header \texttt{xm.h} inkludiert. Diese werden im weiteren Code verwendet, um zum Beispiel die eigene Partition anzuhalten, wie es in Zeile sieben zu sehen ist. Neben den hier gezeigten Funktionen bietet XtratuM auch ein Reihe weiterer an. Darunter zum Beispiel IPC-Techniken mittels Funktionen wie \texttt{XM\_write\_sampling\_message}. Die Main-Funktion einer Partition wird bei XtratuM \texttt{PartitionMain} genannt.
 
 \begin{lstlisting}[frame=single, language=, basicstyle=\footnotesize, caption={XtratuM XML-Konfiguration}, label={lst:xtratum_xml}]
 <SystemDescription xmlns="http://www.xtratum.org/xm-3.x" version="1.0.0" name="hello_world">
@@ -820,7 +819,7 @@ Listing \ref{lst:xtratum_partition} zeigt den nötigen C-Code für das Beispiel-
 </SystemDescription>
 \end{lstlisting}
 
-Die nötige System-Konfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. Wie zu erkennen ist, handelt es sich bei der Konfiguration um eine einfache XML-Datei. Der Übersicht halber sind die zwei Teilabschnitte \emph{Hardware Description} und \emph{Partition Table} in Listing \ref{lst:xtratum_xml_1} und \ref{lst:xtratum_xml_2} ausgelagert. Die Zeilen fünf bis sieben geben die Konfiguration des eigentlichen Hypervisors an. Hier werden lediglich die Konsole für die Ausgabe ausgewählt, sowie der Speicher des Hypervisors reserviert.
+Die nötige Systemkonfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. Wie zu erkennen ist, handelt es sich bei der Konfiguration um eine einfache XML-Datei. Der Übersicht halber sind die zwei Teilabschnitte \emph{Hardware Description} und \emph{Partition Table} in Listing \ref{lst:xtratum_xml_1} und \ref{lst:xtratum_xml_2} ausgelagert. Die Zeilen fünf bis sieben geben die Konfiguration des eigentlichen Hypervisors an. Hier werden lediglich die Konsole für die Ausgabe ausgewählt, sowie der Speicher des Hypervisors reserviert.
 
 \begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM Hardware Description}, label={lst:xtratum_xml_1}]
 <MemoryLayout>
@@ -842,11 +841,11 @@ Die nötige System-Konfiguration ist in Listing \ref{lst:xtratum_xml} zu sehen. 
 </ProcessorTable>
 \end{lstlisting}
 
-Die in Listing \ref{lst:xtratum_xml_1} zu sehende \emph{Hardware Description} enthält bereits konkretere Informationen. Zu Beginn werden in den Zeile eins bis vier die Speicher-Bereiche festgelegt. Dieses Format ähnelt den üblichen Linker-Skripten und beinhaltet alle Speicher-Bereiche die von XtratuM beziehungsweise dessen Partitionen genutzt wird. Anschließend wird in den Zeilen fünf bis sieben eine UART-Schnittstelle definiert. Diese Konsole kann für Ausgaben der Partitionen und des Hypervisors genutzt werden und wird im Rahmen dieser Konfiguration mehrfach referenziert.
+Die in Listing \ref{lst:xtratum_xml_1} zu sehende \emph{Hardware Description} enthält bereits konkretere Informationen. Zu Beginn werden in den Zeilen eins bis vier die Speicherbereiche festgelegt. Dieses Format ähnelt den üblichen Linkerskripten und beinhaltet alle Speicherbereiche die von XtratuM beziehungsweise dessen Partitionen genutzt werden. Anschließend wird in den Zeilen fünf bis sieben eine UART-Schnittstelle definiert. Diese Konsole kann für Ausgaben der Partitionen und des Hypervisors genutzt werden. Im Rahmen dieser Konfiguration wird diese Konsole mehrfach referenziert.
 
-Der letzte große Block dieses Listings ist die Prozessor-Tabelle. Diese enthält für jeden Physikalisch vorhandenen Prozessor-Kern einen entsprechenden Block. Als Parameter wird hier zum Beispiel die Prozessor-Frequenz definiert. In Zeile neun ist diese mit 50 MHz angegeben, da das Beispiel für einen SPARC-LEON-Simulator ausgelegt ist und dieser etwa eine entsprechende Leistung erreicht. Dieses Beispiel ist für ein Einzel-Prozessor System ausgelegt und beinhaltet daher nur einen Prozessor-Block.
+Der letzte große Block dieses Listings ist die Prozessortabelle. Diese enthält für jeden Physikalisch vorhandenen Prozessorkern einen entsprechenden Block. Als Parameter wird hier zum Beispiel die Prozessorfrequenz definiert. In Zeile neun ist diese mit 50 MHz angegeben, da das Beispiel für einen SPARC-LEON-Simulator ausgelegt ist und dieser etwa eine entsprechende Leistung erreicht. Dieses Beispiel ist für ein Einzel-Prozessor System ausgelegt und beinhaltet daher nur einen Prozessor-Block.
 
-Eine Ebene tiefer wird in den Zeilen 10 bis 15 eine Scheduler-Tabelle erstellt. Diese gibt vor wann und wie lange eine Partition rechnen darf. Dabei wird der feste Plan zyklisch wiederholt. Um einen Initvorgang oder einen Debugmodus unterstützen zu können, sind an dieser Stelle mehrerer Schedulerpläne möglich. So können für verschiedene System-Zustände, auch verschiedene Schedulerregeln eingesetzt werden.
+Eine Ebene tiefer wird in den Zeilen 10 bis 15 eine Schedulertabelle erstellt. Diese gibt vor wann und wie lange eine Partition rechnen darf. Dabei wird der feste Plan zyklisch wiederholt. Um einen Initvorgang oder einen Debugmodus unterstützen zu können, sind an dieser Stelle mehrere Schedulerpläne möglich. So können für verschiedene Systemzustände, auch verschiedene Schedulerregeln eingesetzt werden.
 
 \begin{lstlisting}[frame=single, language=XML, basicstyle=\footnotesize, caption={XtratuM Partition Table}, label={lst:xtratum_xml_2}]
 <Partition id="0" name="Partition1" flags="system" console="Uart">
@@ -856,25 +855,11 @@ Eine Ebene tiefer wird in den Zeilen 10 bis 15 eine Scheduler-Tabelle erstellt. 
 </Partition>
 \end{lstlisting}
 
-Listing \ref{lst:xtratum_xml_2} zeigt einen Eintrag der \emph{Partition Table}. Dieser definiert in Zeile 1 einen Namen und eine ID. Ebenfalls wird die zu nutzende Konsole sowie ein Flag-Parameter angegeben, der anzeigt das es sich hierbei um eine System-Partition handelt. Die Zeilen zwei bis vier geben den von dieser Partition genutzten Speicher-Bereich an.
+Listing \ref{lst:xtratum_xml_2} zeigt einen Eintrag der \emph{Partition Table}. Dieser definiert in Zeile eins einen Namen und eine ID. Ebenfalls wird die zu nutzende Konsole sowie ein Flag-Parameter angegeben. Dieser zeigt an, ob es sich hierbei um eine System-Partition handelt. Die Zeilen zwei bis vier geben den von dieser Partition genutzten Speicherbereich an.
 
-Wie an diesem Beispiel zu sehen ist, handelt es sich bei XtratuM um ein statisches System. Dieses verzichtet auf dynamische Speicher-Allokation und setzt ein fest definierten Scheduler-Plan voraus. Damit ist gut geeignet für embedded Anwendungen, sowie den Echtzeit-Bereich. Der Einsatz eines üblichen Betriebssystems erfordert jedoch einen gewissen Aufwand. Hierzu muss sowohl die entsprechende Hardware, als auch der Speicher-Bereich in der Konfiguration vorgesehen werden. Ebenso muss eine Hierarchische-Scheduler-Architektur vorgesehen werden. Zum Einen der statische Zeitscheiben-Scheduler von XtratuM, und zum Anderen der im darauf aufsetzenden Betriebssystem eingesetzte Scheduler. Dies ist der von XtratuM empfohlene Ansatz, der jedoch zu einer gewissen Komplexität führt. Diese muss vor allem im Echtzeit-Bereich beachtet werden um alle Fristen einhalten zu können (vgl. \cite{two_lvl_sched}).
+Wie an diesem Beispiel zu sehen ist, handelt es sich bei XtratuM um ein statisches System. Dieses verzichtet auf dynamische Speicherallokation und setzt ein fest definierten Schedulerplan voraus. Damit ist XtratuM gut geeignet für embedded Anwendungen, sowie den Echtzeitbereich. Der Einsatz eines üblichen Betriebssystems erfordert jedoch einen gewissen Aufwand. Hierzu muss sowohl die entsprechende Hardware, als auch der Speicherbereich in der Konfiguration eingerichtet werden. Ebenso muss eine Hierarchische-Scheduler-Architektur vorgesehen werden. Zum Einen der statische Zeitscheiben-Scheduler von XtratuM, und zum Anderen der im darauf aufsetzenden Betriebssystem eingesetzte Scheduler. Dies ist der von XtratuM empfohlene Ansatz, der jedoch zu einer hohen Komplexität führt. Diese muss vor allem im Echtzeitbereich beachtet werden um alle Fristen einhalten zu können (vgl. \cite{two_lvl_sched}).
 
-Abschließend lässt sich sagen, dass der Hypervisor XtratuM, durchaus einen einfachen Einstieg in die Welt der embedded Virtualisierung gibt. Der Einsatz eines aufbauenden Betriebssystems sowie Echtzeit-Betrachtungen, erfordern jedoch sehr viel mehr Aufwand.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Abschließend lässt sich sagen, dass der Hypervisor XtratuM, durchaus einen einfachen Einstieg in die Welt der embedded Virtualisierung gibt. Der Einsatz eines aufbauenden Betriebssystems sowie Echtzeitbetrachtungen, erfordern jedoch sehr viel mehr Aufwand.
 
 
 
@@ -884,7 +869,9 @@ Abschließend lässt sich sagen, dass der Hypervisor XtratuM, durchaus einen ein
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation Linux und AUTOSAR}
 \label{sec:Kommunikation_L_A}
-Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozess-Kommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Memory bekannt. Diese stehen jedoch unter AUTOSAR nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bus-Systeme wie zum Beispiel LIN oder Flexray sind auch denkbar werden jedoch im weiteren nicht näher untersucht. Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriff auf System ermöglichen die keine CAN-Schnittstelle besitzen. Vor- und Nachteile der Techniken sind im folgenden aufgeführt.
+Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolgen. Aus der klassischen Interprozesskommunikation sind Techniken wie Dateien, Messages, Semaphoren und Shared Memory bekannt. Diese stehen jedoch unter AUTOSAR nicht zur Verfügung. Stattdessen können Client/Server und Sender/Receiver Interfaces verwendet werden, die über verschiedene Schnittstellen nach außen geführt werden können. Im folgenden werden die drei Techniken CAN, Ethernet und VCAN betrachtet. Andere Bussysteme wie zum Beispiel LIN oder Flexray sind auch denkbar, werden jedoch im weiteren nicht näher untersucht.
+
+Der hier erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet Verbindung und kann so CAN-Zugriffe auf Systemen ermöglichen, die keine CAN-Schnittstelle besitzen. Der unter Linux bekannte virtuelle CAN, ermöglicht durch Socket-CAN, ist nicht kompatibel zu diesem Konzept. Vor- und Nachteile der Techniken sind im Folgenden aufgeführt.
 
 % TODO: hieraus eine Tabelle machen oder vielleicht als texte schreiben?!
 \begin{itemize}
@@ -892,44 +879,48 @@ Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedene Wege erfolge
     \begin{itemize}
         \item[$+$] Fester Standard in der Automobilindustrie
         \item[$+$] Deterministisch durch Arbitrierung und zyklische Sender
-        \item[$-$] Linux benötigt vollen CAN Zugriff
-        \item[$-$] Jedes Linux-System benötigt CAN-Hardware (Kosten)
+        \item[$-$] Linux erhält Zugriff auf gesamten CAN
+        \item[$-$] Jedes Linuxsystem benötigt eigene CAN-Hardware (Kosten)
     \end{itemize}
     \item Ethernet
     \begin{itemize}
         \item[$+$] Standard in der allgemeinen Übertragungstechnik
         \item[$+$] Hohe Übertragungsrate
         \item[$+$] AUTOSAR kann "`of the shelf"'-TCP/IP-Stack verwenden, der damit auch zu Linux voll kompatibel sein kann (vgl. \cite[S. 21]{autosar_eth})
-        \item[$-$] Nicht-Deterministische Kollisionen und Latenz. Damit nur bedingt Echtzeitfähig
+        \item[$-$] Nichtdeterministische Kollisionen und Latenz. Damit nur bedingt Echtzeitfähig
         \item[$-$] Erst ab AUTOSAR 4.0 unterstützt
     \end{itemize}
     \item VCAN
     \begin{itemize}
         \item[$+$] Baut auf Ethernet auf
-        \item[$+$] Gut im Evaluations-Prozess umsetzbar
-        \item[$+$] Eigene "`Logik"' lässt sich im Gateway implementieren (Firewall, Kommunikations Matrix)
-        \item[$-$] Nicht geeignet für Produktiv-Systeme
+        \item[$+$] Gut im Evaluationsprozess umsetzbar
+        \item[$+$] Eigene "`Logik"' lässt sich im Gateway implementieren (Firewall, Kommunikationsmatrix)
+        \item[$-$] Nicht geeignet für Produktivsysteme
         \item[$-$] Auf Elektrobit tresos beschränkt
-        \item[$-$] Gateway wird benötigt
+        \item[$-$] Zentrales Gateway wird benötigt
     \end{itemize}
 \end{itemize}
 
-Als Kommunikations-Technik wird für dieses Projekt VCAN gewählt. Dies lässt sich vor allem mit der schlechten, beziehungsweise nicht möglichen Umsetzung der anderen Techniken begründen. Die zu Beginn bereits angesprochenen Techniken zur Inter-Process-Kommunikation werden von AUTOSAR nicht unterstützt, da es der dort beschriebenen Architektur widerspricht. Laut dieser muss jegliche Kommunikation über die RTE realisiert werden. Dies bezüglich wäre es eventuell möglich eine externe Anwendung an diese anzubinden. Auch eine Implementierung mittels eines Complex-Driver ist vorstellbar, jedoch sehr aufwendig. Diese Lösungen wären sehr unsauber und vermutlich mit viel Aufwand verbunden.
+Als Kommunikationstechnik wird für dieses Projekt VCAN gewählt. Dies lässt sich vor allem mit der schlechten, beziehungsweise nicht möglichen Umsetzung der anderen Techniken begründen. Die zu Beginn bereits angesprochenen Techniken zur Interprocesskommunikation werden von AUTOSAR nicht unterstützt, da es der dort beschriebenen Architektur widerspricht. Laut dieser muss jegliche Kommunikation über die RTE realisiert werden. Dies bezüglich wäre es eventuell möglich eine externe Anwendung an diese anzubinden. Auch eine Implementierung mittels eines \emph{Complex Driver} ist vorstellbar, jedoch sehr aufwendig. Diese Lösungen wären sehr unsauber und vermutlich mit viel Aufwand verbunden.
 
-Als nächste Alternative wurde der CAN-Bus vorgestellt. Zwar handelt es sich hierbei um einen etablierten Standard, der auch von AUTOSAR unterstützt wird, jedoch ist dies in diesem Projekt nicht sinnvoll. So wäre eine separate Hardware-Anbindung für jede Anwendung nötig. Diese müsste jeweils mit einem USB-Adapter realisiert werden und somit nicht praktikabel.
+Als nächste Alternative wurde der CAN-Bus vorgestellt. Zwar handelt es sich hierbei um einen etablierten Standard, der auch von AUTOSAR unterstützt wird, jedoch ist der Einsatz in diesem Projekt nicht sinnvoll. So wäre eine separate Hardware-Anbindung für jede Anwendung nötig. Diese müsste jeweils mit einem USB-Adapter realisiert werden und somit nicht praktikabel. Alternativ könnte ein Multiplexer implementiert werden, um den Zugriff zu teilen. Dieses Konzept ähnelt jedoch stark dem VCAN, wodurch dieser sinnvollerweise verwendet wird.
 
 Der Einsatz von Ethernet ist zwar komfortabel, wird jedoch erst ab AUTOSAR 4.0 unterstützt. Da in diesem Projekt AUTOSAR 3.1 eingesetzt wird, ist diese Möglichkeit nicht umsetzbar.
 
-Beim VCAN handelt es sich um eine Mischung aus Ethernet und CAN. Dabei wird zwar Ethernet als Übertragungsmedium genutzt, jedoch das Botschaften-Format von CAN erhalten. Zudem wird dieser vom eingesetzten AUTOSAR unterstützt. Vor allem in den ersten Phasen eines Projektes ist der VCAN von Vorteil, da dieser einfach und flexibel ist. Daher wird auch in diesem Projekt der VCAN gewählt. Ein essenzieller Nachteil hierbei ist jedoch die Notwendigkeit eines Gateways. Da es sich bei CAN um eine Multicast-Technik handelt, Ethernet jedoch auf Unicast ausgelegt ist, wird eine zentrale Komponente benötigt, die einzelne Botschaften an alle Teilnehmer weitergibt. Genau diese Aufgabe wird vom VCAN-Gateway übernommen. Bereits zu Beginn des Projektes lag ein Gateway der Firma Elektrobit vor. Da es sich hierbei jedoch um eine Closed-Source Anwendung handelt, sind Änderungen nur mit Unterstützung von Elektrobit möglich. Um eine erhöhte Flexibilität zu gewährleisten, wurde im Rahmen dieser Arbeit ein eigenes Gateway und eine API entworfen. Diese VCAN-API ist in Python realisiert und ermöglicht das Senden und Empfangen von VCAN-Botschaften. Zudem wurde die Funktionalität des EB-Gateways implementiert und erweitert. Im folgenden Kapitel wird die API näher beschrieben. Eine genaue API-Dokumentation ist im beigelegten Quellcode und im Anhang \ref{sec:vcan_api} zu finden.
+Beim VCAN handelt es sich um eine Mischung aus Ethernet und CAN. Dabei wird zwar Ethernet als Übertragungsmedium genutzt, jedoch das Botschaftenformat von CAN erhalten. Zudem wird dieser vom eingesetzten AUTOSAR unterstützt. Vor allem in den ersten Phasen eines Projektes ist der VCAN von Vorteil, da dieser einfach und flexibel ist. Daher wird auch in diesem Projekt der VCAN gewählt. Ein essenzieller Nachteil hierbei ist jedoch die Notwendigkeit eines Gateways. Da es sich bei CAN um eine Multicast-Technik handelt, Ethernet jedoch auf Unicast ausgelegt ist, wird eine zentrale Komponente benötigt, die einzelne Botschaften an alle Teilnehmer weitergibt. Genau diese Aufgabe wird vom VCAN-Gateway übernommen. 
+
+Bereits zu Beginn des Projektes lag ein Gateway der Firma Elektrobit vor. Da es sich hierbei jedoch um eine Closed-Source Anwendung handelt, sind Änderungen nur mit Unterstützung von Elektrobit möglich. Um eine erhöhte Flexibilität zu gewährleisten, wurde im Rahmen dieser Arbeit ein eigenes Gateway und eine API entworfen. Diese VCAN-API ist in Python realisiert und ermöglicht das Senden und Empfangen von VCAN-Botschaften. Zudem wurde die Funktionalität des EB-Gateways implementiert und erweitert. Im folgenden Kapitel wird die API näher beschrieben. Eine genaue API-Dokumentation ist im beigelegten Quellcode und im Anhang \ref{sec:vcan_api} zu finden.
 
 
 \subsection{VCAN-API}
 \label{sec:VCAN_API}
-Die Entwicklung der VCAN-API hatte zu Beginn das primäre Ziel den direkten Zugriff auf den VCAN zu ermöglichen. Im Laufe des Projektes hat sich jedoch herausgestellt, dass die zusätzliche Implementierung des Gateways keinen großen Mehr-Aufwand bedeutet. Aus diesem Grund deckt die VCAN-API sowohl die Client-Seite, dass Senden und Empfangen von Botschaften, als auch die Gateway-Seite ab. Zusätzlich sind damit kurzfristige Änderungen an der API möglich. Als Programmiersprache wurde Python gewählt. Dies ermöglicht eine schnelle und einfache Entwicklung. Zudem wird dadurch die Kopplung zweier unterschiedlicher Bereiche repräsentiert. Zum Einen der embedded Bereich, der vor allem auf Assembler, C und C++ basiert, und zum Anderen den Bereich der Hochsprachen, wie er zum Beispiel durch Java oder Python repräsentiert wird.
+Die Entwicklung der VCAN-API hatte zu Beginn das primäre Ziel den direkten Zugriff auf den VCAN zu ermöglichen. Im Laufe des Projektes hat sich jedoch herausgestellt, dass die zusätzliche Implementierung des Gateways keinen großen Mehraufwand bedeutet. Aus diesem Grund deckt die VCAN-API sowohl die Client-Seite, dass Senden und Empfangen von Botschaften, als auch die Gateway-Seite ab. Zusätzlich sind damit kurzfristige Änderungen an der API möglich.
+
+Als Programmiersprache wurde Python gewählt. Dies ermöglicht eine schnelle, einfache und plattformübergreifende Entwicklung. Zudem wird dadurch die Kopplung zweier unterschiedlicher Bereiche repräsentiert. Zum Einen der embedded Bereich, der vor allem auf Assembler, C und C++ basiert, und zum Anderen den Bereich der Hochsprachen, wie er zum Beispiel durch Java oder Python repräsentiert wird.
 
 Die Entwicklung der API basiert auf dem VCAN-Protokoll. Da es sich hierbei um kein offenes oder bekanntes Protokoll handelt, wurde dieses im Rahmen dieser Arbeit Reverse Engineered. Hierzu wurden einige VCAN-Botschaften mittels Wireshark\footnote{Wireshark ist zu finden unter: \url{http://www.wireshark.org/}} mitgeschnitten und ausgewertet. Anschließend wurden mittels "`trial and error"' die weiteren Details des Protokolls anhand des bestehenden Gateways ermittelt.
 
-Bei dem VCAN-Protokoll handelt es sich um ein auf TCP basierendes Binär-Format. Dabei wird der TCP-Verbindungsaufbau genutzt um Clients am Gateway anzumelden. Der genaue Aufbau des Protokolls ist im Kapitel \ref{sec:vcan_protokoll} beschrieben. Folgende Daten werden in einer Botschaft übermittelt:
+Bei dem VCAN-Protokoll handelt es sich um ein auf TCP basierendem Binärformat. Dabei wird der TCP-Verbindungsaufbau genutzt um Clients am Gateway anzumelden. Der genaue Aufbau des Protokolls ist im Kapitel \ref{sec:vcan_protokoll} beschrieben. Folgende Daten werden in einer Botschaft übermittelt:
 
 \begin{itemize}
     \item System
@@ -940,35 +931,15 @@ Bei dem VCAN-Protokoll handelt es sich um ein auf TCP basierendes Binär-Format.
     \item Nutzdaten
 \end{itemize}
 
-Es ist zu erkennen, dass dieses Protokoll nicht nur für CAN ausgelegt ist. So existieren zum Beispiel Werte im System-Feld für CAN, FlexRay und LIN. Auch die Angabe eines Kanals entspricht nicht dem einfachen CAN-Standard. Aus diesem Grund ist zu erwarten, dass das ermittelte Protokoll nicht komplett ist. Dieses Projekt beschränkt sich jedoch auf die vom AUTOSAR-CAN-Modul gesendeten Botschaften und ignoriert somit \emph{System} und \emph{Kanal} der Nachricht. In einem zukünftigen Projekt könnte dies jedoch näher untersucht werden, und weitere Funktionalität implementiert werden.
+Es ist zu erkennen, dass dieses Protokoll nicht nur für CAN ausgelegt ist. So existieren zum Beispiel Werte im System-Feld für CAN, FlexRay und LIN. Auch die Angabe eines Kanals entspricht nicht dem einfachen CAN-Standard. Aus diesem Grund ist zu erwarten, dass das ermittelte Protokoll nicht komplett ist. Dieses Projekt beschränkt sich jedoch auf die vom AUTOSAR-CAN-Modul gesendeten Botschaften und ignoriert somit zum Großteil \emph{System} und \emph{Kanal} der Nachricht. In einem zukünftigen Projekt könnte dies jedoch näher untersucht werden, und weitere Funktionalität implementiert werden.
 
 Bei der erstellten VCAN-API handelt es sich um ein reines Backend. Eine Dokumentation und Beispiele zum Erstellen eines Gateways, beziehungsweise Clients, sind im Anhang zu finden. Im Rahmen dieser Arbeit wurde ein Gateway-Anwendung inklusive grafische Oberfläche entwickelt. Die Funktionalität des von Elektrobit bereitgestellten Gateways, inklusive des PCAN-Supports, ist hierin komplett nachgebildet. Unterstützung für die PCAN Hardware ist zur Zeit nur unter Windows gegeben, da sich die entsprechenden Linux-Treiber noch in der Entwicklung befinden. Mit der VCAN-API lassen sich ebenso einfach Clients erstellen, die Botschaften senden und empfangen können.
 
-Neben der Grund-Funktionalität bietet die VCAN-API einige Vorteile der Elektrobit-Lösung gegenüber. So haben das Original-Gateway, sowie die AUTOSAR Komponenten, Probleme mit schnellen Zyklus-Zeiten. Ab etwa 200 ms kommt es immer häufiger vor, dass einzelne Pakete nicht registriert werden. Das hier erstellte Gateway zeigt in diesem Bereich eine gewisse Robustheit. Einig Tests haben jedoch gezeigt, dass auch das eingesetzte Betriebssystem Einfluss auf dieses Problem hat. So scheinen Paketverluste häufiger zu sein, wenn sowohl Client als auch Gateway unter Windows ausgeführt werden. Da hingegen zeigt sich ein besseres Verhalten, wenn beide Anwendungen unter Linux ausgeführt werden. Das deutet auf unterschiedliche Betriebssystemeigene Netzwerkeinstellungen hin. So könnten zum Beispiel unterschiedliche TCP-Receive-Windows so ein Verhalten hervorrufen. Auch eine unterschiedliche Timer-Auflösung könnte hier Einfluss haben. In diesem Projekt konnte jedoch keinerlei Unterschied festgestellt werden.
-% TODO: Warum Paket-Velust?
+Neben der Grundfunktionalität bietet die VCAN-API einige Vorteile der Elektrobit-Lösung gegenüber. So haben das Original-Gateway, sowie die AUTOSAR Komponenten, Probleme mit schnellen Zykluszeiten. Ab etwa 200 ms kommt es immer häufiger vor, dass einzelne Pakete nicht registriert werden. Das hier erstellte Gateway zeigt in diesem Bereich eine gewisse Robustheit. Einige Tests haben jedoch gezeigt, dass auch das eingesetzte Betriebssystem Einfluss auf dieses Problem hat. So scheinen Paketverluste häufiger zu sein, wenn sowohl Client als auch Gateway unter Windows ausgeführt werden. Dahingegen zeigt sich ein besseres Verhalten, wenn beide Anwendungen unter Linux ausgeführt werden. Das deutet auf unterschiedliche Betriebssystemeigene Netzwerkeinstellungen hin. So könnten zum Beispiel unterschiedliche TCP-Receive-Windows so ein Verhalten hervorrufen. Auch eine unterschiedliche Timer-Auflösung könnte hier Einfluss haben. In diesem Projekt konnte jedoch keinerlei Unterschied festgestellt werden.
 
-Ein prototypisch implementiertes Feature ist eine Zugriffskontrolle. Hierzu können mittels einer XML-Datei Whitelists angelegt werden. Hierbei kann jeweils pro IP festgelegt werden, welche CAN-IDs gesendet, und welche empfangen werden dürfen. Eine Beispiel-Konfiguration, sowie das XML-Schema liegen dem Quellcode bei.
+Ein prototypisch implementiertes Feature ist eine Zugriffskontrolle. Hierzu können mittels einer XML-Datei Whitelists angelegt werden. Hierbei kann jeweils pro IP festgelegt werden, welche CAN-IDs gesendet, und welche empfangen werden dürfen. Eine Beispielkonfiguration, sowie das XML-Schema liegen dem Quellcode bei.
 
 Sollte das Gateway in Zukunft auch weiter eingesetzt werden, bietet es sich an, einige Erweiterungen vorzunehmen. So ist Unterstützung für das DBC-Format vorstellbar\footnote{Eine erste Entwicklung hat bereits begonnen, wurde jedoch nicht fertiggestellt.}. Auch Unterstützung für ARXML-Dateien ist möglich. Somit könnte eine Zugriffskontrolle aufgrund des importierten Modells erfolgen. Zudem wäre hierdurch eine symbolische Benennung, sowie eine Auswertung der Botschaften und Signale möglich. Um die Arbitrierung des CANs zu simulieren, ist es ebenfalls vorstellbar, eine ID-basierte Priorisierung zu erlauben.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -980,11 +951,11 @@ Sollte das Gateway in Zukunft auch weiter eingesetzt werden, bietet es sich an, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation AUTOSAR und Scheinwerfer-ECU}
 \label{sec:Kommunikation_A_S}
-Die Kommunikation zwischen der AUTOSAR-Komponente und der Scheinwerfer-ECU erfolgt per CAN. Hierzu wird ein PEAK-PCAN-USB-Adapter verwendet. Da die AUTOSAR-Komponente in einer virtualisierten Umgebung ausgeführt wird, ist direkte Zugang zum PCAN-Adapter nicht gegeben. Daher wird dies über das VCAN-Gateway ermöglicht.
+Die Kommunikation zwischen der AUTOSAR-Komponente und der Scheinwerfer-ECU erfolgt per CAN. Hierzu wird ein PEAK-PCAN-USB-Adapter verwendet. Da die AUTOSAR-Komponente in einer virtualisierten Umgebung ausgeführt wird, ist ein direkter Zugriff auf den PCAN-Adapter nicht gegeben. Daher wird dies über das VCAN-Gateway ermöglicht.
 
 Der zu Beginn des Projektes bestehende Versuchsaufbau beinhaltet ein älteres Bordnetzsteuergerät. Dieses unterstützt nur den Low-Speed CAN-Standard ist damit nicht vollständig mit anderen Systemen, wie zum Beispiel dem PCAN-Adapter, kompatibel. Außerdem verwendet dieses Steuergerät eine veraltete Version des Netzwerkmanagements und ist damit nicht mit dem eingesetzten AUTOSAR kompatibel. Die volle Funktionalität der ECU ist damit unter Umständen nicht nutzbar. Aus diesen Gründen wurde im Rahmen dieser Arbeit der Versuchsaufbau durch ein aktuelles Steuergerät erneuert. Die dazugehörigen Informationen sind im folgenden Kapitel nachzulesen. Darauf folgt ein Kapitel zum Einsatz des Netzwerkmanagements.
 
-Anschließend wird in einem Kapitel eine Restbussimulation von VW näher betrachtet. Im Laufe des Projekts hat sich herausgestellt, das bestimmte Funktionen der ECU nur zugreifbar sind, wenn eine gültige Checksumme berechnet wird. Freundlicherweise wurde von VW eine Restbussimulation bereitgestellt, die die Berechnung des CRC vornimmt. 
+Anschließend wird in einem Kapitel eine Restbussimulation von VW näher betrachtet. Im Laufe des Projekts hat sich herausgestellt, das bestimmte Funktionen der ECU nur zugreifbar sind, wenn eine gültige Checksumme berechnet wird. Freundlicherweise wurde von VW eine Restbussimulation bereitgestellt, die die Berechnung des CRC vornimmt.
 
 
 
@@ -993,7 +964,7 @@ Anschließend wird in einem Kapitel eine Restbussimulation von VW näher betrach
 \label{sec:Aufbau_der_ECU}
 Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im weiteren BCM genannt, aufgebaut und getestet. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
 
-Die Ansteuerung des BCM erfolgt pre CAN mit einer Baudrate von 500 kbit/s. Der am Versuchsaufbau angebrachte Schalter stellt die Klemme 15 sowie Klemme S dar. In diesem Aufbau sind diese Signale nicht getrennt und werden somit immer gleich geschaltet.
+Die Ansteuerung des BCM erfolgt per CAN mit einer Baudrate von 500 kbit/s. Der am Versuchsaufbau angebrachte Schalter stellt die Klemme 15 sowie Klemme S dar. In diesem Aufbau sind diese Signale nicht getrennt und werden somit immer gleich geschaltet. Der Versuchsaufbau wird mit einer Spannung von etwa 12 Volt betrieben.
 
 
 
@@ -1001,7 +972,7 @@ Die Ansteuerung des BCM erfolgt pre CAN mit einer Baudrate von 500 kbit/s. Der a
 \subsection{Einsatz des Netzwerkmanagements}
 \label{sec:AutosarNM}
 % TODO: NM wirklich nicht geschafft?!
-Um das volle System um die ECU nachbilden zu können, wird der Einsatz eines Netzwerkmanagements benötigt. Hier wird das bei VW eingesetzte NM-High verwendet. Der allgemeine Einsatz, sowie AUTOSAR-spezifische Punkte wurde bereits in Kapitel \ref{sec:Netzwerkmanagement} betrachtet, und sollen im weiteren auf das konkrete Beispiel angewendet werden. Leider konnte aus Zeitgründen das Netzwerkmanagement nicht erfolgreich im Projekt implementiert werden. Trotzdem sollen hier alle relevanten Punkte der Konfiguration betrachtet werden. Eine Schritt-für-Schritt Anleitung, basierend auf einem Workshop von Elektrobit, ist in Anhang \ref{sec:nm_tutorial} zu finden.
+Um das volle System um die ECU nachbilden zu können, wird der Einsatz eines Netzwerkmanagements benötigt. Hier wird das bei VW eingesetzte NM-High verwendet. Der allgemeine Einsatz, sowie AUTOSAR-spezifische Punkte wurden bereits in Kapitel \ref{sec:Netzwerkmanagement} betrachtet, und sollen im weiteren auf das konkrete Beispiel angewendet werden. Leider konnte aus Zeitgründen das Netzwerkmanagement nicht erfolgreich im Projekt implementiert werden. Trotzdem sollen hier alle relevanten Punkte der Konfiguration betrachtet werden. Eine Schritt-für-Schritt Anleitung, basierend auf einem Workshop von Elektrobit, ist in Anhang \ref{sec:nm_tutorial} zu finden.
 
 \begin{lstlisting}[frame=single, language=, basicstyle=\footnotesize, caption={Beispiel NM Botschaften}, label={lst:nm_botschaften}]
 SMLS: 0x1B00000C - 0C:00:04:00:00:00:00:00
@@ -1010,32 +981,32 @@ BCM : 0x1B00000E - 0E:00:04:01:11:00:0C:00
 ----: 0x1B000014 - 14:00:04:00:00:00:00:00
 \end{lstlisting}
 
-Für einen ersten Einstieg, sind in Listing \ref{lst:nm_botschaften} einige Beispiel-Botschaft des Netzwerk-Managements zu sehen. Dort ist nach dem Node-Namen, die CAN-ID der Botschaft aufgeführt. Diese beginnen etwa bei 0x1B000000 und enthalten im letzten Teil auch eine Node-ID. Diese ID ist in der eigentlichen Botschaften im ersten Byte wiederzufinden. Das zweite Byte hat immer den Wert null, während das dritte Byte anscheinend einen Status angibt. Diese Werte ändern sich, je nach System-Status. Diesen kann zum Beispiel die Klemme 15 ändern, und damit das Einschlafen des Bus-Systems veranlassen. Alle weiteren Bytes sind ausschließlich beim BCM-Node ungleich null. Diese ersten Beobachtungen des Protokolls werden nun anhand der AUTOSAR-Spezifikation untersucht.
+Für einen ersten Einstieg, sind in Listing \ref{lst:nm_botschaften} einige Beispiel-Botschaft des Netzwerk-Managements zu sehen, wie sie von der Restbussimulation gesendet werden. Dort ist nach dem Node-Namen, die CAN-ID der Botschaft aufgeführt. Diese beginnen etwa bei 0x1B000000 und enthalten im letzten Teil auch eine Node-ID. Diese ID ist in der eigentlichen Botschaften im ersten Byte wiederzufinden. Das zweite Byte hat immer den Wert null, während das dritte Byte einen Systemstatus angibt. Dieser ändert sich zum Beispiel sobald die Klemme 15 betätigt, und damit das Einschlafen beziehungsweise Aufwachen des Bussystems veranlasst wird. Alle weiteren Bytes sind ausschließlich beim BCM-Node ungleich null. Diese ersten Beobachtungen des Protokolls werden nun anhand der AUTOSAR-Spezifikation untersucht.
 
 Die in AUTOSAR eingesetzten Netzerwerkmanagement-PDUs sind nach einem festen Schema aufgebaut (vgl. \cite[Seite 51]{autosar_cannm}). Byte eins repräsentiert einen \emph{Source Node Identifier}. Dies deckt sich auch mit der Beobachtungen aus den Beispiel Botschaften. Die Form der Botschaften-IDs wird jedoch im Standard nicht vorgegeben. Damit handelt es sich bei den Botschaften-IDs im Bereich 0x1B000000 um eine Design-Entscheidung, bei der der \emph{Source Node Identifier} ebenfalls untergebracht worden ist.
 
-Das in den Beispiel-Botschaften durchgehen leere Byte an Position zwei ist im AUTOSAR Standard als \emph{Control Bit Vector} definiert. Dieser wird damit also bei dieser Form des NM nicht verwendet. Die Positionen des \emph{Source Node Identifiers} und des \emph{Control Bit Vectors} kann in der ECU-Konfiguration ausgewählt werden. Dabei beschränkt sich die Auswahl auf Byte 1, Byte 2 oder das deaktivieren eines oder beider Felder. 
+Das in den Beispiel-Botschaften durchgehen leere Byte an Position zwei ist im AUTOSAR Standard als \emph{Control Bit Vector} definiert. Dieser wird damit also bei dieser Form des NM nicht verwendet. Die Positionen des \emph{Source Node Identifiers} und des \emph{Control Bit Vectors} kann in der ECU-Konfiguration ausgewählt werden. Dabei beschränkt sich die Auswahl auf Byte eins, Byte zwei oder das deaktivieren eines oder beider Felder.
 
-Das \emph{Control Bit Vector} Feld wird für einige Management-Funktionen verwendet. So wird über das \emph{NM Coordinator Sleep} Bit, ein synchrones Herunterfahren eines Bus-Systems mit mehreren Koordinatoren bewirkt. Hierbei setzt der Haupt-Koordinator das entsprechende Bit, und alle anderen Koordinatoren bereiten ein Herunterfahren ihres eigenen Teil-Busses vor. Eine weitere Funktion des \emph{Control Bit Vector} Feldes, ist der \emph{Repeat Message Request}. Über diesen kann ein Koordinator das Senden von NM-Botschaften aller Teilnehmer erzwingen. Hierdurch ist eine Identifikation aller Nodes möglich.
+Das \emph{Control Bit Vector} Feld wird für einige Management-Funktionen verwendet. So wird über das \emph{NM Coordinator Sleep} Bit, ein synchrones Herunterfahren eines Bus-Systems mit mehreren Koordinatoren bewirkt. Hierbei setzt der Hauptkoordinator das entsprechende Bit, und alle anderen Koordinatoren bereiten ein Herunterfahren ihres eigenen Teilbusses vor. Eine weitere Funktion des \emph{Control Bit Vector} Feldes, ist der \emph{Repeat Message Request}. Über diesen kann ein Koordinator das Senden von NM-Botschaften aller Teilnehmer erzwingen. Hierdurch ist eine Identifikation aller Nodes möglich.
 
-Die restlichen Bytes der NM-Botschaften enthält User-Daten, und implementiert damit ein VW eigenes Protokoll. Allgemein senden Nodes NM-Botschaften, solange ein Wach-Bleiben des Busses erwünscht ist. Sobald ein Node die Bus nicht mehr benötigt, sendet dieser auch keine NM-Botschaften mehr.
+Die restlichen Bytes der NM-Botschaften enthält User-Daten, und implementiert damit ein VW eigenes Protokoll. Allgemein senden Nodes NM-Botschaften, solange ein Wach-Bleiben des Busses erwünscht ist. Sobald ein Node den Bus nicht mehr benötigt, sendet dieser auch keine NM-Botschaften mehr.
 
-Im folgenden wird der Prozess beschrieben, um das Netzwerk-Management in AUTOSAR, speziell EB tresos, zu aktivieren. Dabei wird ein vollständig konfiguriertes Beispiel vorausgesetzt. Im ersten Schritt müssen das System Modell und die CAN-Datenbank angepasst werden. Im System Modell sind die Service-Ports es ComM-Moduls hinzuzufügen. Über diese kann später die User-Runnable das Netzwerk-Management steuern. In der CAN-Datenbank müssen Botschaften angelegt werden, die als NM-Botschaften verwendet werden sollen. An diesem Punkt ist die ID der Botschaften zu bestimmen.
+Im Folgenden wird der Prozess beschrieben, um das Netzwerk-Management in AUTOSAR, speziell EB tresos, zu aktivieren. Dabei wird ein vollständig konfiguriertes Beispiel vorausgesetzt. Im ersten Schritt müssen das System Modell und die CAN-Datenbank angepasst werden. Im System Modell sind die Service-Ports des ComM-Moduls hinzuzufügen. Über diese kann später die User-Runnable das Netzwerk-Management steuern. In der CAN-Datenbank müssen Botschaften angelegt werden, die als NM-Botschaften verwendet werden sollen. An diesem Punkt ist die ID der Botschaften zu bestimmen.
 
-Nachdem die veränderten .arxml und .dbc Dateien ins tresos-Projekt importiert wurde sind, können die nötigen Module importiert werden. Hier sind die Module CanNm, CanSm, ComM und Nm nötig. Die Module CanNm und Nm stellen das generische und Bus-spezifische Netzwerkmanagement zur Verfügung. Um Zustandsübergänge zu ermöglichen, werden die Module CanSM und ComM benötigt. Letzteres stellt der User-Applikation Funktionen zur Verfügung, mit deren Hilfe der Zustand des Netzwerkmanagements bestimmt werden kann.
+Nachdem die veränderten .arxml und .dbc Dateien ins tresos-Projekt importiert worden sind, können die nötigen Module importiert werden. Hier sind die Module CanNm, CanSm, ComM und Nm relevant. Das Modul Nm stellt ein generisches Netzwerkmanagement zur Verfügung, während das Modul CanNm eine Busspezifische Variante anbietet. Um Zustandsübergänge zu ermöglichen, werden die Module CanSM und ComM benötigt. Letzteres stellt der User-Applikation Funktionen zur Verfügung, mit deren Hilfe der Zustand des Netzwerkmanagements bestimmt werden kann.
 
-Der generische Teil des NM wird eingerichtet, indem ein ComM Channel angelegt wird, und dieser im Modul Nm referenziert wird. Einstellungen zum Format der NM-PDU, speziell zum \emph{Source Node Identifiers} und dem \emph{Control Bit Vector}, können im Modul CanNm vorgenommen werden. Ebenfalls können dort einige Zeit konfiguriert werden, die vom Netzwerkmanagement genutzt werden.
+Der generische Teil des NM wird eingerichtet, indem ein ComM Channel angelegt wird, und dieser im Modul Nm referenziert wird. Einstellungen zum Format der NM-PDU, speziell zum \emph{Source Node Identifiers} und dem \emph{Control Bit Vector}, können im Modul CanNm vorgenommen werden. Ebenfalls können dort einige Zeiten konfiguriert werden, die vom Netzwerkmanagement genutzt werden um zum Beispiel einen Timeout zu erkennen.
 
-Nachdem das Mapping der Service Ports in der RTE vorgenommen wurde, kann über die Funktion das \texttt{Rte\_Call\_UserRequest\_RequestComNode} Netzwerkmanagement genutzt werden. Dabei gibt der Übergabeparameter den gewünschten Bus-Zustand an. Mögliche Parameter sind \texttt{FULL\_COMMUNICATION} und \texttt{NO\_COMMUNICATION}.
+Nachdem das Mapping der Service Ports in der RTE vorgenommen wurde, kann über die Funktion \texttt{Rte\_Call\_UserRequest\_RequestComNode} das Netzwerkmanagement genutzt werden. Dabei gibt der Übergabeparameter den gewünschten Bus-Zustand an. Mögliche Parameter sind \texttt{FULL\_COMMUNICATION} und \texttt{NO\_COMMUNICATION}.
 
 
 
 
 \subsection{Restbussimulation und CRC Berechnung}
 \label{sec:RBS}
-Nach dem Aufbau der neuen ECU wurde die Funktionalität getestet. Einige Funktionen konnten von Anfang an verwendet werden, Standlicht, bei einigen anderen kam es jedoch zu Problemen. Dabei wurde der Fokus auf die Blinker-Funktion gelegt. Obwohl sowohl das Standlicht, als auch der Blinker die selben CAN-Signale verwendet, und lediglich über die Klemme 15 unterschieden werden, konnte die Blink-Funktion nicht aktiviert werden. Nach einigen Versuchen und Gesprächen mit einem VW-Mitarbeiter hat sich herausgestellt, dass die Blinker Funktionalität über eine End-to-End-Absicherung geschützt wird. Diese besteht aus einer Checksumme, über die gesamte Botschaft. Freundlicherweise wurde eine Restbussimulation, kurz RBS, von VW zur Verfügung gestellt, mit deren Hilfe die entsprechenden Botschaft und die dazu gehörige Checksumme generiert werden können. 
+Nach dem Aufbau der neuen ECU wurde die Funktionalität getestet. Einige Funktionen konnten von Anfang an verwendet werden, Standlicht, bei einigen anderen kam es jedoch zu Problemen. Dabei wurde der Fokus auf die Blinkerfunktion gelegt. Obwohl sowohl das Standlicht, als auch der Blinker die selben CAN-Signale verwendet, und lediglich über die Klemme 15 unterschieden werden, konnte die Blinkfunktion nicht aktiviert werden. Nach einigen Versuchen und Gesprächen mit einem VW-Mitarbeiter hat sich herausgestellt, dass die Blinker Funktionalität über eine End-to-End-Absicherung geschützt wird. Diese besteht aus einer Checksumme, über die gesamte Botschaft. Freundlicherweise wurde eine Restbussimulation, kurz RBS, von VW zur Verfügung gestellt, mit deren Hilfe die entsprechenden Botschaft und die dazu gehörige Checksumme generiert werden können. 
 
-Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit die Berechnung des CRC nicht ausgeführt werden kann, wurde ein anderer Weg gewählt. Da es sich hauptsächlich um zwei Bit-Signale und einen 4-Bit Botschaften-Zähler handelt, die hier angesteuert werden beziehungsweise veränderlich sind, beträgt die Anzahl\footnote{CRC-Summen: Zwei 1-Bit Signale und ein 4-Bit Signal: $ 2^1 \times 2^1 \times 2^4 = 2 \times 2 \times 16 = 64 $} der möglichen CRC-Summen 64. Diese wurden kurzerhand manuell durch Tests aus der Restbussimulation erstellt. Die daraus resultierende Tabelle ist im Anhang \ref{sec:CRC Werte} zu finden. Hiermit ist es möglich die Blinker-Signale zu verwenden. Es wird angenommen, dass alle anderen Signale null sind.
+Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit die Berechnung des CRC nicht ausgeführt werden kann, wurde ein anderer Weg gewählt. Da hauptsächlich zwei 1-Bit-Signale und ein 4-Bit Botschaften-Zähler von Interesse sind, beträgt die Anzahl\footnote{CRC-Summen: Zwei 1-Bit Signale und ein 4-Bit Signal: $ 2^1 \times 2^1 \times 2^4 = 2 \times 2 \times 16 = 64 $} der möglichen CRC-Summen 64. Diese wurden kurzerhand manuell durch Tests aus der Restbussimulation extrahiert. Die daraus resultierende Tabelle ist im Anhang \ref{sec:CRC Werte} zu finden. Hiermit ist es möglich die Blinker-Signale zu verwenden. Es wird angenommen, dass alle anderen Signale der Botschaft null sind.
 
 \begin{figure}[ht]
     \centering
@@ -1044,7 +1015,7 @@ Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit di
     \label{fig:rbs}
 \end{figure}
 
-Die Restbussimulation bietet noch weitere interessante Möglichkeiten. Abbildung \ref{fig:rbs} zeigt einen Ausschnitt der Simulations-Übersicht in Vector CANoe. Hier lassen sich alle Steuergeräte ein- und ausschalten. Hierdurch kann eine beliebige Kombination von Hardware getestet werden, während der Rest per Software simuliert wird. Dabei können einzelne Signale von Hand ausgelöst und deren Werte umgestellt werden. Die Kommunikation zur Hardware wird dabei durch einen USB zu CAN Adapter von Vector realisiert.
+Die Restbussimulation bietet noch weitere interessante Möglichkeiten. Abbildung \ref{fig:rbs} zeigt einen Ausschnitt der Simulationsübersicht in Vector CANoe. Hier lassen sich alle Steuergeräte ein- und ausschalten. Hierdurch kann eine beliebige Kombination von Hardware getestet werden, während der Rest per Software simuliert wird. Dabei können einzelne Signale von Hand ausgelöst und deren Werte umgestellt werden. Die Kommunikation zur Hardware wird dabei durch einen USB zu CAN Adapter von Vector realisiert.
 
 
 
@@ -1058,7 +1029,7 @@ Die Restbussimulation bietet noch weitere interessante Möglichkeiten. Abbildung
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der AUTOSAR Anwendung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Entwicklung der AUTOSAR Anwendung}
 \label{sec:entwicklung_autosar}
-Ziel der AUTOSAR-Komponente ist die Kommunikation mit, und das Befehle Empfangen von der steuernden Komponente die im nächsten Kapitel entwickelt wird. Zur Realisierung der Kommunikation wird die Botschaft APP\_01 verwendet. Die darin enthaltenen Signale sind in Tabelle \ref{tab:App_Botschaft} zu sehen. Die Botschaft verwendet die ID 0x742, hat eine Länge von 4 Byte, und wird mit einer Zykluszeit von 100 ms gesendet.
+Ziel der AUTOSAR-Komponente ist die Kommunikation mit, und das Befehle Empfangen von, der steuernden Komponente die im nächsten Kapitel entwickelt wird. Zur Realisierung der Kommunikation wird die Botschaft APP\_01 verwendet. Die darin enthaltenen Signale sind in Tabelle \ref{tab:App_Botschaft} zu sehen. Die Botschaft verwendet die ID 0x742, hat eine Länge von 4 Byte, und wird mit einer Zykluszeit von 100 ms gesendet.
 
 \begin{table}[ht]
     \centering
@@ -1093,7 +1064,7 @@ Das gesamte System Modell ist in Abbildung \ref{fig:smls_modell} zu sehen. Auf d
 
 Auch die nötige CAN-Datenbank in Form einer .dbc-Datei entspricht dem Modell. Hier sind die ECUs und Botschaften ebenfalls nachgebildet. Ein besonderes Augenmerk ist dabei auf das Layout der Signale innerhalb der Botschaften zu legen. Sowohl die .dbc-Datei, als auch das SystemDesk Projekt, sowie die daraus resultierende .arxml-Datei sind auf der beigelegten CD zu finden.
 
-Die ECU-Konfiguration mittels EB tresos wird nach den üblichen Verfahren durchgeführt. Dabei wurden als Grundlage der von EB durchgeführte Workshop, sowie die Unterlagen zur AUTOSAR-Lehrveranstaltung an der Ostfalia aus dem Wintersemester 2012/2013 genutzt. Die einzelnen Schritte zur Konfiguration der ECU sollen an dieser Stelle nicht aufgeführt werden, da diese in den genannten Dokumenten umfangreich erläutert sind. An dieser Stelle ist zu erwähnen, dass die ECU-Konfiguration mehr Zeit in Anspruch genommen hat, als zu Beginn des Projektes geplannt. Dies folgt vor allem aus der häufig nötigen und langwierigen Fehlersuche.
+Die ECU-Konfiguration mittels EB tresos wird nach den üblichen Verfahren durchgeführt. Dabei wurden als Grundlage der von EB durchgeführte Workshop, sowie die Unterlagen zur AUTOSAR-Lehrveranstaltung an der Ostfalia aus dem Wintersemester 2012/2013 genutzt. Die einzelnen Schritte zur Konfiguration der ECU sollen an dieser Stelle nicht aufgeführt werden, da diese in den genannten Dokumenten umfangreich erläutert sind. An dieser Stelle ist zu erwähnen, dass die ECU-Konfiguration mehr Zeit in Anspruch genommen hat, als zu Beginn des Projektes geplant. Dies folgt vor allem aus der häufig nötigen und langwierigen Fehlersuche.
 
 \begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={Implementation der Runnable}, label={lst:headlight_final}]
 void SWC_SMLS_R_SMLS (void) {
@@ -1117,9 +1088,9 @@ void SWC_SMLS_R_SMLS (void) {
 }
 \end{lstlisting}
 
-Die Implementation des Kern-Elements der AUTOSAR-Anwendung, die Runnable, ist in Listing \ref{lst:headlight_final} aufgeführt. Dabei ist der Code der Übersicht halber gekürzt. Der komplette Quellcode ist auf der beigelegten CD enthalten. Zeile eins des Listings zeigt die Signatur der Runnable. Diese ist durch die RTE fest definiert. Die Zeilen zwei und drei enthalten Aufrufe von Initialisierungs-Funktionen. Diese lesen alle aktuellen Werte der CAN-Botschaften ein, und speichern diese in Variablen. Die eigentliche Funktionalität ist in den Zeilen 5 bis 14 enthalten. Hier wird aufgrund der verschiedenen Modi eine bestimmte Aktion ausgeführt. So werden in den Zeilen 10 bis 13, die APP-Signale direkt auf SMLS-Signale geschrieben, falls kein Demo-Modus aktiv ist.
+Die Implementation des Kernelements der AUTOSAR-Anwendung, die Runnable, ist in Listing \ref{lst:headlight_final} aufgeführt. Dabei ist der Code der Übersicht halber gekürzt. Der komplette Quellcode ist auf der beigelegten CD enthalten. Zeile eins des Listings zeigt die Signatur der Runnable. Diese ist durch die RTE fest definiert. Die Zeilen zwei und drei enthalten Aufrufe von Initialisierungsfunktionen. Diese lesen alle aktuellen Werte der CAN-Botschaften ein, und speichern diese in Variablen. Die eigentliche Funktionalität ist in den Zeilen 5 bis 14 enthalten. Hier wird aufgrund der verschiedenen Modi eine bestimmte Aktion ausgeführt. So werden in den Zeilen 10 bis 13, die APP-Signale direkt auf SMLS-Signale geschrieben, falls kein Demo-Modus aktiv ist.
 
-Zum Schluss der Funktion, wird in den Zeilen 16 bis 18, die endgültige Botschaft gesendet. Dazu wird zuerst der CRC durch eine Lookup-Table bestimmt, und anschließend der Botschaftenzähler gesendet und inkrementiert. Durch das Nutzen des impliziten Sendens, sichtbar durch die \texttt{IWrite}-Methodenaufrufe, führt dazu, dass die eigentliche Botschaft erst gesendet wird, sobald die Runnable vorbei ist. Bis dahin werden die geschriebenen Werte zwischengespeichert.
+Zum Schluss der Funktion, wird in den Zeilen 16 bis 18, die endgültige Botschaft gesendet. Dazu wird zuerst der CRC durch eine Lookup-Table bestimmt, und anschließend der Botschaftenzähler gesendet und inkrementiert. Das Nutzen des impliziten Sendens, sichtbar durch die \texttt{IWrite}-Methodenaufrufe, führt dazu, dass die eigentliche Botschaft erst gesendet wird, sobald die Runnable vorbei ist. Bis dahin werden die geschriebenen Werte zwischengespeichert. Das ist nötig, da ansonsten bei jedem Sende-Aufruf die gesamte Botschaft gesendet wird, obwohl noch nicht alle Signale gesetzt wurden.
 
 
 
@@ -1132,7 +1103,7 @@ Zum Schluss der Funktion, wird in den Zeilen 16 bis 18, die endgültige Botschaf
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der steuernden Komponente %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Entwicklung der steuernden Komponente}
 \label{sec:entwicklung_vcan_app}
-Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, mit deren Hilfe sich die Demo-Funktionen leicht aktiveren lassen. Zudem werden aktuelle Status-Informationen vom CAN-Bus übersichtlich dargestellt. 
+Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, mit deren Hilfe sich die Demofunktionen leicht aktiveren lassen. Zudem werden aktuelle Statusinformationen vom CAN-Bus übersichtlich dargestellt. 
 
 \begin{figure}
     \centering
@@ -1173,42 +1144,28 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Analyse des Fallbeispiels %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Analyse des Fallbeispiels}
 \label{sec:Beispiel_Analyse}
-% TODO
 Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächsten Kapitel auf die Praxisrelevanz der Techniken eingegangen. Anschließend wird das Zeitverhalten des VCAN Systems untersucht. Dies ist vor allem im Hinblick auf die Echtzeitfähigkeit interessant. Ein weiteres, in der Praxis relevantes Thema, ist die Sicherheit. Diese wird anhand dieses Fallbeispiels im darauf folgenden Kapitels betrachtet.
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Relevanz für die reale Projekte %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Wie könnte das erarbeitete sinnvoll in der Wirtschaft umgesetzt werden?!
 \section{Relevanz für reale Projekte}
 \label{sec:Relevanz}
-Die Zukunft der Elektronik in der Automotiveindustrie ist stark durch Infotainment und Fahrerassistenzsysteme geprägt. Diese Systeme liegen zwischen zwei Ebenen. Zum Einen die Lowlevel Ebene, die die Anbindung an die Fahrzeughardware bietet und dem klassischen Modell entspricht, und zum Anderen eine Highlevel Ebene, die eine Anbindung an Car2X Netzwerke und und ähnliches bietet. Genau dieser immer größer werdende Bereich kann von den Vorteilen der embedded Virtualisierung profitieren. Wie in den bisherigen Kapiteln klar geworden ist, handelt es sich um eine ausgereifte Technik. Es existieren schon einige Hypervisor, die auch zum Beispiel in der Mobilfunkbranche bereits eingesetzt wird. Auch die Avionik hat die Vorteile bereits seit einigen Jahren erkannt und setzt die Techniken erfolgreich ein.
+Die Zukunft der Elektronik in der Automotiveindustrie ist stark durch Infotainment und Fahrerassistenzsysteme geprägt. Diese Systeme liegen zwischen zwei Ebenen. Zum Einen die Lowlevel Ebene, die die Anbindung an die Fahrzeughardware bietet und dem klassischen Modell entspricht, und zum Anderen eine Highlevel Ebene, die eine Anbindung an Car2X Netzwerke und ähnliches bietet. Genau dieser immer größer werdende Bereich kann von den Vorteilen der embedded Virtualisierung profitieren. Wie in den bisherigen Kapiteln klar geworden ist, handelt es sich um eine ausgereifte Technik. Es existieren schon einige Hypervisoren, die auch zum Beispiel in der Mobilfunkbranche bereits eingesetzt werden. Auch die Avionik hat die Vorteile bereits seit einigen Jahren erkannt und setzt die Techniken erfolgreich ein.
 
-% TODO: das beispiel muss irgendwie besser werden...
-% - Multi-Core CPUs und leistungsfähige SOCs sind billig -> effektiv
-%   - armv7
-%   - Tegra 3: ~20 $
-%       - ARM Cortex A9 (Application)
-%       - 4 Cores @ 1.6 GHz + 1 Core @ 500 MHz
-%       - IOs: wahrscheinlich weniger aber USB, MIPI, I2C, UART, SPI
-%   - LPC4310FBD144: 8 $
-%       - ARM Cortex M4 (Microcontroller)
-%       - 200 MHz
-%       - IOs: 83
-%   - Umsetzung natürlich nicht so einfach, jedoch sollte Richtung sichtbar sein
-%Ein wichtiges Argument für den Einsatz von Virtualisierung sind Kosten. Dies soll im Folgenden an einem Beispiel näher untersucht werden. Das Beispiel ist dabei nicht vollständig repräsentativ und soll lediglich die den Grundgedanken zeigen.
-%
-%Angenommen wird ein System bestehend aus vier ECUs. Die Steuergeräte basieren jeweils auf einem LPC4310 Microcontroller von NXP. Diese werden aktuell mit etwa 10 \$ pro Stück gelistet und bietet eine Leistung von 200 MHz. Nun werden diese ECUs mittels Virtualisierung vereint. Hier wird als Zielsystem ein Nvidia Tegra 3 betrachtet, der zur Zeit für etwa 20 \$ erhältlich ist. Dieser bietet gleich vier Kerne mit je 1,6 GHz Leistung und einen Kern mit 500 MHz Leistung. Hier zeichnet sich bereits eine mögliche Struktur des Zielsystems ab. 
-%
-%Der langsame Kern kann dediziert den Hypervisor übernehmen, während die anderen vier Kerne die Funktionalität der ECU übernehmen. Da für jede ECU nun ein vielfaches der Leistung vorhanden ist, sollte die Echtzeitfähigkeit kein Problem darstellen. Mit dieser Umstellung werden die Kosten in diesem Beispiel von 40 \$ auf 20 \$ halbiert. Hinzukommen ebenso Ersparnisse hinsichtlich der eingesetzten Boards beziehungsweise Peripherie, sowie unter Umständen ein vereinfachter Kabelbaum. Entsprechende Kosten werden hier jedoch nicht betrachtet, da diese nicht einfach einzuschätzen sind. Ebenso wird ein nötiger Integrationsaufwand nicht betrachtet. Trotz dieser Einschränkungen ist eine Richtung zu erkennen: Die Kosten sowie die Hardwarekomplexität des Systems kann verringert werden.
+Ein wichtiges Argument für den Einsatz von Virtualisierung sind die Kosten. Dies soll im Folgenden an einem Beispiel näher untersucht werden. Das Beispiel ist dabei nicht vollständig repräsentativ und soll lediglich den Grundgedanken aufzeigen. Dementsprechend ist die Wahl der Hardware relativ frei und nicht auf eine konkrete Anwendung bezogen.
+
+Angenommen wird ein System bestehend aus vier ECUs. Die Steuergeräte basieren jeweils auf einem LPC4310 Microcontroller von NXP. Diese werden aktuell mit etwa 10 \$ pro Stück gelistet und bieten jeweils eine Rechenleistung von 200 MHz. Nun werden diese ECUs mittels Virtualisierung vereint. Hier wird als Zielsystem ein Nvidia Tegra 3 betrachtet, der zur Zeit für etwa 20 \$ erhältlich ist. Dieser bietet gleich vier Kerne mit je 1,6 GHz Leistung und einen Kern mit 500 MHz Leistung. Hier zeichnet sich bereits eine mögliche Struktur des Zielsystems ab. 
+
+Der langsame Kern kann dediziert den Hypervisor übernehmen, während die anderen vier Kerne die Funktionalität der ECUs übernehmen. Da für jede ECU nun ein vielfaches der Leistung vorhanden ist, sollte die Echtzeitfähigkeit kein Problem darstellen. Mit dieser Umstellung werden die Kosten in diesem Beispiel von 40 \$ auf 20 \$ halbiert. Hinzukommen ebenso Ersparnisse hinsichtlich der eingesetzten Boards beziehungsweise Peripherie, sowie unter Umständen ein vereinfachter Kabelbaum. Entsprechende Kosten werden hier jedoch nicht betrachtet, da diese nicht einfach einzuschätzen sind. Ebenso wird ein nötiger Integrationsaufwand nicht betrachtet. Trotz dieser Einschränkungen ist eine Richtung zu erkennen: Die Kosten sowie die Hardwarekomplexität des Systems kann verringert werden.
 
 Ebenso kann die Umsetzung der funktionalen Sicherheit nach ISO 26262 von eingebetteter Virtualisierung profitieren. Virtuelle Maschinen trennen dabei Teilsystem ab und können die Sicherheitsbetrachtung auf mehrere Domänen aufteilen. Einzig der Hypervisor, als zentrales Element, erhöht die Komplexität des Systems und Bedarf umfangreicher Sicherheitsuntersuchung. Anschließend ist jedoch ein Bausatzsystem vorstellbar, in dem Funktionalität in virtuellen Maschinen gekapselt wird und anschließend diese als abgesicherte und getestete Bausteine eingesetzt werden. Integrationstests sind jedoch auch hier nötig.
 
 Der Bereich des Testens kann ebenfalls durch Virtualisierung erweitert werden. Da eine virtuelle Maschine auf einer abstrakten Ebene ausgeführt wird, ist es auch mögliche diese portabel zu gestalten, um so sowohl auf der embedded Hardware als auch auf einer Testhardware lauffähig zu sein. So ist es denkbar das Produktivcode, gekapselt in einer VM, auch im Testeinsatz Verwendung findet und somit als Restbussimulation für echte Hardware dient.
 
-Ein ähnliches Konzept wird auch durch EB tresos WinCore erreicht. Da durch EB tresos sowohl Projekte für Windows, als auch für embedded Plattformen erstellt werden können, kann der Programmcode komplett übernommen werden. Jedoch ist hier eine umfangreiche Konfiguration der RTE und der restlichen Module nötig. Daher eignet sich WinCore vor allem für die ersten Phasen eines Projektes, sowie die Lehre. Da die Applikation auf üblichen Betriebssystemen und Rechnern lauffähig ist, werden die Komplikation bei der Nutzung einer embedded Plattform vermieden beziehungsweise verschoben.
+Ein ähnliches Konzept wird auch durch EB tresos WinCore erreicht. Da durch EB tresos sowohl Projekte für Windows, als auch für embedded Plattformen erstellt werden können, kann der Programmcode zum Großteil übernommen werden. Jedoch ist hier eine umfangreiche Konfiguration der RTE und der restlichen Module nötig. Daher eignet sich WinCore vor allem für die ersten Phasen eines Projektes, sowie die Lehre. Da die Applikation auf üblichen Betriebssystemen und Rechnern lauffähig ist, werden die Komplikation bei der Nutzung einer embedded Plattform vermieden beziehungsweise verschoben.
 
-Vor allem der Einsatz des VCANs erleichtert viele Arbeiten und erste Tests. Da hier auf Ethernet, und damit auf eine ausgereifte und weit verbreitete Technik gesetzt wird, ist der Zugriff sehr einfach zu realisieren. In diesem Projekt wurde auf Python gesetzt. Aber auch praktisch jede andere Programmierumgebung ist denkbar, da der Zugriff auf TCP-Sockets nahezu immer möglich ist. Und da der Umgang mit Highlevel-Umgebungen dieser Art relativ einfach ist, ist eine erweiterte Funktionalität vorstellbar. Dies reicht vom auslesen einer Konfigurationsdatei um Stimuli einzurichten, bis hin zu einer Weboberfläche um den Zugriff auf den gesamten Bus zu erlauben.
+Vor allem der Einsatz des VCANs erleichtert viele Arbeiten und erste Tests. Da hier auf Ethernet, und damit auf eine ausgereifte und weit verbreitete Technik gesetzt wird, ist der Zugriff sehr einfach zu realisieren. In diesem Projekt wurde auf Python gesetzt. Aber auch praktisch jede andere Programmierumgebung ist denkbar, da der Zugriff auf TCP-Sockets nahezu immer möglich ist. Und da der Umgang mit Highlevel-Umgebungen dieser Art relativ einfach ist, ist eine erweiterte Funktionalität vorstellbar. Dies reicht vom auslesen einer Konfigurationsdatei um Stimuli einzurichten, bis hin zu einer Weboberfläche um den Zugriff auf den gesamten Bus zu erlauben. Auch eine Anbindung an MATLAB-Modelle ist möglich.
 
 
 
@@ -1218,13 +1175,9 @@ Vor allem der Einsatz des VCANs erleichtert viele Arbeiten und erste Tests. Da h
 \label{sec:Benchmark}
 Dieses Kapitel betrachtet das Zeitverhalten des VCAN. Dabei wird versucht eine Aussage zur Echtzeitfähigkeit zu machen. Die Analyse beschränkt sich auf einige wenige Anwendungsfälle. Alle Kombinationen aus Betriebssystem, Netzwerk-, CPU-Last und anderen Faktoren zu testen ist nicht praktikabel.
 
-Allgemein ist zu sagen, dass Ethernet nicht geeignet ist für harte Echtzeitanforderungen. Da der VCAN jedoch vor allem für die Evaluation und einfache Tests ausgelegt ist, lässt sich Ethernet an dieser Stelle trotzdem gut einsetzen. Die Latenz kann dabei verringert werden, indem die Netzwerklast verringert, sowie Netzwerkarchitektur vereinfacht wird. Das bedeutet, dass die Kommunikation das Testsystems in einem separaten Teilnetz stattfindet, auf das möglichst keine anderen Geräte zugreifen können. 
+Allgemein ist zu sagen, dass Ethernet nicht für harte Echtzeitanforderungen geeignet ist. Da der VCAN jedoch vor allem für die Evaluation und einfache Tests ausgelegt ist, lässt sich Ethernet an dieser Stelle trotzdem gut einsetzen. Die Latenz kann dabei verringert werden, indem die Netzwerklast verringert, sowie die Netzwerkarchitektur vereinfacht wird. Das bedeutet, dass die Kommunikation das Testsystems in einem separaten Teilnetz stattfindet, auf das möglichst keine anderen Geräte zugreifen können. 
 
-Zur Analyse des Zeitverhaltens wurde eine Benchmark Anwendung entwickelt. Diese startet ein VCAN-Gateway und speichert die Zeiten eingehender Botschaften. Diese können anschließend ausgewertet werden. Abbildung \ref{fig:timinganalyse} zeigt die Ergebnisse zweier Testreihen als Boxplots. Dabei beträgt die Größe der Stichproben jeweils 1\,000 Botschaften. Wie in Abbildung \ref{fig:boxplot_as} zu erkennen ist, liegen die Werte etwa im Bereich von 20 ms um den Median 120 ms herum. Diese Streuung ist für die vorgesehenen Anwendungen durchaus akzeptabel. Der Mittelwert der Messungen scheint jedoch von der Netzwerkarchitektur abzuhängen. So wurden diese Werte im FH-Netz gemessen. In zwei anderen Netzwerken konnten Durchschnitts werden von 110 ms sowie 130 ms festgestellt werden. Die Ursache dieser Abweichung ist nicht geklärt. Da es sich jedoch um einen relativ konstanten Wert handelt, kann dieser durch Maßnahmen innerhalb des System-Modells oder der RTE-Konfiguration ausgeglichen werden.
-
-Zudem wurde während des Projektes eine Eigenheit des WinCore VCAN beobachtet, die jedoch in dieser Auswertung nicht reproduziert werden konnte. Hierbei wurden Botschaften als Häufungen gesendet. Es kamen Zykluszeiten von 1 s vor, direkt gefolgt einigen Botschaften mit Pausezeiten im Bereich von wenigen Millisekunden.
-
-Abbildung \ref{fig:boxplot_vcan} zeigt die Ergebnisse der Analyse bei Benutzung der VCAN-API. Hier ist zu erkennen, dass eine Genauigkeit von etwa einer millisekunde möglich ist. Lediglich einzelne Ausreißer, in diesem Fall nur einer, weichen einige Millisekunden vom gewünschten Wert ab.
+Zur Analyse des Zeitverhaltens wurde eine Benchmark Anwendung entwickelt. Diese startet ein VCAN-Gateway und speichert die Zeiten eingehender Botschaften. Diese können anschließend ausgewertet werden. Abbildung \ref{fig:timinganalyse} zeigt die Ergebnisse zweier Testreihen als Boxplots. Dabei beträgt die Größe der Stichproben jeweils 1\,000 Botschaften.
 
 \begin{figure}
     \centering
@@ -1244,7 +1197,13 @@ Abbildung \ref{fig:boxplot_vcan} zeigt die Ergebnisse der Analyse bei Benutzung 
     \label{fig:timinganalyse}
 \end{figure}
 
-Tabelle \ref{tab:jitter_statistik} führt die Eigenschaften der Stichproben auf. Auch hier zeigen sich die beschriebenen Ergebnise. Die Standard Abweichung beim Einsatz der VCAN-API beträgt lediglich 0.1 ms, während diese beim Einsatz von AUTOSAR 4.8 ms beträgt. Damit sind beide Werte im akzeptablen Bereich um weiche Echtzeit für die vorgesehenen Anwendungen zu ermöglichen.
+Wie in Abbildung \ref{fig:boxplot_as} zu erkennen ist, liegen die Werte etwa im Bereich von 20 ms um den Median 120 ms herum. Diese Streuung ist für die vorgesehenen Anwendungen durchaus akzeptabel. Der Mittelwert der Messungen scheint jedoch von der Netzwerkarchitektur abzuhängen. So wurden diese Werte im FH-Netz gemessen. In zwei anderen Netzwerken konnten Durchschnitts werden von 110 ms sowie 130 ms festgestellt werden. Die Ursache dieser Abweichung ist nicht geklärt. Da es sich jedoch um einen relativ konstanten Wert handelt, kann dieser durch Maßnahmen innerhalb des System-Modells oder der RTE-Konfiguration ausgeglichen werden.
+
+Zudem wurde während des Projektes eine Eigenheit des WinCore VCAN beobachtet, die jedoch in dieser Auswertung nicht reproduziert werden konnte. Hierbei kam es immer wieder zu langen Pausen, gefolgt von Sendehäufungen. Dies führt zu einer stark erhöhten Standardabweichung.
+
+Abbildung \ref{fig:boxplot_vcan} zeigt die Ergebnisse der Analyse bei Benutzung der VCAN-API. Hier ist zu erkennen, dass eine Genauigkeit von etwa einer Millisekunde möglich ist. Lediglich einzelne Ausreißer, in diesem Fall nur einer, weichen einige Millisekunden vom gewünschten Wert ab.
+
+Tabelle \ref{tab:jitter_statistik} führt die Eigenschaften der Stichproben auf. Auch hier zeigen sich die beschriebenen Ergebnisse. Die Standardabweichung beim Einsatz der VCAN-API beträgt lediglich 0.1 ms, während diese beim Einsatz von AUTOSAR 4.8 ms beträgt. Damit sind beide Werte im akzeptablen Bereich um weiche Echtzeit für die vorgesehenen Anwendungen zu ermöglichen.
 
 \begin{table}[ht]
     \centering
@@ -1257,33 +1216,33 @@ Tabelle \ref{tab:jitter_statistik} führt die Eigenschaften der Stichproben auf.
         Minimal Wert        & 113.4 ms & 97.2 ms\\
         25\% Quantil        & 119.7 ms & 100.0 ms\\
         75\% Quantil        & 129.4 ms & 100.0 ms\\
-        Standard Abweichung & 4.8 ms & 0.1 ms\\
+        Standardabweichung  & 4.8 ms & 0.1 ms\\
         \bottomrule
     \end{tabular}
     \caption{Statistische Eigenschaften der Stichproben}
     \label{tab:jitter_statistik}
 \end{table}
 
-Da die Implementation des WinCore nicht offen liegt, lässt sich das Zeitverhalten hier nicht verbessern. Beim Einsatz der VCAN-API sind jedoch einige Möglichkeiten denkbar. Bisher wurden wxPython und pygame eingesetzt um konstante Timer zu erhalten. Diese sorgen dafür, dass Teile der Ausführungszeit nicht zur Wartezeit hinzukommen. Dabei konnten mittels pygame zuverlässig Sendezyklen bis 1 ms getestet werden. Damit ist der Bereich üblich genutzter Zeiten abgedeckt. Um den Jitter noch weiter zu verringern ist es denkbar \emph{High Precision Event Timer} zu nutzen. Diese können theoretisch Zeiten bis 100 ns auflösen.
+Da die Implementation des WinCore nicht offen liegt, lässt sich das Zeitverhalten hier nicht verbessern. Beim Einsatz der VCAN-API sind jedoch einige Möglichkeiten denkbar. Bisher wurden wxPython und pygame eingesetzt um konstante Timer zu erhalten. Diese sorgen dafür, dass die Ausführungszeit nicht zur Wartezeit hinzukommen. Dabei konnten mittels pygame zuverlässig Sendezyklen bis 1 ms getestet werden. Damit ist der Bereich üblich genutzter Zeiten abgedeckt. Um den Jitter noch weiter zu verringern ist es denkbar \emph{High Precision Event Timer} zu nutzen. Diese können theoretisch Zeiten bis 100 ns auflösen.
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit bei Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Sicherheitsbetrachtung}
 \label{sec:Sicherheit_Beispiel}
-Da es sich bei dem Beispielsystem lediglich um eine Scheinwerfersteuerung handelt, ist Sicherheit kein besonders kritisches Thema. Die Folgenden Punkte jedoch genauso auf jedes andere System anwendbar und sind somit relevant. Bei dem Begriff \emph{Sicherheit} müssen zwei Arten unterschieden werden. Zum Einen die Angriffssicherheit, die einen böswilligen Angreifer annimmt, und zum Anderen die Betriebssicherheit, bei der ein technischer Ausfall betrachtet wird. Der in diesem Projekte eingesetzt VCAN hat in einigen Tests eine gewisse Fehleranfälligkeit gezeigt. Das Fehlerhafte setzen einzelner Bits kann zum Absturz der AUTOSAR Komponenten führen. Da der VCAN jedoch, in dieser Form, nur für Tests und Evaluation zum Einsatz kommt, sind diese Fehler nicht relevant für die spätere Sicherheit des Autos.
+Da es sich bei dem Beispielsystem lediglich um eine Scheinwerfersteuerung handelt, ist Sicherheit kein besonders kritisches Thema. Die Folgenden Punkte sind jedoch genauso auf jedes andere System anwendbar und sind somit relevant. Bei dem Begriff \emph{Sicherheit} müssen zwei Arten unterschieden werden. Zum Einen die Angriffssicherheit, die einen böswilligen Angreifer annimmt, und zum Anderen die Betriebssicherheit, bei der ein technischer Ausfall betrachtet wird. Der in diesem Projekte eingesetzt VCAN hat in einigen Tests eine gewisse Fehleranfälligkeit gezeigt. Das fehlerhafte Setzen einzelner Bits kann zum Absturz der AUTOSAR Komponenten führen. Da der VCAN jedoch, in dieser Form, nur für Tests und Evaluation zum Einsatz kommt, sind diese Fehler nicht relevant für die spätere Sicherheit des Autos.
 
 \paragraph{Angriffssicherheit}
 Das hier betrachtete System bietet im Prinzip die selben Angriffsmöglichkeiten wie klassische Systeme. Sobald ein physischer Zugriff auf das System möglich ist, existieren eine Reihe von Möglichkeiten das System zu kompromittieren. Dabei zeigt ein virtualisiertes System keine Vorteile einem klassischen System gegenüber. Ein zentraler Hypervisor bietet zwar die Möglichkeit die Integrität der virtuellen Maschinen zu überprüfen, jedoch kann auch dieser selbst kompromittiert sein. Seitenkanalangriffe\footnote{Seitenkanalangriffe bezeichnen eine Gruppe von Angriffszenarien, bei denen das System von außen analysiert wird. Hierbei kann zum Beispiel anhand des Energieverbrauchs auf ausgeführte Befehle geschlossen werden.} könnten durch die erhöhte Komplexität des Systems erschwert werden. Eine Verhinderung dieser ist jedoch wahrscheinlich nicht möglich.
 
-Ein weiterer Angriffsweg ist durch eine Internet- beziehungsweise Netzwerkanbindung gegeben. Diese erfahren eine immer größere Verbreitung, durch Car2Car-Kommunikation und das Nutzen des Internets für, zum Beispiel Stauinformationen. Hier besteht eine durchaus große Gefahr. Eine kompromittierte VM kann durch eventuelle Sicherheitslücken im Hypervisor das ganze System lahmlegen. Daher muss dieser mit großer Sorgfalt entwickelt werden. Die Folgen einer Übernahme sind jedoch bei einem virtualisierten System nicht umfangreicher als bei einem klassischen System. Hier könnte ein kompromittiertes Steuergerät den gesamten Bus lahmlegen, indem dauerhaft Nachrichten gesendet werden.
+Ein weiterer Angriffsweg ist durch eine Internet- beziehungsweise Netzwerkanbindung gegeben. Diese erfahren eine immer größere Verbreitung, durch Car2Car-Kommunikation und das Nutzen des Internets für zum Beispiel Stauinformationen. Hier besteht eine durchaus große Gefahr. Eine kompromittierte VM kann durch eventuelle Sicherheitslücken im Hypervisor das ganze System lahmlegen. Daher muss dieser mit großer Sorgfalt entwickelt werden. Die Folgen einer Übernahme sind jedoch bei einem virtualisierten System nicht umfangreicher als bei einem klassischen System. In beiden Fällen könnte ein kompromittiertes Steuergerät den gesamten Bus lahmlegen, indem dauerhaft Nachrichten gesendet werden.
 
 \paragraph{Betriebssicherheit}
 Die Umstellung auf eine virtualisierte Umgebung bedeutet auch die Umstellung von einem verteilten System, hin zu einem vereinten System. Das bedeutet das weniger Hardware Redundanz vorhanden ist, und somit ein Ausfall der Hardware zum Verlust von mehr Funktionalität führt. Damit stellt die Hardware des Hosts, ebenso wie der Hypervisor, einen \emph{single point of failure} dar. Damit besitzt ein virtualisiertes System einen relevanten Nachteil. Da jedoch die Kosten für ein solches System niedriger Ausfallen können, kann zusätzlicher Aufwand betrieben werden, um zuverlässigere Bauteile einzusetzen und die Sicherheitsüberprüfungen auszuweiten. Ob sich diese Rechnung für konkrete Projekt lohnt, muss im Einzelfall entschieden werden. Ein zentraler Hypervisor bietet jedoch auch einige Möglichkeiten. So kann eben hier eine Diagnose stattfinden, um die Zuverlässigkeit der virtuellen Maschinen zu gewährleisten. 
 
 
 \paragraph{Absicherung der Verbindung}
-Ein weiteres Konzept. dass vor allem bei Verbindungen zum Internet relevant ist, ist das Signieren und Verschlüsseln von Nachrichten. Dabei wird vor allem versucht die Integrität und Authentizität zu gewährleisten. Somit kann zum Beispiel das Einschleusen veränderter Kartendaten verhindert werden. Eine im Internet weit verbreitete Technik hierfür ist SSL. Die hier verwendeten Algorithmen, wie zum Beispiel RSA oder MD5, sind jedoch in üblichen Automotiveanwendungen vorhanden. Daher müssen diese beim Nutzen offener Netzwerke wie dem Internet oder Car2Car-Kommunikation implementiert werden. AUTOSAR sieht ab Version 4.0 einen \emph{Crypto Service Manager} vor. Dieser kann Techniken wie MD5, SHA1 oder weitere anbieten. Es wird jedoch im Standard nicht vorgegeben, welche dieser Techniken implementiert werden müssen. Daher ist hier im Einzefall die Verfügbarkeit genau zu prüfen.
+Ein weiteres Konzept. dass vor allem bei Verbindungen zum Internet relevant ist, ist das Signieren und Verschlüsseln von Nachrichten. Dabei wird vor allem versucht die Integrität und Authentizität zu gewährleisten. Somit kann zum Beispiel das Einschleusen veränderter Kartendaten verhindert werden. Eine im Internet weit verbreitete Technik hierfür ist SSL. Die dabei verwendeten Algorithmen, wie zum Beispiel RSA oder MD5, sind jedoch in üblichen Automotiveanwendungen nicht vorhanden. Daher müssen diese beim Nutzen offener Netzwerke wie dem Internet oder Car2Car-Kommunikation implementiert werden. AUTOSAR sieht ab Version 4.0 einen \emph{Crypto Service Manager} vor. Dieser kann Techniken wie MD5, SHA1 oder weitere anbieten. Es wird jedoch im Standard nicht vorgegeben, welche dieser Techniken implementiert werden müssen. Daher ist hier im Einzefall die Verfügbarkeit genau zu prüfen.
 
 Auch mittels Virtualisierung lässt sich ein ähnliches Konzept aufbauen. Dabei kann eine virtuelle Maschine jegliche Kryptographische Verfahren implementieren und diese anderen Instanzen zu Verfügung stellen. Dadurch beschränken sich alle sicherheitskritischen Komponenten, wie zum Beispiel Zertifikate, Schlüssel und Algorithmen, auf eine virtuelle Maschine. Diese kann entsprechend vor Angriffen gesichert werden um so einen Schutz zu gewährleisten. Eine Übernahme dieser Instanz würde hingegen jedoch auch einen Totalausfall der gesicherten Verbindungen bedeutet. Daher muss auch hier zwischen einer verteilten und einer vereinigten Architektur entschieden werden.
 
@@ -1297,16 +1256,20 @@ Auch mittels Virtualisierung lässt sich ein ähnliches Konzept aufbauen. Dabei 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Zusammenfassung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Fazit und Ausblick}
 \label{sec:FazitAusblick}
-% TODO
-% - Virtualisierung interessantes Konzept für komplexere Anwendungen
-% - Konkrete Nutzen/Kosten Rechnung muss von Fall zu Fall erfolgen
-% - WinCore und VCAN vor allem in Lehre und erste Tests sinnvoll
-% - VCAN bietet noch viele Möglichkeiten für weitere Projekte
-%   - DBC
-%   - SD
-%   - RBS
+Zusammenfassend lässt sich sagen, dass die Virtualisierung ein interessantes und ausgereiftes Konzept darstellt, dass durchaus auch in der Welt der eingebetteten Systeme Anwendung finden kann. Zwar wird die Systemkomplexität durch den Einsatz von Virtualisierung erhöht, jedoch wird gleichzeitig auch durch die starke Abstraktion und strikte Trennung ein alternatives Entwicklungskonzept ermöglicht. Hierin lassen sich Teilsysteme Bausteinartig einsetzen, und das System in einem Top-Down-Verfahren entwerfen. Eine konkrete Kosten-Nutzen-Rechnung muss jedoch in jedem Projekt einzeln erfolgen, da eine allgemeine Aussage dazu in dieser Arbeit nicht möglich ist.
 
+Die in diesem Projekt eingesetzte AUTOSAR-Distribution WinCore, sowie der darin integrierte VCAN, sind sehr gut in der Lehre, sowie in einer ersten Evaluationsphase zu nutzen. Bei längerer Benutzung zeigt sich jedoch die Instabilität als kritische Eigenschaft, sodass ein Produktiveinsatz in dieser Weise nicht möglich ist. Beim VCAN handelt es sich um eine einfache und offene Möglichkeit, in die Kommunikation des Systems einzugreifen, um somit eine Restbussimulation sowie manuelle Tests schnell zu ermöglichen.
+
+An dieser Stelle zeigt sich auch Potential für zukünftige Projekte. Sollte der VCAN auch weiter eingesetzt werden, bietet es sich an, die Integration der Kommunikationsmatrix, sowie der Systembeschreibung zu realisieren. Hierdurch wäre eine Übersichtliche Nutzung, sowie eine schnelle Einrichtung einer einfachen Restbussimulation möglich. Da die in dieser Arbeit erstellten VCAN-API offen gehalten ist, sind entsprechende Anpassungen nach kurzer Einarbeitungszeit implementierbar.
+
+% TODO: 
 % - AUTOSAR meiner Meinung nach nicht toll!
+%   - Idee gut und nötig
+%   - Jedoch von zu vielen beeinflusst
+%   - Zu konkret
+%   - sollte einfacher und allgemeiner gehalten sein
+% - VCAN ebenfalls eine gute Idee, jedoch auch nicht perfekt umgesetzt
+
 
 
 
@@ -1331,28 +1294,28 @@ Auch mittels Virtualisierung lässt sich ein ähnliches Konzept aufbauen. Dabei 
 \input{appendix}
 
 
-
-
-
-% TODO: BSW-Modul-Liste; Grafische Notation (AUTOSAR, SPEM); 
-
-
 % Alles hier nach hat keine Nummerierung mehr...
 \backmatter
-
 
 
 \chapter{Beigelegte CD}
 \label{sec:BeigelegteCD}
 % TODO:
-% XtratuM Projekt
-% tresos Projekt
-% SD, arxml, dbc
-% VCAN-Gateway
-% VCAN-API
-% VCAN-App
-% AUTOSAR-Specs...
-% Quellen
+\begin{itemize}
+    \item AUTOSAR Spezifikation
+    \item Projektdaten
+    \begin{itemize}
+        \item CAN-Datenbank
+        \item Systembeschreibung
+        \item Tresos Konfiguration
+        \item Quellcode AUTOSAR
+        \item VCAN Applikation
+    \end{itemize}
+    \item Quellen
+    \item VCAN-API
+    \item VCAN Gateway
+    \item XtratuM Projekt
+\end{itemize}
 
 
 %%%%%%%%%%%%%%%%%%%%%%% Erklärung und CD %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1371,11 +1334,9 @@ Wolfenbüttel, den % TODO
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Bibliographie %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \setbibpreamble{Die Quellenangaben sind alphabetisch nach den Namen der Autoren sortiert.
 % Bei mehreren Autoren wird nach dem ersten Autor sortiert.\par\bigskip\bigskip}
-%
-% Quellen, die nicht direkt zitiert wurden, aber trotzdem hier erscheinen sollen!
-%\nocite{tbinformatik}\nocite{tb_et2000}\nocite{tb_mathe1999}
+
 \nocite{*}
-%
+
 \begin{singlespace}
 \bibliographystyle{natdin}	% alphadin, plaindin, abbrvdin, unsrtdin, natdin
 					            % germbib: gerabbrv, geralpha, gerplain, gerunsrt, gerapali, gerxampl
