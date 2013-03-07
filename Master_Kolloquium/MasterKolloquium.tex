@@ -3,8 +3,9 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % documentclss
-\documentclass[]{beamer}
+%\documentclass[]{beamer}
 %\documentclass[handout]{beamer} %Drucker Version
+\documentclass[draft]{beamer}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -19,6 +20,12 @@
 \usepackage{microtype}
 \usepackage{lmodern}
 
+\usepackage{lscape}
+\usepackage{booktabs}			% \toprule, \midrule und \bottomrule in Tabellen
+\usepackage{multirow}
+\usepackage{paralist}
+
+\usepackage{scrhack} 
 \usepackage{listings}
 \lstset{
     language=C,
@@ -36,9 +43,14 @@
     captionpos=b
 }
 
-\usepackage{graphicx}
+%\usepackage[pdftex]{graphicx} % Bereits von Beamer geladen
 \graphicspath{{../Master_Thesis/images/}}
 \usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{caption}         
+\usepackage{subcaption}      
+\usepackage{pgfgantt}        
+\usepackage{rotating} 		
 
 \hypersetup{
     pdftex,
@@ -52,8 +64,6 @@
     pdfauthor={Martin Wichmann},
 }
 
-\usepackage{booktabs}
-\usepackage{multirow}
 
 
 \newcommand{\inputImage}[1]{\input{../Master_Thesis/images/#1}}
@@ -69,7 +79,7 @@
 {
    \begin{frame}
         \frametitle{Inhaltsübersicht}
-        \tableofcontents[currentsection,currentsubsection]
+        \tableofcontents[currentsection,hideallsubsections]
    \end{frame}
 }
 
@@ -79,6 +89,7 @@
 % Title
 \author{Martin Wichmann}
 \title[Virtualisierung von AUTOSAR Softwarekomponenten]{Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung}
+\subtitle{Kolloquium zur Masterarbeit}
 \date{\today}
 \institute{Ostfalia Hochschule für angewandte Wissenschaften}
 
@@ -96,7 +107,7 @@
 
 \begin{frame}
 \frametitle{Inhaltsübersicht}
-\tableofcontents
+\tableofcontents[hideallsubsections] % Einstellungen siehe Beamer User Guide Seite 99
 \end{frame}
 
 
@@ -108,23 +119,314 @@
 \section{Einleitung}
 \label{sec:einleitung}
 
+%%%%%
 \begin{frame}
-\frametitle{Frametitle}
+\frametitle{Einleitung}
+% TODO:
+% - Warum das ganze?
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Motivation}
+% TODO:
+% - Woraus entstand die Arbeit
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{gantt}}
+        \caption{TODO}
+        \label{fig:TODO}
+    \end{figure}
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Zielsystem}
+% TODO:
+% - Was sollte bei dem Projekt rauskommen
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{arch_begin.dia}}
+        \caption{TODO}
+        \label{fig:TODO}
+    \end{figure}
+\end{frame}
 
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Grundlagen
+\section{Grundlagen}
+\label{sec:grundlagen}
+
+%%%%%
+\begin{frame}
+\frametitle{Überblick}
 
 \end{frame}
+
+
+
+
+%%%%%%%%%%
+\subsection{Virtualisierung}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \inputImage{virt_type1.dia}
+            \caption{Type 1-Hypervisor}
+            \label{fig:hypervisor_type1}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \inputImage{virt_type2.dia}
+            \caption{Type 2-Hypervisor}
+            \label{fig:hypervisor_type2}
+        \end{subfigure}
+        \caption{Hypervisor Kategorien}
+        \label{fig:hypervisor}
+    \end{figure}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[ht]
+        \centering
+        \inputImage{arinc653.dia}
+        \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
+        \label{fig:arinc_653}
+    \end{figure}
+\end{frame}
+
+
+
+
+
+%%%%%%%%%%
+\subsection{AUTOSAR}
+%%%%%
+%\begin{frame}[plain] % TODO: vielleicht plain da das Bild groß ist
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[p]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{autosar_overview.dia}}
+        \caption{Autosar Überblick}
+        \label{fig:autosar_overview}
+    \end{figure}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{Autosar_Prozess.dia}}
+        \caption{AUTOSAR-Entwicklungs-Prozess}
+        \label{fig:autosar_prozess}
+    \end{figure}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{autosar_layer.dia}}
+        \caption{AUTOSAR-Schichtenmodell}
+        \label{fig:autosar_layer}
+    \end{figure}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{autosar_refined_layer.dia}}
+        \caption{AUTOSAR-Schichtenmodell mit genauerer Aufteilung}
+        \label{fig:autosar_refined_layer}
+    \end{figure}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[ht]
+        \centering
+        \inputImage{komm_beispiel.dia}
+        \caption[Struktur der AUTOSAR-Kommunikation]{Struktur der AUTOSAR-Kommunikation für das Senden und Empfangen einer CAN-Botschaft}
+        \label{fig:komm_beispiel}
+    \end{figure}
+\end{frame}
+
+
+
+
+%%%%%%%%%%
+\subsection{Netzwerkmanagment}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Funktionale Sicherheit}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[!htbp]
+        \center
+        \inputImage{ISO_26262_Lifecycle.dia}
+        \caption[Sicherheitslebenszyklus nach ISO 26262]{Sicherheitslebenszyklus nach ISO 26262 (vgl. \cite{iso26262})}
+        \label{fig:lifecycle}
+    \end{figure}
+\end{frame}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Umsetzung
+\section{Umsetzung}
+\label{sec:umsetzung}
+
+%%%%%
+\begin{frame}
+\frametitle{Überblick}
+    \begin{figure}[ht]
+        \centering
+        \inputImage{arch_finished.dia}
+        \caption{Vollständige Architektur}
+        \label{fig:arch_finished}
+    \end{figure}
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Virtualisierung}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Kommunikation Linux und AUTOSAR}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Kommunikation AUTOSAR und Scheinwerfer-ECU}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+%%%%%
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Entwicklung AUTOSAR Komponente}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{SMLS_Modell.dia}}
+        \caption{Entwickeltes AUTOSAR Modell}
+        \label{fig:smls_modell}
+    \end{figure}
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Entwicklung steuernde Komponente}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.59\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{vcan_app_status}
+            \caption{Status-Fenster}
+            \label{fig:vcan_app_status}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.39\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{vcan_app_control}
+            \caption{Kontroll-Fenster}
+            \label{fig:vcan_app_control}
+        \end{subfigure}
+        \caption{Oberfläche der VCAN-Applikation}
+        \label{fig:vcan_app}
+    \end{figure}
+\end{frame}
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 % Fazit
-\section{Fazit}
-\label{sec:Fazit}
+\section{Analyse und Fazit}
+\label{sec:analyse_fazit}
 
+%%%%%%%%%%
+\subsection{Analyse}
+%%%%%
+\begin{frame}
+\frametitle{TODO}
+    \begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{boxplot_as}
+            \caption{Zeitverhalten AUTOSAR}
+            \label{fig:boxplot_as}
+        \end{subfigure}
+        \begin{subfigure}[b]{0.49\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{boxplot_vcan}
+            \caption{Zeitverhalten VCAN-API}
+            \label{fig:boxplot_vcan}
+        \end{subfigure}
+        \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots (Angaben in ms)}
+        \label{fig:timinganalyse}
+    \end{figure}
+\end{frame}
+
+
+
+%%%%%%%%%%
+\subsection{Fazit und Ausblick}
+%%%%%
 \begin{frame}
 \frametitle{Fazit}
 
+\end{frame}
+
+
+%%%%%
+\begin{frame}
+\frametitle{Ausblick}
 
 \end{frame}
+
+
 
 
 
