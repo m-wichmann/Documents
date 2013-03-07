@@ -5,6 +5,7 @@ RM  		=	rm -rf
 
 
 all:
+	../Master_Thesis/convert_dia2pgf.sh
 	$(PDFLATEX) $(TARGET)
 	$(PDFLATEX) $(TARGET)
 
