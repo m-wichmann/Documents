@@ -466,7 +466,7 @@ Std_ReturnType Rte_Write_<p>_<d>(IN Rte_Instance <self>, IN <data>)
 Std_ReturnType Rte_Read_<p>_<d>(IN Rte_Instance <self>, OUT <data>)
 \end{lstlisting}
 
-Die in Zeile 1 und 2 in Listing \ref{lst:rte_beispiele} gezeigten Beispiele, werden verwendet, um auf ein Sender/Receiver-Interface zuzugreifen. Dabei stehen die Platzhalter \texttt{<p>} und \texttt{<d>} für den entsprechenden Port und das gewünschte Datenelement. Das Argument \texttt{<data>} entspricht dem zu empfangenden beziehungsweise zu sendenden Datenelement. Das Element \texttt{<self>} vom Typ \texttt{Rte\_Instance} wird verwendet, um mehrere Instanzen zu verwalten und funktioniert ähnlich wie ein \texttt{this}-Pointer in der Objektorientierten-Programmierung.
+Die in Zeile eins und zwei in Listing \ref{lst:rte_beispiele} gezeigten Beispiele, werden verwendet, um auf ein Sender/Receiver-Interface zuzugreifen. Dabei stehen die Platzhalter \texttt{<p>} und \texttt{<d>} für den entsprechenden Port und das gewünschte Datenelement. Das Argument \texttt{<data>} entspricht dem zu empfangenden beziehungsweise zu sendenden Datenelement. Das Element \texttt{<self>} vom Typ \texttt{Rte\_Instance} wird verwendet, um mehrere Instanzen zu verwalten und funktioniert ähnlich wie ein \texttt{this}-Pointer in der Objektorientierten-Programmierung.
 
 Das Hauptkonzept von VFB und RTE ist die Festlegung von Schnittstellen. Dieses Konzept wird bereits seit langer Zeit in anderen Bereichen der Software-Entwicklung genutzt. So werden bei Java Interfaces verwendet, um konkrete Implementationen abzukapseln und generisch zu halten (vgl. \cite{objektorientierung}).
 
@@ -1021,7 +1021,7 @@ Die Restbussimulation bietet noch weitere interessante Möglichkeiten. Abbildung
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der AUTOSAR Anwendung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Entwicklung der AUTOSAR Anwendung}
 \label{sec:entwicklung_autosar}
-Ziel der AUTOSAR-Komponente ist die Kommunikation mit, und das Befehle Empfangen von, der steuernden Komponente die im nächsten Kapitel entwickelt wird. Zur Realisierung der Kommunikation wird die Botschaft APP\_01 verwendet. Die darin enthaltenen Signale sind in Tabelle \ref{tab:App_Botschaft} zu sehen. Die Botschaft verwendet die ID 0x742, hat eine Länge von 4 Byte, und wird mit einer Zykluszeit von 100 ms gesendet.
+Ziel der AUTOSAR-Komponente ist die Kommunikation mit der steuernden Komponente, die im nächsten Kapitel entwickelt wird. Im speziellen betrifft dies den Empfang von Befehlen. Zur Realisierung der Kommunikation wird die Botschaft APP\_01 verwendet. Die darin enthaltenen Signale sind in Tabelle \ref{tab:App_Botschaft} zu sehen. Die Botschaft verwendet die ID 0x742, hat eine Länge von 4 Byte, und wird mit einer Zykluszeit von 100 ms gesendet.
 
 \begin{table}[ht]
     \centering
@@ -1043,7 +1043,7 @@ Ziel der AUTOSAR-Komponente ist die Kommunikation mit, und das Befehle Empfangen
     \label{tab:App_Botschaft}
 \end{table}
 
-Hierbei bieten die ersten vier Signale direkten Zugriff auf die entsprechenden Funktionen des BCM. Die restlichen Signale werden verwendet um zwei Demo-Modi anzusteuern. Diese sollen verdeutlichen, dass durch die Kommunikations-Kette, Python-AUTOSAR-BCM, eine Entkopplung der Funktionalität erreicht wird. So kann die steuernde Komponente zwar über die Botschaft einen Befehl senden, jedoch nicht direkt die Hardware beeinflussen. Dies übernimmt die AUTOSAR-Komponente und wirkt damit als Puffer zwischen Anwender und Hardware.
+Hierbei bieten die ersten vier Signale direkten Zugriff auf die entsprechenden Funktionen des BCM. Die restlichen Signale werden verwendet, um zwei Demo-Modi anzusteuern. Diese sollen verdeutlichen, dass durch die Kommunikations-Kette, Python-AUTOSAR-BCM, eine Entkopplung der Funktionalität erreicht wird. So kann die steuernde Komponente zwar über die Botschaft einen Befehl senden, jedoch nicht direkt die Hardware beeinflussen. Diese Aufgabe übernimmt die AUTOSAR-Komponente und wirkt damit als Puffer zwischen Anwender und Hardware.
 
 \begin{figure}[ht]
     \centering
@@ -1052,11 +1052,11 @@ Hierbei bieten die ersten vier Signale direkten Zugriff auf die entsprechenden F
     \label{fig:smls_modell}
 \end{figure}
 
-Das gesamte System-Modell ist in Abbildung \ref{fig:smls_modell} zu sehen. Auf der rechten Seite ist die steuernde Komponente, SWC\_APP, dargestellt. Diese ist in Python realisiert und nutzt den VCAN. Die Softwarekomponente SWC\_BCM stellt die ECU-Hardware dar. Obwohl beide Komponenten nicht mittels AUTOSAR realisiert werden, sind sie im Modell nötig, um die entsprechenden Ports zu definieren. Die erstellte AUTOSAR-Komponente ist als SWC\_SMLS im Modell sichtbar. Die Botschaften Licht\_vorne\_01 und Klemmen\_Status\_01 werden verwendet um den aktuellen Status anzeigen zu können. Die letzte verbleibende Botschaft, SMLS\_01, beinhaltet die Steuer-Signale vom SMLS zum BCM hin.
+Das gesamte System-Modell ist in Abbildung \ref{fig:smls_modell} zu sehen. Auf der rechten Seite ist die steuernde Komponente, SWC\_APP, dargestellt. Diese ist in Python realisiert und nutzt den VCAN. Die Softwarekomponente SWC\_BCM stellt die ECU-Hardware dar. Obwohl beide Komponenten nicht mittels AUTOSAR realisiert werden, sind sie im Modell nötig, um die entsprechenden Ports zu definieren. Die erstellte AUTOSAR-Komponente ist als SWC\_SMLS im Modell sichtbar. Die Botschaften Licht\_vorne\_01 und Klemmen\_Status\_01 werden verwendet, um den aktuellen Status anzeigen zu können. Die letzte verbleibende Botschaft, SMLS\_01, beinhaltet die Steuer-Signale vom SMLS zum BCM hin.
 
-Auch die nötige CAN-Datenbank in Form einer .dbc-Datei entspricht dem Modell. Hier sind die ECUs und Botschaften ebenfalls nachgebildet. Ein besonderes Augenmerk ist dabei auf das Layout der Signale innerhalb der Botschaften zu legen. Sowohl die .dbc-Datei, als auch das SystemDesk Projekt, sowie die daraus resultierende .arxml-Datei sind auf der beigelegten CD zu finden.
+Auch die nötige CAN-Datenbank -- in Form einer .dbc-Datei -- entspricht dem Modell. Hier sind die ECUs und Botschaften ebenfalls nachgebildet. Ein besonderes Augenmerk ist dabei auf das Layout der Signale innerhalb der Botschaften zu legen. Sowohl die .dbc-Datei, als auch das SystemDesk Projekt und die daraus resultierende .arxml-Datei sind auf der beigelegten CD zu finden.
 
-Die ECU-Konfiguration mittels EB tresos wird nach den üblichen Verfahren durchgeführt. Dabei wurden als Grundlage der von EB durchgeführte Workshop, sowie die Unterlagen zur AUTOSAR-Lehrveranstaltung an der Ostfalia aus dem Wintersemester 2012/2013 genutzt. Die einzelnen Schritte zur Konfiguration der ECU sollen an dieser Stelle nicht aufgeführt werden, da diese in den genannten Dokumenten umfangreich erläutert sind. An dieser Stelle ist zu erwähnen, dass die ECU-Konfiguration mehr Zeit in Anspruch genommen hat, als zu Beginn des Projektes geplant. Dies folgt vor allem aus der häufig nötigen und langwierigen Fehlersuche.
+Die ECU-Konfiguration mittels EB tresos wird nach den üblichen Verfahren durchgeführt. Dabei wurden als Grundlage der von EB durchgeführte Workshop, sowie die Unterlagen zur AUTOSAR-Lehrveranstaltung an der Ostfalia Hochschule für angewandte Wissenschaften aus dem Wintersemester 2012/2013 genutzt. Die einzelnen Schritte zur Konfiguration der ECU sollen an dieser Stelle nicht aufgeführt werden, da sie in den genannten Dokumenten umfangreich erläutert sind. An dieser Stelle ist zu erwähnen, dass die ECU-Konfiguration mehr Zeit in Anspruch genommen hat, als zu Beginn des Projektes geplant. Dies folgt vor allem aus der häufig nötigen und langwierigen Fehlersuche.
 
 \begin{lstlisting}[frame=single, language=C, basicstyle=\footnotesize, caption={Implementation der Runnable}, label={lst:headlight_final}]
 void SWC_SMLS_R_SMLS (void) {
@@ -1080,7 +1080,7 @@ void SWC_SMLS_R_SMLS (void) {
 }
 \end{lstlisting}
 
-Die Implementation des Kernelements der AUTOSAR-Anwendung, die Runnable, ist in Listing \ref{lst:headlight_final} aufgeführt. Dabei ist der Code der Übersicht halber gekürzt. Der komplette Quellcode ist auf der beigelegten CD enthalten. Zeile eins des Listings zeigt die Signatur der Runnable. Diese ist durch die RTE fest definiert. Die Zeilen zwei und drei enthalten Aufrufe von Initialisierungsfunktionen. Diese lesen alle aktuellen Werte der CAN-Botschaften ein, und speichern diese in Variablen. Die eigentliche Funktionalität ist in den Zeilen 5 bis 14 enthalten. Hier wird aufgrund der verschiedenen Modi eine bestimmte Aktion ausgeführt. So werden in den Zeilen 10 bis 13, die APP-Signale direkt auf SMLS-Signale geschrieben, falls kein Demo-Modus aktiv ist.
+Die Implementation des Kernelements der AUTOSAR-Anwendung, die Runnable, ist in Listing \ref{lst:headlight_final} aufgeführt. Dabei ist der Code der Übersicht halber gekürzt. Der komplette Quellcode ist auf der beigelegten CD enthalten. Zeile eins des Listings zeigt die Signatur der Runnable. Diese ist durch die RTE fest definiert. Die Zeilen zwei und drei enthalten Aufrufe von Initialisierungsfunktionen. Diese lesen alle aktuellen Werte der CAN-Botschaften ein, und speichern sie in Variablen. Die Zeilen 5 bis 14 enthalten die eigentliche Funktionalität, die je nach Modi bestimmte Aktionen ausführt. So werden in den Zeilen 10 bis 13, die APP-Signale direkt auf SMLS-Signale geschrieben, falls kein Demo-Modus aktiv ist.
 
 Zum Schluss der Funktion, wird in den Zeilen 16 bis 18, die endgültige Botschaft gesendet. Dazu wird zuerst der CRC durch eine Lookup-Table bestimmt, und anschließend der Botschaftenzähler gesendet und inkrementiert. Das Nutzen des impliziten Sendens, sichtbar durch die \texttt{IWrite}-Methodenaufrufe, führt dazu, dass die eigentliche Botschaft erst gesendet wird, sobald die Runnable vorbei ist. Bis dahin werden die geschriebenen Werte zwischengespeichert. Das ist nötig, da ansonsten bei jedem Sende-Aufruf die gesamte Botschaft gesendet wird, obwohl noch nicht alle Signale gesetzt wurden.
 
@@ -1115,7 +1115,7 @@ Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, m
     \label{fig:vcan_app}
 \end{figure}
 
-Die Oberfläche der in diesem Projekt entwickelten Anwendungen besteht aus zwei Fenstern. Sie ist mittels wxPython realisiert, da dieses Plattformübergreifend ohne Anpassungen unterstützt wird. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, stellt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung dar.
+Die Oberfläche der in diesem Projekt entwickelten Anwendungen besteht aus zwei Fenstern. Sie ist mittels wxPython realisiert, da dieses Plattformübergreifend ohne Anpassungen unterstützt wird. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, zeigt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung dar.
 
 Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet direkten Zugriff auf alle Signale der \texttt{APP\_01} Botschaft. Zudem können die zwei Demomodi über die Reiter angesprochen werden.
 
@@ -1136,7 +1136,7 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Analyse des Fallbeispiels %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Analyse des Fallbeispiels}
 \label{sec:Beispiel_Analyse}
-Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächsten Kapitel auf die Praxisrelevanz der Techniken eingegangen. Anschließend wird das Zeitverhalten des VCAN Systems untersucht. Dies ist vor allem im Hinblick auf die Echtzeitfähigkeit interessant. Ein weiteres, in der Praxis relevantes Thema, ist die Sicherheit. Diese wird anhand dieses Fallbeispiels im darauf folgenden Kapitels betrachtet.
+Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächsten Unterkapitel auf die Praxisrelevanz der Techniken eingegangen. Anschließend wird das Zeitverhalten des VCAN-Systems untersucht. Dies ist vor allem im Hinblick auf die Echtzeitfähigkeit interessant. Ein weiteres, in der Praxis relevantes Thema, die Sicherheit, wird im darauf folgenden Kapitels betrachtet.
 
 
 
