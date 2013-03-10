@@ -275,11 +275,11 @@ Das Protokoll, wie es im Elektrobit-Gateway eingesetzt wird, hat einige Besonder
 
 \section{Projekt Struktur}
 \label{sec:vcan_struktur}
-Im Folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \ref{fig:vcan_api_uml} zeigt ein UML-Klassendiagramm der VCAN-API.
+Im Folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \ref{fig:vcan_api_uml} zeigt ein UML-Klassendiagramm der VCAN-API. Aufgrund des Fehlens von Zugriffsmodifikatoren (Public, Private\dots) unter Python, werden alle, für das Verwenden der API nicht relevanten, Funktionen und Variablen im Weiteren ausgelassen. Eine genaue Dokumentation dieser befindet sich im Quellcode.
 
 Die reine VCAN-API besitzt als Abhängigkeit lediglich Module der \emph{CPython} Standardbibliothek. Andere Python Interpreter wie Jython werden zur Zeit nicht unterstützt. Support für PCAN ist nur unter Windows verfügbar und benötigt die PCAN-Basic-API.
 
-Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert auf \emph{wxPython}\footnote{\url{http://www.wxpython.org/}}. Der Benchmark benötigt das Modul \emph{pygame}\footnote{\url{http://www.pygame.org/}} für konstante Timer und \emph{rpy}\footnote{\url{http://rpy.sourceforge.net/}} für die Auswertung der Ergebnisse mittels \emph{R}\footnote{\url{http://www.r-project.org/}}.
+Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert auf \emph{wxPython}\footnote{\url{http://www.wxpython.org/}}. Der Benchmark benötigt die Module \emph{pygame}\footnote{\url{http://www.pygame.org/}} für konstante Timer und \emph{rpy}\footnote{\url{http://rpy.sourceforge.net/}} für die Auswertung der Ergebnisse mittels \emph{GNU R}\footnote{\url{http://www.r-project.org/}}.
 
 \begin{figure}[ht]
     \centering

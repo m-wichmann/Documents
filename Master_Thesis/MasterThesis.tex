@@ -3,11 +3,7 @@
 %% Autor: Martin Wichmann
 %% 
 %% TODO:
-%% - Danksagung
 %% - NDA/IP klären!!! (VW, EB, evtl. dSPACE?!)
-%% - steuernde Komponente oder Steuerungskomponente
-%% - netzwerk-management oder netzwerkmanagment
-
 
 \documentclass[
   a4paper,					    % a4paper (sic!)
@@ -210,7 +206,6 @@ Hierbei ist zu beachten, dass das Aktivieren des Netzwerkmanagements erst mögli
 
 Da der Zeitaufwand für die einzelnen Phasen zu Beginn nur sehr schwer einzuschätzen ist, wird für jede Phase des Projektes der Zeitraum eines Monats vorgesehen. Dazu kommen noch ein Monat Evaluation und Sicherheitsbetrachtung des Systems und zum Schluss ein Monat Fertigstellen der schriftlichen Arbeit. Die Zeitplanung ist in einem Gantt-Diagramm in Abbildung \ref{fig:gantt} zu sehen. Jede Phase enthält die Vorbereitung, Umsetzung und Dokumentation des entsprechenden Bereichs.
 
-% TODO: Das Diagramm sieht irgendwie nicht gut aus...
 \begin{figure}[ht]
     \centering
     \input{./images/gantt}
@@ -276,7 +271,7 @@ Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkan
 \begin{figure}[ht]
     \centering
     \input{./images/arinc653.dia}
-    \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
+    \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht (vgl. \cite{arinc653_wr})}
     \label{fig:arinc_653}
 \end{figure}
 
@@ -297,7 +292,7 @@ Der wahrscheinlich umfangreichste embedded Hypervisor ist PikeOS. Dieses Echtzei
 Der OKL4 Microvisor, entwickelt von den \emph{Open Kernel Labs}, basiert ebenfalls auf einem Microkernel. Der Umfang des Quellcodes wird mit weniger als 10\,000 Zeilen Code angegeben und ist damit extrem kompakt und etwa um einen Faktor 1\,000 kleiner als der Linux Kernel (vgl. \cite{wiki:loc}). Das System ist POSIX-konform und ist vor allem auf mobile Geräte optimiert. Daher sind als Gastsystem Linux, Symbian und Windows Mobile vorgesehen. Eigenen Angaben zufolge wurden bisher etwa 750 Millionen Geräte mit dem OKL4 Microvisor verkauft (vgl. \cite{okl4}).
 
 \paragraph{INTEGRITY Multivisor}
-Der von \emph{Green Hills Software} entwickelte INTEGRITY Multivisor ist auf In-Vehicle-Infotainment-Systeme (IVI-Systeme) ausgelegt. Hierzu werden Windows, Linux, Solaris, VxWorks und QNX als Gast-Systeme unterstützt. Es ist nach DO-178B und IEC-61508 zertifiziert und für ARM, PowerPC und x86 Plattformen entworfen. Ebenso wie die anderen Hypervisor unterstützt der INTEGRITY Multivisor übliche Funktionen wie Power-Management und IPC.
+Der von \emph{Green Hills Software} entwickelte INTEGRITY Multivisor ist auf In-Vehicle-Infotainment-Systeme (IVI-Systeme) ausgelegt. Hierzu werden Windows, Linux, Solaris, VxWorks und QNX als Gast-Systeme unterstützt. Es ist nach DO-178B und IEC-61508 zertifiziert und für ARM, PowerPC und x86 Plattformen entworfen. Ebenso wie die anderen Hypervisor unterstützt der INTEGRITY Multivisor übliche Funktionen wie Powermanagement und IPC.
 
 \paragraph{COQOS}
 Bei COQOS handelt es sich um einen Hypervisor, der auf die gleichzeitige Ausführung von Linux (Android) und AUTOSAR ausgelegt ist. Ebenso wie der INTEGRITY Multivisor ist COQOS auf IVI-Systeme und Fahrerassistenzsysteme ausgelegt und ist demnach nach ISO 26262 und DO-178B zertifiziert. Als Plattformen werden x86 und ARM unterstützt. Als Sicherheitskonzept ist eine Firewall in COQOS integriert. Außerdem wird ein Watchdog in einer separaten Instanz unterstützt, um die Funktionalität des Systems zu gewährleisten (vgl. \cite{coqos}).
@@ -505,7 +500,7 @@ Bei dem Modul Os handelt es sich um den Betriebssystem-Kern. Dieser ist dem Bere
 Ebenfalls dem Bereich System Services zugeordnet ist der Scheduler, kurz SchM. Dieser kontrolliert die Aufruf-Reihenfolge der Komponenten und sorgt dafür, dass entsprechende Methoden anderer BSW-Module rechtzeitig und regelmäßig gepollt werden.
 
 \paragraph{EcuM}
-Das Power-Management der ECU wird vom ECU-State-Manager übernommen. Auch dieser ist den System Services zuzuordnen. Er ist verantwortlich für die Initialisierung aller Basissoftware-Module und sowohl Beginn als auch Ende der Schlaf-Modi.
+Das Powermanagement der ECU wird vom ECU-State-Manager übernommen. Auch dieser ist den System Services zuzuordnen. Er ist verantwortlich für die Initialisierung aller Basissoftware-Module und sowohl Beginn als auch Ende der Schlaf-Modi.
 
 \paragraph{Com}
 Als oberstes Modul der Communication Services organisiert das Com-Modul die Kommunikation innerhalb einer und zwischen verschiedenen ECUs. Hierzu stellt das Modul eine Signal-orientierte Datenschnittstelle zur Verfügung. Bei einem Signal handelt es sich um einen einzelnen Wert, zum Beispiel einem Sensor-Wert. Eine Reihe von Signalen wird anschließend im Com-Modul zu PDUs (Protocol Data Unit) gepackt und weitergegeben.
@@ -748,7 +743,7 @@ Die zu Beginn dieser Arbeit, in Abbildung \ref{fig:arch_begin}, skizzierte Archi
     \item Entwicklung der steuernden Anwendung
 \end{itemize}
 
-Diese Kernbereiche werden im Folgenden einzeln näher betrachtet. Das Hauptziel des Fallbeispiels ist die Evaluation des Konzeptes der \emph{eingebetteten Virtualisierung}. Dabei wird der Fokus auf die Trennung zwischen zwei verschiedenen Ebenen gelegt. Zum einen die hardwarenahe Ebene, repräsentiert durch die AUTOSAR-Komponente, und zum anderen die highlevel Ebene, realisiert durch die steuernde Komponente, die im Weiteren auch VCAN-Applikation genannt wird.
+Diese Kernbereiche werden im Folgenden einzeln näher beschrieben. Das Hauptziel des Fallbeispiels ist die Evaluation des Konzeptes der \emph{eingebetteten Virtualisierung}. Dabei wird der Fokus auf die Trennung zwischen zwei verschiedenen Ebenen gelegt. Zum einen die hardwarenahe Ebene, repräsentiert durch die AUTOSAR-Komponente, und zum anderen die highlevel Ebene, realisiert durch die steuernde Komponente, die im Weiteren auch VCAN-Applikation genannt wird.
 
 % TODO: Das Wort "geblinkt" ist echt doof!
 Zur Demonstration des Konzeptes sind verschiedene Modi geplant. Der erste Modus bietet eine direkte Kontrolle der Scheinwerfer-Funktionen. Dies kann eingesetzt werden, um die Funktionalität des Systems zu überprüfen. Des Weiteren werden zwei Demomodi implementiert, die eine etwas umfangreichere Steuerung bieten. Der erste Modus implementiert einen Pausemodus für das Blinken. Dabei wird eine definierbare Anzahl an Zyklen sowohl links als auch rechts geblinkt, gefolgt von einer ebenso langen Pausendauer.
@@ -863,7 +858,6 @@ Eine Kommunikation zwischen Linux und AUTOSAR kann auf verschiedenen Wegen erfol
 
 Der erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos eingesetzt wird. Dieser tunnelt die CAN-Botschaften über eine Ethernet-Verbindung und kann damit CAN-Zugriffe auf Systemen ermöglichen, die keine CAN-Schnittstelle besitzen. Der unter Linux bekannte virtuelle CAN, ermöglicht durch Socket-CAN, ist nicht kompatibel zu diesem Konzept. Vor- und Nachteile der Techniken sind im Folgenden aufgeführt.
 
-% TODO: hieraus eine Tabelle machen oder vielleicht als texte schreiben?!
 \begin{itemize}
     \item CAN
     \begin{itemize}
@@ -943,7 +937,7 @@ Sollte das Gateway in Zukunft auch weiter eingesetzt werden, bietet es sich an, 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Kommunikation %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Kommunikation AUTOSAR und Scheinwerfer-ECU}
 \label{sec:Kommunikation_A_S}
-Die Kommunikation zwischen der AUTOSAR-Komponente und der Scheinwerfer-ECU erfolgt per CAN. Hierzu wird ein PEAK-PCAN-USB-Adapter verwendet. Da die AUTOSAR-Komponente in einer virtualisierten Umgebung ausgeführt wird, ist ein direkter Zugriff auf den PCAN-Adapter nicht gegeben. Daher wird dies über das VCAN-Gateway ermöglicht.
+Die Kommunikation zwischen der AUTOSAR-Komponente und dem Scheinwerfersteuergerät erfolgt per CAN. Hierzu wird ein PCAN-USB-Adapter von PEAK verwendet. Da die AUTOSAR-Komponente in einer virtualisierten Umgebung ausgeführt wird, ist ein direkter Zugriff auf den PCAN-Adapter nicht gegeben. Daher wird dies über das VCAN-Gateway ermöglicht.
 
 Der zu Beginn des Projektes bestehende Versuchsaufbau beinhaltet ein älteres Bordnetzsteuergerät. Dieses unterstützt nur den Low-Speed CAN-Standard und ist damit nicht vollständig mit anderen Systemen, wie dem PCAN-Adapter, kompatibel. Außerdem verwendet dieses Steuergerät eine veraltete Version des Netzwerkmanagements und ist damit nicht mit dem eingesetzten AUTOSAR kompatibel. Die volle Funktionalität der ECU ist damit unter Umständen nicht nutzbar. Aus diesen Gründen wurde im Rahmen dieser Arbeit der Versuchsaufbau durch ein aktuelles Steuergerät erneuert. Die dazugehörigen Informationen sind im Folgenden Kapitel nachzulesen. Darauf folgt ein Kapitel zum Einsatz des Netzwerkmanagements.
 
@@ -963,7 +957,6 @@ Die Ansteuerung des BCM erfolgt per CAN mit einer Baudrate von 500 kbit/s. Der a
 
 \subsection{Einsatz des Netzwerkmanagements}
 \label{sec:AutosarNM}
-% TODO: NM wirklich nicht geschafft?!
 Um das gesamte Bussystem nachbilden zu können, ist der Einsatz eines Netzwerkmanagements nötig. Hier wird das bei VW eingesetzte NM-High verwendet. Der allgemeine Einsatz, sowie AUTOSAR-spezifische Punkte wurden bereits in Kapitel \ref{sec:Netzwerkmanagement} betrachtet, und sollen im Weiteren auf das konkrete Beispiel angewendet werden. Leider konnte aus Zeitgründen das Netzwerkmanagement nicht erfolgreich im Projekt implementiert werden. Trotzdem werden alle relevanten Punkte der Konfiguration betrachtet. Eine Schritt-für-Schritt Anleitung, basierend auf einem Workshop von Elektrobit, ist in Anhang \ref{sec:nm_tutorial} zu finden.
 
 \begin{lstlisting}[frame=single, language=, basicstyle=\footnotesize, caption={Beispiel NM Botschaften}, label={lst:nm_botschaften}]
@@ -973,7 +966,7 @@ BCM : 0x1B00000E - 0E:00:04:01:11:00:0C:00
 ----: 0x1B000014 - 14:00:04:00:00:00:00:00
 \end{lstlisting}
 
-Für einen ersten Einstieg, sind in Listing \ref{lst:nm_botschaften} einige Beispiel-Botschaften des Netzwerk-Managements zu sehen, wie sie von der Restbussimulation gesendet werden. Dort ist nach dem Node-Namen, die CAN-ID der Botschaft aufgeführt. Diese beginnen etwa bei 0x1B000000 und enthalten im letzten Teil auch eine Node-ID. Diese ID ist in der eigentlichen Botschaft im ersten Byte wiederzufinden. Das zweite Byte hat immer den Wert null, während das dritte Byte einen Systemstatus angibt. Dieser ändert sich zum Beispiel sobald die Klemme 15 betätigt, und damit das Einschlafen beziehungsweise Aufwachen des Bussystems veranlasst wird. Alle weiteren Bytes sind ausschließlich beim BCM-Node ungleich null. Diese ersten Beobachtungen des Protokolls werden nun anhand der AUTOSAR-Spezifikation untersucht.
+Für einen ersten Einstieg, sind in Listing \ref{lst:nm_botschaften} einige Beispiel-Botschaften des Netzwerkmanagements zu sehen, wie sie von der Restbussimulation gesendet werden. Dort ist nach dem Node-Namen, die CAN-ID der Botschaft aufgeführt. Diese beginnen etwa bei 0x1B000000 und enthalten im letzten Teil auch eine Node-ID. Diese ID ist in der eigentlichen Botschaft im ersten Byte wiederzufinden. Das zweite Byte hat immer den Wert null, während das dritte Byte einen Systemstatus angibt. Dieser ändert sich zum Beispiel sobald die Klemme 15 betätigt, und damit das Einschlafen beziehungsweise Aufwachen des Bussystems veranlasst wird. Alle weiteren Bytes sind ausschließlich beim BCM-Node ungleich null. Diese ersten Beobachtungen des Protokolls werden nun anhand der AUTOSAR-Spezifikation untersucht.
 
 Die in AUTOSAR eingesetzten Netzerwerkmanagement-PDUs sind nach einem festen Schema aufgebaut (vgl. \cite[Seite 51]{autosar_cannm}). Byte Eins repräsentiert einen \emph{Source Node Identifier}. Dies deckt sich auch mit der Beobachtungen aus den Beispiel-Botschaften. Die Form der Botschaften-IDs wird jedoch im Standard nicht vorgegeben. Damit handelt es sich bei den Botschaften-IDs im Bereich 0x1B000000 um eine Design-Entscheidung, bei der der \emph{Source Node Identifier} ebenfalls untergebracht worden ist.
 
@@ -983,7 +976,7 @@ Das \emph{Control Bit Vector} Feld wird für einige Management-Funktionen verwen
 
 Die restlichen Bytes der NM-Botschaften enthalten User-Daten und implementieren damit ein VW-eigenes Protokoll. Allgemein senden Nodes NM-Botschaften, solange ein Wachbleiben des Busses erwünscht ist. Sobald ein Node den Bus nicht mehr benötigt, sendet dieser auch keine NM-Botschaften mehr.
 
-Im Folgenden wird der Prozess beschrieben, um das Netzwerk-Management in AUTOSAR, speziell EB tresos, zu aktivieren. Dabei wird ein vollständig konfiguriertes Beispiel vorausgesetzt. Im ersten Schritt müssen das System-Modell und die CAN-Datenbank angepasst werden. Im System-Modell sind die Service-Ports des ComM-Moduls hinzuzufügen. Über diese kann später die User-Runnable das Netzwerk-Management steuern. In der CAN-Datenbank müssen Botschaften angelegt werden, die als NM-Botschaften verwendet werden sollen. An diesem Punkt ist die ID der Botschaften zu bestimmen.
+Im Folgenden wird der Prozess beschrieben, um das Netzwerkmanagement in AUTOSAR, speziell EB tresos, zu aktivieren. Dabei wird ein vollständig konfiguriertes Beispiel vorausgesetzt. Im ersten Schritt müssen das System-Modell und die CAN-Datenbank angepasst werden. Im System-Modell sind die Service-Ports des ComM-Moduls hinzuzufügen. Über diese kann später die User-Runnable das Netzwerkmanagement steuern. In der CAN-Datenbank müssen Botschaften angelegt werden, die als NM-Botschaften verwendet werden sollen. An diesem Punkt ist die ID der Botschaften zu bestimmen.
 
 Nachdem die veränderten .arxml und .dbc Dateien ins tresos-Projekt importiert worden sind, können die nötigen Module importiert werden. Hier sind die Module CanNm, CanSm, ComM und Nm relevant. Das Modul Nm stellt ein generisches Netzwerkmanagement zur Verfügung, während das Modul CanNm eine busspezifische Variante anbietet. Um Zustandsübergänge zu ermöglichen, werden die Module CanSM und ComM benötigt. Letzteres stellt der User-Applikation Funktionen zur Verfügung, mit deren Hilfe der Zustand des Netzwerkmanagements bestimmt werden kann.
 
@@ -1227,7 +1220,7 @@ Da es sich bei dem Beispielsystem lediglich um eine Scheinwerfersteuerung handel
 \paragraph{Angriffssicherheit}
 Das hier betrachtete System bietet im Prinzip die selben Angriffsmöglichkeiten wie klassische Systeme. Sobald ein physischer Zugriff auf das System möglich ist, existieren eine Reihe von Möglichkeiten das System zu kompromittieren. Dabei zeigt ein virtualisiertes System keine Vorteile einem klassischen System gegenüber. Ein zentraler Hypervisor bietet zwar die Möglichkeit die Integrität der virtuellen Maschinen zu überprüfen, jedoch kann auch dieser selbst kompromittiert sein. Seitenkanalangriffe\footnote{Seitenkanalangriffe bezeichnen eine Gruppe von Angriffszenarien, bei denen das System von außen analysiert wird. Hierbei kann zum Beispiel anhand des Energieverbrauchs auf ausgeführte Befehle geschlossen werden.} könnten durch die erhöhte Komplexität des Systems erschwert werden. Eine Verhinderung dieser ist jedoch wahrscheinlich nicht möglich.
 
-Ein weiterer Angriffsweg ist durch eine Internet- beziehungsweise Netzwerkanbindung gegeben. Diese erfahren eine immer größere Verbreitung, durch Car2Car-Kommunikation und das Nutzen des Internets für Stauinformationen. Hier besteht eine durchaus große Gefahr. Eine kompromittierte VM kann durch eventuelle Sicherheitslücken im Hypervisor das ganze System lahmlegen. Daher muss dieser mit großer Sorgfalt entwickelt werden. Die Folgen einer Übernahme sind jedoch bei einem virtualisierten System nicht umfangreicher als bei einem klassischen System. In beiden Fällen könnte ein kompromittiertes Steuergerät den gesamten Bus lahmlegen, indem dauerhaft Nachrichten gesendet werden.
+Ein weiterer Angriffsweg ist durch eine Netzwerkanbindung gegeben. Diese erfahren eine immer größere Verbreitung, durch Car2Car-Kommunikation und das Nutzen des Internets für Stauinformationen. Hier besteht eine durchaus große Gefahr. Eine kompromittierte VM kann durch eventuelle Sicherheitslücken im Hypervisor das ganze System lahmlegen. Daher muss dieser mit großer Sorgfalt entwickelt werden. Die Folgen einer Übernahme sind jedoch bei einem virtualisierten System nicht umfangreicher als bei einem klassischen System. In beiden Fällen könnte ein kompromittiertes Steuergerät den gesamten Bus lahmlegen, indem dauerhaft Nachrichten gesendet werden.
 
 \paragraph{Betriebssicherheit}
 Die Umstellung auf eine virtualisierte Umgebung bedeutet auch die Umstellung von einem verteilten System, hin zu einem vereinten System. Das bedeutet das weniger Hardware Redundanz vorhanden ist, und somit ein Ausfall der Hardware zum Verlust von mehr Funktionalität führt. Damit stellt die Hardware des Hosts, ebenso wie der Hypervisor, einen \emph{single point of failure} dar. Damit besitzt ein virtualisiertes System einen relevanten Nachteil. Da jedoch die Kosten für ein solches System niedriger Ausfallen können, kann zusätzlicher Aufwand betrieben werden, um zuverlässigere Bauteile einzusetzen und die Sicherheitsüberprüfungen auszuweiten. Ob sich diese Rechnung für konkrete Projekt lohnt, muss im Einzelfall entschieden werden. Ein zentraler Hypervisor bietet jedoch auch einige Möglichkeiten. So kann eben hier eine Diagnose stattfinden, um die Zuverlässigkeit der virtuellen Maschinen zu gewährleisten. 
@@ -1295,6 +1288,7 @@ An dieser Stelle zeigt sich auch Potential für zukünftige Projekte. Sollte der
 % TODO:
 \begin{itemize}
     \item AUTOSAR Spezifikation
+    \item Masterarbeit
     \item Projektdaten
     \begin{itemize}
         \item CAN-Datenbank
