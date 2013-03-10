@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%% Nm Tutorial %%%%%%%%%%%%%%%%%%%%
 \chapter{Netzwerk-Management Anleitung}
 \label{sec:nm_tutorial}
-Diese Anleitung basiert auf dem entsprechenden AUTOSAR Workshop von Elektrobit vom 11.12.2012 und wurde an einigen Stellen gekürzt und erweitert. \\
+Diese Anleitung basiert auf dem entsprechenden AUTOSAR-Workshop von Elektrobit vom 11.12.2012 und wurde an einigen Stellen gekürzt und erweitert. \\
 
 \begin{compactitem}
     \item Module importieren (CanNm, CanSM, ComM, Nm)
@@ -195,7 +195,7 @@ Dieses Kapitel beschreibt die im Laufe des Projektes erstellte Software zur Komm
 
 \section{Protokoll}
 \label{sec:vcan_protokoll}
-Das VCAN-Protokoll besteht aus einem Binär-Format, dass per TCP-Socket übertragen wird. Der Aufbau und Abbau der TCP-Verbindungen wird verwendet um Clients am Gateway an- und abzumelden. Zudem müssen Socket-Fehler abgefangen werden, da ein ordnungsgemäßer Verbindungsabbau nicht gegeben sein muss.
+Das VCAN-Protokoll besteht aus einem Binär-Format, dass per TCP-Socket übertragen wird. Der Aufbau und Abbau der TCP-Verbindungen wird verwendet, um Clients am Gateway an- und abzumelden. Zudem müssen Socket-Fehler abgefangen werden, da ein ordnungsgemäßer Verbindungsabbau nicht gegeben sein muss.
 
 \begin{figure}[ht]
     \centering
@@ -204,13 +204,13 @@ Das VCAN-Protokoll besteht aus einem Binär-Format, dass per TCP-Socket übertra
     \label{fig:vcan_protokoll}
 \end{figure}
 
-Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_protokoll} zu sehen. Das Format besteht aus einem Header, dem DLC-Feld und den eigentlichen Daten. Der Header enthält unter anderem die ID der Botschaft. Die Nutzdaten können 1 bis 8 Byte lang sein. Im folgenden ist eine ausfürliche Auflistung der Felder dargestellt. Die Byte-Reheinfolge entspricht Big-Endian. Tabelle \ref{tab:vcanbotschaft} zeigt eine Beispiel-Botschaft ohne TCP- und Ethernet-Header.
+Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_protokoll} zu sehen. Das Format besteht aus einem Header, dem DLC-Feld und den eigentlichen Daten. Der Header enthält unter anderem die ID der Botschaft. Die Nutzdaten können 1 bis 8 Byte lang sein. Im Folgenden ist eine ausfürliche Auflistung der Felder dargestellt. Die Byte-Reheinfolge entspricht Big-Endian. Tabelle \ref{tab:vcanbotschaft} zeigt eine Beispiel-Botschaft ohne TCP- und Ethernet-Header.
 
 \begin{description}
-    \item[System] \hfill \\ Angabe eines Systems (zum Beispiel CAN oder LIN). Eine Auflistung der möglichen Werte ist in Tabelle \ref{tab:vcansysteme} zu finden. Die symbolischen Namen stammen dabei aus dem Elektrobit Gateway. Höhere Werte führen beim EB Gateway zu Fehlern beziehungsweise Abstürzen.
+    \item[System] \hfill \\ Angabe eines Systems (zum Beispiel CAN oder LIN). Eine Auflistung der möglichen Werte ist in Tabelle \ref{tab:vcansysteme} zu finden. Die symbolischen Namen stammen dabei aus dem Elektrobit-Gateway. Höhere Werte führen beim EB Gateway zu Fehlern beziehungsweise Abstürzen.
     \item[Channel] \hfill \\ Enthält eine Kanal-Nummer. Kann Werte von 0 bis 255 annehmen.
     \item[ID] \hfill \\ CAN-ID der Botschaft.
-    \item[Marker] \hfill \\ Markiert extended CAN Frames. 0 steht für einen standard frame, jeder andere Wert für ein extendend Frame. Dies Byte könnte weitere Funktionalität bei LIN oder FlexRay Systemen haben.
+    \item[Marker] \hfill \\ Markiert extended CAN Frames. 0 steht für einen standard frame, jeder andere Wert für ein extendend Frame. Dieses Byte könnte weitere Funktionalität bei LIN oder FlexRay Systemen haben.
     \item[DLC] \hfill \\ Anzahl der Daten-Bytes. Kann bei CAN nur Werte von 1 bis 8 annehmen. 
     \item[Data] \hfill \\ Nutzdaten. Die Anzahl der Bytes entspricht dem Wert im DLC-Feld.
 \end{description}
@@ -277,9 +277,9 @@ Das Protokoll, wie es im Elektrobit-Gateway eingesetzt wird, hat einige Besonder
 \label{sec:vcan_struktur}
 Im Folgenden wird die Dateistruktur des Projektes näher betrachtet. Abbildung \ref{fig:vcan_api_uml} zeigt ein UML-Klassendiagramm der VCAN-API. Aufgrund des Fehlens von Zugriffsmodifikatoren (Public, Private\dots) unter Python, werden alle, für das Verwenden der API nicht relevanten, Funktionen und Variablen im Weiteren ausgelassen. Eine genaue Dokumentation dieser befindet sich im Quellcode.
 
-Die reine VCAN-API besitzt als Abhängigkeit lediglich Module der \emph{CPython} Standardbibliothek. Andere Python Interpreter wie Jython werden zur Zeit nicht unterstützt. Support für PCAN ist nur unter Windows verfügbar und benötigt die PCAN-Basic-API.
+Die reine VCAN-API besitzt als Abhängigkeit lediglich Module der \emph{CPython} Standardbibliothek. Andere Python-Interpreter wie Jython werden zur Zeit nicht unterstützt. Support für PCAN ist nur unter Windows verfügbar und benötigt die PCAN-Basic-API.
 
-Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert auf \emph{wxPython}\footnote{\url{http://www.wxpython.org/}}. Der Benchmark benötigt die Module \emph{pygame}\footnote{\url{http://www.pygame.org/}} für konstante Timer und \emph{rpy}\footnote{\url{http://rpy.sourceforge.net/}} für die Auswertung der Ergebnisse mittels \emph{GNU R}\footnote{\url{http://www.r-project.org/}}.
+Die vom Gateway und der VCAN-Applikation genutzte grafische Oberfläche basiert auf \emph{wxPython}\footnote{\url{http://www.wxpython.org/}}. Der Benchmark benötigt die Module \emph{pygame}\footnote{\url{http://www.pygame.org/}} für konstante Timer und \emph{rpy}\footnote{\url{http://rpy.sourceforge.net/}} für die Auswertung der Ergebnisse mittels \emph{GNU R}\footnote{\url{http://www.r-project.org/}}.
 
 \begin{figure}[ht]
     \centering
@@ -318,7 +318,7 @@ Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert
     \apiitem{./gateway\_rules.xml}
     Eine Beispiel-Konfiguration der im Gateway eingebauten Firewall-Regeln.
     \apiitem{./vcan\_app.py}
-    VCAN Applikation um den Scheinwerfer-Versuchsaufbau anzusteuern.
+    VCAN-Applikation um den Scheinwerfer-Versuchsaufbau anzusteuern.
 \end{description}
 
 
@@ -331,11 +331,11 @@ Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert
     Das Gateway nimmt Verbindungen von Clients entgegen und verteilt eingehende Botschaften an alle angemeldeten Clients weiter.
     \begin{description}
         \apiitem{start\_gateway(host='127.0.0.1', port=10020, rulesfile='')}
-        Startet das Gateway auf IP \texttt{host} und dem Port \texttt{port}. Auf dem ausführenden Rechner muss ein Netzwerk-Interface mit der entsprechenden IP existieren. Der Port darf nicht durch eine andere Anwendung belegt sein. Optional kann eine Regeldatei angegeben werden um Firewall-Regeln zu definieren. Dies ist noch experimentell.
+        Startet das Gateway auf IP \texttt{host} und dem Port \texttt{port}. Auf dem ausführenden Rechner muss ein Netzwerk-Interface mit der entsprechenden IP existieren. Der Port darf nicht durch eine andere Anwendung belegt sein. Optional kann eine Regeldatei angegeben werden, um Firewall-Regeln zu definieren. Dies ist noch experimentell.
         \apiitem{stop\_gateway()}
         Stoppt das Gateway wieder. Anschließend kann mittels der \texttt{start\_gateway} Methode wieder gestartet werden. Es werden jedoch alle Verbindungen getrennt, und die Host IP muss ein weiteres mal angegeben werden.
         \apiitem{connect\_other\_gateway(host, port=10020)}
-        Ein Gateway kann sich zu einem anderen Gateway verbinden um ein Netz zu bilden. Das Ziel-Gateway muss unter der IP \texttt{host} und dem Port \texttt{port} erreichbar sein. Diese Methode ist hilfreich, wenn zum Beispiel eine Firewall eingehende Verbindungen verbietet oder ein Gateway unter Linux mit einem Windows-Gateway verbunden wird, um den PCAN nutzen zu können.
+        Diese Methode erlaubt es, ein laufendes Gateway mit einem anderen Gateway zu verbinden. Das Ziel-Gateway muss unter der IP \texttt{host} und dem Port \texttt{port} erreichbar sein.
         \apiitem{pcan\_init()}
         Initialisiert den ersten gefundenen PEAK-PCAN USB-Dongle mit einer Baud-Rate von 500kbaud. Das gwählte USB-Interface und die Baud-Rate können zur Zeit nur im Code geändert werden. PCAN Support ist im Moment nur unter Windows vorhanden und wird ansonsten durch eine VCANException markiert.
         \apiitem{pcan\_uninit()}
@@ -346,12 +346,12 @@ Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert
 % class VCANConfig
 \begin{description}
     \apiitem{class VCANConfig(rulesfile)}
-    Diese Klasse wird verwendet um Firewall-Regeln im Gateway zu implementieren. Hierzu wird eine XML-Datei mit Regeln übergeben. Diese Datei muss dem beiligenden Schema \texttt{vcan\_config.xsd} entsprechen. Das Gateway ist dafür verantwortlich die entsprechenden Überprüfungen beim Senden und Empfangen durchzuführen.
+    Diese Klasse wird verwendet, um Firewall-Regeln im Gateway zu implementieren. Hierzu wird eine XML-Datei mit Regeln übergeben. Diese Datei muss dem beiligenden Schema \texttt{vcan\_config.xsd} entsprechen. Das Gateway ist dafür verantwortlich, die entsprechenden Überprüfungen beim Senden und Empfangen durchzuführen.
     \begin{description}
         \apiitem{is\_send\_allowed(ip, can\_id)}
-        Überprüft ob die IP \texttt{ip} eine Botschaft mit der ID \texttt{can\_id} senden darf. Gibt True zurück falls erlaubt, und False falls verboten.
+        Überprüft, ob die IP \texttt{ip} eine Botschaft mit der ID \texttt{can\_id} senden darf. Gibt True zurück falls erlaubt, und False falls verboten.
         \apiitem{is\_receive\_allowed(ip, can\_id)}
-        Überprüft ob die IP \texttt{ip} eine Botschaft mit der ID \texttt{can\_id} empfangen darf. Gibt True zurück falls erlaubt, und False falls verboten.
+        Überprüft, ob die IP \texttt{ip} eine Botschaft mit der ID \texttt{can\_id} empfangen darf. Gibt True zurück falls erlaubt, und False falls verboten.
     \end{description}
 \end{description}
 
@@ -370,16 +370,16 @@ Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert
 % class VCANClient
 \begin{description}
     \apiitem{class VCANClient(q\_length=1024)}
-    Diese Klasse kann verwendet werden, um Zugriff auf den VCAN zu erhalten. Es bietet Funktionen um eine Verbindung aufzubauen und zu schließen. Außerdem können Botschaften empfangen und gesendet werden. Standardmäßig erfolgt das Empfangen auf Polling-Basis. Hierzu wird eine Queue der Länge \texttt{q\_length} angelegt. Der Anwender ist verantwortlich die eingehenden Daten häufig genug zu pollen. Alternativ kann für das Empfangen eine Callback-Funtion angegeben werden.
+    Diese Klasse kann verwendet werden, um Zugriff auf den VCAN zu erhalten. Sie bietet Funktionen, um eine Verbindung aufzubauen und zu schließen. Außerdem können Botschaften empfangen und gesendet werden. Standardmäßig erfolgt das Empfangen auf Polling-Basis. Hierzu wird eine Queue der Länge \texttt{q\_length} angelegt. Der Anwender ist verantwortlich die eingehenden Daten häufig genug zu pollen. Alternativ kann für das Empfangen eine Callback-Funtion angegeben werden.
     \begin{description}
         \apiitem{connect(ip, port=10020, receive\_data=True, callback=None)}
-        Verbindet den Client mit einem Gateway auf IP \texttt{ip} und Port \texttt{port}. Über den Schalter \texttt{receive\_data} kann das Empfangen von Botschaften deaktiviert werden. Der Parameter \texttt{callback} kann verwendent werden um eine Funktions-Referenz zu übergeben, die empfangene Botschaften direkt verarbeitet. Wirft \texttt{VCANException} falls keine Verbindung hergestellt werden kann.
+        Verbindet den Client mit einem Gateway auf IP \texttt{ip} und Port \texttt{port}. Über den Schalter \texttt{receive\_data} kann das Empfangen von Botschaften deaktiviert werden. Der Parameter \texttt{callback} kann verwendet werden um eine Funktions-Referenz zu übergeben, die empfangene Botschaften direkt verarbeitet. Wirft \texttt{VCANException} falls keine Verbindung hergestellt werden kann.
         \apiitem{close(sleep\_time=0.5)}
-        Schließt die aktuelle Verbindung. Der Parameter \texttt{sleep\_time} wird verwendet um nach dem Schließen der Verbindung einen Moment zu warten. Damit werden Eigenheiten des EB-Gateways und der AUTOSAR-Anwendungen ausgeglichen, da es ansonsten zu Fehlern kommen kann. Die Angabe erfolgt in Sekunden.
+        Schließt die aktuelle Verbindung. Der Parameter \texttt{sleep\_time} wird verwendet, um nach dem Schließen der Verbindung einen Moment zu warten. Damit werden Eigenheiten des EB-Gateways und der AUTOSAR-Anwendungen ausgeglichen, da es ansonsten zu Fehlern kommen kann. Die Angabe erfolgt in Sekunden.
         \apiitem{get\_received\_item()}
-        Gibt die älteste empfangene Botschaft zurück. Falls die Queue leer ist wird \texttt{None} zurückgegeben. Diese Methode muss im Polling-Betrieb häufig genug aufgerufen werden, um Daten-Verlust zu vermeiden.
+        Gibt die älteste empfangene Botschaft zurück. Falls die Queue leer ist, wird \texttt{None} zurückgegeben. Diese Methode muss im Polling-Betrieb häufig genug aufgerufen werden, um Daten-Verlust zu vermeiden.
         \apiitem{send(message, sleep\_time=0.2)}
-        Sende die Botschaft \texttt{message} zum verbundenden Gateway. Die Botschaft kann sowohl als Binär-String, als auch als VCANMessage vorliegen. Der Parameter \texttt{sleep\_time} wird verwendet um Fehler zu vermeiden indem nach dem Senden ein Moment gewartet wird. Falls nur Applikation angebunden sind, die die VCAN-API nutzen kann dieser Wert auf 0 gesetzt werden. AUTOSAR-Applikation haben jedoch Probleme mit zu geringen Warte-Zeiten und können Botschaften verlieren oder sogar abstürzen. Die Angabe erfolgt in Sekunden. Falls der Client zu keinem Gateway verbunden ist, wird eine \texttt{VCANException} geworfer.
+        Sende die Botschaft \texttt{message} zum verbundenden Gateway. Die Botschaft kann sowohl als Binär-String, als auch als VCANMessage vorliegen. Der Parameter \texttt{sleep\_time} wird verwendet, um Fehler zu vermeiden indem nach dem Senden ein Moment gewartet wird. Falls nur Applikation angebunden sind, die die VCAN-API nutzen kann dieser Wert auf 0 gesetzt werden. AUTOSAR-Applikation haben jedoch Probleme mit zu geringen Warte-Zeiten und können Botschaften verlieren oder sogar abstürzen. Die Angabe erfolgt in Sekunden. Falls der Client zu keinem Gateway verbunden ist, wird eine \texttt{VCANException} geworfer.
     \end{description}
 \end{description}
 
@@ -408,7 +408,7 @@ Die vom Gateway und der VCAN-Applikation genutzte grafischen Oberfläche basiert
 
 \section{Beispiel-Anwendungen}
 \label{sec:vcan_beispiele}
-Im Folgenden sind einige Beispiel Anwendungen aufgeführt, die den VCAN nutzen. Da der Quellcode weitreichend selbsterklärend ist, wird auf eine Erläuterung der Beispiele verzichtet.
+Im Folgenden sind einige Beispiel-Anwendungen aufgeführt, die den VCAN nutzen. Da der Quellcode weitreichend selbsterklärend ist, wird auf eine Erläuterung der Beispiele verzichtet.
 
 \subsection{Gateway}
 \label{sec:vcan_gateway_beispiele}
