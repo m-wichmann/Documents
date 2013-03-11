@@ -513,7 +513,7 @@ def __send(client, value):
     data = [0,0,1,value,0,0,0,0]
     m = VCANMessage()
     m.set_parameters(int("3c0", 16),  data)
-    sclient.send(m,sleep_time=0.5)
+    client.send(m,sleep_time=0.5)
 
 client = VCANClient()
 client.connect('127.0.0.1', port=10020)
