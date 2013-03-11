@@ -2,8 +2,6 @@
 %% Master Thesis
 %% Autor: Martin Wichmann
 %% 
-%% TODO:
-%% - NDA/IP klären!!! (VW, EB, evtl. dSPACE?!)
 
 \documentclass[
   a4paper,					    % a4paper (sic!)
@@ -110,7 +108,7 @@
 \title{Virtualisierung von AUTOSAR Softwarekomponenten für die Erprobung}
 \author{Martin Wichmann\\Matrikel 701\,277\,37}
 % TODO
-\date{Eingereicht am TODO}
+\date{Eingereicht am 18.3.2013}
 \publishers{Prüfer: 
 
   Prof. Dr.-Ing. Gert Bikker
@@ -746,13 +744,9 @@ Die zu Beginn dieser Arbeit, in Abbildung \ref{fig:arch_begin}, skizzierte Archi
 
 Diese Kernbereiche werden im Folgenden einzeln näher beschrieben. Das Hauptziel des Fallbeispiels ist die Evaluation des Konzeptes der \emph{eingebetteten Virtualisierung}. Dabei wird der Fokus auf die Trennung zwischen zwei verschiedenen Ebenen gelegt. Zum einen die hardwarenahe Ebene, repräsentiert durch die AUTOSAR-Komponente, und zum anderen die highlevel Ebene, realisiert durch die steuernde Komponente, die im Weiteren auch VCAN-Applikation genannt wird.
 
-% TODO: Das Wort "geblinkt" ist echt doof!
 Zur Demonstration des Konzeptes sind verschiedene Modi geplant. Der erste Modus bietet eine direkte Kontrolle der Scheinwerfer-Funktionen. Dies kann eingesetzt werden, um die Funktionalität des Systems zu überprüfen. Des Weiteren werden zwei Demomodi implementiert, die eine etwas umfangreichere Steuerung bieten. Der erste Modus implementiert einen Pausemodus für das Blinken. Dabei wird eine definierbare Anzahl an Zyklen sowohl links als auch rechts geblinkt, gefolgt von einer ebenso langen Pausendauer.
 
 Der zweite Demo-Modus ähnelt dem ersten, ermöglicht jedoch das getrennte Konfigurieren der Intervallzeiten für den linken und rechten Blinker. Die Intervallzeiten, sowie alle anderen relevanten Signale werden von der VCAN-Applikation zur AUTOSAR-Komponente gesendet. Diese wertet die Signale aus und steuert die Scheinwerfer-ECU-Komponente entsprechend an.
-
-% TODO: hier muss irgendwie noch mehr hin.
-
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1187,7 +1181,7 @@ Wie in Abbildung \ref{fig:boxplot_as} zu erkennen ist, liegen die Werte etwa im 
 
 Zudem wurde während des Projektes eine Eigenheit des WinCore VCAN beobachtet, die jedoch in dieser Auswertung nicht reproduziert werden konnte. Hierbei kam es immer wieder zu langen Pausen, gefolgt von Sendehäufungen. Dies führt zu einer stark erhöhten Standardabweichung.
 
-Abbildung \ref{fig:boxplot_vcan} zeigt die Ergebnisse der Analyse bei Benutzung der VCAN-API. Hier ist zu erkennen, dass eine Genauigkeit von etwa einer Millisekunde möglich ist. Lediglich einzelne Ausreißer, in diesem Fall nur einer, weichen einige Millisekunden vom gewünschten Wert ab.
+Abbildung \ref{fig:boxplot_vcan} zeigt die Ergebnisse der Analyse bei Benutzung der VCAN-API. Hier ist zu erkennen, dass eine Genauigkeit von etwa einer Millisekunde möglich ist. Lediglich einzelne Ausreißer weichen einige Millisekunden vom gewünschten Wert ab. In dieser Testreihe existiert nur ein solcher Ausreißer, der im Diagramm nicht sichtbar ist.
 
 Tabelle \ref{tab:jitter_statistik} führt die Eigenschaften der Stichproben auf. Auch hier zeigen sich die beschriebenen Ergebnisse. Die Standardabweichung beim Einsatz der VCAN-API beträgt lediglich 0.1 ms, während diese beim Einsatz von AUTOSAR 4.8 ms beträgt. Damit sind beide Werte im akzeptablen Bereich, um weiche Echtzeit für die vorgesehenen Anwendungen zu ermöglichen.
 
@@ -1303,7 +1297,7 @@ Den VCAN halte ich für eine interessante und einfache Lösung für die Kommunik
 \label{sec:Erklärung}
 Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig und nur unter Verwendung der angegebenen Quellen und Hilfsmittel erstellt habe.
 \vspace{2.5cm} \par
-Wolfenbüttel, den % TODO
+Wolfenbüttel, den 18.3.2013% TODO
 
 
 % Alle Einträge zum Glossar hinzufügen und Glossar/Akronymliste printen
