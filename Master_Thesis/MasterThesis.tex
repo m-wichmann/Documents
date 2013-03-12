@@ -91,7 +91,7 @@
 \newcommand{\apiitem}[1]{\item[\texttt{#1}] \hfill \\}
 
 %%% Trennungen %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\hyphenation{Netz-werk-Ma-nage-ment}
+\hyphenation{}
 
 %%% 1 1/2 fachen Zeilenabstand wählen %%%%%%%%%%%%%%%%%%%%
 \onehalfspacing
@@ -171,7 +171,11 @@ After almost ten years since the beginning of AUTOSAR, the architecture and deve
 \label{sec:Einleitung}
 Die Möglichkeiten der Virtualisierung werden im Serverbereich bereits seit Jahren genutzt. Aber auch eingebettete Systeme können von diesen Techniken profitieren und damit die Anzahl der Steuergeräte vermindern und Kosten sparen. Vor allem eine steigende Komplexität und Umfang zwingen die Automobilindustrie zum Umdenken. An diesem Punkt setzt AUTOSAR an. Diese moderne Systemarchitektur erfährt seit einigen Jahren eine immer stärkere Verbreitung. 
 
-Diese Masterarbeit betrachtet die Möglichkeiten der Virtualisierung im Embedded-Bereich anhand eines Fallbeispiels. In diesem Zusammenhang wird ebenfalls AUTOSAR näher untersucht und in die Virtualisierung eingebunden. Das betrachtete Fallbeispiel wird im Folgenden Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Dabei werden die Themengebiete \emph{Virtualisierung} und \emph{AUTOSAR} betrachtet. Die in diesem Zusammenhang ebenfalls interessante funktionale Sicherheit nach \emph{ISO 26262} wird ebenso untersucht.
+Bei der Betrachtung der Virtualisierung sind zwei verschiedene Anwendungsgebiete zu erkennen. Zum Einen die Lehre und Evaluation und zum Anderen der Einsatz in realen Projekten. Diese Gebiete unterscheiden sich stark in ihren Anforderungen. Während in der Lehre vor allem ein schneller Einstieg nötig ist, bedingt der Einsatz im Auto Robustheit und Sicherheit. Analog dazu ist der Einsatz von AUTOSAR zu sehen.
+
+Diese Masterarbeit betrachtet die Möglichkeiten der Virtualisierung im Embedded-Bereich anhand eines Fallbeispiels. In diesem Zusammenhang wird ebenfalls AUTOSAR näher untersucht und in die Virtualisierung eingebunden. 
+
+Das betrachtete Fallbeispiel wird im Folgenden Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Dabei werden die Themengebiete \emph{Virtualisierung} und \emph{AUTOSAR} betrachtet. Die in diesem Zusammenhang ebenfalls interessante funktionale Sicherheit nach \emph{ISO 26262} wird ebenso untersucht.
 
 Im darauf folgenden Kapitel wird das Fallbeispiel und dessen Umsetzung vorgestellt. Dabei wird auf alle relevanten Punkte näher eingegangen. Die Ergebnisse des Fallbeispiels werden im letzten Kapitel analysiert, und untersucht ob die vorgestellten Techniken eine Zukunft in realen Projekten haben.
 
@@ -1237,6 +1241,8 @@ Auch mittels Virtualisierung lässt sich ein ähnliches Konzept aufbauen. Dabei 
 \chapter{Fazit und Ausblick}
 \label{sec:FazitAusblick}
 Zusammenfassend lässt sich sagen, dass die Virtualisierung ein interessantes und ausgereiftes Konzept darstellt, dass durchaus auch in der Welt der eingebetteten Systeme Anwendung finden kann. Zwar wird die Systemkomplexität durch den Einsatz von Virtualisierung erhöht, jedoch wird gleichzeitig durch die starke Abstraktion und strikte Trennung ein alternatives Entwicklungskonzept ermöglicht. Hierin lassen sich Teilsysteme bausteinartig einsetzen, während das Gesamtsystem in einem Top-Down-Verfahren entworfen wird. Eine konkrete Kosten-Nutzen-Rechnung muss allerdings in jedem Projekt einzeln erfolgen, da eine allgemeine Aussage in dieser Arbeit nicht möglich ist.
+
+In diesem Projekt hat sich die Virtualisierung als praktisches Konzept gezeigt. Dabei ist jedoch zu beachten, dass die wahren Vorteile dieser Technik erst durch den Einsatz eines Type 1-Hypervisors entstehen. Dieses ist jedoch mit viel Aufwand verbunden, wobei XtratuM als freie und offene Lösung einen guten Einstieg bietet. Auch in der Lehre könnte dies in Zukunft eingesetzt werden.
 
 Die in diesem Projekt eingesetzte AUTOSAR-Distribution WinCore, sowie der darin integrierte VCAN, sind sehr gut in der Lehre, sowie in einer ersten Evaluationsphase zu nutzen. Bei längerer Benutzung zeigt sich jedoch die Instabilität als kritische Eigenschaft, sodass ein Produktiveinsatz in dieser Weise nicht möglich ist. Beim VCAN handelt es sich um eine einfache und offene Möglichkeit, in die Kommunikation des Systems einzugreifen, um somit eine Restbussimulation sowie manuelle Tests schnell zu ermöglichen.
 

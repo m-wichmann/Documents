@@ -16,4 +16,5 @@
 *.lot
 *.lol
 appendix_nda.tex
+appendix_nda_backup.tex
 images/*.tex
