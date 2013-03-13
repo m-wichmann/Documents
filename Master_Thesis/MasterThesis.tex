@@ -141,7 +141,7 @@ Nach fast zehn Jahren seit den ersten Bemühungen um AUTOSAR, haben sich die Arc
 
 \foreignlanguage{english}{
 \section*{Abstract}
-After almost ten years since the beginning of AUTOSAR, the architecture and development process is established in the automotive industry. This master thesis looks at the possibilities to use virtualized AUTOSAR components. To do this a case study is examined to evaluate both the virtualization, including the communication, and AUTOSAR as a concept. To cover the demand for AUTOSAR developers, the Ostfalia Hochschule für angewandte Wissenschaften has placed AUTOSAR in its curriculum. To support these efforts, this thesis is written to cover the fundamentals of AUTOSAR.
+After almost ten years since the beginning of AUTOSAR, the architecture and development process has been established in the automotive industry. This master thesis looks at the possibilities to use virtualized AUTOSAR components. This is done by a case study, in which both the virtualization, including the communication, and AUTOSAR as a concept are evaluated. To cover the demand for developers, the Ostfalia University of Applied Sciences included AUTOSAR in its curriculum. Therefore this thesis covers the fundamentals of AUTOSAR and describes the performed case study.
 }
 
 \textbf{Keywords}: AUTOSAR, embedded virtualization, ISO 26262
@@ -173,7 +173,7 @@ Die Möglichkeiten der Virtualisierung werden im Serverbereich bereits seit Jahr
 
 Bei der Betrachtung der Virtualisierung sind zwei verschiedene Anwendungsgebiete zu erkennen. Zum Einen die Lehre und Evaluation und zum Anderen der Einsatz in realen Projekten. Diese Gebiete unterscheiden sich stark in ihren Anforderungen. Während in der Lehre vor allem ein schneller Einstieg nötig ist, bedingt der Einsatz im Auto Robustheit und Sicherheit. Analog dazu ist der Einsatz von AUTOSAR zu sehen.
 
-Diese Masterarbeit betrachtet die Möglichkeiten der Virtualisierung im Embedded-Bereich anhand eines Fallbeispiels. In diesem Zusammenhang wird ebenfalls AUTOSAR näher untersucht und in die Virtualisierung eingebunden. 
+Diese Masterarbeit betrachtet die Möglichkeiten der Virtualisierung im Em\-bed\-ded-Be\-reich anhand eines Fallbeispiels. In diesem Zusammenhang wird ebenfalls AUTOSAR näher untersucht und in die Virtualisierung eingebunden. 
 
 Das betrachtete Fallbeispiel wird im Folgenden Kapitel vorgestellt. Anschließend werden die theoretischen Grundlagen erläutert und diskutiert. Dabei werden die Themengebiete \emph{Virtualisierung} und \emph{AUTOSAR} betrachtet. Die in diesem Zusammenhang ebenfalls interessante funktionale Sicherheit nach \emph{ISO 26262} wird ebenso untersucht.
 
@@ -226,7 +226,7 @@ Dieses Kapitel enthält Grundlagen zu den Themen AUTOSAR und Virtualisierung. Da
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Virtualisierung}
 \label{sec:Virtualisierung}
-Der Begriff \emph{Virtualisierung} bezeichnet eine Reihe von Techniken, die verwendet werden, um die Ressourcen eines Rechner-Systems zu verwalten. Hierdurch kann ein reales System, auf mehrere virtuelle Systeme aufgeteilt, und als solche genutzt werden. Dabei können verschiedene Ziele im Vordergrund stehen. Im Bereich der Virtualisierung wird dass System, dass den Hypervisor ausführt Host genannt. Ein Gastsystem hingegen, wird vom Hypervisor verwaltet.
+Der Begriff \emph{Virtualisierung} bezeichnet eine Reihe von Techniken, die verwendet werden, um die Ressourcen eines Rechner-Systems zu verwalten. Hierdurch kann ein reales System auf mehrere virtuelle Systeme aufgeteilt, und als solche genutzt werden. Dabei können verschiedene Ziele im Vordergrund stehen. Im Bereich der Virtualisierung wird dass System, dass den Hypervisor ausführt, Host genannt. Ein Gastsystem hingegen, wird vom Hypervisor verwaltet.
 
 Aus dem Desktopbereich ist die Systemvirtualisierung bekannt, wie sie zum Beispiel mittels VirtualBox\footnote{VirtualBox zu finden unter \url{www.virtualbox.org}} umgesetzt ist. Hierbei werden die Ressourcen des bestehenden Systems durch einen Hypervisor, auch Virtual Machine Monitor (kurz VMM) genannt, verwaltet und den virtuellen Instanzen zugeordnet. Diese Variante wird vor allem eingesetzt, um Zugriff auf einen anderes Betriebssystem zu erhalten, und so spezielle Software ausführen zu können.
 
@@ -234,7 +234,7 @@ Im Gegensatz dazu wird im Serverbereich der Fokus auf andere Bereiche gelegt. Di
 
 Virtualisierung kann mittels einer Reihe von Techniken realisiert werden. Hier wird unterschieden, ob die Hardware direkt zum Gastsystem weitergegeben wird, oder aber eine eigene virtuelle Hardware emuliert wird. Außerdem könnte ein Gastsystem Teile des Hosts, zum Beispiel dessen Kernel, mitverwenden. Klassischerweise werden Hypervisoren in zwei Kategorien eingeteilt (vgl. \cite[Seite 22 ff.]{hypervisor}). Diese Einteilung stimmt nicht ganz mit der Praxis überein, da der Übergang zwischen Hypervisor und Betriebssystem fließend verläuft. Für die folgenden Betrachtungen soll diese Einteilung jedoch genügen.
 
-\begin{figure}
+\begin{figure}[tb]
     \centering
     \begin{subfigure}[b]{0.49\textwidth}
         \centering
@@ -269,9 +269,9 @@ Hypervisor im Embedded-Bereich müssen bestimmte Anforderungen erfüllen die vie
 
 Um nur ein einfaches Beispiel zu nennen, könnte ein Anwendung mit vier Subsystemen betrachtet werden. Diese Subsysteme könnten alle in ein einziges System mit einer 4-Kern CPU vereint und genauso wie vorher verwendet werden. Je nach benötigter Leistung könnte das resultierende System durchaus verkleinert und damit kostengünstiger gestaltet werden. Jedoch entstehen auch Probleme, wie ein Overhead durch den Hypervisor, durch den eine höhere Leistung nötig ist. Außerdem müssen natürlich alle nötigen Ein- und Ausgänge der Subsysteme auf dem resultierenden System vorhanden sein.
 
-Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkannt und von einigen Bereichen der Industrie umgesetzt. In der Avionik ist diese Technik als \emph{Integrated Modular Avionics}, kurz IMA, bekannt und wird durch verschiedene Standards\footnote{Zum Beispiel Def Stan 00-74 der ASAAC und STANAG 4626 als NATO Standard.} beschrieben. Die aktuell wichtigste Spezifikation ist dabei die seit 1996 existierende \emph{ARINC 653}. Dabei handelt es sich um einen Standard für \emph{sichere, partitionierte Echtzeit-Systeme im Avionik-Bereich} (vgl. \cite{arinc653_wr}). Ein Ziel der Spezifikation ist die Verbesserung der Wiederverwendbarkeit, Portabilität und Modularität der eingesetzten Komponenten.
+Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkannt und von diversen Bereichen der Industrie umgesetzt. In der Avionik ist diese Technik als \emph{Integrated Modular Avionics}, kurz IMA, bekannt und wird durch verschiedene Standards\footnote{Zum Beispiel Def Stan 00-74 der ASAAC und STANAG 4626 als NATO Standard.} beschrieben. Die aktuell wichtigste Spezifikation ist dabei die seit 1996 existierende \emph{ARINC 653}. Dabei handelt es sich um einen Standard für \emph{sichere, partitionierte Echtzeit-Systeme im Avionik-Bereich} (vgl. \cite{arinc653_wr}). Ein Ziel der Spezifikation ist die Verbesserung der Wiederverwendbarkeit, Portabilität und Modularität der eingesetzten Komponenten.
 
-\begin{figure}[ht]
+\begin{figure}[tb]
     \centering
     \input{./images/arinc653.dia}
     \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht (vgl. \cite{arinc653_wr})}
@@ -280,9 +280,9 @@ Die Vorteile eingebetteter Virtualisierung wurden bereits vor einiger Zeit erkan
 
 Abbildung \ref{fig:arinc_653} zeigt einen Überblick über dieses System. Das Konzept besteht aus einem zugrunde liegendem Echtzeit-Betriebssystem, dass den darauf ausgeführten Softwareinstanzen die sogenannte APEX-API\footnote{APplication/EXecutive-API} anbietet. Diese ist auch eingeschränkt zu POSIX kompatibel (vgl. \cite{wiki:arinc_653}), wodurch ebenfalls POSIX-konforme Applikationen ausgeführt werden können. Die eingesetzten Software-Instanzen können dabei sowohl \emph{bare-metal-Anwendungen} als auch ein weiteres Betriebssystem sein.
 
-Um die hohen Sicherheitsanforderungen im Avionikbereich zu erfüllen, ist das gesamte System der Spezifikation DO-178B\footnote{Die Spezifikation DO-178B beschreibt Sicherheitsanforderungen an Software im Avionik Bereich. Damit ähnelt diese den Standards DIN 61508 und ISO 26262.} entsprechend entworfen. Hierdurch können auf einem Prozessor Softwareinstanzen mit verschiedenen Kritikalitäten ausgeführt werden können. 
+Um die hohen Sicherheitsanforderungen im Avionikbereich zu erfüllen, ist das gesamte System der Spezifikation DO-178B\footnote{Die Spezifikation DO-178B beschreibt Sicherheitsanforderungen an Software im Avionik Bereich. Damit ähnelt diese den Standards DIN 61508 und ISO 26262.} entsprechend entworfen. Hierdurch können auf einem Prozessor Softwareinstanzen mit verschiedenen Kritikalitäten ausgeführt werden. 
 
-Der ARINC 653 ähnelt mit den genannten Eigenschaften dem AUTOSAR-Standard. Auch die Konfiguration des System basiert, wie bei AUTOSAR, auf XML.
+Der ARINC 653 ähnelt mit den genannten Eigenschaften dem AUTOSAR-Standard. Auch die Konfiguration des Systems basiert, wie bei AUTOSAR, auf XML.
 
 
 \subsection{Marktübersicht}
@@ -292,7 +292,7 @@ Im Bereich der Embedded-Hypervisoren existieren eine Reihe verbreiteter Produkte
 Der wahrscheinlich umfangreichste Embedded-Hypervisor ist PikeOS. Dieses Echtzeitsystem der Firma \emph{SYSGO AG} basiert auf einem Microkernel und bietet sowohl volle Virtualisierung als auch Paravirtualisierung. Es ist nach DO-178B und ISO 26262 zertifiziert und auf vielen Architekturen lauffähig. Darunter PowerPC, x86, ARM, MIPS und SPARC-V8-LEON. APIs werden angeboten um folgende Gastanwendungen zu ermöglichen: Linux, POSIX, ARINC, AUTOSAR und Real-Time Java. Neben den üblichen API-Funktionen bietet PikeOS einen zertifizierten IP-Stack und ein Dateisystem. Das System wird im Airbus A350 eingesetzt.
 
 \paragraph{OKL4 Microvisor}
-Der OKL4 Microvisor, entwickelt von den \emph{Open Kernel Labs}, basiert ebenfalls auf einem Microkernel. Der Umfang des Quellcodes wird mit weniger als 10\,000 Zeilen Code angegeben und ist damit extrem kompakt und etwa um einen Faktor 1\,000 kleiner als der Linux Kernel (vgl. \cite{wiki:loc}). Das System ist POSIX-konform und ist vor allem auf mobile Geräte optimiert. Daher sind als Gastsystem Linux, Symbian und Windows Mobile vorgesehen. Eigenen Angaben zufolge wurden bisher etwa 750 Millionen Geräte mit dem OKL4 Microvisor verkauft (vgl. \cite{okl4}).
+Der OKL4 Microvisor, entwickelt von den \emph{Open Kernel Labs}, basiert ebenfalls auf einem Microkernel. Der Umfang des Quellcodes wird mit weniger als 10\,000 Zeilen Code angegeben. Er ist damit extrem kompakt und etwa um einen Faktor 1\,000 kleiner als der Linux Kernel (vgl. \cite{wiki:loc}). Das System ist POSIX-konform und ist vor allem auf mobile Geräte optimiert. Daher sind als Gastsystem Linux, Symbian und Windows Mobile vorgesehen. Eigenen Angaben zufolge wurden bisher etwa 750 Millionen Geräte mit dem OKL4 Microvisor verkauft (vgl. \cite{okl4}).
 
 \paragraph{INTEGRITY Multivisor}
 Der von \emph{Green Hills Software} entwickelte INTEGRITY Multivisor ist auf In-Vehicle-Infotainment-Systeme (IVI-Systeme) ausgelegt. Hierzu werden Windows, Linux, Solaris, VxWorks und QNX als Gast-Systeme unterstützt. Es ist nach DO-178B und IEC-61508 zertifiziert und für ARM, PowerPC und x86 Plattformen entworfen. Ebenso wie die anderen Hypervisor unterstützt der INTEGRITY Multivisor übliche Funktionen wie Powermanagement und IPC.
@@ -311,10 +311,10 @@ Der Hypervisor XtratuM\footnote{\url{http://www.xtratum.org/}} wird von der \emp
 Der Einsatz von Virtualisierung bietet eine Reihe von Vorteilen (vgl. \cite{wiki:emb_hyp}). Im Folgenden werden davon einige näher betrachtet.
 
 \paragraph{Unabhängigkeit vom Betriebssystem}
-Da ein Hypervisor die Systeme vollständig trennt, ist es möglich verschiedene Betriebssysteme komplett parallel zu verwenden und die Stärken der verschiedenen Systeme zu nutzen. Dieser Vorteil wird bei COQOS genutzt, um AUTOSAR und Android parallel ausführen zu können. Dadurch kann AUTOSAR zeit- und sicherheitskritische Aufgaben übernehmen und gleichzeitig Android den Infotainmentbereich abdecken.
+Da ein Hypervisor die Systeme vollständig trennt, ist es möglich, verschiedene Betriebssysteme komplett parallel zu verwenden und die Stärken der verschiedenen Systeme zu nutzen. Dieser Vorteil wird bei COQOS genutzt, um AUTOSAR und Android parallel ausführen zu können. Dadurch kann AUTOSAR zeit- und sicherheitskritische Aufgaben übernehmen und gleichzeitig Android den Infotainmentbereich abdecken.
 
 \paragraph{Sicherheit}
-Eine strikte Trennung durch Virtualisierung kann eine erhöhte Sicherheit bedeuten. Hierbei ist sowohl die Sicherheit vor Angriffen als auch Ausfällen gemeint. Es ist eine Redundanz der Applikationen möglich. Diese Technik wird in Hochsicherheitsanwendungen, wie Flugzeugen, genutzt um Codefehler auszuschließen. Es könnte also eine Anwendung mehrfach implementiert werden und diese in verschiedenen VMs ausgeführt werden.
+Eine strikte Trennung durch Virtualisierung kann eine erhöhte Sicherheit bedeuten. Hierbei ist sowohl die Sicherheit vor Angriffen als auch Ausfällen gemeint. Es ist eine Redundanz der Applikationen möglich. Diese Technik wird in Hochsicherheitsanwendungen wie Flugzeugen genutzt, um Codefehler auszuschließen. Es könnte also eine Anwendung mehrfach implementiert werden und diese in verschiedenen VMs ausgeführt werden.
 
 Eine weitere Möglichkeit durch Virtualisierung die Sicherheit zu erhöhen, ist das Einsetzen eines Watchdog-Systems auf Hypervisorebene. Dieser kann das korrekte Verhalten der VMs überprüfen und bei Bedarf das System neu starten. Auch kann auf dieser Ebene eine Art Firewall implementiert werden. Diese kontrolliert, welche VMs Nachrichten senden und empfangen darf. Damit wird das Versenden einer motorrelevanten Botschaft durch das Infotainmentsystem verhindert.
 
@@ -331,25 +331,25 @@ Ein im Embedded-Bereich eingesetzter Hypervisor kann klein und robust sein, da d
 Neben den bisher genannten Vorteilen bietet Embedded-Virtualisierung auch einige Nachteile. Diese werden im Folgenden betrachtet.
 
 \paragraph{Single Point of Failure}
-Da der Hypervisor eine zentrale Position besitzt, kann sein Ausfall das gesamte System gefährden. Da der Hypervisor für die Ausführung der Instanzen verantwortlich ist, den Speicher und die Kommunikationsdienste verwaltet, würde ein Fehler oder sogar ein Ausfall des Hypervisors, ein Ausfall des Gesamtsystems verursachen. Dementsprechend ist der Hypervisor nach den höchsten Ansprüchen der Sicherheitstechnik zu entwerfen. Zudem sollten umfangreiche Diagnosemöglichkeiten vorhanden sein, um das Risiko eines unerwarteten Ausfalls zu minimieren.
+Da der Hypervisor eine zentrale Position besitzt, kann sein Ausfall das gesamte System gefährden. Da der Hypervisor für die Ausführung der Instanzen verantwortlich ist, den Speicher und die Kommunikationsdienste verwaltet, würde ein Fehler oder sogar ein Ausfall des Hypervisors einen Ausfall des Gesamtsystems verursachen. Dementsprechend ist der Hypervisor nach den höchsten Ansprüchen der Sicherheitstechnik zu entwerfen. Zudem sollten umfangreiche Diagnosemöglichkeiten vorhanden sein, um das Risiko eines unerwarteten Ausfalls zu minimieren.
 
 \paragraph{Leistungseinbußen}
 Durch das Einsetzen eines Hypervisors und mehrerer virtueller Maschinen kann es zu Leistungseinbußen kommen. Diese können allerdings minimiert werden, indem die Hardware entsprechend gewählt wird. Moderne CPU-Architekturen bieten verschiedene Virtualisierungserweiterungen\footnote{Zum Beispiel Intel VT oder ARM VE} an, mit denen der Overhead minimiert wird. Durch eine angemessene Anzahl der CPU-Kerne entfällt der Wechsel zwischen den VMs. Zudem bieten klassische Embedded-Architekturen, wie ARM, eine bessere Interruptperformance als die häufig eingesetzte x86-Architektur und sind damit gut für Virtualisierung geeignet (vgl. \cite{okl4}).
 
 \paragraph{Größere Folgen eines Ausfalls}
-Da sich die Anzahl der Steuergeräte durch Virtualisierung verringert, verringert sich die Hardware-Redundanz. Der Ausfall eines Steuergerätes führt somit Ausfall einer Reihe von Funktionen. Auf der anderen Seite könnte dieser Nachteil jedoch durch Virtualisierung auch stark verbessert werden. Es ist möglich, dass ein anderes Steuergerät einen Ausfall erkennt und direkt eine Ersatz-VM startet um die Sicherheit weiter zu gewährleisten. 
+Da sich die Anzahl der Steuergeräte durch Virtualisierung verringert, verringert sich die Hardware-Redundanz. Der Ausfall eines Steuergerätes führt somit zum Ausfall einer Reihe von Funktionen. Auf der anderen Seite könnte dieser Nachteil jedoch durch Virtualisierung auch stark verbessert werden. Es ist möglich, dass ein anderes Steuergerät einen Ausfall erkennt und direkt eine Ersatz-VM startet um die Sicherheit weiter zu gewährleisten. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Autosar %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{AUTOSAR}
 \label{sec:Autosar}
-Bei AUTOSAR handelt es sich um eine offene und standardisierte Softwarearchitektur, die hauptsächlich in der Automobilindustrie Verwendung findet. AUTOSAR, kurz für \emph{AUTomotive Open System ARchitecture}, wurde gemeinsam von einer Reihe von Automobilherstellern und -zulieferern seit etwa 2003 entwickelt. Zu den Kern-Mitgliedern gehören zur Zeit BMW, Bosch, Toyota, Volkswagen und fünf weiteren Firmen. AUTOSAR ist als Erbe von \emph{OSEK/VDX}\footnote{Bei OSEK handelt es sich um eine Spezifikation für Echtzeitbetriebssysteme in eingebetteten Systemen.} zu sehen und baut somit zum Teil auf dieses auf.
+Bei AUTOSAR handelt es sich um eine offene und standardisierte Softwarearchitektur, die hauptsächlich in der Automobilindustrie Verwendung findet. AUTOSAR, kurz für \emph{AUTomotive Open System ARchitecture}, wurde gemeinsam von einer Reihe von Automobilherstellern und -zulieferern seit etwa 2003 entwickelt. Zu den Kernmitgliedern gehören zur Zeit BMW, Bosch, Toyota, Volkswagen und fünf weiteren Firmen. AUTOSAR ist als Erbe von \emph{OSEK/VDX}\footnote{Bei OSEK handelt es sich um eine Spezifikation für Echtzeitbetriebssysteme in eingebetteten Systemen.} zu sehen und baut somit zum Teil auf dieses auf.
 
 Gemäß dem AUTOSAR-Leitspruch "`Cooperate on standards, compete on implementation"' handelt es sich bei AUTOSAR lediglich um einen Standard. Ziel von AUTOSAR ist es Schnittstellen zu definieren, die möglichst alle Voraussetzungen der Automobilindustrie erfüllen und damit den Standard allgemein einsetzbar machen. Die Implementation des AUTOSAR-Standards ist den verschiedenen Firmen überlassen. Im Kapitel \ref{sec:Toolkette} wird eine kurze Übersicht der verschiedenen AUTOSAR-Distributionen und zugehöriger Tools gegeben.
 
 Im Folgenden Kapitel wird ein kurzer Überblick der Technik von AUTOSAR gegeben. Um den Rahmen dieser Arbeit nicht zu sprengen, beschränkt sich das Kapitel auf die Grundlagen und wichtigsten Konzepte. Ein übersichtlicher und guter Einblick ist zudem in \cite{autosar_layer} und \cite{autosar_techoverview} zu finden.
 
-Ein Grund für den Einsatz von AUTOSAR ist vor allem die steigende Komplexität von Elektrik/Elektronik-Systemen (kurz E/E-Systeme) wie sie in der Automobilentwicklung vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können, bedarf es eines Standard-Systems das auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die AUTOSAR verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit (vgl. \cite[S. 5]{autosar_techoverview}).
+Ein Grund für den Einsatz von AUTOSAR ist vor allem die steigende Komplexität von Elektrik/Elektronik-Systemen (kurz E/E-Systeme) wie sie in der Automobilentwicklung vorkommen. Um diese Komplexität auch in Zukunft noch verwalten zu können, bedarf es eines Standardsystems das auf diese Bedürfnisse zugeschnitten ist. Weitere Ziele die AUTOSAR verfolgt sind Flexibilität, Skalierbarkeit, Qualität und Zuverlässigkeit (vgl. \cite[S. 5]{autosar_techoverview}).
 
 Tabelle \ref{tab:timeline} zeigt die Versionshistorie von AUTOSAR. Die Entwicklung ist in drei Phasen eingeteilt. Die erste Phase beginnt etwa zwei Jahre nach Gründung Entwicklungspartnerschaft in 2003, und beschäftigt sich mit den Grundlagen der Architektur. 2007 lief die Phase II an, mit dem Ziel der Erweiterung des Standards. Phase III begann 2011 und konzentriert sich auf die Wartung und Pflege der Architektur. Dabei ist zu beachten, dass sowohl die Version 3 als auch Version 4 des Standards zur Zeit parallel gepflegt werden.
 
@@ -422,14 +422,14 @@ An zentraler Stelle steht das "`AUTOSAR Entwicklungswerkzeug"'. Dieses besteht i
     \item Runtime-Enviroment-Generator
 \end{itemize}
 
-\begin{figure}[ht]
+\begin{figure}[tb]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/Autosar_Prozess.dia}}
-    \caption{AUTOSAR-Entwicklungs-Prozess}
+    \caption{AUTOSAR-Entwicklungsprozess}
     \label{fig:autosar_prozess}
 \end{figure}
 
-Die Basis-Software Implementation stellt das eigentliche Betriebssystem, inklusive aller Module dar. Mit Hilfe des Basis-Software-Konfigurators werden die verschiedenen Module des Betriebssystems ausgewählt und konfiguriert. An dieser Stelle werden zum Beispiel Tasks erstellt und Botschaften-IDs vergeben. Zu diesem Zweck kann an dieser Stelle die System- und Kommunikations-Beschreibung importiert werden. Hierdurch können einige Einstellung automatisch vorgenommen werden. Der letzte Teil der AUTOSAR Entwicklungsumgebung ist der RTE-Generator. Dieser benötigt eine System-Beschreibung und generiert aus dieser die entsprechende API zwischen Basis-Software (kurz BSW) und Applikation. Der vereinfachte AUTOSAR-Entwicklungs-Prozess ist in Abbildung \ref{fig:autosar_prozess} zu sehen.
+Die Basis-Software Implementation stellt das eigentliche Betriebssystem, inklusive aller Module dar. Mit Hilfe des Basis-Software-Konfigurators werden die verschiedenen Module des Betriebssystems ausgewählt und konfiguriert. An dieser Stelle werden zum Beispiel Tasks erstellt und Botschaften-IDs vergeben. Zu diesem Zweck kann an dieser Stelle die System- und Kommunikations-Beschreibung importiert werden. Hierdurch können einige Einstellungen automatisch vorgenommen werden. Der letzte Teil der AUTOSAR Entwicklungsumgebung ist der RTE-Generator. Dieser benötigt eine System-Beschreibung und generiert aus dieser die entsprechende API zwischen Basis-Software (kurz BSW) und Applikation. Der vereinfachte AUTOSAR-Entwicklungsprozess ist in Abbildung \ref{fig:autosar_prozess} zu sehen.
 
 
 
@@ -437,7 +437,7 @@ Die Basis-Software Implementation stellt das eigentliche Betriebssystem, inklusi
 \label{sec:vfb}
 Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikation ist der \emph{Virtual Functional Bus} (kurz VFB) und die \emph{Runtime-Enviroment} (kurz RTE). Durch diese soll ein Austausch und eine Verlagerung auf eine andere ECU ermöglicht werden. Dies wird gewährleistet durch eine vollständige Trennung zwischen der Basis-Software und der User-Applikation, wie es in Abbildung \ref{fig:autosar_layer} zu sehen ist. 
 
-\begin{figure}[ht]
+\begin{figure}[tb]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/autosar_layer.dia}}
     \caption{AUTOSAR-Schichtenmodell}
@@ -446,7 +446,7 @@ Eines der Kernkonzepte zur Kommunikation und zur Abschottung der User-Applikatio
 
 Wie der Name schon sagt, handelt es sich beim VFB um einen virtuellen Bus. Aus diesem Grund ist dieser auch nicht in Abbildung \ref{fig:autosar_layer} zu sehen. Dies ergibt sich aus einer Trennung zwischen Designphase und Compilezeit beziehungsweise Laufzeit. So wird während der System-Modellierung ein VFB für das gesamte Modell entworfen, der später zu einer oder mehreren RTEs wird. Mit Hilfe des VFB wird die Kommunikation zwischen den verschiedenen Komponenten ermöglicht. Es werden Möglichkeiten geboten verschiedene Interface-Typen und Ports zu definieren. Bei \emph{Ports} handelt es sich um Interaktionspunkte zwischen Softwarekomponenten. Dabei wird zwischen Provide-Ports (kurz PPorts), die etwas bereitstellen, und Required-Ports (kurz RPorts), die etwas benötigen, unterschieden. Um einen Port verwenden zu können, muss diesem ein Port-Interface zugeordnet sein.
 
-Die zwei wichtigsten Interface-Typen werden im Weiteren kurz betrachtet. Analog zu diesen existieren zwei AUTOSAR-Service-Interfaces, die intern in AUTOSAR verwendet werden, zum Beispiel zum Aufruf des ECU-State-Managers (EcuM). Außerdem wird noch ein Kalibrierungsinterface angeboten, mit dessen Hilfe sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen. Zusätzlich kann beim Zugriff auf ein Port zwischen einem expliziten und impliziten Zugriff unterschieden werden. Diese Modi, sowie die Multiplizität der Interface soll an dieser Stelle nicht erläutert werden, da dieses den Rahmen dieser Arbeit überschreiten würde. Nähere Informationen dazu sind unter \cite[Seite 101 ff.]{SE_Autosar} zu finden.
+Die zwei wichtigsten Interface-Typen werden im Weiteren kurz betrachtet. Analog zu diesen existieren zwei AUTOSAR-Service-Interfaces, die intern in AUTOSAR verwendet werden, zum Beispiel zum Aufruf des ECU-State-Managers (EcuM). Außerdem wird noch ein Kalibrierungsinterface angeboten, mit dessen Hilfe sich statische Kalibrierungs-Daten bereitstellen und abfragen lassen. Zusätzlich kann beim Zugriff auf ein Port zwischen einem expliziten und impliziten Zugriff unterschieden werden. Diese Modi, sowie die Multiplizität der Interface soll an dieser Stelle nicht erläutert werden, da dieses den Umfang dieser Arbeit überschreiten würde. Nähere Informationen dazu sind unter \cite[Seite 101 ff.]{SE_Autosar} zu finden.
 
 \paragraph{Sender/Receiver-Interface}
 Bei einem Sender/Receiver-Interface handelt es sich um einen Kommunikationsmechanismus mit dessen Hilfe Daten ausgetauscht werden können. Die übertragenen Daten können dabei sowohl primitve, als auch komplexe Datentypen, wie Strukturen, enthalten.
@@ -455,7 +455,7 @@ Bei einem Sender/Receiver-Interface handelt es sich um einen Kommunikationsmecha
 Vom Server wird hier eine Funktion bereitgestellt, die vom Client aufgerufen werden kann. Dabei können mit Hilfe der Übergabe- und Rückgabeparameter ebenfalls Daten ausgetauscht werden.
 
 \paragraph*{}
-Bei der RTE handelt es sich um eine konkrete Implementierung des VFB. Während der VFB zur Design-Phase das komplette Modell abdeckt, wird eine RTE pro ECU verwendet. Diese RTE stellt alle Methoden zur Verfügung, die für die Kommunikation der Komponenten dieser ECU nötig sind. Methoden die auf dieser ECU nicht ausgeführt werden können, entfallen.
+Bei der RTE handelt es sich um eine konkrete Implementierung des VFB. Während der VFB zur Design-Phase das komplette Modell abdeckt, wird eine RTE pro ECU verwendet. Diese RTE stellt alle Methoden zur Verfügung, die für die Kommunikation der Komponenten dieser ECU nötig sind. Entsprechend entfallen alle Methoden, die auf dieser ECU nicht ausgeführt werden können.
 
 Die angebotenen Schnittstellen werden bei der Generierung der RTE erstellt, und folgen definierten Namensschemata. Im Folgenden werden ein paar Beispiele kurz betrachtet. Die genaue Benennung der Schnittstellen ist in der Spezifikation nachzulesen.
 
@@ -464,9 +464,9 @@ Std_ReturnType Rte_Write_<p>_<d>(IN Rte_Instance <self>, IN <data>)
 Std_ReturnType Rte_Read_<p>_<d>(IN Rte_Instance <self>, OUT <data>)
 \end{lstlisting}
 
-Die in Zeile eins und zwei in Listing \ref{lst:rte_beispiele} gezeigten Beispiele, werden verwendet, um auf ein Sender/Receiver-Interface zuzugreifen. Dabei stehen die Platzhalter \texttt{<p>} und \texttt{<d>} für den entsprechenden Port und das gewünschte Datenelement. Das Argument \texttt{<data>} entspricht dem zu empfangenden beziehungsweise zu sendenden Datenelement. Das Element \texttt{<self>} vom Typ \texttt{Rte\_Instance} wird verwendet, um mehrere Instanzen zu verwalten und funktioniert ähnlich wie ein \texttt{this}-Pointer in der Objektorientierten-Programmierung.
+Die in Zeile eins und zwei in Listing \ref{lst:rte_beispiele} gezeigten Beispiele, werden verwendet, um auf ein Sender/Receiver-Interface zuzugreifen. Dabei stehen die Platzhalter \texttt{<p>} und \texttt{<d>} für den entsprechenden Port und das gewünschte Datenelement. Das Argument \texttt{<data>} entspricht dem zu empfangenden beziehungsweise zu sendenden Datenelement. Das Element \texttt{<self>} vom Typ \texttt{Rte\_Instance} wird verwendet, um mehrere Instanzen zu verwalten und funktioniert ähnlich wie ein \texttt{this}-Pointer in der objektorientierten Programmierung.
 
-Das Hauptkonzept von VFB und RTE ist die Festlegung von Schnittstellen. Dieses Konzept wird bereits seit langer Zeit in anderen Bereichen der Software-Entwicklung genutzt. So werden bei Java Interfaces verwendet, um konkrete Implementationen abzukapseln und generisch zu halten (vgl. \cite{objektorientierung}).
+Das Hauptkonzept von VFB und RTE ist die Festlegung von Schnittstellen. Dieses Konzept wird bereits seit langer Zeit in anderen Bereichen der Softwareentwicklung genutzt. So werden bei Java Interfaces verwendet, um konkrete Implementationen abzukapseln und generisch zu halten (vgl. \cite{objektorientierung}).
 
 Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu halten. Somit soll es möglich sein, eine Implementation einer SW-C durch eine andere auszutauschen, ohne das Gesamtsystem zu verändern. Zudem ist ein Ziel, die Funktionalität unabhängig von der Hardware zur Verfügung zu stellen. Das bedeutet das eine SW-C auf eine andere ECU verlagert werden kann, ohne weitere Anpassungen vornehmen zu müssen. Dabei müssen lediglich die RTE-Schichten neu generiert werden, um damit zum Beispiel Intra-ECU Kommunikation zur Inter-ECU Kommunikation zu verändern. Ob dieses Verfahren in der Praxis so einfach eingesetzt werden kann, ist zweifelhaft. So muss die für die SW-C nötig Hardware (zum Beispiel PWM-Ausgänge) sowohl vorhanden, als auch bei der ECU-Konfiguration korrekt eingerichtet sein. Zudem müssen entsprechende Timer konfiguriert sein, um die enthaltenen Runnables ausführen zu können. Allgemein gilt jedoch, dass durch die Kapselung ein Austausch der Software erleichtert wird.
 
@@ -481,7 +481,7 @@ Diese Konzepte werden beim VFB und der RTE eingesetzt um SW-Cs austauschbar zu h
 \label{sec:bsw}
 Bei der \emph{Basis-Software} (kurz BSW) handelt es sich um das eigentlich Betriebssystem. Dieses stellt verschiedene Funktionen bereit. Darunter ein Scheduler und eine Verwaltung der Tasks. Außerdem sind eine Hardware-Abstraktion und -Treiber hier untergebracht. Dabei ist das gesamte System modular aufgebaut, um möglichst übersichtlich zu sein. Abbildung \ref{fig:autosar_refined_layer} zeigt das Schichtenmodell der Basis-Software. Die genaue Einteilung der Module und Abhängigkeiten zwischen diesen wird im Rahmen dieser Arbeit nicht beschrieben. Der geneigte Leser findet unter \cite{autosar_layer} nähere Informationen dazu.
 
-\begin{figure}[ht]
+\begin{figure}[tb]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/autosar_refined_layer.dia}}
     \caption{AUTOSAR-Schichtenmodell mit genauerer Aufteilung}
@@ -506,7 +506,7 @@ Ebenfalls dem Bereich System Services zugeordnet ist der Scheduler, kurz SchM. D
 Das Powermanagement der ECU wird vom ECU-State-Manager übernommen. Auch dieser ist den System Services zuzuordnen. Er ist verantwortlich für die Initialisierung aller Basissoftware-Module und sowohl Beginn als auch Ende der Schlaf-Modi.
 
 \paragraph{Com}
-Als oberstes Modul der Communication Services organisiert das Com-Modul die Kommunikation innerhalb einer und zwischen verschiedenen ECUs. Hierzu stellt das Modul eine Signal-orientierte Datenschnittstelle zur Verfügung. Bei einem Signal handelt es sich um einen einzelnen Wert, zum Beispiel einem Sensor-Wert. Eine Reihe von Signalen wird anschließend im Com-Modul zu PDUs (Protocol Data Unit) gepackt und weitergegeben.
+Als oberstes Modul der Communication Services organisiert das Com-Modul die Kommunikation innerhalb einer und zwischen verschiedenen ECUs. Hierzu stellt das Modul eine Signalorientierte Datenschnittstelle zur Verfügung. Bei einem Signal handelt es sich um einen einzelnen Wert, zum Beispiel einem Sensor-Wert. Eine Reihe von Signalen wird anschließend im Com-Modul zu PDUs (Protocol Data Unit) gepackt und weitergegeben.
 
 \paragraph{PduR}
 Die gepackten PDUs werden vom PDU-Router-Modul zwischen dem Com-Modulen und den entsprechenden Interfaces weitergegeben. Damit stellt das PduR-Modul die Funktion eines Gateways dar und wird ebenfalls bei den Communication Services eingeordnet.
@@ -520,9 +520,9 @@ Unter dem Begriff Complex Driver werden Module zusammengefasst, die eingesetzt w
 
 \subsection{Beispiel für den Kommunikations-Ablauf}
 \label{sec:beispiel_komm}
-Die in Abbildung \ref{fig:komm_beispiel} zu sehende, und im Weiteren erläuterte, Struktur der Kommunikation innerhalb der Basis-Software, verdeutlicht einige Konzepte von AUTOSAR. Dabei ist die strikte Trennung der Funktionalitäten ein Kernelement. Als Beispiel wird das Senden und Empfangen von CAN-Botschaften verwendet.
+Die in Abbildung \ref{fig:komm_beispiel} zu sehende, und im Weiteren erläuterte, Struktur der Kommunikation innerhalb der Basis-Software verdeutlicht einige Konzepte von AUTOSAR. Dabei ist die strikte Trennung der Funktionalitäten ein Kernelement. Als Beispiel wird das Senden und Empfangen von CAN-Botschaften verwendet.
 
-\begin{figure}[ht]
+\begin{figure}[tb]
     \centering
     \input{./images/komm_beispiel.dia}
     \caption[Struktur der AUTOSAR-Kommunikation]{Struktur der AUTOSAR-Kommunikation für das Senden und Empfangen einer CAN-Botschaft}
@@ -544,7 +544,7 @@ Wie gesehen, wird eine strikte Trennung der AUTOSAR-Module und deren Aufgaben vo
 \label{sec:Toolkette}
 In diesem Kapitel wird ein Überblick über die nötige Toolkette und die bestehenden Möglichkeiten gegeben. Allgemein werden vier Komponenten benötigt: Basissoftware-Implementation und -Konfigurator, RTE-Generator und ein System-Modellierungs-Werkzeug. Dabei können einzelne Lösungen sowohl eine als auch mehrere dieser Komponenten abdecken. Dadurch fällt die Trennung dieser Schichten zum Teil schwer. In der Theorie soll es bei AUTOSAR möglich sein, einzelne Komponenten der Toolkette auszutauschen. So könnte es möglich sein, Produkte von vier verschiedenen Herstellern zu nutzen und diese über die standardisierten Schnittstellen miteinander arbeiten zu lassen. Auch der Austausch einzelner BSW-Module fällt in diesen Bereich. Ob dies in der Praxis wirklich möglich ist, ist anzuzweifeln, da viele Hersteller bestimmte Teile des Standards nicht oder nicht komplett unterstützen und es so zu Fehlern kommen kann.
 
-Im Folgenden werden einige AUTOSAR-Distributionen kurz betrachtet (vgl. \cite{wiki:autosar}). Die Auswahl der Produkte ist nicht repräsentativ für derern Verbreitung, sondern soll lediglich einen Marktüberblick schaffen. Dabei ist zu sehen, das nicht alle Abschnitte der Toolkette von allen Produkten abgedeckt werden. So spezialisieren sich die Lösungen der Firma dSPACE vor allem auf den System-Entwurf, während Elektrobit hierzu keine Software anbietet. Neben den erwähnten Herstellern existieren noch eine Reihe weiterer, die jedoch nicht näher betrachtet werden sollen.
+Im Folgenden werden einige AUTOSAR-Distributionen kurz betrachtet (vgl. \cite{wiki:autosar}). Die Auswahl der Produkte ist nicht repräsentativ für derern Verbreitung, sondern soll lediglich einen Marktüberblick schaffen. Dabei ist zu sehen, das nicht alle Abschnitte der Toolkette von allen Produkten abgedeckt werden. So spezialisieren sich die Lösungen der Firma dSPACE vor allem auf den System-Entwurf, während Elektrobit hierzu keine Software anbietet. Neben den erwähnten Herstellern existieren noch eine Reihe weiterer Anbieter, die jedoch nicht näher betrachtet werden sollen.
 
 \paragraph{ArcCore}
 ArcCore bietet eine AUTOSAR-Toolkette an, die alle Bereiche abdeckt. Dabei werden sowohl die BSW-Implementation als auch die Basisversion des Entwicklungswerkzeuges als Open-Source unter einer GPL-Lizenz vertrieben. Zudem setzt es mit Eclipse und der GNU-Compiler-Collection auf zwei starke Open-Source-Projekte. ArcCore unterstützt AUTOSAR 4.0.
@@ -563,7 +563,7 @@ Mit Volcano VSTAR bietet Mentor Graphics eine BSW-Implementation, einen BSW-Konf
 
 \subsection{Kritik an AUTOSAR}
 \label{sec:kritik_autosar}
-Mit AUTOSAR existiert ein Standard, der die Möglichkeit bietet die System-Entwicklung im Automobil-Bereich stark zu vereinfachen und zu vereinheitlichen. Jedoch handelt es sich bei AUTOSAR nicht um eine Universallösung, die alle Probleme löst. Vor allem da AUTOSAR einen großen Umstieg von der klassischen Software-Entwicklung bedeutet, gibt es immer wieder Kritik an den Konzepten. Ob diese Kritikpunkte ausreichen, um das Vermeiden von AUTOSAR zu begründen ist anzuzweifeln. Im Folgenden werden einige Kritikpunkte näher betrachtet und diskutiert.
+Mit AUTOSAR existiert ein Standard, der die Möglichkeit bietet die System-Entwicklung im Automobil-Bereich stark zu vereinfachen und zu vereinheitlichen. Jedoch handelt es sich bei AUTOSAR nicht um eine Universallösung, die alle Probleme löst. Vor allem da AUTOSAR einen großen Umstieg von der klassischen Software-Entwicklung bedeutet, gibt es immer wieder Kritik an den Konzepten. Ob diese Kritikpunkte ausreichen, um das Vermeiden von AUTOSAR zu begründen, ist anzuzweifeln. Im Folgenden werden einige Kritikpunkte näher betrachtet und diskutiert.
 
 \paragraph{Effizienz}
 Speziell auf Anforderungen angepasste Systeme können effektiver entworfen werden, als ein generisches Bausatzsystem wie AUTOSAR. Vor allem ECUs mit kleinem Funktionsumfang leiden unter dem Mehraufwand, der durch die Abstraktionsschichten und Modularisierung von AUTOSAR entsteht. Auf der anderen Seite können komplexe Systeme von den angebotenen Möglichkeiten profitieren, und mittels AUTOSAR die Effizienz steigern (vgl. \cite{as_kritik}\cite{wiki:autosar}). Da es sich bei der Automobil-Industrie um einen stark kostenorientierten Zweig der Wirtschaft handelt, können geringe Mehrkosten durchaus relevant sein. Somit ist eine Abwägung zwischen Kosten und Vorteilen von AUTOSAR in jedem Projekt nötig (vgl. \cite[Seite 152]{SE_Autosar}).
@@ -571,18 +571,18 @@ Speziell auf Anforderungen angepasste Systeme können effektiver entworfen werde
 \paragraph{Umfang des Standard}
 Der AUTOSAR-Standard ist sehr umfangreich. Es wird versucht, möglichst viele Fälle abzudecken und jegliche nötige Funktionalität zu beschreiben. Dies kann Ansatzpunkt für Kritik sein, da der Standard hierdurch aufgeblasen wird. Vor allem durch den Einfluss verschiedener OEMs ist im Standard Funktionalität enthalten, die nicht der gängigen Praxis entspricht. Als Beispiel hierzu sei der Zeitpunkt der Entscheidung für eine Kommunikations-Strategie (Topologie, Protokolle\dots) genannt (vgl. \cite{as_kritik}). Der Standard sieht die zwei Zeitpunkte "`pre-compile-time"' und "`link time"' vor. Jedoch wurde auf Wunsch von Volvo hin auch die Möglichkeit geboten, Entscheidungen "`post build"' zu treffen. Diese im Standard enthaltene Möglichkeit wird anscheinend einzig von Volvo verwendet, und stellt damit für die meisten Hersteller keinen Mehrwert dar. Allerdings besteht die Gefahr, dass neben dem allgemeinen AUTOSAR-Standard, ebenso OEM spezifische Derivate und Substandards entstehen.\footnote{So zum Beispiel geschehen mit dem AUTOSAR 3.1.4.DAI.4 Standard von Daimler}
 
-Zudem sind in der Spezifikation Hinweise und Anforderungen an eine konkrete Implementierung gegeben. So sind immer wieder C-spezifische Anmerkungen zu finden, die umgesetzt werden sollten oder müssen. Hierdurch wird die Offenheit des Standards jedoch eingeschränkt, da konkrete Teile der Implementierung vorgegeben sind (vgl. \cite[Seite 20]{autosar_eth}). Auch wenn diese Anmerkung dem üblichen Programmierstandard entsprechen, widerspricht dieser Ansatz dem Design einer Architektur, in der vor allem Schnittstellen beschrieben werden und diese im Vordergrund stehen sollten (vgl. \cite{objektorientierung}).
+Zudem sind in der Spezifikation Hinweise und Anforderungen an eine konkrete Implementierung gegeben. So sind immer wieder C-spezifische Anmerkungen zu finden, die umgesetzt werden sollten oder müssen. Hierdurch wird die Offenheit des Standards jedoch eingeschränkt, da konkrete Teile der Implementierung vorgegeben sind (vgl. \cite[Seite 20]{autosar_eth}). Auch wenn diese Anmerkungen dem üblichen Programmierstandard entsprechen, widerspricht dieser Ansatz dem Design einer Architektur, in der vor allem Schnittstellen beschrieben werden und diese im Vordergrund stehen sollten (vgl. \cite{objektorientierung}).
 
 Auch das Fehlen einer Referenzimplementierung kann als Kritik an den Standard angebracht werden (vgl. \cite{Hoffmann200803}). Mehrdeutige oder unklare Aussagen könnten durch eine Referenzimplementierung geklärt werden. Ebenfalls würde dies mögliche Designfehler, nicht umsetzbare oder nicht praktikable Entscheidungen überprüfen und könnte frühzeitig Fehler vermeiden (vgl. \cite{testing}).
 
 \paragraph{Schnelle Entwicklung von AUTOSAR}
-Die schnelle Entwicklung von AUTOSAR bringt durchaus Probleme mit sich. Seit 2005 ist etwa alle zwei Jahre eine neue Version der AUTOSAR-Spezifikation veröffentlicht worden -- mitunter mit umfangreichen Änderungen und Neuerungen. Dieser schnellen Entwicklung müssen die Toolketten-Anbieter und die Automobil-Hersteller folgen. Erstere müssen dabei möglichst schnell die neue Version unterstützen und die neuen BSW-Module anbieten, um Wettbewerbsfähig zu sein. Automobilhersteller müssen zudem versuchen, die aktuellen Versionen in ihren Entwicklungsprozess einzubauen. Da dieser durchaus mehrere Jahre betragen kann, ist eine kurzfristige Umstellung nur schwer möglich. Hinzu kommt zudem, dass einige OEMs veränderte und erweiterte AUTOSAR-Variationen verwenden. Auch diese müssen von den eingesetzten Tools unterstützt werden. Diese Punkte zusammen führen dazu, dass der Entwicklungsprozess der Toolkette und der Endprodukte nur schwer dem aktuellen Stand von AUTOSAR folgen kann. Es ist zu erwarten, dass sich die Entwicklung von AUTOSAR in Zukunft verlangsamt und damit das Nachvollziehen der Änderungen erleichtert wird. Die im Moment gängige Praxis mehrere AUTOSAR-Versionen zu unterstützen und zu pflegen würde damit auch ein Ende haben (vgl. \cite{as_kritik}\cite[Seite 179]{SE_Autosar}).
+Die schnelle Entwicklung von AUTOSAR bringt durchaus Probleme mit sich. Seit 2005 ist etwa alle zwei Jahre eine neue Version der AUTOSAR-Spezifikation veröffentlicht worden -- mitunter mit umfangreichen Änderungen und Neuerungen. Dieser schnellen Entwicklung müssen die Toolketten-Anbieter und die Automobil-Hersteller folgen. Erstere müssen dabei, um wettbewerbsfähig zu sein, möglichst schnell die neue Version unterstützen und die neuen BSW-Module anbieten. Automobilhersteller müssen zudem versuchen, die aktuellen Versionen in ihren Entwicklungsprozess einzubauen. Da dieser durchaus mehrere Jahre betragen kann, ist eine kurzfristige Umstellung nur schwer möglich. Hinzu kommt zudem, dass einige OEMs veränderte und erweiterte AUTOSAR-Variationen verwenden. Auch diese müssen von den eingesetzten Tools unterstützt werden. Diese Punkte zusammen führen dazu, dass der Entwicklungsprozess der Toolkette und der Endprodukte nur schwer dem aktuellen Stand von AUTOSAR folgen kann. Es ist zu erwarten, dass sich die Entwicklung von AUTOSAR in Zukunft verlangsamt und damit das Nachvollziehen der Änderungen erleichtert wird. Die im Moment gängige Praxis mehrere AUTOSAR-Versionen zu unterstützen und zu pflegen würde damit ebenfalls ein Ende haben (vgl. \cite{as_kritik}\cite[Seite 179]{SE_Autosar}).
 
 \paragraph{Bindung an Hersteller}
-Im Standard ist vorgesehen, dass Soft\-ware-Kom\-po\-nen\-ten, Basissoftware-Module und ähnliches austauschbar sind. Allerdings ist anzuzweifeln, ob dieses in der Praxis so einfach möglich ist. Hierdurch entsteht eine Bindung an den Hersteller der AUTOSAR-Distribution, da der Aufwand und die Kosten eines Umstiegs zu einem anderen Hersteller hoch sind (vgl. \cite{as_kritik}).
+Im Standard ist vorgesehen, dass Soft\-ware-Kom\-po\-nen\-ten, Basissoftware-Module und ähnliches austauschbar sind. Allerdings ist anzuzweifeln, ob dieses in der Praxis so einfach möglich ist. Daher entsteht eine Bindung an den Hersteller der AUTOSAR-Distribution, da der Aufwand und die Kosten eines Umstiegs zu einem anderen Hersteller hoch sind (vgl. \cite{as_kritik}).
 
 \paragraph{Starke Relevanz der Designphase}
-Durch die Top-Down-Methodik gewinnt die Designphase stark an Relevanz. Dies ist einerseits ein Vorteil, da das gesamte System aus einer abstrakten Perspektive entworfen werden kann, auf der anderen Seite jedoch auch ein Nachteil. Fehler, die erst in der Umsetzung und Implementation des Systems zu erkennen sind, müssen auf das Modell zurück abgebildet werden. Hierdurch ergibt sich ein erneuter Integrationsaufwand, da die neuen Versionen des Modells wieder eingearbeitet werden müssen. Dies ist auch während dieses Projektes erkennbar. Das Hinzufügen einer CAN-Botschaft führt zu einer Änderung der CAN-Matrix, des System-Designs und zu einer Notwendigkeit die Basissoftware neu zu konfigurieren. In einem klassischen Design könnte dies wahrscheinlich einfacher gelöst werden, allerdings ist ein Vergleich dieser beiden Methoden an dieser Stelle nicht möglich.
+Durch die Top-Down-Methodik gewinnt die Designphase stark an Relevanz. Dies ist einerseits ein Vorteil, da das gesamte System aus einer abstrakten Perspektive entworfen werden kann, auf der anderen Seite jedoch auch ein Nachteil. Fehler, die erst in der Umsetzung und Implementation des Systems zu erkennen sind, müssen auf das Modell zurück abgebildet werden. Hierdurch ergibt sich ein erneuter Integrationsaufwand, da die neuen Versionen des Modells wieder eingearbeitet werden müssen. Dies ist auch während dieses Projektes erkennbar. Das Hinzufügen einer CAN-Botschaft führt zu einer Änderung der CAN-Matrix, des System-Designs und zu einer Notwendigkeit die Basissoftware neu zu konfigurieren. In einem klassischen Design könnte dies wahrscheinlich einfacher gelöst werden. Allerdings ist ein Vergleich dieser beiden Methoden an dieser Stelle nicht möglich.
 
 \paragraph{Dokumentation der Konfiguration}
 Da die Konfiguration der Basissoftware und der Entwurf des System-Designs mittels grafischer Tools durchgeführt wird, ist eine Dokumentation der einzelnen Entscheidungen schwierig (vgl. \cite[Seite 182 f.]{SE_Autosar}). Das EB tresos Studio bietet zum Beispiel keine Möglichkeit Kommentare einzubringen. In der klassischen Entwicklung kann eine Entscheidung mittels eines Kommentars im Quellcode oder ähnlichem erläutert werden. Das bei AUTOSAR eingesetzte XML-Format kann zwar Kommentare enthalten, ist aber nicht praktikabel als Projektdokumentation einsetzbar, da eine Übersicht kaum möglich ist. Aus diesem Grund ist es bei dem Einsatz von AUTOSAR notwendig, spezielle Vorkehrungen zur Dokumentation einzelner Entscheidungen zu treffen.
@@ -633,20 +633,20 @@ Funktionale Sicherheit versucht einen allgemeinen methodischen Ansatz zur Absich
 
 Abbildung \ref{fig:lifecycle} zeigt den Sicherheitslebenzyklus nach ISO 26262. Dieser stellt eine konkrete Interpretation des Produktlebenszyklus nach DIN 61508 dar. Die im Bild angegebenen Nummerierungen verweisen auf die jeweiligen Kapitel in der Norm. 
 
-\begin{figure}[!htbp]
+\begin{figure}[p]
     \center
     \input{./images/ISO_26262_Lifecycle.dia}
     \caption[Sicherheitslebenszyklus nach ISO 26262]{Sicherheitslebenszyklus nach ISO 26262 (vgl. \cite{iso26262})}
     \label{fig:lifecycle}
 \end{figure}
 
-Der Lebenszyklus lässt sich in drei Phasen aufteilen. In der \emph{Concept phase} werden die Produkt-Anforderungen definiert. Zusätzlich wird hier eine Gefährdungsanalyse und Risikoeinschätzung vorgenommen und ein Sicherheitsplan zur funktionalen Sicherheit entworfen der alle weiteren Phasen abdeckt.
+Der Lebenszyklus lässt sich in drei Phasen aufteilen. In der \emph{Concept Phase} werden die Produkt-Anforderungen definiert. Zusätzlich wird hier eine \emph{Gefährdungsanalyse und Risikoeinschätzung} vorgenommen und ein Sicherheitsplan zur funktionalen Sicherheit entworfen, der alle weiteren Phasen abdeckt.
 
 In der zweiten Phase, \emph{Product Development}, wird das eigentliche Produkt entworfen. Der Entwurf ist in die groben Abschnitte System-, Hardware- und Softwareentwurf gegliedert. Am Schluss der Entwicklungsphase steht die Produktveröffentlichung. Für alle Abschnitte sind in den jeweiligen Kapitel der Norm genauere Informationen zu finden.
 
-Die letzte Phase, \emph{After SOP}\footnote{SOP steht für Start of Production dt. Beginn der Produktion.}, betrachtet die Produktion und Auslieferung der Produkte. Der zu Beginn entworfene Sicherheitsplan muss während allen Phasen verbessert und erweitert werden. Dabei muss zu jedem Zeitpunkt Nachvollziehbarkeit und Nichtabstreitbarkeit gewährleistet sein. Das bedeutet, dass jederzeit bekannt ist wer, wann, warum, welche Änderungen vorgenommen hat. Während aller Phasen des Projektes können Reviews, Audits und Sicherheitsassessments durchgeführt werden.
+Die letzte Phase, \emph{After SOP}\footnote{SOP steht für Start of Production dt. Beginn der Produktion.}, betrachtet die Produktion und Auslieferung der Produkte. Der zu Beginn entworfene Sicherheitsplan muss während allen Phasen verbessert und erweitert werden. Dabei muss zu jedem Zeitpunkt Nachvollziehbarkeit und Nichtabstreitbarkeit gewährleistet sein. Das bedeutet, dass jederzeit bekannt ist, wer wann warum welche Änderungen vorgenommen hat. Während aller Phasen des Projektes können Reviews, Audits und Sicherheitsassessments durchgeführt werden.
 
-Der genaue Umfang des Managements der funktionalen Sicherheit wird im Standard nicht festgelegt. Dieser hängt von der Art und Größe des Projektes ab und muss in der Concept phase definiert werden. Einige geforderte Dokumente sind:
+Der genaue Umfang des Managements der funktionalen Sicherheit wird im Standard nicht festgelegt. Dieser hängt von der Art und Größe des Projektes ab und muss in der Concept Phase definiert werden. Einige geforderte Dokumente sind:
 
 \begin{itemize}
     \item Ausbildungs- und Qualifizierungsnachweise
@@ -683,7 +683,7 @@ Im letzten Schritt werden aus dem ASIL Sicherheitsziele abgeleitet. Diese sind d
 
 \subsection{Produktentwicklung}
 \label{sec:ISO26262_produkt_entwicklung}
-Auf genaue Prozesse bei der Produktentwicklung soll an dieser Stelle nicht eingegangen werden. Allgemein ist zu sagen, dass die ISO 26262 einige Vorgaben und Empfehlung macht, die bei steigendem ASIL an Umfang zunehmen. So können im Bereich der Softwareentwicklung bei ASIL A oder B anweisungsüberdeckende Tests ausreichend sein, während bei ASIL D umfangreiche Tests nach dem MC/DC\footnote{Modified Condition/Decision Coverage}-Prinzip gefordert sind. Im Hardware-Bereich sind Anforderungen an die Ausfallrate der Systeme vorgegeben. Um diese zu bestimmen definiert der Standard eine Reihe von Metriken, anhand derer die Berechnung der Ausfallraten erfolgt.
+Auf genaue Prozesse bei der Produktentwicklung soll an dieser Stelle nicht eingegangen werden. Allgemein ist zu sagen, dass die ISO 26262 einige Vorgaben und Empfehlung gibt, die bei steigendem ASIL an Umfang zunehmen. So können im Bereich der Softwareentwicklung bei ASIL A oder B anweisungsüberdeckende Tests ausreichend sein, während bei ASIL D umfangreiche Tests nach dem MC/DC\footnote{Modified Condition/Decision Coverage}-Prinzip gefordert sind. Im Hardware-Bereich sind Anforderungen an die Ausfallrate der Systeme vorgegeben. Um diese zu bestimmen definiert der Standard eine Reihe von Metriken, anhand derer die Berechnung der Ausfallraten erfolgt.
 
 Ein wichtiger Punkt der Norm kann unter dem Leit-Satz: "`bewährte Architekturen wiederverwenden"' zusammengefasst werden. Diese etwas vage Angabe lässt sich verschieden interpretieren. Es kann jedoch allgemein gesagt werden, dass alle standardisierten Techniken als bewährte Architekturen zu sehen sind. Dazu könnten die ARM-Architektur, die CAN-Schnittstelle oder der POSIX-Standard gezählt werden. Auch Betriebssysteme und Systemarchitekturen wie OSEK/VDX und AUTOSAR gehören hierzu.
 
@@ -729,7 +729,7 @@ Das von Vector Informatik eingesetzte Verfahren zur Einhaltung der ISO 26262 bas
 \label{sec:Umsetzung_Fallbeispiel}
 Dieses Kapitel beschreibt die konkrete Umsetzung des Fallbeispiels während des Projektes. Dabei werden Entscheidungen begründet und Alternativen betrachtet.
 
-\begin{figure}[ht]
+\begin{figure}[tb]
     \centering
     \input{./images/arch_finished.dia}
     \caption{Vollständige Architektur}
@@ -869,7 +869,7 @@ Der erwähnte VCAN bezeichnet den virtuellen CAN-Bus der bei Elektrobit tresos e
     \begin{itemize}
         \item[$+$] Standard in der allgemeinen Übertragungstechnik
         \item[$+$] Hohe Übertragungsrate
-        \item[$+$] AUTOSAR kann "`of the shelf"'\footnote{Commercial off-the-shelf, oder kurz COTS, steht für Software und Hardware die unmodifiziert und Branchenübergreifend eingesetzt werden kann. Eine Anpassung an einen bestimmten Kunden findet also nicht statt.}-TCP/IP-Stack verwenden, der damit auch zu Linux voll kompatibel sein kann (vgl. \cite[S. 21]{autosar_eth})
+        \item[$+$] AUTOSAR kann "`of the shelf"'\footnote{Commercial off-the-shelf, oder kurz COTS, steht für Software und Hardware die unmodifiziert und branchenübergreifend eingesetzt werden kann. Eine Anpassung an einen bestimmten Kunden findet also nicht statt.}-TCP/IP-Stack verwenden, der damit auch zu Linux voll kompatibel sein kann (vgl. \cite[S. 21]{autosar_eth})
         \item[$-$] Nichtdeterministische Kollisionen und Latenz. Damit nur bedingt Echtzeitfähig
         \item[$-$] Erst ab AUTOSAR 4.0 unterstützt
     \end{itemize}
@@ -916,7 +916,7 @@ Bei dem VCAN-Protokoll handelt es sich um ein auf TCP basierendem Binärformat. 
 
 Es ist zu erkennen, dass dieses Protokoll nicht nur für CAN ausgelegt ist. So existieren Werte im System-Feld für CAN, FlexRay und LIN. Auch die Angabe eines Kanals entspricht nicht dem einfachen CAN-Standard. Aus diesem Grund ist zu erwarten, dass das ermittelte Protokoll nicht komplett ist. Dieses Projekt beschränkt sich auf die vom AUTOSAR-CAN-Modul gesendeten Botschaften und ignoriert somit zum Großteil \emph{System} und \emph{Kanal} der Nachricht. In einem zukünftigen Projekt könnte dies jedoch näher untersucht werden, und weitere Funktionalität implementiert werden.
 
-Bei der erstellten VCAN-API handelt es sich um ein reines Backend. Eine Dokumentation und Beispiele zum Erstellen eines Gateways, beziehungsweise Clients, sind im Anhang zu finden. Im Rahmen dieser Arbeit wurde eine Gateway-Anwendung inklusive grafische Oberfläche entwickelt. Die Funktionalität des von Elektrobit bereitgestellten Gateways, inklusive des PCAN-Supports, ist hierin komplett nachgebildet. Unterstützung für die PCAN Hardware ist zur Zeit nur unter Windows gegeben, da sich die entsprechenden Linux-Treiber noch in der Entwicklung befinden. Mit der VCAN-API lassen sich ebenso einfach Clients erstellen, die Botschaften senden und empfangen können.
+Bei der erstellten VCAN-API handelt es sich um ein reines Backend. Eine Dokumentation und Beispiele zum Erstellen eines Gateways, beziehungsweise Clients, sind im Anhang zu finden. Im Rahmen dieser Arbeit wurde eine Gateway-Anwendung inklusive grafischer Oberfläche entwickelt. Die Funktionalität des von Elektrobit bereitgestellten Gateways, inklusive des PCAN-Supports, ist hierin komplett nachgebildet. Unterstützung für die PCAN Hardware ist zur Zeit nur unter Windows gegeben, da sich die entsprechenden Linux-Treiber noch in der Entwicklung befinden. Mit der VCAN-API lassen sich ebenso einfach Clients erstellen, die Botschaften senden und empfangen können.
 
 Neben der Grundfunktionalität bietet die VCAN-API einige Vorteile gegenüber der Elektrobit-Lösung. Das Original-Gateway, sowie die AUTOSAR-Komponenten, haben Probleme mit schnellen Zykluszeiten. Ab etwa 200 ms kommt es immer häufiger vor, dass einzelne Pakete nicht registriert werden. Das hier erstellte Gateway zeigt in diesem Bereich eine gewisse Robustheit.
 
@@ -947,7 +947,7 @@ Anschließend wird in einem Kapitel eine Restbussimulation von VW näher betrach
 
 \subsection{Aufbau des Bordnetzsteuergerätes}
 \label{sec:Aufbau_der_ECU}
-Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN-Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im Weiteren BCM genannt, aufgebaut und getestet. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes.
+Bereits 2011 wurde im Rahmen einer Bachelorarbeit ein Versuchsaufbau zur Ansteuerung von Front-Scheinwerfern erstellt. Dieser Aufbau Bestand aus einem älteren Bordnetzsteuergerät der PQ35 Reihe. Dieses verwendet einen Low-Speed-CAN-Bus und ein altes Netzwerkmanagement. Dieses NM wird von EB tresos jedoch nicht unterstützt. Aus diesem Grund wurde im Rahmen dieses Projektes ein neues Bordnetzsteuergerät, im Weiteren BCM genannt, aufgebaut und getestet. Im Anhang dieser Arbeit (siehe \ref{sec:ecu}) befindet sich eine Dokumentation des Aufbaus und des Bordnetzsteuergerätes. Ebenso ist dort ein Foto des Versuchsaufbaus zu sehen.
 
 Die Ansteuerung des BCM erfolgt per CAN mit einer Baudrate von 500 kbit/s. Der am Versuchsaufbau angebrachte Schalter stellt die Klemme 15 sowie Klemme S dar. In diesem Aufbau sind diese Signale nicht getrennt und werden somit immer gleich geschaltet. Der Versuchsaufbau wird mit einer Spannung von 12 Volt betrieben.
 
@@ -967,11 +967,11 @@ BCM : 0x1B00000E - 0E:00:04:01:11:00:0C:00
 
 Für einen ersten Einstieg, sind in Listing \ref{lst:nm_botschaften} einige Beispiel-Botschaften des Netzwerkmanagements zu sehen, wie sie von der Restbussimulation gesendet werden. Dort ist nach dem Node-Namen, die CAN-ID der Botschaft aufgeführt. Diese beginnen etwa bei 0x1B000000 und enthalten im letzten Teil auch eine Node-ID. Diese ID ist in der eigentlichen Botschaft im ersten Byte wiederzufinden. Das zweite Byte hat immer den Wert null, während das dritte Byte einen Systemstatus angibt. Dieser ändert sich zum Beispiel sobald die Klemme 15 betätigt, und damit das Einschlafen beziehungsweise Aufwachen des Bussystems veranlasst wird. Alle weiteren Bytes sind ausschließlich beim BCM-Node ungleich null. Diese ersten Beobachtungen des Protokolls werden nun anhand der AUTOSAR-Spezifikation untersucht.
 
-Die in AUTOSAR eingesetzten Netzerwerkmanagement-PDUs sind nach einem festen Schema aufgebaut (vgl. \cite[Seite 51]{autosar_cannm}). Byte Eins repräsentiert einen \emph{Source Node Identifier}. Dies deckt sich mit den Beobachtungen aus den Beispiel-Botschaften. Die Form der Botschaften-IDs wird jedoch im Standard nicht vorgegeben. Damit handelt es sich bei den Botschaften-IDs im Bereich 0x1B000000 um eine Design-Entscheidung, bei der der \emph{Source Node Identifier} ebenfalls untergebracht worden ist.
+Die in AUTOSAR eingesetzten Netzwerkmanagement-PDUs sind nach einem festen Schema aufgebaut (vgl. \cite[Seite 51]{autosar_cannm}). Byte Eins repräsentiert einen \emph{Source Node Identifier}. Dies deckt sich mit den Beobachtungen aus den Beispiel-Botschaften. Die Form der Botschaften-IDs wird jedoch im Standard nicht vorgegeben. Damit handelt es sich bei den Botschaften-IDs im Bereich 0x1B000000 um eine Design-Entscheidung, bei der der \emph{Source Node Identifier} ebenfalls untergebracht worden ist.
 
-Das in den Beispiel-Botschaften durchgehend leere Byte an Position zwei ist im AUTOSAR-Standard als \emph{Control Bit Vector} definiert. Dieser bei dieser Form des NM nicht verwendet. Die Positionen des \emph{Source Node Identifiers} und des \emph{Control Bit Vectors} kann in der ECU-Konfiguration ausgewählt werden. Dabei beschränkt sich die Auswahl auf Byte Eins, Byte Zwei oder das Deaktivieren eines oder beider Felder.
+Das in den Beispiel-Botschaften durchgehend leere Byte an Position zwei, ist im AUTOSAR-Standard als \emph{Control Bit Vector} definiert. Dieses Byte wird bei dieser Form des NM nicht verwendet. Die Positionen des \emph{Source Node Identifiers} und des \emph{Control Bit Vectors} kann in der ECU-Konfiguration ausgewählt werden. Dabei beschränkt sich die Auswahl auf Byte Eins, Byte Zwei oder das Deaktivieren eines oder beider Felder.
 
-Das \emph{Control Bit Vector} Feld wird für einige Management-Funktionen verwendet. Über das \emph{NM Coordinator Sleep} Bit kann ein synchrones Herunterfahren eines Bus-Systems mit mehreren Koordinatoren bewirkt. Hierbei setzt der Hauptkoordinator das entsprechende Bit, und alle anderen Koordinatoren bereiten ein Herunterfahren ihres eigenen Teilbusses vor. Eine weitere Funktion des \emph{Control Bit Vector} Feldes, ist der \emph{Repeat Message Request}. Über diesen kann ein Koordinator das Senden von NM-Botschaften aller Teilnehmer erzwingen. Hierdurch ist eine Identifikation aller Nodes möglich.
+Das \emph{Control Bit Vector} Feld wird für einige Management-Funktionen verwendet. Über das \emph{NM Coordinator Sleep} Bit kann ein synchrones Herunterfahren eines Bus-Systems mit mehreren Koordinatoren bewirkt werden. Hierbei setzt der Hauptkoordinator das entsprechende Bit, und alle anderen Koordinatoren bereiten ein Herunterfahren ihres eigenen Teilbusses vor. Eine weitere Funktion des \emph{Control Bit Vector} Feldes, ist der \emph{Repeat Message Request}. Über diesen kann ein Koordinator das Senden von NM-Botschaften aller Teilnehmer erzwingen. Hierdurch ist eine Identifikation aller Nodes möglich.
 
 Die restlichen Bytes der NM-Botschaften enthalten User-Daten und implementieren damit ein VW-eigenes Protokoll. Allgemein senden Nodes NM-Botschaften, solange ein Wachbleiben des Busses erwünscht ist. Sobald ein Node den Bus nicht mehr benötigt, sendet dieser keine NM-Botschaften mehr.
 
@@ -988,14 +988,14 @@ Nachdem das Mapping der Service Ports in der RTE vorgenommen wurde, kann über d
 
 \subsection{Restbussimulation und CRC Berechnung}
 \label{sec:RBS}
-Nach dem Aufbau der neuen ECU wurde die Funktionalität getestet. Einige Funktionen -- wie das Standlicht -- konnten von Anfang an verwendet werden, bei einigen anderen kam es jedoch zu Problemen. Dabei wurde der Fokus auf die Blinkerfunktion gelegt. Obwohl sowohl das Standlicht, als auch der Blinker die selben CAN-Signale verwendet, und lediglich über die Klemme 15 unterschieden werden, konnte die Blinkfunktion nicht aktiviert werden. Nach einigen Versuchen und Gesprächen mit einem VW-Mitarbeiter hat sich herausgestellt, dass die Blinker-Funktion über eine End-to-End-Absicherung geschützt wird. Diese besteht aus einer Checksumme, über die gesamte Botschaft. Freundlicherweise wurde eine Restbussimulation, kurz RBS, von VW zur Verfügung gestellt, mit deren Hilfe die entsprechenden Botschaften und die dazugehörigen Checksummen generiert werden können. 
+Nach dem Aufbau der neuen ECU wurde die Funktionalität getestet. Einige Funktionen -- wie das Standlicht -- konnten von Anfang an verwendet werden, bei einigen anderen kam es jedoch zu Problemen. Dabei wurde der Fokus auf die Blinkerfunktion gelegt. Obwohl sowohl das Standlicht, als auch der Blinker die selben CAN-Signale verwenden, und lediglich über die Klemme 15 unterschieden werden, konnte die Blinkfunktion nicht aktiviert werden. Nach einigen Versuchen und Gesprächen mit einem VW-Mitarbeiter hat sich herausgestellt, dass die Blinker-Funktion über eine End-to-End-Absicherung geschützt wird. Diese besteht aus einer Checksumme, über die gesamte Botschaft. Freundlicherweise wurde eine Restbussimulation, kurz RBS, von VW zur Verfügung gestellt, mit deren Hilfe die entsprechenden Botschaften und die dazugehörigen Checksummen generiert werden können. 
 
-Da die AUTOSAR-Komponente keine direkten Zugriff auf diese RBS hat, und damit die Berechnung des CRC nicht ausgeführt werden kann, wurde ein anderer Weg gewählt. Da hauptsächlich zwei 1-Bit-Signale und ein 4-Bit Botschaften-Zähler von Interesse sind, beträgt die Anzahl\footnote{CRC-Summen: Zwei 1-Bit Signale und ein 4-Bit Signal: $ 2^1 \times 2^1 \times 2^4 = 2 \times 2 \times 16 = 64 $} der möglichen CRC-Summen 64. Diese wurden kurzerhand manuell durch Tests aus der Restbussimulation extrahiert. Die daraus resultierende Tabelle ist im Anhang \ref{sec:CRC Werte} zu finden. Hiermit ist es möglich, die Blinker-Signale zu verwenden. Es wird angenommen, dass alle anderen Signale der Botschaft null sind.
+Da die AUTOSAR-Komponente keinen direkten Zugriff auf diese RBS hat, und damit die Berechnung des CRC nicht ausgeführt werden kann, wurde ein anderer Weg gewählt. Da hauptsächlich zwei 1-Bit-Signale und ein 4-Bit Botschaften-Zähler von Interesse sind, beträgt die Anzahl\footnote{CRC-Summen: Zwei 1-Bit Signale und ein 4-Bit Signal: $ 2^1 \times 2^1 \times 2^4 = 2 \times 2 \times 16 = 64 $} der möglichen CRC-Summen 64. Diese wurden kurzerhand manuell durch Tests aus der Restbussimulation extrahiert. Die daraus resultierende Tabelle ist im Anhang \ref{sec:CRC Werte} zu finden. Hiermit ist es möglich, die Blinker-Signale zu verwenden. Es wird angenommen, dass alle anderen Signale der Botschaft null sind.
 
-\begin{figure}[ht]
+\begin{figure}[tb]
     \centering
     \includegraphics[width=\textwidth]{rbs_ausschnitt}
-    \caption{Auschnitt der RBS Übersicht}
+    \caption{Ausschnitt der RBS Übersicht}
     \label{fig:rbs}
 \end{figure}
 
@@ -1037,7 +1037,7 @@ Ziel der AUTOSAR-Komponente ist die Kommunikation mit der steuernden Komponente,
 
 Hierbei bieten die ersten vier Signale direkten Zugriff auf die entsprechenden Funktionen des BCM. Die restlichen Signale werden verwendet, um zwei Demo-Modi anzusteuern. Diese sollen verdeutlichen, dass durch die Kommunikations-Kette, Python-AUTOSAR-BCM, eine Entkopplung der Funktionalität erreicht wird. So kann die steuernde Komponente zwar über die Botschaft einen Befehl senden, jedoch nicht direkt die Hardware beeinflussen. Diese Aufgabe übernimmt die AUTOSAR-Komponente und wirkt damit als Puffer zwischen Anwender und Hardware.
 
-\begin{figure}[ht]
+\begin{figure}[tb]
     \centering
     \resizebox{\linewidth}{!}{\input{./images/SMLS_Modell.dia}}
     \caption{Entwickeltes AUTOSAR Modell}
@@ -1087,7 +1087,7 @@ Zum Schluss der Funktion, wird in den Zeilen 16 bis 18, die endgültige Botschaf
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Entwicklung der steuernden Komponente %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Entwicklung der steuernden Komponente}
 \label{sec:entwicklung_vcan_app}
-Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, mit deren Hilfe sich die Demofunktionen leicht aktiveren lassen. Zudem werden aktuelle Statusinformationen vom CAN-Bus übersichtlich dargestellt. 
+Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, mit deren Hilfe sich die Demofunktionen leicht aktivieren lassen. Zudem werden aktuelle Statusinformationen vom CAN-Bus übersichtlich dargestellt. 
 
 \begin{figure}
     \centering
@@ -1107,7 +1107,7 @@ Die steuernde Komponente basiert auf der VCAN-API und bietet eine Oberfläche, m
     \label{fig:vcan_app}
 \end{figure}
 
-Die Oberfläche der in diesem Projekt entwickelten Anwendungen besteht aus zwei Fenstern. Sie ist mittels wxPython realisiert, da dieses Plattformübergreifend ohne Anpassungen unterstützt wird. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, zeigt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung dar.
+Die Oberfläche der in diesem Projekt entwickelten Anwendungen besteht aus zwei Fenstern. Sie ist mittels wxPython realisiert, da dieses Plattformübergreifend ohne Anpassungen unterstützt wird. Das in Abbildung \ref{fig:vcan_app_status} zu sehende Status-Fenster, zeigt die Informationen der verwendeten CAN-Botschaften\footnote{\texttt{Licht\_vorne\_01}, \texttt{SMLS\_01} und \texttt{Klemmen\_Status\_01}} in einer übersichtlichen Darstellung.
 
 Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet direkten Zugriff auf alle Signale der \texttt{APP\_01} Botschaft. Zudem können die zwei Demomodi über die Reiter angesprochen werden.
 
@@ -1128,7 +1128,7 @@ Abbildung \ref{fig:vcan_app_control} zeigt das Kontrollfenster. Dieses bietet di
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Analyse des Fallbeispiels %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \chapter{Analyse des Fallbeispiels}
 \label{sec:Beispiel_Analyse}
-Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächsten Unterkapitel auf die Praxisrelevanz der Techniken eingegangen. Anschließend wird das Zeitverhalten des VCAN-Systems untersucht. Dies ist vor allem im Hinblick auf die Echtzeitfähigkeit interessant. Ein weiteres, in der Praxis relevantes, Thema ist die Sicherheit. Diese wird im darauf folgenden Kapitels betrachtet.
+Dieses Kapitel betrachtet die Ergebnisse des Fallbeispiels. Dabei wird im nächsten Unterkapitel auf die Praxisrelevanz der Techniken eingegangen. Anschließend wird das Zeitverhalten des VCAN-Systems untersucht. Dies ist vor allem im Hinblick auf die Echtzeitfähigkeit interessant. Ein weiteres, in der Praxis relevantes, Thema ist die Sicherheit. Diese wird im darauf folgenden Kapitel betrachtet.
 
 
 
@@ -1143,11 +1143,11 @@ Angenommen wird ein System bestehend aus vier ECUs. Die Steuergeräte basieren j
 
 Der langsame Kern kann dediziert den Hypervisor übernehmen, während die anderen vier Kerne die Funktionalität der ECUs übernehmen. Da für jede ECU nun ein Vielfaches der Leistung vorhanden ist, sollte die Echtzeitfähigkeit kein Problem darstellen. Mit dieser Umstellung werden die Kosten in diesem Beispiel von 40 \$ auf 20 \$ halbiert. Hinzukommen Ersparnisse hinsichtlich der eingesetzten Boards beziehungsweise Peripherie, sowie unter Umständen ein vereinfachter Kabelbaum. Entsprechende Kosten werden an dieser Stelle nicht betrachtet, da diese nicht einfach einzuschätzen sind. Ebenso wird ein nötiger Integrationsaufwand nicht betrachtet. Trotz dieser Einschränkungen ist eine Richtung zu erkennen: Die Kosten sowie die Hardwarekomplexität des Systems kann verringert werden.
 
-Auch die Umsetzung der funktionalen Sicherheit nach ISO 26262 kann von eingebetteter Virtualisierung profitieren. Virtuelle Maschinen trennen dabei Teilsysteme ab und können die Sicherheitsbetrachtung auf mehrere Domänen aufteilen. Einzig der Hypervisor, als zentrales Element, erhöht die Komplexität des Systems und Bedarf umfangreicher Sicherheitsuntersuchung. Anschließend ist jedoch ein Bausatzsystem vorstellbar, in dem Funktionalität in virtuellen Maschinen gekapselt wird und anschließend diese als abgesicherte und getestete Bausteine eingesetzt werden. Integrationstests sind allerdings ebenfalls nötig.
+Auch die Umsetzung der funktionalen Sicherheit nach ISO 26262 kann von eingebetteter Virtualisierung profitieren. Virtuelle Maschinen trennen dabei Teilsysteme ab und können die Sicherheitsbetrachtung auf mehrere Domänen aufteilen. Einzig der Hypervisor, als zentrales Element, erhöht die Komplexität des Systems und Bedarf umfangreicher Sicherheitsuntersuchungen. Anschließend ist jedoch ein Bausatzsystem vorstellbar, in dem Funktionalität in virtuellen Maschinen gekapselt wird und anschließend diese als abgesicherte und getestete Bausteine eingesetzt werden. Integrationstests sind allerdings ebenfalls nötig.
 
-Der Bereich des Testens kann ebenfalls durch Virtualisierung verbessert werden. Da eine virtuelle Maschine auf einer abstrakten Ebene ausgeführt wird, ist es möglich, diese portabel zu gestalten, um sowohl auf der Zielhardware als auch auf einer Testhardware lauffähig zu sein. So ist es denkbar das Produktivcode, gekapselt in einer VM, im Testeinsatz Verwendung findet und somit als Restbussimulation für echte Hardware dient.
+Der Bereich des Testens kann ebenfalls durch Virtualisierung verbessert werden. Da eine virtuelle Maschine auf einer abstrakten Ebene ausgeführt wird, ist es möglich, diese portabel zu gestalten, um sowohl auf der Zielhardware als auch auf einer Testhardware lauffähig zu sein. So ist es denkbar, dass Produktivcode, gekapselt in einer VM, im Testeinsatz Verwendung findet und somit als Restbussimulation für echte Hardware dient.
 
-Ein ähnliches Konzept wird ebenfalls durch EB tresos WinCore erreicht. Da durch EB tresos sowohl Projekte für Windows, als auch für Embedded-Plattformen erstellt werden können, kann der Programmcode zum Großteil übernommen werden. Jedoch ist eine umfangreiche Konfiguration der RTE und der restlichen Module nötig. Daher eignet sich WinCore vor allem für die ersten Phasen eines Projektes, sowie die Lehre. Da die Applikation auf üblichen Betriebssystemen und Rechnern lauffähig ist, werden die Komplikation bei der Nutzung einer Embedded-Plattform vermieden beziehungsweise verschoben.
+Ein ähnliches Konzept wird ebenfalls durch EB tresos WinCore erreicht. Da durch EB tresos sowohl Projekte für Windows, als auch für Embedded-Plattformen erstellt werden können, kann der Programmcode zum Großteil übernommen werden. Jedoch ist eine umfangreiche Konfiguration der RTE und der restlichen Module nötig. Daher eignet sich WinCore vor allem für die ersten Phasen eines Projektes, sowie die Lehre. Da die Applikation auf üblichen Betriebssystemen und Rechnern lauffähig ist, werden die Komplikationen bei der Nutzung einer Embedded-Plattform vermieden beziehungsweise verschoben.
 
 Vor allem der Einsatz des VCANs erleichtert viele Arbeiten und erste Tests. Da auf Ethernet, und damit auf eine ausgereifte und weit verbreitete Technik gesetzt wird, ist der Zugriff sehr einfach zu realisieren. In diesem Projekt wird auf Python 2.7 gesetzt. Aber auch praktisch jede andere Programmierumgebung ist denkbar, da der Zugriff auf TCP-Sockets nahezu immer möglich ist. Und da der Umgang mit Highlevel-Umgebungen dieser Art relativ einfach ist, ist eine erweiterte Funktionalität vorstellbar. Dies reicht vom Auslesen einer Konfigurationsdatei um Stimuli einzurichten, bis hin zu einer Weboberfläche, um den Zugriff auf den gesamten Bus zu erlauben. Auch eine Anbindung an MATLAB-Modelle wäre möglich.
 
@@ -1159,33 +1159,40 @@ Vor allem der Einsatz des VCANs erleichtert viele Arbeiten und erste Tests. Da a
 \label{sec:Benchmark}
 Dieses Kapitel betrachtet das Zeitverhalten des VCAN. Dabei wird versucht, eine Aussage zur Echtzeitfähigkeit zu machen. Die Analyse beschränkt sich auf einige wenige Anwendungsfälle. Alle Kombinationen aus Betriebssystem, Netzwerk-, CPU-Last und anderen Faktoren zu testen, ist nicht praktikabel.
 
-Allgemein ist zu sagen, dass Ethernet nicht für harte Echtzeitanforderungen geeignet ist. Da der VCAN jedoch vor allem für die Evaluation und einfache Tests ausgelegt ist, lässt sich Ethernet an dieser Stelle trotzdem gut einsetzen. Die Latenz kann dabei verringert werden, indem die Netzwerklast minimiert, sowie die Netzwerkarchitektur vereinfacht wird. Das bedeutet, dass die Kommunikation das Testsystems in einem separaten Teilnetz stattfindet, auf das möglichst keine anderen Geräte zugreifen können. 
+Allgemein ist zu sagen, dass Ethernet nicht für harte Echtzeitanforderungen geeignet ist. Da der VCAN jedoch vor allem für die Evaluation und einfache Tests ausgelegt ist, lässt sich Ethernet an dieser Stelle trotzdem gut einsetzen. Die Latenz kann dabei verringert werden, indem die Netzwerklast minimiert, sowie die Netzwerkarchitektur vereinfacht wird. Das bedeutet, dass die Kommunikation des Testsystems in einem separaten Teilnetz stattfindet, auf das möglichst keine anderen Geräte zugreifen können. 
 
 Zur Analyse des Zeitverhaltens wurde eine Benchmark-Anwendung entwickelt. Diese startet ein VCAN-Gateway und speichert die Zeiten eingehender Botschaften. Diese können anschließend ausgewertet werden. Abbildung \ref{fig:timinganalyse} zeigt die Ergebnisse zweier Testreihen als Boxplots. Dabei beträgt die Größe der Stichproben jeweils 1\,000 Botschaften.
 
-\begin{figure}
+%\begin{figure}
+%    \centering
+%    \begin{subfigure}[b]{0.49\textwidth}
+%        \centering
+%        \includegraphics[width=\textwidth]{boxplot_as}
+%        \caption{Zeitverhalten AUTOSAR}
+%        \label{fig:boxplot_as}
+%    \end{subfigure}
+%    \begin{subfigure}[b]{0.49\textwidth}
+%        \centering
+%        \includegraphics[width=\textwidth]{boxplot_vcan}
+%        \caption{Zeitverhalten VCAN-API}
+%        \label{fig:boxplot_vcan}
+%    \end{subfigure}
+%    \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots (Angaben in ms)}
+%    \label{fig:timinganalyse}
+%\end{figure}
+
+\begin{figure}[tb]
     \centering
-    \begin{subfigure}[b]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{boxplot_as}
-        \caption{Zeitverhalten AUTOSAR}
-        \label{fig:boxplot_as}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.49\textwidth}
-        \centering
-        \includegraphics[width=\textwidth]{boxplot_vcan}
-        \caption{Zeitverhalten VCAN-API}
-        \label{fig:boxplot_vcan}
-    \end{subfigure}
-    \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots (Angaben in ms)}
+    \includegraphics[width=0.8\textwidth]{boxplot}
+    \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots}
     \label{fig:timinganalyse}
 \end{figure}
 
-Wie in Abbildung \ref{fig:boxplot_as} zu erkennen ist, liegen die Werte etwa im Bereich von 20 ms um den Median 120 ms herum. Diese Streuung ist für die vorgesehenen Anwendungen durchaus akzeptabel. Der Mittelwert der Messungen scheint jedoch von der Netzwerkarchitektur abzuhängen. So wurden diese Werte im Netz der Ostfalia Hochschule gemessen. In zwei anderen Netzwerken konnten Durchschnittswerte von 110 ms sowie 130 ms festgestellt werden. Die Ursache dieser Abweichung ist nicht geklärt. Da es sich um einen relativ konstanten Wert handelt, kann dieser durch Maßnahmen innerhalb des System-Modells oder der RTE-Konfiguration ausgeglichen werden.
+Links in der Abbildung \ref{fig:timinganalyse} ist der Einsatz der AUTOSAR-Komponente zu sehen. Die Werte liegen etwa im Bereich von 20 ms um den Median 120 ms herum. Diese Streuung ist für die vorgesehenen Anwendungen durchaus akzeptabel. Der Mittelwert der Messungen scheint jedoch von der Netzwerkarchitektur abzuhängen. So wurden diese Werte im Netz der Ostfalia Hochschule gemessen. In zwei anderen Netzwerken konnten Durchschnittswerte von 110 ms sowie 130 ms festgestellt werden. Die Ursache dieser Abweichung ist nicht geklärt. Da es sich um einen relativ konstanten Wert handelt, kann dieser durch Maßnahmen innerhalb des System-Modells oder der RTE-Konfiguration ausgeglichen werden.
 
 Zudem wurde während des Projektes eine Eigenheit des WinCore VCAN beobachtet, die jedoch in dieser Auswertung nicht reproduziert werden konnte. Hierbei kam es immer wieder zu langen Pausen, gefolgt von Sendehäufungen. Dies führt zu einer stark erhöhten Standardabweichung.
 
-Abbildung \ref{fig:boxplot_vcan} zeigt die Ergebnisse der Analyse bei Benutzung der VCAN-API. Hier ist zu erkennen, dass eine Genauigkeit von etwa einer Millisekunde möglich ist. Lediglich einzelne Ausreißer weichen einige Millisekunden vom gewünschten Wert ab. In dieser Testreihe existiert nur ein solcher Ausreißer, der im Diagramm nicht sichtbar ist.
+Die rechte Seite der Abbildung \ref{fig:timinganalyse} zeigt die Ergebnisse der Analyse bei Benutzung der VCAN-API. Hier ist zu erkennen, dass eine Genauigkeit von etwa einer Millisekunde möglich ist. Lediglich einzelne Ausreißer weichen einige Millisekunden vom gewünschten Wert ab. In dieser Testreihe existiert nur ein solcher Ausreißer, der im Diagramm nicht sichtbar ist.
 
 Tabelle \ref{tab:jitter_statistik} führt die Eigenschaften der Stichproben auf. Auch hier zeigen sich die beschriebenen Ergebnisse. Die Standardabweichung beim Einsatz der VCAN-API beträgt lediglich 0.1 ms, während diese beim Einsatz von AUTOSAR 4.8 ms beträgt. Damit sind beide Werte im akzeptablen Bereich, um weiche Echtzeit für die vorgesehenen Anwendungen zu ermöglichen.
 
@@ -1207,17 +1214,17 @@ Tabelle \ref{tab:jitter_statistik} führt die Eigenschaften der Stichproben auf.
     \label{tab:jitter_statistik}
 \end{table}
 
-Da die Implementation des WinCore nicht offen liegt, lässt sich das Zeitverhalten hier nicht verbessern. Beim Einsatz der VCAN-API sind jedoch einige Möglichkeiten denkbar. Bisher wurden wxPython und pygame eingesetzt, um konstante Timer zu erhalten. Diese sorgen dafür, dass die Ausführungszeit nicht zur Wartezeit hinzukommen. Dabei konnten mittels pygame zuverlässig Sendezyklen bis 1 ms getestet werden. Damit ist der Bereich üblich genutzter Zeiten abgedeckt. Um den Jitter noch weiter zu verringern ist es denkbar \emph{High Precision Event Timer} zu nutzen. Diese können theoretisch Zeiten bis 100 ns auflösen.
+Da die Implementation des WinCore nicht offen liegt, lässt sich das Zeitverhalten hier nicht verbessern. Beim Einsatz der VCAN-API sind jedoch einige Möglichkeiten denkbar. Bisher wurden wxPython und pygame eingesetzt, um konstante Timer zu erhalten. Diese sorgen dafür, dass die Ausführungszeit nicht zur Wartezeit hinzukommt. Dabei konnten mittels pygame zuverlässig Sendezyklen bis 1 ms getestet werden. Damit ist der Bereich üblich genutzter Zeiten abgedeckt. Um den Jitter noch weiter zu verringern ist es denkbar \emph{High Precision Event Timer} zu nutzen. Diese können theoretisch Zeiten bis 100 ns auflösen.
 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Sicherheit bei Embedded Virtualisierung %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Sicherheitsbetrachtung}
 \label{sec:Sicherheit_Beispiel}
-Da es sich bei dem Beispielsystem lediglich um eine Scheinwerfersteuerung handelt, ist Sicherheit kein besonders kritisches Thema. Die Folgenden Punkte sind jedoch genauso auf jedes andere System anwendbar und somit relevant. Bei dem Begriff \emph{Sicherheit} müssen zwei Arten unterschieden werden. Zum einen die Angriffssicherheit, die einen böswilligen Angreifer annimmt, und zum anderen die Betriebssicherheit, bei der ein technischer Ausfall betrachtet wird. Der in diesem Projekte eingesetzt VCAN hat in einigen Tests eine gewisse Fehleranfälligkeit gezeigt. Das fehlerhafte Setzen einzelner Bits kann zum Absturz der AUTOSAR-Komponenten führen. Da der VCAN allerdings, in dieser Form, nur für Tests und Evaluation zum Einsatz kommt, sind diese Fehler nicht relevant für die spätere Sicherheit des Autos.
+Da es sich bei dem Beispielsystem lediglich um eine Scheinwerfersteuerung handelt, ist Sicherheit kein besonders kritisches Thema. Die folgenden Punkte sind jedoch genauso auf jedes andere System anwendbar und somit relevant. Bei dem Begriff \emph{Sicherheit} müssen zwei Arten unterschieden werden. Zum einen die Angriffssicherheit, die einen böswilligen Angreifer annimmt, und zum anderen die Betriebssicherheit, bei der ein technischer Ausfall betrachtet wird. Der in diesem Projekt eingesetzte VCAN hat in einigen Tests eine gewisse Fehleranfälligkeit gezeigt. Das fehlerhafte Setzen einzelner Bits kann zum Absturz der AUTOSAR-Komponenten führen. Da der VCAN allerdings, in dieser Form, nur für Tests und Evaluation zum Einsatz kommt, sind diese Fehler nicht relevant für die spätere Sicherheit des Autos.
 
 \paragraph{Angriffssicherheit}
-Das hier betrachtete Beispiel bietet im Prinzip die selben Angriffsmöglichkeiten wie klassische Systeme. Sobald ein physischer Zugriff möglich ist, existieren eine Reihe von Möglichkeiten das System zu kompromittieren. Dabei zeigt ein Virtualisierung keine Vorteile einem klassischen Design gegenüber. Ein zentraler Hypervisor bietet zwar die Möglichkeit, die Integrität der virtuellen Maschinen zu überprüfen, jedoch kann auch dieser selbst kompromittiert sein. Seitenkanalangriffe\footnote{Seitenkanalangriffe bezeichnen eine Gruppe von Angriffszenarien, bei denen das System von außen analysiert wird. Hierbei kann zum Beispiel anhand des Energieverbrauchs auf ausgeführte Befehle geschlossen werden.} könnten durch die erhöhte Komplexität erschwert werden. Eine Verhinderung dieser ist allerdings wahrscheinlich nicht möglich.
+Das hier betrachtete Beispiel bietet im Prinzip die selben Angriffsmöglichkeiten wie klassische Systeme. Sobald ein physischer Zugriff möglich ist, existieren eine Reihe von Möglichkeiten das System zu kompromittieren. Dabei zeigt eine Virtualisierung keine Vorteile einem klassischen Design gegenüber. Ein zentraler Hypervisor bietet zwar die Möglichkeit, die Integrität der virtuellen Maschinen zu überprüfen, jedoch kann auch dieser selbst kompromittiert sein. Seitenkanalangriffe\footnote{Seitenkanalangriffe bezeichnen eine Gruppe von Angriffsszenarien, bei denen das System von außen analysiert wird. Hierbei kann zum Beispiel anhand des Energieverbrauchs auf ausgeführte Befehle geschlossen werden.} könnten durch die erhöhte Komplexität erschwert werden. Eine Verhinderung dieser ist allerdings wahrscheinlich nicht möglich.
 
 Ein weiterer Angriffsweg ist durch eine Netzwerkanbindung gegeben. Diese erfahren eine immer größere Verbreitung, durch Car2Car-Kommunikation und das Nutzen des Internets für Stauinformationen. Hier besteht eine durchaus große Gefahr. Eine kompromittierte VM kann durch eventuelle Sicherheitslücken im Hypervisor das ganze System lahmlegen. Daher muss dieser mit großer Sorgfalt entwickelt werden. Die Folgen einer Übernahme sind bei einem virtualisierten System nicht umfangreicher, als bei einem klassischen System. In beiden Fällen könnte ein kompromittiertes Steuergerät den gesamten Bus lahmlegen, indem dauerhaft Nachrichten gesendet werden.
 

@@ -2,7 +2,7 @@
 %%%%%%%%%%%%%%%% Nm Tutorial %%%%%%%%%%%%%%%%%%%%
 \chapter{Netzwerk-Management Anleitung}
 \label{sec:nm_tutorial}
-Diese Anleitung basiert auf dem entsprechenden AUTOSAR-Workshop von Elektrobit vom 11.12.2012 und wurde an einigen Stellen gekürzt und erweitert. \\
+Diese Anleitung basiert auf dem entsprechenden AUTOSAR-Workshop von Elektrobit vom 11.12.2012 und wurde an einigen Stellen gekürzt beziehungsweise erweitert. \\
 
 \begin{compactitem}
     \item Module importieren (CanNm, CanSM, ComM, Nm)
@@ -22,7 +22,7 @@ Diese Anleitung basiert auf dem entsprechenden AUTOSAR-Workshop von Elektrobit v
         \item ./Network Channel/: Channel hinzufügen
         \begin{compactitem}
             \item Main Function Period: 0.01
-            \item User Per Channel: User inzufügen
+            \item User Per Channel: User hinzufügen
         \end{compactitem}
     \end{compactitem}
     \item Nm
@@ -64,7 +64,7 @@ Diese Anleitung basiert auf dem entsprechenden AUTOSAR-Workshop von Elektrobit v
     \begin{compactitem}
         \item ./List of Configurations/: Config hinzufügen und öffnen
         \item ./List of Can Networks/: Hinzufügen und öffnen
-        \item ComM Channel: Vorher ersteller
+        \item ComM Channel: Vorher erstellter
         \item Com Rx PDU Group: RXPDUS\_GLOBAL
         \item Com Tx PDU Group: TXPDUS\_GLOBAL
         \item Can Controller hinzufügen und Can Config auswählen
@@ -200,11 +200,11 @@ Das VCAN-Protokoll besteht aus einem Binär-Format, dass per TCP-Socket übertra
 \begin{figure}[ht]
     \centering
     \input{./images/vcan_protokoll.dia}
-    \caption{Überblick über das VCAN Protkoll}
+    \caption{Überblick über das VCAN Protokoll}
     \label{fig:vcan_protokoll}
 \end{figure}
 
-Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_protokoll} zu sehen. Das Format besteht aus einem Header, dem DLC-Feld und den eigentlichen Daten. Der Header enthält unter anderem die ID der Botschaft. Die Nutzdaten können 1 bis 8 Byte lang sein. Im Folgenden ist eine ausfürliche Auflistung der Felder dargestellt. Die Byte-Reheinfolge entspricht Big-Endian. Tabelle \ref{tab:vcanbotschaft} zeigt eine Beispiel-Botschaft ohne TCP- und Ethernet-Header.
+Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_protokoll} zu sehen. Das Format besteht aus einem Header, dem DLC-Feld und den eigentlichen Daten. Der Header enthält unter anderem die ID der Botschaft. Die Nutzdaten können 1 bis 8 Byte lang sein. Im Folgenden ist eine ausfürliche Auflistung der Felder dargestellt. Die Byte-Reihenfolge entspricht Big-Endian. Tabelle \ref{tab:vcanbotschaft} zeigt eine Beispiel-Botschaft ohne TCP- und Ethernet-Header.
 
 \begin{description}
     \item[System] \hfill \\ Angabe eines Systems (zum Beispiel CAN oder LIN). Eine Auflistung der möglichen Werte ist in Tabelle \ref{tab:vcansysteme} zu finden. Die symbolischen Namen stammen dabei aus dem Elektrobit-Gateway. Höhere Werte führen beim EB Gateway zu Fehlern beziehungsweise Abstürzen.
@@ -270,7 +270,7 @@ Das eigentliche Binär-Format des Protokolls ist in Abbildung \ref{fig:vcan_prot
     \end{minipage}
 \end{table}
 
-Das Protokoll, wie es im Elektrobit-Gateway eingesetzt wird, hat einige Besonderheiten. So werden gelegentlich die Daten-Bytes mehrerer Botschaften angehängt. Hierbei wird der Header nur einmal, jedoch die Daten mehrerer Botschaften übermittelt. Auch wird zeitweise der Daten-Bereich einer Botschaft mehrfach angehängt. Das Verhalten konnte nicht zuverlässig nachvollzogen werden. Es hat jedoch den Anschein, dass diese Probleme durch eine hohe Netzwerk-Last beziehungsweise -Latenz hervorgerufen werden. Da nicht eindeutig eine Mehrfachsendung einer Botschaft von verschiedene Botschaften in einem Paket unterschieden werden kann, wurde dieses Verhalten nicht implementiert. 
+Das Protokoll, wie es im Elektrobit-Gateway eingesetzt wird, hat einige Besonderheiten. So werden gelegentlich die Daten-Bytes mehrerer Botschaften angehängt. Hierbei wird der Header nur einmal, jedoch die Daten mehrerer Botschaften übermittelt. Auch wird zeitweise der Datenbereich einer Botschaft mehrfach angehängt. Das Verhalten konnte nicht zuverlässig nachvollzogen werden. Es hat jedoch den Anschein, dass diese Probleme durch eine hohe Netzwerk-Last beziehungsweise Latenz hervorgerufen werden. Da nicht eindeutig eine Mehrfachsendung einer Botschaft von verschiedene Botschaften in einem Paket unterschieden werden kann, wurde dieses Verhalten nicht implementiert. 
 
 
 \section{Projekt Struktur}
@@ -333,7 +333,7 @@ Die vom Gateway und der VCAN-Applikation genutzte grafische Oberfläche basiert 
         \apiitem{start\_gateway(host='127.0.0.1', port=10020, rulesfile='')}
         Startet das Gateway auf IP \texttt{host} und dem Port \texttt{port}. Auf dem ausführenden Rechner muss ein Netzwerk-Interface mit der entsprechenden IP existieren. Der Port darf nicht durch eine andere Anwendung belegt sein. Optional kann eine Regeldatei angegeben werden, um Firewall-Regeln zu definieren. Dies ist noch experimentell.
         \apiitem{stop\_gateway()}
-        Stoppt das Gateway wieder. Anschließend kann mittels der \texttt{start\_gateway} Methode wieder gestartet werden. Es werden jedoch alle Verbindungen getrennt, und die Host IP muss ein weiteres mal angegeben werden.
+        Stoppt das Gateway. Anschließend kann dies wieder gestartet werden. Es werden jedoch alle Verbindungen getrennt, und die Host IP muss ein weiteres mal angegeben werden.
         \apiitem{connect\_other\_gateway(host, port=10020)}
         Diese Methode erlaubt es, ein laufendes Gateway mit einem anderen Gateway zu verbinden. Das Ziel-Gateway muss unter der IP \texttt{host} und dem Port \texttt{port} erreichbar sein.
         \apiitem{pcan\_init()}
@@ -377,30 +377,30 @@ Die vom Gateway und der VCAN-Applikation genutzte grafische Oberfläche basiert 
         \apiitem{close(sleep\_time=0.5)}
         Schließt die aktuelle Verbindung. Der Parameter \texttt{sleep\_time} wird verwendet, um nach dem Schließen der Verbindung einen Moment zu warten. Damit werden Eigenheiten des EB-Gateways und der AUTOSAR-Anwendungen ausgeglichen, da es ansonsten zu Fehlern kommen kann. Die Angabe erfolgt in Sekunden.
         \apiitem{get\_received\_item()}
-        Gibt die älteste empfangene Botschaft zurück. Falls die Queue leer ist, wird \texttt{None} zurückgegeben. Diese Methode muss im Polling-Betrieb häufig genug aufgerufen werden, um Daten-Verlust zu vermeiden.
+        Gibt die älteste empfangene Botschaft zurück. Falls die Queue leer ist, wird \texttt{None} zurückgegeben. Diese Methode muss im Pol\-ling-Be\-trieb häufig genug aufgerufen werden, um Daten-Verlust zu vermeiden.
         \apiitem{send(message, sleep\_time=0.2)}
-        Sende die Botschaft \texttt{message} zum verbundenden Gateway. Die Botschaft kann sowohl als Binär-String, als auch als VCANMessage vorliegen. Der Parameter \texttt{sleep\_time} wird verwendet, um Fehler zu vermeiden indem nach dem Senden ein Moment gewartet wird. Falls nur Applikation angebunden sind, die die VCAN-API nutzen kann dieser Wert auf 0 gesetzt werden. AUTOSAR-Applikation haben jedoch Probleme mit zu geringen Warte-Zeiten und können Botschaften verlieren oder sogar abstürzen. Die Angabe erfolgt in Sekunden. Falls der Client zu keinem Gateway verbunden ist, wird eine \texttt{VCANException} geworfer.
+        Sende die Botschaft \texttt{message} zum verbundenden Gateway. Die Botschaft kann sowohl als Binärstring, als auch als VCANMessage vorliegen. Der Parameter \texttt{sleep\_time} wird verwendet, um Fehler zu vermeiden indem nach dem Senden ein Moment gewartet wird. Falls nur Applikationen angebunden sind, die die VCAN-API nutzen kann dieser Wert auf 0 gesetzt werden. AUTOSAR-Applikationen haben jedoch Probleme mit zu geringen Warte-Zeiten und können Botschaften verlieren oder sogar abstürzen. Die Angabe erfolgt in Sekunden. Falls der Client zu keinem Gateway verbunden ist, wird eine \texttt{VCANException} geworfen.
     \end{description}
 \end{description}
 
 % class VCANMessage
 \begin{description}
     \apiitem{class VCANMessage()}
-    Repräsentiert eine Botschaft in der VCAN-API. Der Konstruktur generiert eine leere Botschaft. Diese kann entweder über \texttt{set\_parameters()} von Hand mit Parametern gefüllt werden, oder über \texttt{parameters\_from\_string()} von einer eingehenden Nachricht aus einem Binär-String.
+    Repräsentiert eine Botschaft in der VCAN-API. Der Konstruktur generiert eine leere Botschaft. Diese kann auf zwei Arten gefüllt werden. Die Methode \texttt{set\_parameters()} kann verwendet werden, um alle Werte manuell zu setzen. Ein Binärstring, wie er vom Gateway empfangen wird, kann über die Methode \texttt{parameters\_from\_string()} in eine VCANMessage umgewandelt werden.
     \begin{description}
         \apiitem{set\_parameters(can\_id,  data, system, channel, dlc=None)}
-        Setzt die Parameter der Nachricht entsprechend den Parametern. Parameter \texttt{can\_id} gibt die ID der Botschaft an. Die Nutzdaten sind werden in \texttt{data} erwartet und müssen als Liste übergeben werden. Die Parameter \texttt{system} und \texttt{channel} geben das entsprechende System und den Kanal an. Standard-Werte sind CAN und Kanal 0. Weitere Möglichkeiten sind in der Datei \texttt{vcan\_message.py} als Konstanten hinterlegt. Der letzte Parameter, \texttt{dlc}, gibt die Länge der Daten an. Falls \texttt{None} übergeben wird, wird die Länge des Daten-Arrays verwendet.
+        Setzt die Parameter der Nachricht entsprechend den Parametern. Parameter \texttt{can\_id} gibt die ID der Botschaft an. Die Nutzdaten werden in \texttt{data} erwartet und müssen als Liste übergeben werden. Die Parameter \texttt{system} und \texttt{channel} geben das entsprechende System und den Kanal an. Standard-Werte sind CAN und Kanal 0. Weitere Möglichkeiten sind in der Datei \texttt{vcan\_message.py} als Konstanten hinterlegt. Der letzte Parameter, \texttt{dlc}, gibt die Länge der Daten an. Falls \texttt{None} übergeben wird, wird die Länge des Daten-Arrays verwendet.
         \apiitem{parameters\_from\_string(m\_string)}
-        Setzt die Parameter der Nachricht anhand des Binär-Strings \texttt{m\_string}. Diese entsprechen direkt dem TCP-Paket und können hierdurch in eine VCAN-API-konforme Form gebracht werden.
+        Setzt die Parameter der Botschaft anhand des Binärstrings \texttt{m\_string}. Diese entsprechen direkt dem TCP-Paket und können hierdurch in eine VCAN-API-konforme Form gebracht werden.
         \apiitem{to\_sendable\_string()}
-        Wandelt die Botschaft in einen Binär-String um, der per TCP versendet werden kann.
+        Wandelt die Botschaft in einen Binärstring um, der per TCP versendet werden kann.
     \end{description}
 \end{description}
 
 % class VCANException
 \begin{description}
     \apiitem{class VCANException()}
-    Exception der VCAN-API. Wird geworfen falls die Verbindung zu einem Gateway scheitert, oder eine Nachricht gesendet wird obwohl keine Verbindung besteht. Außerdem siehe \ref{sec:vcan_gateway_api}
+    Exception der VCAN-API. Wird geworfen falls die Verbindung zu einem Gateway scheitert, oder eine Nachricht gesendet wird obwohl keine Verbindung besteht. Außerdem siehe \ref{sec:vcan_gateway_api}.
 \end{description}
 
 
