@@ -3,9 +3,9 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % documentclss
-%\documentclass[]{beamer}
+\documentclass[]{beamer}
 %\documentclass[handout]{beamer} %Drucker Version
-\documentclass[draft]{beamer}
+%\documentclass[draft]{beamer}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -25,7 +25,7 @@
 \usepackage{multirow}
 \usepackage{paralist}
 
-\usepackage{scrhack} 
+%\usepackage{scrhack} 
 \usepackage{listings}
 \lstset{
     language=C,
@@ -75,7 +75,7 @@
 
 \usetheme{Warsaw}
 
-\AtBeginSection[]
+\AtBeginSubsection[]
 {
    \begin{frame}
         \frametitle{Inhaltsübersicht}
@@ -122,37 +122,35 @@
 %%%%%
 \begin{frame}
 \frametitle{Einleitung}
-% TODO:
-% - Warum das ganze?
+    \begin{itemize}
+        \item AUTOSAR mittlerweile etabliert
+        \item Virtualisierung im Serverbereich üblich
+        \item In dieser Arbeit:
+        \begin{itemize}
+            \item Evaluation von Virtualisierung im Embedded-Bereich
+            \item Evaluation von AUTOSAR
+        \end{itemize}
+        \item Einsatzbereiche
+        \begin{itemize}
+            \item Lehre und Evaluation
+            \item Reale Projekte
+        \end{itemize}
+        \item Schwerpunkt: Kommunikation und Virtualisierung
+    \end{itemize}
 \end{frame}
 
-%%%%%%%%%%
-\subsection{Motivation}
-% TODO:
-% - Woraus entstand die Arbeit
-%%%%%
-\begin{frame}
-\frametitle{TODO}
-    \begin{figure}[ht]
-        \centering
-        \resizebox{\linewidth}{!}{\inputImage{gantt}}
-        \caption{TODO}
-        \label{fig:TODO}
-    \end{figure}
-\end{frame}
 
 %%%%%%%%%%
-\subsection{Zielsystem}
-% TODO:
-% - Was sollte bei dem Projekt rauskommen
+%\subsection{Zielsystem}
+
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Motivation}
     \begin{figure}[ht]
         \centering
-        \resizebox{\linewidth}{!}{\inputImage{arch_begin.dia}}
-        \caption{TODO}
-        \label{fig:TODO}
+        \resizebox{0.9\linewidth}{!}{\inputImage{arch_begin.dia}}
+        \caption{Fallbeispiel}
+        \label{fig:fallbeispiel}
     \end{figure}
 \end{frame}
 
@@ -163,31 +161,39 @@
 \section{Grundlagen}
 \label{sec:grundlagen}
 
-%%%%%
-\begin{frame}
-\frametitle{Überblick}
-
-\end{frame}
-
-
-
-
 %%%%%%%%%%
 \subsection{Virtualisierung}
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Überblick}
+    \begin{itemize}
+        \item Beschreibt eine Reihe von Techniken
+        \item Ein reales System -> mehrere virtuelle Systeme
+        \item Zentrales Element: Hypervisor
+        \item Verschiedene Ziele:
+        \begin{itemize}
+            \item Zugriff auf verschiedene Betriebssysteme
+            \item Wartbarkeit
+            \item Skalierbarkeit
+            \item Ausfallsicherheit
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Hypervisor Kategorien}
     \begin{figure}
         \centering
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
-            \inputImage{virt_type1.dia}
+            \resizebox{0.9\linewidth}{!}{\inputImage{virt_type1.dia}}
             \caption{Type 1-Hypervisor}
             \label{fig:hypervisor_type1}
         \end{subfigure}
         \begin{subfigure}[b]{0.49\textwidth}
             \centering
-            \inputImage{virt_type2.dia}
+            \resizebox{0.9\linewidth}{!}{\inputImage{virt_type2.dia}}
             \caption{Type 2-Hypervisor}
             \label{fig:hypervisor_type2}
         \end{subfigure}
@@ -198,28 +204,86 @@
 
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Virtualisierung in eingebetteten Systemen}
+    \begin{itemize}
+        \item Auch bekannt als: Time and Space Partitioning
+        \item SOCs immer Leistungsfähiger
+        \item Automobil: ~50 Steuergeräte
+        \item Spezielle Anforderungen
+        \begin{itemize}
+            \item Energieverbrauch
+            \item Speichernutzung
+            \item Sicherheit
+            \item Determinismus und Echtzeitfähigkeit
+        \end{itemize}
+        \item Bereits im Einsatz: ARINC 653
+    \end{itemize}
+\end{frame}
+
+
+%%%%%
+\begin{frame}
+\frametitle{ARINC 653 Übersicht}
     \begin{figure}[ht]
         \centering
-        \inputImage{arinc653.dia}
-        \caption[ARINC 653 Architektur Übersicht]{ARINC 653 Architektur Übersicht\cite{arinc653_wr}}
+        \resizebox{0.65\linewidth}{!}{\inputImage{arinc653.dia}}
+        \caption{ARINC 653 Architektur Übersicht}
         \label{fig:arinc_653}
     \end{figure}
 \end{frame}
 
+%%%%%
+\begin{frame}
+\frametitle{Marktübersicht}
+    \begin{itemize}
+        \item PikeOS
+        \item OKL4 Microvisor
+        \item INTEGRITY Multivisor
+        \item COQOS
+        \item XtratuM
+    \end{itemize}
+\end{frame}
 
+%%%%%
+\begin{frame}
+\frametitle{Vorteile und Nachteile}
+    \begin{itemize}
+        \item[$ + $] Unabhängigkeit vom Betriebssystem
+        \item[$ + $] Sicherheit
+        \item[$ + $] Wiederverwenden von altem Code
+        \item[$ + $] IP-Schutz und Trennung von Software-Lizenzen
+        \item[$ + $] Hypervisor klein und robust
 
+        \item[$ - $] Single Point of Failure
+        \item[$ - $] Leistungseinbußen
+        \item[$ - $] Größere Folgen eines Ausfalls
+    \end{itemize}
+\end{frame}
 
 
 %%%%%%%%%%
 \subsection{AUTOSAR}
+
 %%%%%
-%\begin{frame}[plain] % TODO: vielleicht plain da das Bild groß ist
 \begin{frame}
-\frametitle{TODO}
+\frametitle{AUTOSAR Einleitung}
+    \begin{itemize}
+        \item AUTomotive Open System ARchitecture
+        \item Systemarchitektur
+        \item Entwicklungsmodell
+        \item Entwickelt von und für Automobilindustrie
+        \item "`Erbe"' von OSEK/VDX
+        \item AUTOSAR ist nur Standard und beschreibt Schnittstellen
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}[plain] % TODO: vielleicht plain da das Bild groß ist
+%\begin{frame}
+\frametitle{AUTOSAR Überblick}
     \begin{figure}[p]
         \centering
-        \resizebox{\linewidth}{!}{\inputImage{autosar_overview.dia}}
+        \resizebox{0.6\linewidth}{!}{\inputImage{autosar_overview.dia}}
         \caption{Autosar Überblick}
         \label{fig:autosar_overview}
     \end{figure}
@@ -227,14 +291,32 @@
 
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Grundkonzepte}
+    \begin{itemize}
+        \item Systembeschreibung (System Description)
+        \item Kommunikations-Informationen
+        \item Quellcode und Objektdateien
+        \item AUTOSAR Entwicklungswerkzeug
+        \begin{itemize}
+            \item Basis-Software-Implementation
+            \item Basis-Software-Konfigurator
+            \item Runtime-Enviroment-Generator
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Entwicklungsprozess}
     \begin{figure}[ht]
         \centering
         \resizebox{\linewidth}{!}{\inputImage{Autosar_Prozess.dia}}
-        \caption{AUTOSAR-Entwicklungs-Prozess}
+        \caption{AUTOSAR-Entwicklungsprozess}
         \label{fig:autosar_prozess}
     \end{figure}
 \end{frame}
+
+% TODO: RTE, VFB, BSW
 
 %%%%%
 \begin{frame}
@@ -260,13 +342,16 @@
 
 %%%%%
 \begin{frame}
-\frametitle{TODO}
-    \begin{figure}[ht]
-        \centering
-        \inputImage{komm_beispiel.dia}
-        \caption[Struktur der AUTOSAR-Kommunikation]{Struktur der AUTOSAR-Kommunikation für das Senden und Empfangen einer CAN-Botschaft}
-        \label{fig:komm_beispiel}
-    \end{figure}
+\frametitle{Kritik an AUTOSAR}
+    \begin{itemize}
+        \item Effizienz
+        \item Umfang des Standards
+        \item Schnelle Entwicklung von AUTOSAR
+        \item Bindung an Hersteller
+        \item Starke Relevanz der Designphase
+        \item Dokumentation der Konfiguration
+        \item Portabilität von Softwarekomponenten
+    \end{itemize}
 \end{frame}
 
 
@@ -291,7 +376,7 @@
     \begin{figure}[!htbp]
         \center
         \inputImage{ISO_26262_Lifecycle.dia}
-        \caption[Sicherheitslebenszyklus nach ISO 26262]{Sicherheitslebenszyklus nach ISO 26262 (vgl. \cite{iso26262})}
+        \caption{Sicherheitslebenszyklus nach ISO 26262}
         \label{fig:lifecycle}
     \end{figure}
 \end{frame}
@@ -410,19 +495,8 @@
 \frametitle{TODO}
     \begin{figure}
         \centering
-        \begin{subfigure}[b]{0.49\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{boxplot_as}
-            \caption{Zeitverhalten AUTOSAR}
-            \label{fig:boxplot_as}
-        \end{subfigure}
-        \begin{subfigure}[b]{0.49\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{boxplot_vcan}
-            \caption{Zeitverhalten VCAN-API}
-            \label{fig:boxplot_vcan}
-        \end{subfigure}
-        \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots (Angaben in ms)}
+        \includegraphics[width=0.5\textwidth]{boxplot}
+        \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots}
         \label{fig:timinganalyse}
     \end{figure}
 \end{frame}
