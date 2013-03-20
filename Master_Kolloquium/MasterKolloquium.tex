@@ -537,7 +537,20 @@ Rte_Read_<p>_<d>(self, data)
 \subsection{Analyse}
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Relevanz für reale Projekte}
+    \begin{itemize}
+        \item Infotainment und Fahrerassistenzsysteme
+        \item Anbindung an Internet oder Car2X
+        \item Virtualisierung wird bereits in Avionik und Mobilfunkbranche eingesetzt
+        \item Funktionale Sicherheit beschränkt auf VMs
+        \item Produktivcode als Restbussimulation
+        \item VCAN bietet einfachen Zugriff
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Benchark und Echtzeitfähigkeit}
     \begin{figure}
         \centering
         \includegraphics[width=0.5\textwidth]{boxplot}
@@ -546,6 +559,30 @@ Rte_Read_<p>_<d>(self, data)
     \end{figure}
 \end{frame}
 
+%%%%%
+\begin{frame}
+\frametitle{Sicherheitsbetrachtung der Virtualisierung}
+    \begin{itemize}
+        \item Angriffssicherheit
+        \begin{itemize}
+            \item Gleiche Probleme klassischen Systemen
+            \item Angriffsweg Internet
+        \end{itemize}
+        \pause
+        \item Betriebssicherheit
+        \begin{itemize}
+            \item Verteiltes System -> Vereinigtes System
+            \item Weniger Hardware Redundanz
+        \end{itemize}
+        \pause
+        \item Absicherung der Kommunikation
+        \begin{itemize}
+            \item Integrität und Authentizität durch signieren und verschlüsseln
+            \item AUTOSAR 4.0 bietet \emph{Crypto Service}
+            \item Dedizierte VM kann Service anbieten (SSL, RSA, MD5\dots)
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
 
 %%%%%%%%%%
@@ -554,7 +591,23 @@ Rte_Read_<p>_<d>(self, data)
 \begin{frame}
 \frametitle{Fazit}
     \begin{itemize}
-        \item 
+        \item Virtualisierung ist ausgereiftes Konzept
+        \begin{itemize}
+            \item Erhöhte Komplexität
+            \item Verbesserte Abstraktion
+            \item Type 1-Hypervisor notwendig
+        \end{itemize}
+        \item WinCore und VCAN
+        \begin{itemize}
+            \item Guter Einstieg
+            \item Instabilität kritisch
+        \end{itemize}
+        \item AUTOSAR
+        \begin{itemize}
+            \item Notwendiger Schritt
+            \item Zu komplex?
+        \end{itemize}
+        % TODO: ISO 26262 notwendig
     \end{itemize}
 \end{frame}
 
@@ -563,7 +616,14 @@ Rte_Read_<p>_<d>(self, data)
 \begin{frame}
 \frametitle{Ausblick}
     \begin{itemize}
-        \item
+        \item XtratuM in der Lehre
+        \item VCAN
+        \begin{itemize}
+            \item VCAN-API erweiterbar
+            \item DBC, ARXML Unterstützung
+            \item Restbussimulation
+            \item \dots
+        \end{itemize}
     \end{itemize}
 \end{frame}
 
