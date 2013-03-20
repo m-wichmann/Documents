@@ -75,7 +75,7 @@
 
 \usetheme{Warsaw}
 
-\AtBeginSubsection[]
+\AtBeginSection[]
 {
    \begin{frame}
         \frametitle{Inhaltsübersicht}
@@ -316,11 +316,9 @@
     \end{figure}
 \end{frame}
 
-% TODO: RTE, VFB, BSW
-
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{AUTOSAR-Schichtenmodell}
     \begin{figure}[ht]
         \centering
         \resizebox{\linewidth}{!}{\inputImage{autosar_layer.dia}}
@@ -330,8 +328,41 @@
 \end{frame}
 
 %%%%%
+\begin{frame}[fragile] % TODO: fragile nötig?
+\frametitle{VFB und RTE}
+    \begin{itemize}
+        \item Virtual Functional Bus -> Designphase
+        \item Runtime-Enviroment -> Compilephase
+        \item 1 VFB pro System -> 1 RTE pro ECU
+        \item Trennung zwischen Applikation und Basissoftware
+        \item Schnittstellen/Interfaces werden in VFB definiert
+    \end{itemize}
+    \begin{exampleblock}{Beispiel Sender/Receiver-Interface}
+        \begin{verbatim}
+Rte_Write_<p>_<d>(self, data)
+Rte_Read_<p>_<d>(self, data)
+        \end{verbatim}
+    \end{exampleblock}
+\end{frame}
+
+
+%%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Basissoftware}
+    \begin{itemize}
+        \item "`Betriebssystem"'
+        \item Modular
+        \item Statisches System
+        \item Schnittstellen sowie Umfang der Module festgelegt
+        \item Granularität: Implementation Conformance Classes
+        \item Wichtige Module: Os, SchM, Com, PduR
+    \end{itemize}
+\end{frame}
+
+
+%%%%%
+\begin{frame}
+\frametitle{AUTOSAR-Schichtenmodell mit Modulen}
     \begin{figure}[ht]
         \centering
         \resizebox{\linewidth}{!}{\inputImage{autosar_refined_layer.dia}}
@@ -361,25 +392,39 @@
 \subsection{Netzwerkmanagment}
 %%%%%
 \begin{frame}
-\frametitle{TODO}
-
+\frametitle{Netzwerkmanagement}
+    \begin{itemize}
+        \item Synchroner Wechsel des Buszustands
+        \item Ziele: Energie sparen, Fehler vermeiden
+        \item Implementation nicht allgemein spezifiziert
+        \item Allgemein: Braodcastbotschaften geben Zustand einer ECU bekannt
+        \item Mögliche Konzepte:
+        \begin{itemize}
+            \item Direktes Monitoring
+            \item Indirektes Monitoring
+            \item Master/Slave
+            \item Peer-to-Peer
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 
 
-
+% TODO: soll das rein?! Wenn ja in welchem Umfang?!
 %%%%%%%%%%
-\subsection{Funktionale Sicherheit}
+%\subsection{Funktionale Sicherheit}
 %%%%%
-\begin{frame}
-\frametitle{TODO}
-    \begin{figure}[!htbp]
-        \center
-        \inputImage{ISO_26262_Lifecycle.dia}
-        \caption{Sicherheitslebenszyklus nach ISO 26262}
-        \label{fig:lifecycle}
-    \end{figure}
-\end{frame}
+%\begin{frame}
+%\frametitle{TODO}
+%    \begin{itemize}
+%        \item Allgemeiner, methodischer Ansatz zu Absicherung
+%        \item DIN/IEC 61508
+%        \item ISO 26262
+%        \begin{block}{TODO}
+%Die Ersatzpflicht des Herstellers ist ausgeschlossen, wenn [\dots] der Fehler nach dem Stand der Wissenschaft und Technik in dem Zeitpunkt, in dem der Hersteller das Produkt in den Verkehr brachte, nicht erkannt werden konnte.
+%        \end{block}
+%    \end{itemize}
+%\end{frame}
 
 
 
@@ -397,7 +442,7 @@
 \frametitle{Überblick}
     \begin{figure}[ht]
         \centering
-        \inputImage{arch_finished.dia}
+        \resizebox{0.8\linewidth}{!}{\inputImage{arch_finished.dia}}
         \caption{Vollständige Architektur}
         \label{fig:arch_finished}
     \end{figure}
@@ -508,14 +553,18 @@
 %%%%%
 \begin{frame}
 \frametitle{Fazit}
-
+    \begin{itemize}
+        \item 
+    \end{itemize}
 \end{frame}
 
 
 %%%%%
 \begin{frame}
 \frametitle{Ausblick}
-
+    \begin{itemize}
+        \item
+    \end{itemize}
 \end{frame}
 
 
