@@ -208,7 +208,7 @@
     \begin{itemize}
         \item Auch bekannt als: Time and Space Partitioning
         \item SOCs immer Leistungsfähiger
-        \item Automobil: ~50 Steuergeräte
+        \item Automobil: Bis zu 50 Steuergeräte
         \item Spezielle Anforderungen
         \begin{itemize}
             \item Energieverbrauch
@@ -278,8 +278,7 @@
 \end{frame}
 
 %%%%%
-\begin{frame}[plain] % TODO: vielleicht plain da das Bild groß ist
-%\begin{frame}
+\begin{frame}[plain]
 \frametitle{AUTOSAR Überblick}
     \begin{figure}[p]
         \centering
@@ -310,7 +309,7 @@
 \frametitle{Entwicklungsprozess}
     \begin{figure}[ht]
         \centering
-        \resizebox{\linewidth}{!}{\inputImage{Autosar_Prozess.dia}}
+        \resizebox{0.98\linewidth}{!}{\inputImage{Autosar_Prozess.dia}}
         \caption{AUTOSAR-Entwicklungsprozess}
         \label{fig:autosar_prozess}
     \end{figure}
@@ -321,14 +320,14 @@
 \frametitle{AUTOSAR-Schichtenmodell}
     \begin{figure}[ht]
         \centering
-        \resizebox{\linewidth}{!}{\inputImage{autosar_layer.dia}}
+        \resizebox{0.98\linewidth}{!}{\inputImage{autosar_layer.dia}}
         \caption{AUTOSAR-Schichtenmodell}
         \label{fig:autosar_layer}
     \end{figure}
 \end{frame}
 
 %%%%%
-\begin{frame}[fragile] % TODO: fragile nötig?
+\begin{frame}[fragile]
 \frametitle{VFB und RTE}
     \begin{itemize}
         \item Virtual Functional Bus -> Designphase
@@ -365,7 +364,7 @@ Rte_Read_<p>_<d>(self, data)
 \frametitle{AUTOSAR-Schichtenmodell mit Modulen}
     \begin{figure}[ht]
         \centering
-        \resizebox{\linewidth}{!}{\inputImage{autosar_refined_layer.dia}}
+        \resizebox{0.98\linewidth}{!}{\inputImage{autosar_refined_layer.dia}}
         \caption{AUTOSAR-Schichtenmodell mit genauerer Aufteilung}
         \label{fig:autosar_refined_layer}
     \end{figure}
@@ -437,6 +436,7 @@ Rte_Read_<p>_<d>(self, data)
 \section{Umsetzung}
 \label{sec:umsetzung}
 
+% TODO: Anforderungen an Fallbeispiel
 %%%%%
 \begin{frame}
 \frametitle{Überblick}
@@ -455,19 +455,93 @@ Rte_Read_<p>_<d>(self, data)
 \subsection{Virtualisierung}
 %%%%%
 \begin{frame}
-\frametitle{TODO}
-
+\frametitle{Virtualisierung}
+    \begin{itemize}
+        \item 2 VMs
+        \begin{itemize}
+            \item AUTOSAR-Komponente
+            \item VCAN-Applikation
+        \end{itemize}
+        \item Hypervisor
+        \begin{itemize}
+            \item Fallbeispiel: Type 2 -> VirtualBox
+            \item Evaluation: Type 1 -> XtratuM
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
-
+%%%%%
+\begin{frame}
+\frametitle{XtratuM}
+    \begin{itemize}
+        \item Open-Source Type 1 Hypervisor
+        \item Universitat Politècnica de València (Spanien)
+        \item Angelehnt an ARINC-653
+        \item Arbeitsfluss:
+        \begin{itemize}
+            \item XML-Konfiguration
+            \item C-Code
+            \item Kompilieren
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
 
 %%%%%%%%%%
 \subsection{Kommunikation Linux und AUTOSAR}
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Kommunikationstechniken}
 
+    \begin{itemize}
+        \pause
+        \item Interprozesskommunikation
+        \begin{itemize}
+            \item[$ + $] Geringer Overhead
+            \item[$ - $] Nicht in AUTOSAR vorgesehen
+        \end{itemize}
+        \pause
+        \item CAN
+        \begin{itemize}
+            \item[$ + $] Standard im Embedded-Bereich
+            \item[$ - $] Hardware für jedes System nötig
+        \end{itemize}
+        \pause
+        \item Ethernet
+        \begin{itemize}
+            \item[$ + $] Standard in allgemeiner Übertragungstechnik
+            \item[$ - $] Erst ab AUTOSAR 4.0 unterstützt
+        \end{itemize}
+        \pause
+        \item VCAN
+        \begin{itemize}
+            \item[$ + $] Baut auf Ethernet auf
+            \item[$ - $] Auf EB tresos beschränkt
+        \end{itemize}
+    \end{itemize}
+
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{VCAN}
+    \begin{itemize}
+        \item Ethernet TCP-Verbindung
+        \item Format
+        \begin{itemize}
+            \item System
+            \item Kanal
+            \item CAN-Botschaft -> ID, DLC, Daten
+        \end{itemize}        
+        \item Gateway nötig
+        \item VCAN-API
+        \begin{itemize}
+            \item In Python realisiert
+            \item Gateway-API
+            \item Client-API
+            \item Erweiterbar -> Zugriffskontrolle
+        \end{itemize}
+    \end{itemize}
 \end{frame}
 
 
@@ -477,22 +551,59 @@ Rte_Read_<p>_<d>(self, data)
 \subsection{Kommunikation AUTOSAR und Scheinwerfer-ECU}
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Steuergerät}
+    \begin{itemize}
+        \item Bisheriges Steuergerät
+        \begin{itemize}
+            \item Low-Speed-CAN
+            \item Altes Netzwerkmanagement -> Von EB tresos nicht untersützt
+        \end{itemize}
+        \item Aktuelles Steuergerät
+        \begin{itemize}
+            \item EB tresos Netzwerkmanagement unterstützt
+            \item Funktionalität teilweise durch CRC geschützt
+            \item CRC durch Restbussimulation
+        \end{itemize}
+    \end{itemize}
+\end{frame}
 
+
+%%%%%
+\begin{frame}
+\frametitle{AUTOSAR Netzwerkmanagment}
+    \begin{exampleblock}{NM-Botschaften}
+        \begin{table}
+        \centering
+            \begin{tabular}[h]{l l l}
+                Node & ID & Botschaft\\
+                \toprule
+                SMLS        & 0x1B00000C & 0C:00:04:00:00:00:00:00\\
+                BCM         & 0x1B00000E & 0E:00:04:01:11:00:0C:00\\
+                ---         & 0x1B000010 & 10:00:04:00:00:00:00:00\\
+                ---         & 0x1B000014 & 14:00:04:00:00:00:00:00\\
+            \end{tabular}
+        \label{tab:jitter_statistik}
+        \end{table}
+    \end{exampleblock}
+    \begin{itemize}
+        \item Byte 1: Source Node Identifier
+        \item Byte 2: Control Bit Vector
+        \item Rest: Nutzdaten -> VW-eigenes Protokoll
+    \end{itemize}
 \end{frame}
 
 
 
 
 %%%%%%%%%%
-\subsection{Entwicklung AUTOSAR Komponente}
+\subsection{Entwicklung AUTOSAR-Komponente}
 %%%%%
 \begin{frame}
-\frametitle{TODO}
+\frametitle{Systemmodell AUTOSAR-Komponente}
     \begin{figure}[ht]
         \centering
         \resizebox{\linewidth}{!}{\inputImage{SMLS_Modell.dia}}
-        \caption{Entwickeltes AUTOSAR Modell}
+        \caption{Entwickeltes Komponenten Modell}
         \label{fig:smls_modell}
     \end{figure}
 \end{frame}
@@ -504,24 +615,18 @@ Rte_Read_<p>_<d>(self, data)
 \subsection{Entwicklung steuernde Komponente}
 %%%%%
 \begin{frame}
-\frametitle{TODO}
-    \begin{figure}
-        \centering
-        \begin{subfigure}[b]{0.59\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{vcan_app_status}
-            \caption{Status-Fenster}
-            \label{fig:vcan_app_status}
-        \end{subfigure}
-        \begin{subfigure}[b]{0.39\textwidth}
-            \centering
-            \includegraphics[width=\textwidth]{vcan_app_control}
-            \caption{Kontroll-Fenster}
-            \label{fig:vcan_app_control}
-        \end{subfigure}
-        \caption{Oberfläche der VCAN-Applikation}
-        \label{fig:vcan_app}
-    \end{figure}
+\frametitle{Steuernde Komponente}
+    \begin{itemize}
+        \item Basiert auf VCAN-API
+        \item Zugriff auf Signale
+        \item Übersichtliche Darstellung des Zustands
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Demonstration}
+
 \end{frame}
 
 
@@ -595,7 +700,7 @@ Rte_Read_<p>_<d>(self, data)
         \begin{itemize}
             \item Erhöhte Komplexität
             \item Verbesserte Abstraktion
-            \item Type 1-Hypervisor notwendig
+            \item Type 1-Hypervisor für Vorteile notwendig
         \end{itemize}
         \item WinCore und VCAN
         \begin{itemize}
