@@ -1,0 +1,419 @@
+% TODO:
+% - 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% documentclss
+\documentclass[]{beamer}
+%\documentclass[handout]{beamer} %Drucker Version
+%\documentclass[draft]{beamer}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% packages
+
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+
+\usepackage{setspace}
+\usepackage{ellipsis}
+\usepackage{microtype}
+\usepackage{lmodern}
+
+\usepackage{lscape}
+\usepackage{booktabs}			% \toprule, \midrule und \bottomrule in Tabellen
+\usepackage{multirow}
+\usepackage{paralist}
+
+%\usepackage{scrhack} 
+\usepackage{listings}
+\lstset{
+    language=C,
+    breaklines=true,
+    breakatwhitespace=true
+    basicstyle=\footnotesize,
+    numbers=left,
+    numberstyle=\footnotesize,
+    stepnumber=1,
+    numbersep=5pt,
+    extendedchars=true,
+    inputencoding=utf8,
+    breakindent=30pt,
+    escapeinside={\%(}{\%)},
+    captionpos=b
+}
+
+%\usepackage[pdftex]{graphicx} % Bereits von Beamer geladen
+\graphicspath{{../Master_Thesis/images/}}
+\usepackage{tikz}
+\usepackage{wrapfig}
+\usepackage{caption}         
+\usepackage{subcaption}      
+\usepackage{pgfgantt}        
+\usepackage{rotating} 		
+
+\hypersetup{
+    pdftex,
+    bookmarks, bookmarksopen, bookmarksopenlevel=1, bookmarksnumbered=true,
+    pdfpagemode={UseNone},
+    pdfpagelayout={SinglePage},
+    plainpages=false,
+    pdfkeywords={AUTOSAR},
+    pdfsubject={AUTOSAR Einführung},
+    pdftitle={AUTOSAR Einführung},
+    pdfauthor={Martin Wichmann},
+}
+
+
+
+\newcommand{\inputImage}[1]{\input{../Master_Thesis/images/#1}}
+% Bild einfügen:
+%\centering
+%\resizebox{0.3\linewidth}{!}{\inputImage{autosar_overview.dia}}
+
+\newtranslation[to=ngerman]{Example}{Beispiel}
+
+\usetheme{Warsaw}
+
+\AtBeginSection[]
+{
+   \begin{frame}
+        \frametitle{Inhaltsübersicht}
+        \tableofcontents[currentsection,hideallsubsections]
+   \end{frame}
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Title
+\author{Martin Wichmann}
+\title{AUTOSAR Einführung}
+\date{\today}
+\institute{Ostfalia Hochschule für angewandte Wissenschaften}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% begin document
+\begin{document}
+
+\begin{frame}
+\maketitle
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Inhaltsübersicht}
+\tableofcontents[hideallsubsections] % Einstellungen siehe Beamer User Guide Seite 99
+\end{frame}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Einleitung
+\section{Einleitung}
+\label{sec:einleitung}
+
+%%%%%%%%%%
+\subsection{Allgemeines}
+\label{sec:allgemeines}
+
+%%%%%
+\begin{frame}
+\frametitle{Was ist AUTOSAR?}
+    \begin{itemize}
+        \item AUTomotive Open System ARchitecture
+        \item Systemarchitektur
+        \item Entwicklungsmodell
+        \item Entwickelt von und für die Automobilindustrie
+        \item "`Erbe"' von OSEK/VDX
+        \item AUTOSAR ist nur Standard und beschreibt Schnittstellen
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Warum AUTOSAR?}
+    \begin{itemize}
+        \item steigende Komplexität von E/E-Systemen
+        \item "`Cooperate on standards, compete on implementation"'
+        \item Ziele:
+        \begin{itemize}
+            \item Flexibilität
+            \item Skalierbarkeit
+            \item Qualität
+            \item Zuverlässigkeit
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Versionshistorie}
+    \begin{table}[h]
+        \centering
+        \begin{tabular}[h]{c c c l}
+            \toprule
+            Release & Datum & Phase & Notiz\\
+            \midrule
+                  & Juli 2003  &  & Gründung AUTOSAR\\
+            \midrule
+            1.0   & 08.07.2005 & \multirow{3}{*}{Phase I} & \\
+            2.0	  & 04.05.2006 &  & Entwicklung des Standards\\
+            2.1	  & 04.12.2006 &  & \\
+            \midrule
+            3.0	  & 21.12.2007 & \multirow{3}{*}{Phase II} & \\
+            3.1	  & 15.08.2008 &  & Selektive Verbesserungen\\
+            4.0	  & 18.12.2009 &  & \\
+            \midrule
+            4.0.2 & 15.04.2011 & \multirow{3}{*}{Phase III} & \\
+            3.2	  & 13.05.2011 &  & Wartung\\
+            4.0.3 & 22.12.2011 &  & \\
+            \bottomrule
+        \end{tabular}
+        \caption{Zeitlicher Ablauf der AUTOSAR-Entwicklung}
+        \label{tab:timeline}
+    \end{table}
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Überblick}
+\label{sec:überblick}
+
+%%%%%
+\begin{frame}[plain]
+\frametitle{Überblick}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{0.6\linewidth}{!}{\inputImage{autosar_overview.dia}}
+        \caption{AUTOSAR Überblick}
+        \label{fig:autosar_overview}
+    \end{figure}
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Methdology}
+\label{sec:methodology}
+
+%%%%%
+\begin{frame}
+\frametitle{Stuktur}
+    \begin{block}{Composition}
+        \begin{itemize}
+            \item "`Container"' für andere Kompositionen und SW-Cs
+        \end{itemize}
+    \end{block}
+    \begin{block}{Software Component (SW-C)}
+        \begin{itemize}
+            \item "`Container"'
+            \item Besitzen Ports
+        \end{itemize}
+    \end{block}
+    \begin{block}{Runnable}
+        \begin{itemize}
+            \item Codesequenzen
+            \item Durch Events (Timer, Daten,\dots) gestartet
+            \item Senden und Empfangen via Ports
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{VFB und RTE}
+    \begin{block}{VFB}
+        \begin{itemize}
+            \item Virtual Functional Bus
+            \item Systemsicht
+            \item Abstrakte Beschreibung
+        \end{itemize}
+    \end{block}
+    \begin{block}{RTE}
+        \begin{itemize}
+            \item Runtime Enviroment
+            \item Realisiert VFB
+            \item Pro ECU eine RTE
+            \item Automatisch aus Systembeschreibung generiert
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Ports und Interfaces}
+    \begin{block}{Port}
+        \begin{itemize}
+            \item Interaktionspunkte von Softwarekomponenten
+            \item Provide Port (PPort)
+            \item Require Port (RPort)
+        \end{itemize}
+    \end{block}
+    \begin{block}{Interface}
+        \begin{itemize}
+            \item Beschreibt Port näher
+            \item Daten/Operationen
+            \item Port mit kompatiblen Interfaces können verbunden werden
+        \end{itemize}
+    \end{block}
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Notation}
+\label{sec:Notation}
+
+%%%%%
+\begin{frame}
+\frametitle{Notation}
+
+    \begin{itemize}
+        \item Arbeitsablauf durch SPEM\footnote[frame]{\url{http://www.omg.org/spec/}}
+        \item Systemmodelle durch eigene Notation\footnote[frame]{./Auxiliary Material/AUTOSAR\_GraphicalNotation.pdf}
+    \end{itemize}
+
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Komponenten Diagramm}
+
+\end{frame}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Einleitung
+\section{Technik}
+\label{sec:technik}
+
+%%%%%
+\begin{frame}
+\frametitle{Technik}
+
+\end{frame}
+
+%%%%%%%%%%
+\subsection{VFB/RTE}
+\label{sec:VFB_RTE}
+%%%%%
+\begin{frame}
+\frametitle{Technik}
+
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Ports und Interfaces}
+\label{sec:ports_interfaces}
+%%%%%
+\begin{frame}
+\frametitle{Technik}
+
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Basissoftware}
+\label{sec:bsw}
+%%%%%
+\begin{frame}
+\frametitle{Technik}
+
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Module}
+
+\end{frame}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Anwendung an einem Beispiel
+\section{Anwendung an einem Beispiel}
+\label{sec:anwendung_beispiel}
+
+%%%%%%%%%%
+\subsection{Arbeitsablauf}
+\label{sec:arbeitsablauf}
+
+%%%%%
+\begin{frame}
+\frametitle{Arbeitsablauf}
+
+\end{frame}
+
+%%%%%%%%%%
+\subsection{Beispiel}
+\label{sec:beispiel}
+
+%%%%%
+\begin{frame}
+\frametitle{Beispiel: System Description}
+
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Beispiel: Kommunikationsmatrix}
+
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Beispiel: Applikationscode}
+
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Beispiel: ECU-Konfiguration}
+
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{Beispiel: Ergebniss}
+
+\end{frame}
+
+
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Literaturangaben
+\appendix
+\section*{Literatur}
+\label{sec:Literatur}
+
+\begin{frame}
+
+
+\begin{thebibliography}{10}
+
+\bibitem[1]{1} \textsc{Olaf Kindel, Mario Driedrich}: {\em Softwareentwicklung mit AUTOSAR: Grundlagen, Engineering, Management in der Praxis.} dpunkt.verlag, 2009.
+
+\bibitem[2]{2} \textsc{Peter Löw, Roland Pabst, Erwin Petry}: {\em Funktionale Sicherheit in der Praxis.} dpunkt.verlag, 2010.
+
+\bibitem[3]{3} \textsc{AUTOSAR}: {\em Technical Overview.} Online unter: \url{http://autosar.org/download/R3.1/AUTOSAR_TechnicalOverview.pdf}
+
+\bibitem[4]{4} \textsc{AUTOSAR}: {\em Layered Software Architecture.} Online unter: \url{http://autosar.org/download/R3.1/AUTOSAR_LayeredSoftwareArchitecture.pdf}
+
+\end{thebibliography}
+
+
+\end{frame}
+
+\end{document}
+
