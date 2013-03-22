@@ -17,5 +17,6 @@ clean:
 	$(RM) $(TARGET).toc
 	$(RM) $(TARGET).nav
 	$(RM) $(TARGET).snm
+	$(RM) $(TARGET).vrb
 
 .PHONY: all clean

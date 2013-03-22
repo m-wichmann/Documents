@@ -124,7 +124,7 @@
 \frametitle{Einleitung}
     \begin{itemize}
         \item AUTOSAR mittlerweile etabliert
-        \item Virtualisierung im Serverbereich üblich
+        \item Virtualisierung im Server-Bereich üblich
         \item In dieser Arbeit:
         \begin{itemize}
             \item Evaluation von Virtualisierung im Embedded-Bereich
@@ -168,7 +168,7 @@
 \frametitle{Überblick}
     \begin{itemize}
         \item Beschreibt eine Reihe von Techniken
-        \item Ein reales System -> mehrere virtuelle Systeme
+        \item Ein reales System --> mehrere virtuelle Systeme
         \item Zentrales Element: Hypervisor
         \item Verschiedene Ziele:
         \begin{itemize}
@@ -206,8 +206,8 @@
 \begin{frame}
 \frametitle{Virtualisierung in eingebetteten Systemen}
     \begin{itemize}
-        \item Auch bekannt als: Time and Space Partitioning
-        \item SOCs immer Leistungsfähiger
+        \item Auch bekannt als: \emph{Time and Space Partitioning}
+        \item SOCs immer leistungsfähiger
         \item Automobil: Bis zu 50 Steuergeräte
         \item Spezielle Anforderungen
         \begin{itemize}
@@ -271,7 +271,7 @@
         \item AUTomotive Open System ARchitecture
         \item Systemarchitektur
         \item Entwicklungsmodell
-        \item Entwickelt von und für Automobilindustrie
+        \item Entwickelt von und für die Automobilindustrie
         \item "`Erbe"' von OSEK/VDX
         \item AUTOSAR ist nur Standard und beschreibt Schnittstellen
     \end{itemize}
@@ -293,7 +293,7 @@
 \frametitle{Grundkonzepte}
     \begin{itemize}
         \item Systembeschreibung (System Description)
-        \item Kommunikations-Informationen
+        \item Kommunikationsinformationen
         \item Quellcode und Objektdateien
         \item AUTOSAR Entwicklungswerkzeug
         \begin{itemize}
@@ -330,9 +330,9 @@
 \begin{frame}[fragile]
 \frametitle{VFB und RTE}
     \begin{itemize}
-        \item Virtual Functional Bus -> Designphase
-        \item Runtime-Enviroment -> Compilephase
-        \item 1 VFB pro System -> 1 RTE pro ECU
+        \item Virtual Functional Bus --> Designphase
+        \item Runtime-Enviroment --> Compilephase
+        \item 1 VFB pro System --> 1 RTE pro ECU
         \item Trennung zwischen Applikation und Basissoftware
         \item Schnittstellen/Interfaces werden in VFB definiert
     \end{itemize}
@@ -464,8 +464,8 @@ Rte_Read_<p>_<d>(self, data)
         \end{itemize}
         \item Hypervisor
         \begin{itemize}
-            \item Fallbeispiel: Type 2 -> VirtualBox
-            \item Evaluation: Type 1 -> XtratuM
+            \item Fallbeispiel: Type 2 --> VirtualBox
+            \item Evaluation: Type 1 --> XtratuM
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -474,7 +474,7 @@ Rte_Read_<p>_<d>(self, data)
 \begin{frame}
 \frametitle{XtratuM}
     \begin{itemize}
-        \item Open-Source Type 1 Hypervisor
+        \item Open-Source Type 1-Hypervisor
         \item Universitat Politècnica de València (Spanien)
         \item Angelehnt an ARINC-653
         \item Arbeitsfluss:
@@ -531,7 +531,7 @@ Rte_Read_<p>_<d>(self, data)
         \begin{itemize}
             \item System
             \item Kanal
-            \item CAN-Botschaft -> ID, DLC, Daten
+            \item CAN-Botschaft --> ID, DLC, Daten
         \end{itemize}        
         \item Gateway nötig
         \item VCAN-API
@@ -539,7 +539,7 @@ Rte_Read_<p>_<d>(self, data)
             \item In Python realisiert
             \item Gateway-API
             \item Client-API
-            \item Erweiterbar -> Zugriffskontrolle
+            \item Erweiterbar --> Zugriffskontrolle
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -556,13 +556,13 @@ Rte_Read_<p>_<d>(self, data)
         \item Bisheriges Steuergerät
         \begin{itemize}
             \item Low-Speed-CAN
-            \item Altes Netzwerkmanagement -> Von EB tresos nicht untersützt
+            \item Altes Netzwerkmanagement --> Von EB tresos nicht untersützt
         \end{itemize}
         \item Aktuelles Steuergerät
         \begin{itemize}
             \item EB tresos Netzwerkmanagement unterstützt
             \item Funktionalität teilweise durch CRC geschützt
-            \item CRC durch Restbussimulation
+            \item CRC-Werte durch Restbussimulation ermittelt
         \end{itemize}
     \end{itemize}
 \end{frame}
@@ -588,7 +588,7 @@ Rte_Read_<p>_<d>(self, data)
     \begin{itemize}
         \item Byte 1: Source Node Identifier
         \item Byte 2: Control Bit Vector
-        \item Rest: Nutzdaten -> VW-eigenes Protokoll
+        \item Rest: Nutzdaten --> VW-eigenes Protokoll
     \end{itemize}
 \end{frame}
 
@@ -676,7 +676,7 @@ Rte_Read_<p>_<d>(self, data)
         \pause
         \item Betriebssicherheit
         \begin{itemize}
-            \item Verteiltes System -> Vereinigtes System
+            \item Verteiltes System --> Vereinigtes System
             \item Weniger Hardware Redundanz
         \end{itemize}
         \pause
