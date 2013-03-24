@@ -83,6 +83,20 @@
    \end{frame}
 }
 
+\newcommand*\oldmacro{}%
+\let\oldmacro\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+  \oldmacro\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber}
+
+\newcommand{\beginbackup}{
+   \newcounter{framenumbervorappendix}
+   \setcounter{framenumbervorappendix}{\value{framenumber}}
+}
+\newcommand{\backupend}{
+   \addtocounter{framenumbervorappendix}{-\value{framenumber}}
+   \addtocounter{framenumber}{\value{framenumbervorappendix}} 
+}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -204,7 +218,6 @@
 \begin{frame}
 \frametitle{Virtualisierung in eingebetteten Systemen}
     \begin{itemize}
-        \item Auch bekannt als: \emph{Time and Space Partitioning}
         \item SOCs immer leistungsfähiger
         \item Automobil: Bis zu 50 Steuergeräte
         \item Spezielle Anforderungen
@@ -215,6 +228,7 @@
             \item Determinismus und Echtzeitfähigkeit
         \end{itemize}
         \item Bereits im Einsatz: ARINC 653
+        \item Auch bekannt als: \emph{Time and Space Partitioning}
     \end{itemize}
 \end{frame}
 
@@ -238,13 +252,11 @@
     \begin{itemize}
         \item[$ + $] Unabhängigkeit vom Betriebssystem
         \item[$ + $] Sicherheit
-        \item[$ + $] Wiederverwenden von altem Code
         \item[$ + $] IP-Schutz und Trennung von Software-Lizenzen
         \item[$ + $] Hypervisor klein und robust
 
-        \item[$ - $] Single Point of Failure
+        \item[$ - $] Single Point of Failure und größere Folgen eines Ausfalls
         \item[$ - $] Leistungseinbußen
-        \item[$ - $] Größere Folgen eines Ausfalls
     \end{itemize}
 \end{frame}
 
@@ -331,7 +343,6 @@ Rte_Read_<p>_<d>(self, data)
         \item Modular
         \item Statisches System
         \item Schnittstellen sowie Umfang der Module festgelegt
-        \item Granularität: Implementation Conformance Classes
         \item Wichtige Module: Os, SchM, Com, PduR
     \end{itemize}
 \end{frame}
@@ -344,37 +355,12 @@ Rte_Read_<p>_<d>(self, data)
 \frametitle{Kritik an AUTOSAR}
     \begin{itemize}
         \item Effizienz
-        \item Umfang des Standards
-        \item Schnelle Entwicklung von AUTOSAR
-        \item Bindung an Hersteller
+        \item Umfang und Schnelle Entwicklung des Standards
         \item Starke Relevanz der Designphase
-        \item Dokumentation der Konfiguration
-        \item Portabilität von Softwarekomponenten
     \end{itemize}
 \end{frame}
 
 
-
-
-
-
-
-
-% TODO: soll das rein?! Wenn ja in welchem Umfang?!
-%%%%%%%%%%
-%\subsection{Funktionale Sicherheit}
-%%%%%
-%\begin{frame}
-%\frametitle{TODO}
-%    \begin{itemize}
-%        \item Allgemeiner, methodischer Ansatz zu Absicherung
-%        \item DIN/IEC 61508
-%        \item ISO 26262
-%        \begin{block}{TODO}
-%Die Ersatzpflicht des Herstellers ist ausgeschlossen, wenn [\dots] der Fehler nach dem Stand der Wissenschaft und Technik in dem Zeitpunkt, in dem der Hersteller das Produkt in den Verkehr brachte, nicht erkannt werden konnte.
-%        \end{block}
-%    \end{itemize}
-%\end{frame}
 
 
 
@@ -493,7 +479,7 @@ Rte_Read_<p>_<d>(self, data)
         \item Bisheriges Steuergerät
         \begin{itemize}
             \item Low-Speed-CAN
-            \item Altes Netzwerkmanagement --> Von EB tresos nicht untersützt
+            \item Altes Netzwerkmanagement --> Von EB tresos nicht unterstützt
         \end{itemize}
         \item Aktuelles Steuergerät
         \begin{itemize}
@@ -554,34 +540,6 @@ Rte_Read_<p>_<d>(self, data)
 \label{sec:analyse_fazit}
 
 %%%%%%%%%%
-\subsection{Analyse}
-%%%%%
-\begin{frame}
-\frametitle{Relevanz für reale Projekte}
-    \begin{itemize}
-        \item Infotainment und Fahrerassistenzsysteme
-        \item Anbindung an Internet oder Car2X
-        \item Virtualisierung wird bereits in Avionik und Mobilfunkbranche eingesetzt
-        \item Produktivcode als Restbussimulation
-        \item VCAN bietet einfachen Zugriff
-    \end{itemize}
-\end{frame}
-
-%%%%%
-\begin{frame}
-\frametitle{Benchark und Echtzeitfähigkeit}
-    \begin{figure}
-        \centering
-        \includegraphics[width=0.5\textwidth]{boxplot}
-        \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots}
-        \label{fig:timinganalyse}
-    \end{figure}
-\end{frame}
-
-
-
-
-%%%%%%%%%%
 \subsection{Fazit und Ausblick}
 %%%%%
 \begin{frame}
@@ -592,6 +550,7 @@ Rte_Read_<p>_<d>(self, data)
             \item Erhöhte Komplexität
             \item Verbesserte Abstraktion
             \item Type 1-Hypervisor für Vorteile notwendig
+            \item Wird bereits in Avionik und Mobilfunkbranche eingesetzt
         \end{itemize}
         \item WinCore und VCAN
         \begin{itemize}
@@ -605,7 +564,6 @@ Rte_Read_<p>_<d>(self, data)
         \end{itemize}
     \end{itemize}
 \end{frame}
-
 
 %%%%%
 \begin{frame}
@@ -623,8 +581,12 @@ Rte_Read_<p>_<d>(self, data)
 \end{frame}
 
 %%%%%
-\begin{frame}
-\end{frame}
+% Schwarze Folie vor Anhang um Präsentation zu "beenden"
+\bgroup
+    \setbeamercolor{background canvas}{bg=black}
+    \begin{frame}[plain]{}
+    \end{frame}
+\egroup
 
 
 
@@ -635,6 +597,8 @@ Rte_Read_<p>_<d>(self, data)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
 % Literaturangaben
 \appendix
+
+\beginbackup
 
 \section*{Virtualisierung (Anhang)}
 \label{sec:virt_anhang}
@@ -727,6 +691,17 @@ Rte_Read_<p>_<d>(self, data)
     \end{figure}
 \end{frame}
 
+%%%%%
+\begin{frame}
+\frametitle{Benchmark und Echtzeitfähigkeit}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{boxplot}
+        \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots}
+        \label{fig:timinganalyse}
+    \end{figure}
+\end{frame}
+
 \section*{Netzwerkmanagement}
 \label{sec:NM_anhang}
 
@@ -737,7 +712,7 @@ Rte_Read_<p>_<d>(self, data)
         \item Synchroner Wechsel des Buszustands
         \item Ziele: Energie sparen, Fehler vermeiden
         \item Implementation nicht allgemein spezifiziert
-        \item Allgemein: Braodcastbotschaften geben Zustand einer ECU bekannt
+        \item Allgemein: Broadcastbotschaften geben Zustand einer ECU bekannt
         \item Mögliche Konzepte:
         \begin{itemize}
             \item Direktes Monitoring
@@ -774,6 +749,9 @@ Rte_Read_<p>_<d>(self, data)
 
 
 
+
+
+
 \section*{Literatur}
 \label{sec:Literatur}
 
@@ -795,5 +773,6 @@ Rte_Read_<p>_<d>(self, data)
 
 \end{frame}
 
+\backupend
 \end{document}
 
