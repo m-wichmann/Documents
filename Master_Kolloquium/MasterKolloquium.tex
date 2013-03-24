@@ -140,8 +140,6 @@
 \end{frame}
 
 
-%%%%%%%%%%
-%\subsection{Zielsystem}
 
 %%%%%
 \begin{frame}
@@ -232,17 +230,7 @@
     \end{figure}
 \end{frame}
 
-%%%%%
-\begin{frame}
-\frametitle{Marktübersicht}
-    \begin{itemize}
-        \item PikeOS
-        \item OKL4 Microvisor
-        \item INTEGRITY Multivisor
-        \item COQOS
-        \item XtratuM
-    \end{itemize}
-\end{frame}
+
 
 %%%%%
 \begin{frame}
@@ -304,16 +292,6 @@
     \end{itemize}
 \end{frame}
 
-%%%%%
-\begin{frame}
-\frametitle{Entwicklungsprozess}
-    \begin{figure}[ht]
-        \centering
-        \resizebox{0.98\linewidth}{!}{\inputImage{Autosar_Prozess.dia}}
-        \caption{AUTOSAR-Entwicklungsprozess}
-        \label{fig:autosar_prozess}
-    \end{figure}
-\end{frame}
 
 %%%%%
 \begin{frame}
@@ -359,16 +337,7 @@ Rte_Read_<p>_<d>(self, data)
 \end{frame}
 
 
-%%%%%
-\begin{frame}
-\frametitle{AUTOSAR-Schichtenmodell mit Modulen}
-    \begin{figure}[ht]
-        \centering
-        \resizebox{0.98\linewidth}{!}{\inputImage{autosar_refined_layer.dia}}
-        \caption{AUTOSAR-Schichtenmodell mit genauerer Aufteilung}
-        \label{fig:autosar_refined_layer}
-    \end{figure}
-\end{frame}
+
 
 %%%%%
 \begin{frame}
@@ -387,25 +356,7 @@ Rte_Read_<p>_<d>(self, data)
 
 
 
-%%%%%%%%%%
-\subsection{Netzwerkmanagment}
-%%%%%
-\begin{frame}
-\frametitle{Netzwerkmanagement}
-    \begin{itemize}
-        \item Synchroner Wechsel des Buszustands
-        \item Ziele: Energie sparen, Fehler vermeiden
-        \item Implementation nicht allgemein spezifiziert
-        \item Allgemein: Braodcastbotschaften geben Zustand einer ECU bekannt
-        \item Mögliche Konzepte:
-        \begin{itemize}
-            \item Direktes Monitoring
-            \item Indirektes Monitoring
-            \item Master/Slave
-            \item Peer-to-Peer
-        \end{itemize}
-    \end{itemize}
-\end{frame}
+
 
 
 
@@ -470,21 +421,7 @@ Rte_Read_<p>_<d>(self, data)
     \end{itemize}
 \end{frame}
 
-%%%%%
-\begin{frame}
-\frametitle{XtratuM}
-    \begin{itemize}
-        \item Open-Source Type 1-Hypervisor
-        \item Universitat Politècnica de València (Spanien)
-        \item Angelehnt an ARINC-653
-        \item Arbeitsfluss:
-        \begin{itemize}
-            \item XML-Konfiguration
-            \item C-Code
-            \item Kompilieren
-        \end{itemize}
-    \end{itemize}
-\end{frame}
+
 
 
 %%%%%%%%%%
@@ -568,29 +505,7 @@ Rte_Read_<p>_<d>(self, data)
 \end{frame}
 
 
-%%%%%
-\begin{frame}
-\frametitle{AUTOSAR Netzwerkmanagment}
-    \begin{exampleblock}{NM-Botschaften}
-        \begin{table}
-        \centering
-            \begin{tabular}[h]{l l l}
-                Node & ID & Botschaft\\
-                \toprule
-                SMLS        & 0x1B00000C & 0C:00:04:00:00:00:00:00\\
-                BCM         & 0x1B00000E & 0E:00:04:01:11:00:0C:00\\
-                ---         & 0x1B000010 & 10:00:04:00:00:00:00:00\\
-                ---         & 0x1B000014 & 14:00:04:00:00:00:00:00\\
-            \end{tabular}
-        \label{tab:jitter_statistik}
-        \end{table}
-    \end{exampleblock}
-    \begin{itemize}
-        \item Byte 1: Source Node Identifier
-        \item Byte 2: Control Bit Vector
-        \item Rest: Nutzdaten --> VW-eigenes Protokoll
-    \end{itemize}
-\end{frame}
+
 
 
 
@@ -647,7 +562,6 @@ Rte_Read_<p>_<d>(self, data)
         \item Infotainment und Fahrerassistenzsysteme
         \item Anbindung an Internet oder Car2X
         \item Virtualisierung wird bereits in Avionik und Mobilfunkbranche eingesetzt
-        \item Funktionale Sicherheit beschränkt auf VMs
         \item Produktivcode als Restbussimulation
         \item VCAN bietet einfachen Zugriff
     \end{itemize}
@@ -662,6 +576,79 @@ Rte_Read_<p>_<d>(self, data)
         \caption[Zeitanalyse des VCAN als Boxplots]{Zeitanalyse des VCAN als Boxplots}
         \label{fig:timinganalyse}
     \end{figure}
+\end{frame}
+
+
+
+
+%%%%%%%%%%
+\subsection{Fazit und Ausblick}
+%%%%%
+\begin{frame}
+\frametitle{Fazit}
+    \begin{itemize}
+        \item Virtualisierung ist ausgereiftes Konzept
+        \begin{itemize}
+            \item Erhöhte Komplexität
+            \item Verbesserte Abstraktion
+            \item Type 1-Hypervisor für Vorteile notwendig
+        \end{itemize}
+        \item WinCore und VCAN
+        \begin{itemize}
+            \item Guter Einstieg
+            \item Instabilität kritisch
+        \end{itemize}
+        \item AUTOSAR
+        \begin{itemize}
+            \item Notwendiger Schritt
+            \item Zu komplex?
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+%%%%%
+\begin{frame}
+\frametitle{Ausblick}
+    \begin{itemize}
+        \item XtratuM in der Lehre
+        \item VCAN
+        \begin{itemize}
+            \item VCAN-API erweiterbar
+            \item DBC, ARXML Unterstützung
+            \item Restbussimulation
+            \item \dots
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\end{frame}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+% Literaturangaben
+\appendix
+
+\section*{Virtualisierung (Anhang)}
+\label{sec:virt_anhang}
+
+%%%%%
+\begin{frame}
+\frametitle{Hypervisor Marktübersicht}
+    \begin{itemize}
+        \item PikeOS
+        \item OKL4 Microvisor
+        \item INTEGRITY Multivisor
+        \item COQOS
+        \item XtratuM
+    \end{itemize}
 \end{frame}
 
 %%%%%
@@ -689,61 +676,104 @@ Rte_Read_<p>_<d>(self, data)
     \end{itemize}
 \end{frame}
 
-
-%%%%%%%%%%
-\subsection{Fazit und Ausblick}
-%%%%%
-\begin{frame}
-\frametitle{Fazit}
-    \begin{itemize}
-        \item Virtualisierung ist ausgereiftes Konzept
-        \begin{itemize}
-            \item Erhöhte Komplexität
-            \item Verbesserte Abstraktion
-            \item Type 1-Hypervisor für Vorteile notwendig
-        \end{itemize}
-        \item WinCore und VCAN
-        \begin{itemize}
-            \item Guter Einstieg
-            \item Instabilität kritisch
-        \end{itemize}
-        \item AUTOSAR
-        \begin{itemize}
-            \item Notwendiger Schritt
-            \item Zu komplex?
-        \end{itemize}
-        % TODO: ISO 26262 notwendig
-    \end{itemize}
-\end{frame}
-
+\section*{XtratuM}
+\label{sec:XtratuM_anhang}
 
 %%%%%
 \begin{frame}
-\frametitle{Ausblick}
+\frametitle{XtratuM}
     \begin{itemize}
-        \item XtratuM in der Lehre
-        \item VCAN
+        \item Open-Source Type 1-Hypervisor
+        \item Universitat Politècnica de València (Spanien)
+        \item Angelehnt an ARINC-653
+        \item Arbeitsfluss:
         \begin{itemize}
-            \item VCAN-API erweiterbar
-            \item DBC, ARXML Unterstützung
-            \item Restbussimulation
-            \item \dots
+            \item XML-Konfiguration
+            \item C-Code
+            \item Kompilieren
         \end{itemize}
     \end{itemize}
 \end{frame}
 
+%%%%%
+\begin{frame}
+\frametitle{XtratuM Demonstration}
+
+\end{frame}
+
+\section*{AUTOSAR (Anhang)}
+\label{sec:autosar_anhang}
+
+
+%%%%%
+\begin{frame}
+\frametitle{Entwicklungsprozess}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{0.98\linewidth}{!}{\inputImage{Autosar_Prozess.dia}}
+        \caption{AUTOSAR-Entwicklungsprozess}
+        \label{fig:autosar_prozess}
+    \end{figure}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{AUTOSAR-Schichtenmodell mit Modulen}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{0.98\linewidth}{!}{\inputImage{autosar_refined_layer.dia}}
+        \caption{AUTOSAR-Schichtenmodell mit genauerer Aufteilung}
+        \label{fig:autosar_refined_layer}
+    \end{figure}
+\end{frame}
+
+\section*{Netzwerkmanagement}
+\label{sec:NM_anhang}
+
+%%%%%
+\begin{frame}
+\frametitle{Netzwerkmanagement}
+    \begin{itemize}
+        \item Synchroner Wechsel des Buszustands
+        \item Ziele: Energie sparen, Fehler vermeiden
+        \item Implementation nicht allgemein spezifiziert
+        \item Allgemein: Braodcastbotschaften geben Zustand einer ECU bekannt
+        \item Mögliche Konzepte:
+        \begin{itemize}
+            \item Direktes Monitoring
+            \item Indirektes Monitoring
+            \item Master/Slave
+            \item Peer-to-Peer
+        \end{itemize}
+    \end{itemize}
+\end{frame}
+
+%%%%%
+\begin{frame}
+\frametitle{AUTOSAR Netzwerkmanagment}
+    \begin{exampleblock}{NM-Botschaften}
+        \begin{table}
+        \centering
+            \begin{tabular}[h]{l l l}
+                Node & ID & Botschaft\\
+                \toprule
+                SMLS        & 0x1B00000C & 0C:00:04:00:00:00:00:00\\
+                BCM         & 0x1B00000E & 0E:00:04:01:11:00:0C:00\\
+                ---         & 0x1B000010 & 10:00:04:00:00:00:00:00\\
+                ---         & 0x1B000014 & 14:00:04:00:00:00:00:00\\
+            \end{tabular}
+        \label{tab:jitter_statistik}
+        \end{table}
+    \end{exampleblock}
+    \begin{itemize}
+        \item Byte 1: Source Node Identifier
+        \item Byte 2: Control Bit Vector
+        \item Rest: Nutzdaten --> VW-eigenes Protokoll
+    \end{itemize}
+\end{frame}
 
 
 
-
-
-
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
-% Literaturangaben
-\appendix
 \section*{Literatur}
 \label{sec:Literatur}
 
