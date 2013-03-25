@@ -175,7 +175,6 @@
             4.0.3 & 22.12.2011 &  & \\
             \bottomrule
         \end{tabular}
-        \caption{Zeitlicher Ablauf der AUTOSAR-Entwicklung}
         \label{tab:timeline}
     \end{table}
 \end{frame}
@@ -186,11 +185,10 @@
 
 %%%%%
 \begin{frame}[plain]
-\frametitle{Überblick}
+\frametitle{AUTOSAR Überblick}
     \begin{figure}[ht]
         \centering
         \resizebox{0.6\linewidth}{!}{\inputImage{autosar_overview.dia}}
-        \caption{AUTOSAR Überblick}
         \label{fig:autosar_overview}
     \end{figure}
 \end{frame}
@@ -270,8 +268,16 @@
 \frametitle{Notation}
 
     \begin{itemize}
-        \item Arbeitsablauf durch SPEM\footnote[frame]{\url{http://www.omg.org/spec/}}
-        \item Systemmodelle durch eigene Notation\footnote[frame]{./Auxiliary Material/AUTOSAR\_GraphicalNotation.pdf}
+        \item Arbeitsablauf durch SPEM
+        \begin{itemize}
+            \item \url{http://www.omg.org/spec/}
+        \end{itemize}
+        \item Systemmodelle durch eigene Notation
+        \begin{itemize}
+            \item Im Standard beschrieben unter: \url{http://autosar.org/download/R3.1/AUTOSAR_GraphicalNotation.pdf}
+            \item Wird leider nicht durchgehend verwendet!
+            \item (Noch unfertiges) Profil für Dia (Open-Source-Diagramm-Tool): \url{https://github.com/erebos42/dia_sheets}
+        \end{itemize}
     \end{itemize}
 
 \end{frame}
@@ -279,7 +285,11 @@
 %%%%%
 \begin{frame}
 \frametitle{Komponenten Diagramm}
-
+    \begin{figure}[ht]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{SMLS_Modell.dia}}
+        \label{fig:smls_modell}
+    \end{figure}
 \end{frame}
 
 
@@ -345,8 +355,12 @@
 
 %%%%%
 \begin{frame}
-\frametitle{Arbeitsablauf}
-
+\frametitle{Entwicklungsprozess}
+    \begin{figure}[ht]
+        \centering
+        \resizebox{0.98\linewidth}{!}{\inputImage{Autosar_Prozess.dia}}
+        \label{fig:autosar_prozess}
+    \end{figure}
 \end{frame}
 
 %%%%%%%%%%
@@ -356,7 +370,11 @@
 %%%%%
 \begin{frame}
 \frametitle{Beispiel: System Description}
-
+    \begin{figure}[ht]
+        \centering
+        \resizebox{\linewidth}{!}{\inputImage{SMLS_Modell.dia}}
+        \label{fig:smls_modell2}
+    \end{figure}
 \end{frame}
 
 %%%%%
@@ -366,9 +384,13 @@
 \end{frame}
 
 %%%%%
-\begin{frame}
+\begin{frame}[fragile]
 \frametitle{Beispiel: Applikationscode}
-
+    \begin{verbatim}
+void SWC_SMLS_R_SMLS (void) {
+  Rte_Write_out_value(42);
+}
+    \end{verbatim}
 \end{frame}
 
 %%%%%
@@ -379,7 +401,7 @@
 
 %%%%%
 \begin{frame}
-\frametitle{Beispiel: Ergebniss}
+\frametitle{Beispiel: Ergebnis}
 
 \end{frame}
 
